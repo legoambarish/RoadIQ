@@ -3,9 +3,9 @@
 ## Repository state
 
 - Branch: `main` (the agreed branch at task start).
-- Latest commit before this handoff's changes: `a6c2498` (`Set up initial project structure with backend and frontend directories, including necessary configuration files, API routes, schemas, services, tests, and documentation.`).
-- Contract-freeze changes are to be committed on `main` after validation.
-- This handoff records the base commit and actual verification results; consult Git history for the resulting contract-freeze commit.
+- Base commit reviewed before changes: `a6c2498` (`Set up initial project structure with backend and frontend directories, including necessary configuration files, API routes, schemas, services, tests, and documentation.`).
+- Latest task implementation commit: `5634f93` (`Freeze RoadIQ data contracts and scoring rules`), committed on `main` after validation.
+- This handoff metadata update follows the implementation commit; Git history is authoritative for the current repository HEAD.
 
 ## Completed in this task
 
