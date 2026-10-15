@@ -78,6 +78,8 @@ def _annotated_data_uri(image: Image.Image, mask: Image.Image) -> str:
         size = (max(1, round(preview.width * scale)), max(1, round(preview.height * scale)))
         preview = preview.resize(size, Image.Resampling.BILINEAR)
         mask = mask.resize(size, Image.Resampling.NEAREST)
+    elif mask.size != preview.size:
+        mask = mask.resize(preview.size, Image.Resampling.NEAREST)
     tint = Image.new("RGBA", preview.size, (255, 190, 40, 105))
     tint.putalpha(mask.point(lambda pixel: 105 if pixel else 0))
     annotated = Image.alpha_composite(preview.convert("RGBA"), tint)

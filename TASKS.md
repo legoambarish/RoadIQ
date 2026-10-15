@@ -1,5 +1,11 @@
 # RoadIQ task tracker
 
+## Task C MVP continuation — 2026-10-16
+
+Current work is on the assigned `task/c-computer-vision` branch. It fixes annotation resizing for images larger than the 512-pixel analysis edge and adds a deterministic synthetic road-texture demo plus CLI options to save an annotated JPEG and structured JSON report. This stays within Task C; API and frontend integration remain owned by Task D and Task B.
+
+Verified demo: a 640×480 synthetic image generated with seed 42 completes the analysis, reports `unrated`, identifies method `pillow_high_frequency_texture_regions_v1` as `untrained_baseline`, returns a candidate area ratio (not aggregate coverage), keeps individual particle count null, and writes an annotated preview. Focused Task C/backend tests: 26 passed, 2 skipped. Full backend suite excluding the unrelated health TestClient case: 85 passed, 2 skipped, 1 deselected. No India-only aggregate-instance labels or active trained checkpoint are present; real model metrics remain pending. See `HANDOFF.md` and `README.md` for commands and caveats.
+
 ## Coordination baseline
 
 - Current integration branch: `main`.
@@ -117,7 +123,7 @@ The branch's existing India-only semantic-segmentation trainer was exercised onl
 
 - Task A's provisional RSQI scorer is merged into `main` by PR #1 at `7995ff4`; its RoadIQ normalization and confidence calibration still lack labelled data.
 - The Task B dashboard and Everyday/Engineer follow-up are merged into `main` by PR #2 and PR #5. All road values remain illustrative fixtures; no live segment or image API is connected.
-- Task C's branch `task/c-computer-vision` contains image validation/quality heuristics, a named texture proxy, structured observations, a mockable detector, optional RLE masks, and an experimental India-only road/pothole semantic segmentation trainer. No trained checkpoint or held-out model-quality result exists. The dataset has no aggregate-instance or metal-fragment labels. Physical measurements, material classification, aggregate/metal analysis, broad validated damage detection, and image API remain unavailable. PR #4 remains open and is not merged.
+- Task C's branch `task/c-computer-vision` contains image validation/quality heuristics, a named texture proxy, structured observations, a mockable detector, optional RLE masks, and an experimental India-only road/pothole semantic segmentation trainer. PR #4's implementation is merged into `main`; this Task C branch continues with the demo/scaling follow-up. No trained checkpoint or held-out model-quality result exists. The dataset has no aggregate-instance or metal-fragment labels. Physical measurements, material classification, aggregate/metal instance analysis, broad validated damage detection, and an image API remain unavailable from Task C.
 - Task D's docs-only integration checklist is merged by PR #3; runtime integration remains blocked on reviewed A/B/C mappings and dependencies.
 
 ## Four-owner kickoff checklist

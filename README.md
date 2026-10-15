@@ -73,6 +73,21 @@ npm run build
 npm run lint
 ```
 
+### Task C synthetic vision demo
+
+This makes a deterministic **synthetic** asphalt-like texture image, analyzes it with the Task C baseline, writes an annotated JPEG, and saves a structured JSON report. It requires no external model, network access, dataset, or private road photo.
+
+```bash
+cd /workspaces/RoadIQ
+. .venv/bin/activate
+PYTHONPATH=backend python -m scripts.create_demo_road_image --output /tmp/roadiq-synthetic-road.png --seed 42
+PYTHONPATH=backend python -m scripts.analyze_road_image /tmp/roadiq-synthetic-road.png \
+  --annotated-output /tmp/roadiq-annotated.jpg \
+  --report-output /tmp/roadiq-report.json
+```
+
+Open `/tmp/roadiq-annotated.jpg` to see the high-frequency texture candidates. `/tmp/roadiq-report.json` labels the method as an untrained baseline and keeps particle counts, physical measurements, confidence, and RSQI unavailable/unrated. Synthetic output validates the demo plumbing only; it is not evidence of real-world model performance.
+
 ## API status
 The initial backend exposes a versioned health endpoint:
 - `GET /api/v1/health`

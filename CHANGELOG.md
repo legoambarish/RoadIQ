@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-16 — Task C demonstrable baseline
+
+- Fixed annotated-preview mask scaling when the source image exceeds the 512-pixel analysis resolution; larger valid images now produce previews instead of failing during alpha composition.
+- Added deterministic synthetic road-texture sample generation and CLI flags to export the annotation and structured JSON report separately.
+- Added an end-to-end regression test for the synthetic 640×480 image. It validates baseline plumbing only; no real-world model performance is claimed.
+
 ## Unreleased
 - Added `evaluate_aggregate_baseline` for reviewed test-split COCO polygon/uncompressed-RLE or grayscale instance masks. It reports pixel IoU/precision/recall, manifest and per-file hashes, per-image timing, and explicitly unavailable instance-count MAE. No labeled RoadIQ aggregate test set is present, so no accuracy result is claimed.
 - Added a documented JSONL dataset manifest and validator for label/provenance parsing, scene-group split isolation, exact-image hashes, and perceptual near-duplicate leakage; it does not fetch datasets.
