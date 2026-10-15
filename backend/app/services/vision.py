@@ -451,6 +451,7 @@ def analyze_road_image(
                 "retryable": False,
             })
     segmentation_output: dict[str, Any] | None = None
+    road_roi_mask: Image.Image | None = None
     if actual_segmentation_model is not None and quality["usable"]:
         try:
             prediction = actual_segmentation_model.predict(image)
@@ -459,6 +460,7 @@ def analyze_road_image(
                 raise ValueError("segmentation output must contain an image-sized PIL label mask")
             label_mask = label_mask.convert("L")
             road_mask = label_mask.point(lambda value: 255 if value == 0 else 0)
+            road_roi_mask = road_mask
             pothole_mask = label_mask.point(lambda value: 255 if value == 3 else 0)
             road_pixels = road_mask.histogram()[255]
             pothole_pixels = pothole_mask.histogram()[255]
@@ -478,6 +480,7 @@ def analyze_road_image(
                 "confidence_calibrated": prediction.get("confidence_calibrated", False),
             }
         except Exception as exc:
+            road_roi_mask = None
             segmentation_error = f"{type(exc).__name__}: {exc}"
             processing_errors.append({
                 "code": "segmentation_inference_failed",
@@ -540,7 +543,11 @@ def analyze_road_image(
     surface_reason = "no validated asphalt/concrete classifier is configured"
     aggregate_reason = "no validated individual-aggregate segmentation model is configured"
     aggregate_started = time.perf_counter()
-    aggregate_analysis = analyze_aggregate_texture_regions(image) if quality["usable"] else _empty_aggregate_report("image quality gate failed")
+    aggregate_analysis = (
+        analyze_aggregate_texture_regions(image, pavement_mask=road_roi_mask)
+        if quality["usable"]
+        else _empty_aggregate_report("image quality gate failed")
+    )
     annotated_image_data_uri = aggregate_analysis.pop("annotated_image_data_uri", None)
     if quality["usable"]:
         aggregate_analysis["inference_time_ms"] = round((time.perf_counter() - aggregate_started) * 1000, 3)
