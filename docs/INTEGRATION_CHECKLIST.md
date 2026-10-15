@@ -1,13 +1,13 @@
 # Task D integration preparation and contract audit
 
-**Status recorded 2026-10-15:** preparation only. This file records current branch/PR evidence and proposed field mappings; it does not approve a new shared API contract.
+**Status recorded 2026-10-16:** Task D has packaged and exercised a Windows desktop build on the available host. Live image-analysis integration is still unimplemented. This file records current merged dependencies and proposed field mappings; it does not approve a new shared API contract.
 
 ## Dependency readiness
 
 - **Task A:** PR #1 is merged into main at commit 7995ff4. The provisional scorer and its tests are present. Its default normalization profiles are empty, so it returns an unrated result unless a caller supplies a complete fixed profile and all required evidence. No RoadIQ-labelled calibration set exists.
-- **Task B:** PR #2, “Task B: Build map and dashboard,” is open against main at 4718ac6. The GitHub API showed no submitted reviews or check runs when inspected. Its dashboard uses static demo fixtures; the image panel only previews a local file and does not upload or analyze it. The B handoff reports that TypeScript build, Oxlint, and Vite build passed, but that is author-recorded evidence, not a check on this Task D checkout.
-- **Task C:** remote branch task/c-computer-vision is at 2afa289, five commits behind and ten ahead of current main. There is no C PR. Its observation service and tests are not an approved integration dependency. The service has no HTTP route, no usable-pavement segmentation or material classifier, and no configured India-only model. Its handoff says it is not ready for integration.
-- **Task D:** docs-only preparation commit ef64767 is pushed on task/d-integration-release and open in PR #3 against main. The branch is based on fetched origin/main commit 7995ff4; the previous D pointer was preserved locally as backup/task-d-integration-release-prebase-7995ff4.
+- **Task B:** PRs #2, #5, and #6 are merged into main. Its dashboard uses static demo fixtures; the image panel only previews a local file and does not upload or analyze it. The frontend build and lint passed on this Task D checkout.
+- **Task C:** PRs #4, #7, #8, #10, and #11 are merged into main. The local observation/demo service and tests exist, but there is no image HTTP route or active trained checkpoint. Usable-pavement/material classification, individual aggregate/metal analysis, calibrated physical measurements, and held-out RoadIQ evaluation remain unavailable; Task C is not ready as a complete production analysis dependency.
+- **Task D:** checklist PR #3 is merged. This package branch is task/d-integration-release, based on current origin/main at f83b4d7. It adds a Windows one-file launcher and desktop-runtime tests; a new PR is pending publication.
 
 ## Field crosswalk
 
@@ -82,25 +82,22 @@ These mappings cannot be implemented by copying raw values. Task A requires a un
 
 ## Commands, configuration, and demo limits
 
-README.md documents Python 3.12.x, Node.js 20+, backend installation with pip install -r backend/requirements.txt, and frontend installation with npm install. Its exact runtime/verification commands are:
+The repository documents the development backend as `uvicorn app.main:app --reload --host 0.0.0.0 --port 8000`, from `backend/` after activating the root virtual environment. It documents the frontend as `npm run dev -- --host 0.0.0.0` from `frontend/`, backend tests as `pytest backend/tests -q` from the root, and frontend checks as `npm run build` and `npm run lint` from `frontend/`.
 
-~~~text
-Backend, from backend after activating the root .venv:
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+The verified Windows package commands, from the repository root, were:
 
-Frontend, from frontend:
-npm run dev -- --host 0.0.0.0
-
-Backend tests, from repository root:
-pytest backend/tests -q
-
-Frontend checks, from frontend:
-npm run build
-npm run lint
+~~~powershell
+.\.venv\Scripts\python.exe -m pytest backend/tests -q
+.\scripts\build_windows.ps1
+.\dist\RoadIQ.exe
 ~~~
 
-Task B’s frontend README documents npm run dev; the root README documents npm run dev -- --host 0.0.0.0. The root command started the current Task D checkout’s Vite server and returned HTTP 200 at 127.0.0.1:5173. npm install completed (27 packages, zero reported vulnerabilities), and npm run build and npm run lint passed on this Task D checkout; these checks do not cover the unmerged PR #2 UI. The host has Python 3.11.15 on PATH and Python 3.14 via the Windows launcher, Node 24.16.0, and npm 11.13.0. It has no root .venv, and the repository README requires Python 3.12.x. The documented pytest backend command could not start because pytest is not installed; the backend startup command could not start because uvicorn is not installed.
+Backend tests passed with 93 passed and 2 skipped, plus one existing Starlette deprecation warning. The build script ran `npm install`, built the frontend with `VITE_API_BASE_URL=/api/v1`, and produced `dist\RoadIQ.exe` (24,040,596 bytes). `npm run lint` and the Vite/TypeScript build passed. The runtime smoke check used a reduced inherited `PATH` containing only Windows system binaries; the app returned health JSON, served the dashboard, opened the default browser, rejected an unauthenticated restart request with 403, and gracefully restarted when the same executable was launched again. This was not a clean-VM test.
 
-The only .env.example settings are FASTAPI_ENV, API_PREFIX, CORS_ORIGINS, and VITE_API_BASE_URL. They contain development defaults, not credentials. Current main has no model path, map-provider key, database, image storage, or external-service requirement; the health route is local and dependency-free. B’s map is schematic SVG and the selected image stays in local browser preview. C’s branch adds Pillow to base requirements and an optional requirements-vision.txt with torch, torchvision, RF-DETR, and Hugging Face Hub; it still has no approved India-only checkpoint or documented inference result to download/use.
+The exact manual frontend commands used were `npm run build -- --outDir ../build/windows-frontend --emptyOutDir` with `VITE_API_BASE_URL=/api/v1`, then `npm run lint`, from `frontend/`. The packaged app command is `dist\RoadIQ.exe`; its single-file bundle does not need Python or Node at runtime. Logs are written to `%LOCALAPPDATA%\RoadIQ\logs\RoadIQ.log`. Starting the executable a second time replaces only a live process whose executable path matches the recorded `RoadIQ.exe`. Closing the browser leaves the local service running; stopping it currently requires ending RoadIQ from Task Manager or shutting down Windows.
 
-The demo may show B’s numeric RoadSegment values only when clearly labeled fixture/demo values. It must not describe them as RoadIQ observations, scorer outputs, model predictions, validated scores, or safety ratings. No end-to-end demo or release readiness is claimed.
+The host provided Python 3.12.14, Node 24.16.0, npm 11.13.0, and PyInstaller 6.22.3. The build environment was a local `.venv`; the output package was built on Windows 11. Generated `build/` and `dist/` outputs are ignored.
+
+The only `.env.example` settings are `FASTAPI_ENV`, `API_PREFIX`, `CORS_ORIGINS`, and `VITE_API_BASE_URL`; the inspected values are development defaults, not credentials. The packaged app overrides API prefix/environment and uses loopback. No secret, model download, map-provider key, database, image storage, or external service is required for runtime. The dashboard uses local fixtures and a browser-only image preview. Task C has optional vision requirements and experimental code, but no approved active India-only checkpoint is bundled or downloaded by the app.
+
+The demo may show B’s numeric RoadSegment values only when clearly labeled fixture/demo values. It must not describe them as RoadIQ observations, scorer outputs, model predictions, validated scores, or safety ratings. No end-to-end image-analysis demo or production release readiness is claimed.

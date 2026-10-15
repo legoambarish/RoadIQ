@@ -19,3 +19,7 @@ frontend/.vite/
 # editor / os
 .DS_Store
 .vscode/
+
+# Windows desktop build output
+/dist/
+/build/
