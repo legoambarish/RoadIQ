@@ -8,6 +8,10 @@
 - Human owner names have not been supplied; assign one human owner to each task before implementation. Task labels identify scope, not a person.
 - Follow the mandatory read/inspect/branch/test/handoff/PR workflow in `AGENTS.md`. GitHub's committed repository state is authoritative, independent of any agent's memory.
 
+## Core product objective
+
+RoadIQ is primarily an image-based road-surface quality assessment prototype. Its core image engine should analyze pavement region/quality, individual visible stone aggregates (provisionally interpreting “metal chips” as aggregates, pending owner confirmation), aggregate boundaries/gaps/coverage/loss, image texture, and visible deterioration. Map and travel-mode dashboard features are secondary. Support asphalt/bituminous and cement-concrete when evidence supports them; otherwise return unknown. Current software remains a scaffold: no image analysis, RSQI scorer, report UI, image API, or held-out model evaluation is implemented.
+
 ## Contract baseline
 
 - Current agreed working branch: `main` (also the branch at task start).
@@ -20,19 +24,19 @@
 
 | Task | Scope and file ownership | Explicitly out of scope | Dependencies |
 | --- | --- | --- | --- |
-| A — Scoring | Implement configurable normalization/scoring, evidence sufficiency, confidence/explanation production, and scoring tests in a dedicated backend scoring service and its tests. Consume `backend/app/schemas/road_segment.py`; own scoring-service files only. | API routes, dashboard, image inference, changing shared schema without coordination. No safety certification. | Frozen shared schema and written scoring assumptions; may develop independently of B/C. |
-| B — Dashboard | Implement frontend UX, data display, unrated/error states, accessible explanations, and API integration in `frontend/`. Own frontend UI/API modules; use `frontend/src/types/road-segment.ts`. | Scoring or inference logic; implying missing data means good. | Frozen shared schema and API contract; may develop independently of A/C against typed fixtures. |
-| C — Computer vision | Implement image inference, supported measurement extraction, source attribution, uncertainty, and image/calibration tests in `backend/app/services/vision.py` and dedicated vision modules/tests. | Segment API, dashboard, claiming ground dimensions/grade from pixels without calibration. | Frozen measurement/provenance schema; may develop independently of A/B. |
-| D — Integration/release | Implement planned retrieval routes, service wiring, persistence boundary only if approved, contract/integration tests, release checks, and API runtime behavior. Own `backend/app/api/routes/`, `backend/app/main.py`, integration tests, and release configuration. | Taking over A scoring, B UI, or C inference implementations; claiming planned routes already exist. | Depends on A, B, and C outputs for end-to-end integration; API routes may be scaffolded against the frozen contract before all implementations are complete. |
+| A — Scoring | Own versioned image-feature normalization, provisional RoadIQ Surface Quality Index (RSQI), evidence sufficiency, transparent contributions/explanations, confidence policy, and scorer tests in a dedicated backend scoring service. Consume Task C outputs and the shared contract. | Image inference/annotations, frontend/reporting, API integration, unilateral shared schema changes. No safety/engineering certification. | Written candidate feature/weight proposal in `docs/SCORING_SPEC.md`; C output shape and adequate labelled evidence. |
+| B — Frontend/reporting | Own image upload/report experience, annotated-image display, RSQI contribution/evidence/uncertainty presentation, unrated/error states, and secondary map/mode UI in `frontend/`. | Scoring or inference logic; portraying masks as truth; implying missing data means good. | Shared proposed image-analysis response/API contract; can use clearly marked typed fixtures until API exists. |
+| C — Aggregate analysis | Own image quality gate, pavement ROI, asphalt/concrete/unknown classification, aggregate instance segmentation/features, defect detection, texture proxies, calibration handling, provenance, and inference tests in `backend/app/services/vision.py` and dedicated modules/tests. | RSQI weighting/score decisions, dashboard, map API; no ground dimensions from pixels without calibration. | Confirm “metal chips” means stone aggregates; shared field/unit contract and annotated-label protocol. |
+| D — Integration/evaluation | Own API integration and release checks; coordinate dataset versioning/split hygiene and held-out end-to-end/model evaluation reporting with actual metrics. Own `backend/app/api/routes/`, `backend/app/main.py`, integration/evaluation tests and reports. | Replacing A scoring, B UI, or C inference; claiming planned API/model/results exist. | Integrates A/B/C reviewed outputs; dataset/label availability and a frozen held-out test set for evaluation. |
 
 ### Branch assignment and human owner
 
 | Task | Human owner | Assigned branch |
 | --- | --- | --- |
 | A — Scoring | TBD; assign before implementation | `task/a-scoring-engine` |
-| B — Dashboard | TBD; assign before implementation | `task/b-map-dashboard` |
-| C — Computer vision | TBD; assign before implementation | `task/c-computer-vision` |
-| D — Integration/release | TBD; assign before implementation | `task/d-integration-release` |
+| B — Frontend/reporting | TBD; assign before implementation | `task/b-map-dashboard` |
+| C — Aggregate/image analysis | TBD; assign before implementation | `task/c-computer-vision` |
+| D — Integration/evaluation | TBD; assign before implementation | `task/d-integration-release` |
 
 `main` is the shared integration branch. At this workflow freeze no task branches existed locally or remotely. Create task branches from up-to-date `main`; send completed task work through reviewed pull requests. Task D coordinates integration, but does not take over A/B/C modules. Dependency manifests and lockfiles are shared-impact files and require review from affected owners.
 
@@ -44,7 +48,7 @@
 
 ## Acceptance criteria
 
-### Contract freeze — completed in this change
+### Shared segment-contract freeze — completed previously
 
 - [x] One schema defines stable ID, GeoJSON line geometry, survey source/time, typed measurements and units, unknowns, damage fields, surface and mode scores, confidence/coverage, status, explanation, and provenance.
 - [x] Backend validation and frontend TypeScript field names/types agree; schema tests cover key valid/invalid boundaries.
@@ -54,40 +58,47 @@
 
 ### Task A — scoring (planned)
 
-- [ ] Implements formula only with approved, versioned normalizations and all four supported inputs; no partial weight renormalization.
-- [ ] Returns `unrated` and null surface score/label if evidence is insufficient; never maps unknown to zero.
-- [ ] Keeps surface quality separate from every mode score; emits reproducible explanations and reports confidence/coverage only with documented methods.
-- [ ] Tests normalization boundaries, exact formula behavior, missing inputs, version/config selection, and score labels.
+- [ ] Implements configurable, versioned candidate image-feature index and exposes every component contribution; initial weights remain hypotheses pending evaluation.
+- [ ] Uses surface-type/capture-aware normalization, with frozen training references and no per-image/test-cohort normalization.
+- [ ] Returns `unrated` with null score when required image quality, usable ROI, material-specific features, or component evidence is absent; never fills missing values with zero or renormalizes weights silently.
+- [ ] Separates surface condition from vehicle/pedestrian suitability; produces transparent score reasons and calibrated confidence only.
+- [ ] Tests formula, normalization boundaries, configuration/version, missing evidence, unknown surface type, confidence/status, and label cutoffs.
 
 ### Task B — dashboard (planned)
 
-- [ ] Consumes the shared types and planned API contract, while handling the currently implemented health-only API honestly.
-- [ ] Distinguishes absolute score from relative percentile and never presents unrated as good.
-- [ ] Displays survey date, available sample/coverage, confidence, provenance/explanation, and uncertainty.
-- [ ] Separates surface quality from mode suitability and pedestrian access/context; does not infer pedestrian-friendliness from missing lane markings.
+- [ ] Supports the future image-analysis workflow and renders the submitted image with an annotated overlay and explanatory report.
+- [ ] Shows image-quality/ROI status, surface type or unknown, aggregate/defect/texture evidence and units, index contributions, confidence, unavailable values, and limitations.
+- [ ] Clearly renders Low Confidence or Unrated and never presents unrated as good; distinguishes image-derived texture proxies from physical roughness.
+- [ ] Keeps surface condition separate from mode suitability and pedestrian access/context; does not infer pedestrian-friendliness from missing lane markings.
+- [ ] Handles the currently implemented health-only API honestly; no claim that planned image/segment APIs exist.
 - [ ] Passes frontend TypeScript checks, lint, and Vite production build.
 
 ### Task C — computer vision (planned)
 
-- [ ] Keeps inference behind a replaceable service boundary; preserves source=`image_inference`, nulls, and uncertainty in outputs.
-- [ ] Does not emit calibrated physical grade/roughness/area from pixels without documented calibration.
-- [ ] Tests supported/unsupported inputs and malformed/unavailable inference results without requiring production model weights.
+- [ ] Implements testable image validation/quality gating, usable pavement ROI, and surface-type output (`asphalt_bituminous`, `cement_concrete`, or `unknown`).
+- [ ] Segments/counts individual stone aggregates only where resolution permits and reports count, pixel size distribution, visible coverage, boundary/gap statistics, and aggregate-loss proxy with explicit provenance/confidence.
+- [ ] Emits counts/m² or physical widths only with ground scale, usable physical area, and sufficient resolution; otherwise returns null physical values and retains valid pixel-space estimates.
+- [ ] Detects visible cracks, potholes, raveling, and deterioration; emits named image texture proxies and never calls 2D image texture true 3D roughness/IRI.
+- [ ] Preserves unavailable values as null and documents model/checkpoint, preprocessing, calibration method, and limitations.
+- [ ] Tests malformed/low-quality inputs, unsupported material/resolution, unit/calibration gates, masks, and unavailable outputs without requiring production weights.
 
 ### Task D — integration and release (planned)
 
-- [ ] Implements only the documented routes and response/error shapes, including mode scores in segment retrieval.
-- [ ] Validates contract boundaries and service integrations; protects health route behavior.
+- [ ] Implements reviewed image-analysis request/response contract and validation/error behavior; keeps current health route working and marks segment/image routes planned until implemented.
+- [ ] Defines dataset manifest/annotation protocol and grouped train/validation/test split; prevents road-segment and feasible near-duplicate leakage across splits.
+- [ ] Runs evaluation on a held-out, labelled test set and reports actual counts/metrics by surface class and task (detection/segmentation, aggregate measures, surface index, confidence); never fabricates metrics.
+- [ ] Distinguishes untouched pretrained baseline from frozen/finetuned/RoadIQ-trained models and records training data/split/version.
 - [ ] Runs backend pytest and frontend build/type/lint checks; records actual commands/results and unresolved issues in `HANDOFF.md`.
 - [ ] Confirms configuration/secrets safety and release readiness without claiming production algorithm/model validation.
 
 ## Current status
 
-- Contract freeze: complete for the prototype baseline; this does not approve the provisional scoring assumptions as engineering standards.
+- Core requirements alignment: documentation only; image pipeline, RSQI implementation, report UI, dataset, evaluation, and image API remain planned.
 - Tasks A-D: planned; none of their end-user features is claimed as complete here.
 
 ## Four-owner kickoff checklist
 
 - [ ] **Task A owner:** confirm human owner; read `AGENTS.md`, relevant docs, and `HANDOFF.md`; fetch latest remote; use `task/a-scoring-engine`; implement only scoring scope; test, update status/changelog/handoff, push, and open/update a PR.
-- [ ] **Task B owner:** confirm human owner; read `AGENTS.md`, relevant docs, and `HANDOFF.md`; fetch latest remote; use `task/b-map-dashboard`; implement only frontend scope; test/build/lint, update status/changelog/handoff, push, and open/update a PR.
-- [ ] **Task C owner:** confirm human owner; read `AGENTS.md`, relevant docs, and `HANDOFF.md`; fetch latest remote; use `task/c-computer-vision`; implement only inference scope; test, update status/changelog/handoff, push, and open/update a PR.
-- [ ] **Task D owner:** confirm human owner; read `AGENTS.md`, relevant docs, and `HANDOFF.md`; fetch latest remote; use `task/d-integration-release`; coordinate dependencies and integrate through reviewed PRs; run release checks, update status/changelog/handoff, and open/update a PR.
+- [ ] **Task B owner:** confirm human owner; read `AGENTS.md`, relevant docs, and `HANDOFF.md`; fetch latest remote; use `task/b-map-dashboard`; implement only frontend/image report scope; test/build/lint, update status/changelog/handoff, push, and open/update a PR.
+- [ ] **Task C owner:** confirm human owner and confirm “metal chips” means stone aggregates; read `AGENTS.md`, relevant docs, and `HANDOFF.md`; fetch latest remote; use `task/c-computer-vision`; implement only image/aggregate-analysis scope; test, update status/changelog/handoff, push, and open/update a PR.
+- [ ] **Task D owner:** confirm human owner; read `AGENTS.md`, relevant docs, and `HANDOFF.md`; fetch latest remote; use `task/d-integration-release`; coordinate dependencies, dataset hygiene, held-out evaluation, and reviewed PR integration; run release checks, update status/changelog/handoff, and open/update a PR.

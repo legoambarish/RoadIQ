@@ -18,6 +18,156 @@ Returns HTTP 200 and:
 
 The route is implemented without external-service dependencies.
 
+## Planned image-analysis endpoint (not implemented)
+
+Image analysis is the primary product workflow. The endpoint below is a proposed integration contract for Task C (inference), Task A (RSQI), Task B (report display), and Task D (API/evaluation). It is **not present in the current FastAPI app**. Exact upload limits, supported formats, storage/retention, and calibration request shape remain unresolved.
+
+### `POST /api/v1/image-analyses`
+
+Proposed request: `multipart/form-data` with required `image` file and optional `calibration` JSON part. Calibration must identify its method and scale/unit and associate it with the submitted image; unverified or absent calibration does not enable physical measurements. Do not accept remote image URLs unless a separately reviewed SSRF-safe design is adopted.
+
+Proposed response (HTTP 200 after synchronous analysis; asynchronous/job behavior is unresolved):
+
+```json
+{
+  "analysis_id": "img-analysis-opaque-id",
+  "analysis_status": "unrated",
+  "image_quality": {
+    "status": "observed",
+    "issues": [],
+    "usable": true,
+    "source": "image_inference"
+  },
+  "pavement_region": {
+    "usable_area_ratio": {
+      "value": 0.78, "unit": "ratio", "status": "estimated",
+      "source": "image_inference"
+    },
+    "annotation": { "value": null, "unit": "uri", "status": "unavailable", "source": null }
+  },
+  "surface_type": {
+    "value": "unknown",
+    "unit": "category",
+    "status": "estimated",
+    "source": "image_inference",
+    "confidence": null
+  },
+  "aggregate_analysis": {
+    "aggregate_count": {
+      "value": null, "unit": "aggregates_per_image", "status": "unavailable", "source": null
+    },
+    "aggregate_count_per_m2": {
+      "value": null, "unit": "aggregates_per_m2", "status": "unavailable", "source": null
+    },
+    "size_distribution": {
+      "value": null, "unit": "pixel_distribution", "status": "unavailable", "source": null
+    },
+    "physical_size_distribution": {
+      "value": null, "unit": "mm_distribution", "status": "unavailable", "source": null
+    },
+    "visible_coverage_ratio": {
+      "value": null, "unit": "ratio", "status": "unavailable", "source": null
+    },
+    "boundary_gap_statistics": {
+      "value": null, "unit": "pixel_statistics", "status": "unavailable", "source": null
+    },
+    "physical_boundary_gap_statistics": {
+      "value": null, "unit": "mm_statistics", "status": "unavailable", "source": null
+    },
+    "aggregate_loss_indicator": {
+      "value": null, "unit": "damage_index_0_100", "status": "unavailable", "source": null
+    }
+  },
+  "defects": [
+    {
+      "class": "crack",
+      "count": {
+        "value": null, "unit": "defects_per_image", "status": "unavailable", "source": null
+      },
+      "visible_area_ratio": {
+        "value": null, "unit": "ratio", "status": "unavailable", "source": null
+      },
+      "confidence": null,
+      "annotation": null
+    }
+  ],
+  "texture_features": {
+    "features": [
+      {
+        "name": "local_contrast",
+        "value": null,
+        "unit": "algorithm_defined_proxy",
+        "status": "unavailable",
+        "source": null
+      }
+    ],
+    "is_physical_roughness": false
+  },
+  "rsqi": {
+    "value": null,
+    "unit": "index_0_100",
+    "status": "unrated",
+    "confidence": null,
+    "confidence_band": "unrated",
+    "components": {
+      "visible_defect_burden": {
+        "value": null, "unit": "damage_index_0_100",
+        "status": "unavailable", "source": null, "weight": 0.35,
+        "weighted_contribution": null
+      },
+      "aggregate_loss": {
+        "value": null, "unit": "damage_index_0_100",
+        "status": "unavailable", "source": null, "weight": 0.20,
+        "weighted_contribution": null
+      },
+      "gap_anomaly": {
+        "value": null, "unit": "damage_index_0_100",
+        "status": "unavailable", "source": null, "weight": 0.15,
+        "weighted_contribution": null
+      },
+      "texture_anomaly": {
+        "value": null, "unit": "damage_index_0_100",
+        "status": "unavailable", "source": null, "weight": 0.15,
+        "weighted_contribution": null
+      },
+      "aggregate_distribution_anomaly": {
+        "value": null, "unit": "damage_index_0_100",
+        "status": "unavailable", "source": null, "weight": 0.15,
+        "weighted_contribution": null
+      }
+    },
+    "explanation": "Surface type and required image evidence are unavailable; no index is assigned.",
+    "limitations": ["No reliable image-derived feature values are available."]
+  },
+  "data_provenance": [
+    { "field_path": "image_quality", "source": "image_inference" }
+  ],
+  "annotated_image": {
+    "value": null, "unit": "uri", "status": "unavailable", "source": null
+  },
+  "model": {
+    "name": null,
+    "version": null,
+    "training_status": "not_reported"
+  }
+}
+```
+
+This is a shape example, not a result from a running model. All values shown unavailable/null must remain null unless a valid measurement method produced a value. A result's provenance should include image/model/version references without exposing secrets or unsafe storage locations. `training_status` must distinguish `pretrained_baseline`, `roadIQ_trained`, `roadIQ_fine_tuned`, and `not_reported`; do not claim RoadIQ training unless it occurred and its split/data version are recorded.
+
+### Proposed measurement conventions and validation
+
+- Every measurement object uses `{value, unit, status, source}`. `status` is `observed`, `estimated`, or `unavailable`; an observed/estimated value requires a source, while unavailable requires `value: null` and `source: null`. Source is one of `sensor`, `image_inference`, `user_input`, `demo_fixture`.
+- Ratios are finite numbers in `[0,1]`; confidence is nullable `[0,1]`; index values are nullable `[0,100]`. Counts are non-negative integers. Physical widths/sizes are non-negative and only returned in `mm` when calibration and resolution justify them.
+- Image-analysis `analysis_status` is `completed`, `low_confidence`, `unrated`, or `failed`; `rsqi.status` is `rated`, `low_confidence`, or `unrated`. `unrated` requires null RSQI value and confidence band `unrated`. `low_confidence` may carry a tentative numeric estimate only when all required evidence exists; it must be visibly labelled and use a validated confidence policy. `failed` is a processing error, not a successful empty analysis.
+- Every defect count/extent and every named texture feature is individually represented with value, unit, availability status, and source. RSQI components carry normalized damage value, unit, status/source, configured weight, and weighted contribution so the explanation is auditable.
+- `aggregates_per_m2` requires known ground scale, established usable physical pavement area, and count over that same area. Otherwise it is unavailable; `aggregates_per_image` may be reported when countable.
+- Pixel measurements (pixel count/size/gap statistics) must not be described as physical dimensions. Texture feature names/method/version must be included; texture is not IRI or 3D roughness.
+- Surface type is `asphalt_bituminous`, `cement_concrete`, or `unknown`; uncertainty must be retained. An unknown surface type prevents scoring components that require material-specific references.
+- Missing/unreliable feature inputs are null, not zero. If required quality/evidence gates fail, `rsqi.status` is `unrated`, `value` and confidence band are null/`unrated`, and explanation includes reasons. A tentative numeric score may be labelled `low_confidence` only under a validated confidence policy; numeric cutoffs remain unresolved.
+- The `annotated_image` reference can be absent. When present, API access control, expiry, safe content types, and retention must be defined before implementation.
+- Surface index is distinct from travel-mode suitability and does not establish structural strength, skid resistance, weather resistance, or safety.
+
 ## Planned segment retrieval endpoints
 
 ### `GET /api/v1/road-segments`
@@ -127,6 +277,8 @@ Typical FastAPI validation response (actual input varies):
 
 Currently, requesting either planned segment route returns FastAPI's route-not-found 404 because those routes do not exist; it does **not** indicate a missing segment. No create, upload, persistence, or scoring endpoint is part of this contract.
 
+The planned image-analysis endpoint also does not exist. File size/type/image decoding failures, unsupported image quality, calibration errors, model unavailability, and async job semantics need explicit implementation-specific responses before that route ships; do not disguise failure as a successful zero-valued report.
+
 ## Shared schema validation
 
 The segment model rejects extra fields, invalid IDs, invalid coordinates/units/ranges, timezone-naive survey timestamps, unavailable values represented as zero, and rated records missing any normalized damage component. It permits explicit nulls for unknown scores/evidence. Backend tests cover these validation boundaries; frontend uses matching TypeScript field names and unions. Generated OpenAPI types are not currently shared automatically, so changes to the contract require coordinated updates and tests.
@@ -138,3 +290,6 @@ The segment model rejects extra fields, invalid IDs, invalid coordinates/units/r
 - Antimeridian bounding-box semantics and timestamp/freshness query behavior.
 - Custom error envelope and operational handling.
 - Contract versioning and generated cross-language types.
+- Image upload constraints, calibration format, annotated-image storage/access/retention, and synchronous versus asynchronous processing.
+- Exact image-analysis schemas and compatibility/mapping into road-segment records; current Pydantic/TypeScript segment types do not yet implement the proposed image-specific fields.
+- Dataset/label version references and safe exposure of model provenance.

@@ -2,51 +2,59 @@
 
 ## Date/time and task owner
 
-- Date/time: 2026-10-15 13:47 UTC
-- Task owner: Coordination engineer
+- Date/time: 2026-10-15 13:53 UTC
+- Task owner: Core requirements alignment
 
 ## Current branch and latest commit hash
 
 - Branch: `main`
-- Latest coordination commit: `513ce78` (`Establish agent coordination workflow`); this handoff metadata update follows that documentation commit.
-- Remote check: fetched `origin`; `origin/main` remains at `a6c2498`; current local `main` had two commits ahead before this task's changes.
+- Base commit: `a0df601` (`Record coordination workflow handoff`), verified after fetching `origin`.
+- Alignment commit: pending validation and commit.
 
 ## Goal and completed work
 
-- Goal: establish a repository-backed, model-agnostic collaboration workflow for the four task owners.
-- Added mandatory pre-edit inspection, task-branch, ownership, contract-change, testing, handoff, commit, push, and PR rules.
-- Recorded the agreed task branch names and file ownership; human owner names remain to be assigned.
-- Added a four-owner kickoff checklist.
-- No Task A/B/C/D feature implementation, schema change, or API change was made.
+- Recentered the product objective on image-based pavement analysis, especially visible stone aggregates, aggregate boundaries/gaps, surface texture, aggregate-loss indicators, and deterioration.
+- Documented a candidate image-feature RoadIQ Surface Quality Index (RSQI), evidence/confidence rules, calibration limits, labelled dataset structure, grouped split hygiene, and held-out evaluation metrics.
+- Updated task ownership: C aggregate/image analysis, A scoring, B frontend/reporting, D integration/evaluation. Existing branch names are preserved.
+- Updated the architecture pipeline, proposed image-analysis API payload, README core demo goal/limitations, task acceptance criteria, and changelog.
+- No image-analysis, scoring, frontend, API route, dataset, or evaluation implementation was started. No model metrics are available or claimed.
 
 ## Files changed
 
-- `AGENTS.md`
 - `TASKS.md`
+- `docs/SCORING_SPEC.md`
+- `docs/ARCHITECTURE.md`
+- `docs/API_CONTRACT.md`
+- `README.md`
 - `CHANGELOG.md`
 - `HANDOFF.md`
 
 ## Tests/builds run and actual results
 
-- `git fetch origin` — passed; no new remote commits were found.
-- `git status --short --branch`, `git branch -avv`, `git remote -v`, and `git log -5 --oneline --decorate` — inspected branch, remote, and history.
-- Documentation-only changes: no application test suite or build was run.
+- `.venv/bin/pytest backend/tests -q` — passed, 9 tests; one Starlette deprecation warning for `anyio.abc.BlockingPortal`.
+- `cd frontend && npm run build && npm run lint` — passed; TypeScript/Vite production build and oxlint succeeded.
+- Parsed fenced JSON examples in `docs/API_CONTRACT.md` and `docs/SCORING_SPEC.md` with Python's standard JSON parser — passed.
 - `git diff --check` — passed.
 
 ## Tests not run
 
-- Backend pytest, frontend build/type check, and frontend lint were not run; no runtime code changed.
+- No image-analysis, scoring, or evaluation tests exist yet; these capabilities remain unimplemented.
+- No separate frontend unit-test suite was run; the repository verification path is build/type-check and lint.
 
 ## Known issues and blockers
 
-- Human owner names have not been provided; assign one person to each task before starting implementation.
-- Task branches do not yet exist; create each named branch from a current `main` when the corresponding task starts.
-- No pull request is required for this coordination-only change on the agreed integration branch; future task work must use reviewed PRs.
+- Confirm with project owner that “metal chips” means stone aggregates.
+- No labelled RoadIQ dataset, annotated images, trained/fine-tuned model, or held-out metrics exist in this repository.
+- Feature definitions, image-quality/resolution thresholds, normalization references, RSQI weights, confidence calibration/cutoffs, and evaluation acceptance criteria need owner/domain review.
+- Image-analysis endpoint, image-specific runtime schemas, upload/storage/privacy policy, calibration format, and annotated-image handling remain proposed only.
+- Human names are unassigned for all four task owners; task branches should be created from current `main` when work begins.
 
 ## Contract or dependency changes
 
-- None. Existing contracts and dependency manifests were not changed.
+- Documentation-only proposal for a future image-analysis request/response with units, provenance, confidence, and explicit unavailable values.
+- No implementation schema, API runtime, or dependency manifest changed. The future image contract requires review and coordinated backend/frontend schema/test changes before implementation.
+- Candidate RSQI feature weights are hypotheses, not approved engineering standards.
 
 ## Exact next action
 
-Assign the four human owners, then have each owner fetch the latest remote, create/use their assigned task branch from current `main`, and start only their documented scope.
+Assign the four human task owners and confirm the aggregate terminology with the project owner. Then Task C should define/validate the annotation and inference output contract with Task A and Task D before implementing image/aggregate analysis on `task/c-computer-vision`.

@@ -2,9 +2,11 @@
 
 ## Status and scope
 
-This is the provisional hackathon contract, not a validated engineering standard or an implemented production scorer. The backend currently validates the data shape; it does not calculate a score. All weights, normalizations, and label thresholds below are configurable assumptions that require team/domain review before use beyond a clearly identified demo.
+This is a provisional hackathon contract, not a validated engineering standard or an implemented production scorer. The backend currently validates the segment data shape; it does not accept or analyse images and does not calculate a score. Image-based pavement structure and visible distress—especially stone aggregates, their boundaries and gaps, texture, aggregate loss, and defects—are the primary product objective. Mapping and mode dashboards are secondary.
 
-The shared segment contract is implemented in `backend/app/schemas/road_segment.py` and mirrored by `frontend/src/types/road-segment.ts`. API retrieval remains planned; see [API_CONTRACT.md](./API_CONTRACT.md).
+The existing segment contract is implemented in `backend/app/schemas/road_segment.py` and mirrored by `frontend/src/types/road-segment.ts`. The richer image-analysis result below is proposed and requires coordinated schema/API implementation; no image-analysis endpoint currently exists. See [API_CONTRACT.md](./API_CONTRACT.md).
+
+The phrase “metal chips” is interpreted provisionally as visible **stone aggregates**. Confirm this with the project owner before model or annotation work. Target surfaces are asphalt/bituminous and cement concrete where evidence permits; return surface type `unknown` when uncertain.
 
 ## Road-segment data contract
 
@@ -103,25 +105,42 @@ All numeric values must be finite. A measurement's unit must match its field. Th
 
 ## Provisional surface scoring
 
-If (and only if) the four components have supportable, comparable normalized inputs:
+The candidate RoadIQ Surface Quality Index (RSQI) is a surface-condition index, not travel suitability, structural strength, skid resistance, or a safety certification. Candidate component scores below are **damage-oriented**: 0 means no detected damage signal under that feature definition, and 100 means the reference maximum damage signal. The overall index is higher-is-better:
 
 ```text
-Damage = 0.35A + 0.25D + 0.25S + 0.15R
-Surface Quality = 100 - Damage
+Damage = 0.35V + 0.20L + 0.15G + 0.15T + 0.15M
+RSQI = 100 - Damage
 ```
 
-`A`, `D`, `S`, and `R` mean normalized damaged area, defect density, severity, and roughness on `[0, 100]`; larger values mean more damage. Weights sum to 1. The four values are provided as `damage_components.damaged_area`, `.defect_density`, `.severity`, and `.roughness`.
+Weights sum to 1. These are initial hypotheses only and must be configurable/versioned and validated before reporting as a meaningful quality index:
 
-Normalization contract (the formulas are candidates, not yet calibrated):
+| Component | Weight | Candidate evidence and direction |
+| --- | ---: | --- |
+| `V` — visible defect burden | 0.35 | Area fraction and/or severity of visible cracks, potholes, raveling, and deterioration in usable pavement; more visible deterioration increases damage. |
+| `L` — aggregate-loss indicator | 0.20 | Image-inferred loss/displacement of expected surface aggregate, conditioned on surface type and validated reference examples; stronger loss signal increases damage. This is a visual indicator, not proof of material loss below the visible surface. |
+| `G` — aggregate boundary/gap anomaly | 0.15 | Gap/void and boundary statistics relative to surface-type-specific, scale/resolution-appropriate references; larger anomalous gaps increase damage. Ordinary aggregate boundaries are not defects by themselves. |
+| `T` — image texture anomaly | 0.15 | Surface-type- and capture-condition-adjusted image texture proxy (e.g. local contrast, entropy, or spatial-frequency features); larger validated deterioration-associated anomaly increases damage. This is not physical roughness. |
+| `M` — aggregate size/coverage anomaly | 0.15 | Aggregate size-distribution and visible aggregate-coverage deviation from a validated, surface-type-specific reference; greater deterioration-associated deviation increases damage. |
 
-- `A`: damaged-area ratio mapped to a 0-100 damage index using a configurable reference ratio.
-- `D`: defects/km mapped to a 0-100 index using a configurable reference density. Counts may be divided by segment length only when that surveyed length and count cover the same interval.
-- `S`: severity converted using an agreed defect severity rubric to 0-100.
-- `R`: IRI in m/km mapped to a 0-100 damage index using a configurable reference IRI.
-- Clamp normalized inputs to `[0, 100]`; do not clamp or fill missing raw measurements into an apparent observation.
-- Reference values, severity rubric, and configuration version are not yet agreed. Until they are fixed and justified, a component without an approved mapping is null.
+### Candidate image features and measurement integrity
 
-Do not renormalize weights across available components. If any one of A/D/S/R is missing, evidence is insufficient, or inputs are not reasonably comparable, return `assessment_status: "unrated"` and null surface score/label. Missing evidence is not zero damage. The schema enforces the rated/unrated shape but deliberately does not calculate or validate the formula; Task A owns scoring implementation.
+The image-analysis report should expose raw estimates, units, method/provenance, and availability separately from normalized scoring components:
+
+- **Image quality:** blur/focus, exposure, occlusion, perspective, minimum usable pixel dimensions, and whether analysis is supported. Failed quality gates produce `unrated`, not zero defects.
+- **Pavement region:** mask/region of interest and usable-area fraction. Exclude non-pavement/occlusion from denominators and disclose the usable fraction.
+- **Surface type:** `asphalt_bituminous`, `cement_concrete`, or `unknown`, with confidence. Do not force uncertain classification.
+- **Aggregates:** instance count per image; size distribution in pixels; visible aggregate coverage ratio `[0,1]`; boundary/gap statistics in pixels; aggregate-loss indicator as an image inference/proxy. Individual aggregates are reported only when resolution supports separation.
+- **Physical aggregates per square metre:** nullable. Report only when ground scale and usable pavement area are established for that image; otherwise report count per image and pixel-space features only.
+- **Boundary/gap widths:** report pixels by default. Physical units (e.g. mm) require appropriate per-image scale calibration and enough resolved pixels for meaningful precision.
+- **Defects:** visible classes include cracks, potholes, raveling, and other visible deterioration. Preserve class, count/area extent, confidence, and mask/detection provenance. Counts do not imply length/km or area/m² without a surveyed denominator.
+- **Texture:** image-derived feature values must be named and versioned; identify them as image texture proxies. Do not label them IRI, physical roughness, or 3D topography.
+- **Unknowns:** every unavailable/unreliable measurement is null with an unavailable status/reason, not zero. A numeric zero is permitted only for a valid measurement process that observed zero.
+
+For each feature, normalization must be defined against versioned, labelled references stratified or otherwise validated for surface type and capture conditions (camera, distance, lighting, resolution, perspective). Candidate approaches are monotonic reference ranges/percentiles fitted on training data and frozen before validation/test evaluation; clamp normalized values to `[0,100]` only after the reference mapping is fixed. Avoid normalizing independently per submitted image or test cohort, which would destroy absolute comparability.
+
+The reference ranges, class-specific handling, feature extractors, annotation rubric, and configuration version are not yet agreed. A feature that cannot be extracted reliably or normalized comparably is null. Do not adjust or renormalize weights around missing features. The candidate full index is `unrated` if any required component `V/L/G/T/M` is unavailable, the surface type is unknown where the component depends on it, the image-quality gate fails, or usable area/resolution is inadequate. A future, explicitly versioned alternative may be proposed, but cannot silently treat absent evidence as no damage.
+
+No values for `V/L/G/T/M`, weights, normalizations, thresholds, or confidence are validated today. Task A owns index implementation and must version the weights/normalization; Task C owns extracting image observations and documenting model/output provenance; Task D coordinates held-out evaluation. The existing `damage_components` fields are the current generic scaffold, not a complete image-analysis response contract.
 
 ### Provisional labels
 
@@ -134,9 +153,50 @@ Do not renormalize weights across available components. If any one of A/D/S/R is
 
 Thresholds are configurable hackathon assumptions, not validated engineering thresholds. Label every display as provisional until validated.
 
+An implementation must be able to report **Low Confidence** when a tentative estimate is emitted with calibrated low confidence, or **Unrated** when input/evidence gates fail. Numeric score without adequate evidence is not allowed. Numeric confidence and any low/medium/high bands require calibration on held-out data; cutoffs remain unresolved.
+
 ## Confidence, evidence, and explanations
 
-Confidence (0-1) must describe confidence in the assessment, not be conflated with evidence coverage or quality. Evidence coverage (0-1) needs a documented denominator (e.g., surveyed length/area or required evidence fields) and sampling protocol. Both are nullable; do not invent precision. There is not yet an agreed confidence calibration, coverage denominator, minimum coverage, or age/freshness limit. Task A must expose these limitations and explain which components and sources informed any score.
+Confidence (0-1) must describe confidence in the assessment, not be conflated with score or coverage. It should account for image quality, usable region, effective resolution, surface-type uncertainty, component availability, model calibration, and disagreement/uncertainty where supportable. Evidence coverage (0-1) needs a documented denominator such as usable pavement area over image area and must not mean model confidence. Both are nullable; do not invent precision. There is not yet an agreed calibration, coverage denominator, quality/resolution threshold, or Low Confidence cutoff. The report must give score contributions, salient detected evidence, unavailable features, caveats, and a human-readable explanation. The frontend displays these and the annotated image without implying annotation is ground truth.
+
+## Dataset and evaluation contract
+
+No RoadIQ-labelled dataset, trained model, or evaluation result is currently present. Dataset creation and evaluation are planned, not completed. Do not state or imply metrics until the held-out evaluation has actually run and been recorded.
+
+### Minimum labelled example
+
+Each image needs a stable `image_id`, `road_segment_id` grouping key (or an explicit `unknown` group), image file/checksum, capture metadata where available (camera/device, timestamp, view/distance, lighting/weather if known), surface type (`asphalt_bituminous`, `cement_concrete`, or `unknown`) and annotator confidence, image-quality/usability label, usable pavement-region mask, annotation protocol/version, and split/group assignment. Annotations should include:
+
+- Aggregate instance masks/IDs and visible aggregate boundaries where resolvable; unresolved aggregate labels must be explicitly marked, not omitted as zero.
+- Pixel-space aggregate size measurements and visible coverage; ground scale/calibration metadata and physical measurements only for calibrated images.
+- Defect masks/boxes and class labels for cracks, potholes, raveling, and visible deterioration, plus severity/extent according to a written rubric.
+- Expert image-based surface-condition label/score and rationale, with independent annotator identity/review status. Field measurements (e.g. calibrated profile/roughness or condition survey) may be linked by segment/time but kept as separate targets with method/unit.
+- Image-quality labels and reasons for excluded/unratable images; data provenance/licensing/consent and annotation version.
+
+Keep train/validation/test assignments grouped by road segment and, where feasible, location/session/capture burst. Deduplicate exact files by checksum and detect near-duplicates (perceptual hash/embedding/manual review); all near-duplicates must remain in one split. Freeze test labels and references before tuning. Report dataset counts by split, segment, surface class, defect class, and excluded/unrated cases. A small dataset may support a baseline experiment only; it does not establish generalization.
+
+### Evaluation
+
+Report actual held-out metrics with sample counts, split/dataset version, confidence intervals or resampling method where feasible, and stratification by surface type and relevant image-quality strata:
+
+- Aggregate and defect detection: precision, recall, F1, and AP/mAP where the annotation/task supports it.
+- Instance/semantic segmentation and pavement ROI: IoU and Dice; report per-class results.
+- Aggregate count: MAE and bias; size distribution: distributional error with the chosen statistic documented; visible coverage/gap metrics: error against expert masks/measurements.
+- Surface-type classification: confusion matrix and per-class precision/recall/F1, including `unknown`.
+- RSQI versus expert image labels: MAE/RMSE for numeric labels, rank correlation, and weighted kappa for ordinal labels; document adjudication and inter-rater agreement.
+- Where field measurements exist: evaluate separately against those measurement protocols; image ratings are not a substitute or proof of physical roughness.
+- Confidence: calibration (e.g. reliability curve/ECE or Brier score where applicable) and performance versus coverage/selective risk.
+
+Name pretrained checkpoints, source/license, preprocessing, and whether inference is an untouched pretrained baseline, a frozen feature extractor, or trained/fine-tuned on RoadIQ data. Report all training data and split boundaries. Never describe a pretrained-only baseline as trained on RoadIQ.
+
+## Image-based limitations
+
+- A 2D image cannot establish true 3D roughness, subsurface structure/strength, weather resistance, or skid resistance.
+- Shadows, glare, water, dirt, paint, viewpoint, scale, compression, and camera differences can mimic/obscure aggregate gaps, cracks, or texture. Annotated pixels and inferred masks are estimates.
+- Aggregate appearance and visible coverage vary by material, construction, age, lighting, and image scale. Do not treat expected ordinary stone texture as deterioration.
+- Physical dimensions and counts per square metre require defensible calibration and a valid usable-area denominator.
+- Surface type and component-specific model performance may vary; unknown surface type or unsupported image conditions must reduce confidence or make the index unrated.
+- Mode-specific suitability remains separate from the RSQI. Surface condition alone does not establish walking or vehicle suitability.
 
 ## Mode-specific suitability
 
@@ -153,8 +213,12 @@ Walking must not be derived from pavement condition alone: access, comfort, foot
 
 ## Limitations and unresolved decisions
 
-- Calibration data, validation process, reference values, severity rubric, and formula/threshold approval.
-- Minimum evidence and freshness thresholds; confidence calibration and evidence-coverage denominator.
+- Owner confirmation that “metal chips” means stone aggregates.
+- Annotation protocol, dataset availability/licensing, image-quality/resolution gate, and surface-specific aggregate references.
+- Calibration data, validation process, feature normalization references, component definitions, RSQI formula/threshold approval.
+- Minimum image evidence and calibration requirements; confidence calibration, Low Confidence cutoff, and usable-area denominator.
+- Expert-label adjudication, inter-rater agreement, field-measurement availability, held-out dataset size, and acceptable performance criteria.
+- Pretrained baseline/checkpoint/license and whether/when RoadIQ-specific training is feasible.
 - Mode-specific formulas, required evidence, and suitable interpretation.
 - Stable ID generation, segment splitting/merging, directionality, and grade/crossfall sign convention.
 - Ranking cohorts, percentile method, tie handling, and sample-size disclosure.

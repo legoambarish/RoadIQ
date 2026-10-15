@@ -1,6 +1,9 @@
 # Changelog
 
 ## Unreleased
+- Aligned the product objective around image-based pavement analysis, with aggregate structure, visible defects, and texture proxies as core evidence.
+- Added a provisional image-feature RSQI proposal, measurement/calibration constraints, dataset annotation/split requirements, and held-out evaluation metrics; no metrics or model results are claimed.
+- Updated Task A-D ownership/acceptance criteria, architecture pipeline, proposed image-analysis API payload, README demo goal/limitations, and handoff. No inference, scoring, UI, image API, or evaluation feature was implemented.
 - Added a mandatory model-agnostic agent workflow covering repository inspection, task branches, ownership, contract coordination, verification, handoff, commits, and pull requests.
 - Recorded the four agreed task branch names, ownership boundaries, owner-assignment placeholders, and kickoff checklist.
 - Standardized the handoff template; no feature task implementation or runtime contract change was made.
