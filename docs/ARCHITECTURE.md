@@ -7,7 +7,7 @@ RoadIQ remains an initial prototype scaffold; it is not production-ready.
 - **Frontend:** React + TypeScript + Vite under `frontend/`, with a landing/status page, minimal health API client, and TypeScript road-segment contract. A dashboard and segment retrieval UI are not implemented.
 - **Backend:** FastAPI + Pydantic under `backend/`. The implemented HTTP API exposes `GET /api/v1/health` and `/`. `backend/app/schemas/road_segment.py` validates the shared road-segment shape. A deterministic demo fixture is isolated in `backend/app/fixtures/`.
 - **Computer vision:** `backend/app/services/vision.py` is a placeholder only. It does not perform inference, calibrate pixels to ground dimensions, or download model weights.
-- **Scoring:** no scoring engine is implemented. [SCORING_SPEC.md](./SCORING_SPEC.md) describes provisional rules and explicit evidence limits.
+- **Scoring:** `backend/app/services/scoring.py` implements a deterministic candidate RSQI scorer with configurable weights/labels, fixed surface/capture-specific normalization profiles, explicit evidence gates, component contributions, and unrated/null handling. It does not extract image features, supply RoadIQ-trained reference ranges, calibrate confidence, or calculate mode suitability. [SCORING_SPEC.md](./SCORING_SPEC.md) describes provisional rules and evidence limits.
 - **Persistence and mapping:** no segment database, segment retrieval API, or dashboard map exists. Mapping provider choice remains open.
 
 ## Product objective and planned image-analysis pipeline
@@ -53,7 +53,7 @@ The shared schema is a cross-task interface. Changes to it require compatibility
 4. Task D exposes validated analysis reports through planned routes and evaluates predictions on grouped held-out images; actual metrics and data splits are recorded.
 5. Task B renders the annotated image/report, score contributions, evidence, confidence, and unavailable fields without implying a score or mask is ground truth.
 
-No database, inference execution, scoring execution, segment API, or production dashboard is implied by this proposed flow.
+This proposed flow is not implemented end-to-end: there is no database, image inference, segment API, or production dashboard. The standalone candidate scorer described above exists, but no API route invokes it and its default configuration has no normalization references.
 
 ## Unresolved architecture decisions
 

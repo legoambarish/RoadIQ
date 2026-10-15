@@ -1,6 +1,8 @@
 # Changelog
 
 ## Unreleased
+- Added the Task A deterministic candidate RSQI scoring service with configurable weights and labels, fixed surface/capture-specific reference normalization, strict evidence gates, auditable component contributions, null confidence/coverage, and null mode-suitability outputs. No RoadIQ normalization references, inference, API route, or calibrated evaluation are claimed.
+- Added focused scoring tests for the formula, thresholds, normalization, evidence gates, units/provenance, deterministic output, mode outputs, and proposed API object shape.
 - Aligned the product objective around image-based pavement analysis, with aggregate structure, visible defects, and texture proxies as core evidence.
 - Added a provisional image-feature RSQI proposal, measurement/calibration constraints, dataset annotation/split requirements, and held-out evaluation metrics; no metrics or model results are claimed.
 - Updated Task A-D ownership/acceptance criteria, architecture pipeline, proposed image-analysis API payload, README demo goal/limitations, and handoff. No inference, scoring, UI, image API, or evaluation feature was implemented.

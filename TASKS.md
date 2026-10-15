@@ -10,7 +10,7 @@
 
 ## Core product objective
 
-RoadIQ is primarily an image-based road-surface quality assessment prototype. Its core image engine should analyze pavement region/quality, individual visible stone aggregates (provisionally interpreting “metal chips” as aggregates, pending owner confirmation), aggregate boundaries/gaps/coverage/loss, image texture, and visible deterioration. Map and travel-mode dashboard features are secondary. Support asphalt/bituminous and cement-concrete when evidence supports them; otherwise return unknown. Current software remains a scaffold: no image analysis, RSQI scorer, report UI, image API, or held-out model evaluation is implemented.
+RoadIQ is primarily an image-based road-surface quality assessment prototype. Its core image engine should analyze pavement region/quality, individual visible stone aggregates (provisionally interpreting “metal chips” as aggregates, pending owner confirmation), aggregate boundaries/gaps/coverage/loss, image texture, and visible deterioration. Map and travel-mode dashboard features are secondary. Support asphalt/bituminous and cement-concrete when evidence supports them; otherwise return unknown. A provisional RSQI scoring service is implemented on `task/a-scoring-engine` and is under review in PR #1. Image analysis, report UI, image API, and held-out model evaluation are not implemented.
 
 ## Contract baseline
 
@@ -33,7 +33,7 @@ RoadIQ is primarily an image-based road-surface quality assessment prototype. It
 
 | Task | Human owner | Assigned branch |
 | --- | --- | --- |
-| A — Scoring | TBD; assign before implementation | `task/a-scoring-engine` |
+| A — Scoring | Human owner/reviewer not assigned; implementation complete, PR #1 open | `task/a-scoring-engine` |
 | B — Frontend/reporting | TBD; assign before implementation | `task/b-map-dashboard` |
 | C — Aggregate/image analysis | TBD; assign before implementation | `task/c-computer-vision` |
 | D — Integration/evaluation | TBD; assign before implementation | `task/d-integration-release` |
@@ -56,13 +56,16 @@ RoadIQ is primarily an image-based road-surface quality assessment prototype. It
 - [x] Actual health endpoint is distinguished from planned segment retrieval endpoints.
 - [x] Task boundaries, file ownership, dependencies, and outcomes are specified without implementing all four tasks.
 
-### Task A — scoring (planned)
+### Task A — scoring (implemented; PR #1 open; calibration dependencies remain)
 
-- [ ] Implements configurable, versioned candidate image-feature index and exposes every component contribution; initial weights remain hypotheses pending evaluation.
-- [ ] Uses surface-type/capture-aware normalization, with frozen training references and no per-image/test-cohort normalization.
-- [ ] Returns `unrated` with null score when required image quality, usable ROI, material-specific features, or component evidence is absent; never fills missing values with zero or renormalizes weights silently.
-- [ ] Separates surface condition from vehicle/pedestrian suitability; produces transparent score reasons and calibrated confidence only.
-- [ ] Tests formula, normalization boundaries, configuration/version, missing evidence, unknown surface type, confidence/status, and label cutoffs.
+- [x] Implements configurable, versioned candidate image-feature index and exposes every component contribution; initial weights remain hypotheses pending evaluation.
+- [x] Selects fixed normalization profiles by surface type and capture profile; never normalizes per image/test cohort. RoadIQ training-derived ranges remain unavailable until a labelled dataset is prepared and reviewed.
+- [x] Returns `unrated` with null score when required image quality, usable ROI, material-specific references, resolution, or component evidence is absent; never fills missing values with zero or renormalizes weights silently.
+- [x] Separates surface condition from vehicle/pedestrian suitability; mode scores remain null because formulas/evidence rules are unresolved. Confidence and evidence coverage remain null until calibrated.
+- [x] Tests formula, normalization boundaries, configuration/version, missing evidence, unknown surface type, confidence/status, mode outputs, and label cutoffs.
+- [ ] Supply and validate frozen RoadIQ normalization ranges and confidence/coverage calibration against a labelled dataset; no such dataset currently exists.
+
+Task A implementation is on `task/a-scoring-engine` in `backend/app/services/scoring.py` with focused tests in `backend/tests/test_scoring.py`. PR #1 is open against `main`. It provides a scorer/API boundary only and does not implement Task C feature extraction or Task D API routes/evaluation.
 
 ### Task B — dashboard (planned)
 
@@ -93,12 +96,12 @@ RoadIQ is primarily an image-based road-surface quality assessment prototype. It
 
 ## Current status
 
-- Core requirements alignment: documentation only; image pipeline, RSQI implementation, report UI, dataset, evaluation, and image API remain planned.
-- Tasks A-D: planned; none of their end-user features is claimed as complete here.
+- Core requirements alignment: documentation completed. Task A's provisional RSQI implementation is on its branch and under PR review; image pipeline, report UI, dataset, evaluation, and image API remain planned.
+- Task A's scoring service implementation is complete and under PR review; Tasks B-D and end-to-end product features remain planned.
 
 ## Four-owner kickoff checklist
 
-- [ ] **Task A owner:** confirm human owner; read `AGENTS.md`, relevant docs, and `HANDOFF.md`; fetch latest remote; use `task/a-scoring-engine`; implement only scoring scope; test, update status/changelog/handoff, push, and open/update a PR.
+- [ ] **Task A human owner/reviewer:** assign the reviewer and review PR #1. Implementation, tests, documentation, branch push, and PR creation are complete.
 - [ ] **Task B owner:** confirm human owner; read `AGENTS.md`, relevant docs, and `HANDOFF.md`; fetch latest remote; use `task/b-map-dashboard`; implement only frontend/image report scope; test/build/lint, update status/changelog/handoff, push, and open/update a PR.
 - [ ] **Task C owner:** confirm human owner and confirm “metal chips” means stone aggregates; read `AGENTS.md`, relevant docs, and `HANDOFF.md`; fetch latest remote; use `task/c-computer-vision`; implement only image/aggregate-analysis scope; test, update status/changelog/handoff, push, and open/update a PR.
 - [ ] **Task D owner:** confirm human owner; read `AGENTS.md`, relevant docs, and `HANDOFF.md`; fetch latest remote; use `task/d-integration-release`; coordinate dependencies, dataset hygiene, held-out evaluation, and reviewed PR integration; run release checks, update status/changelog/handoff, and open/update a PR.
