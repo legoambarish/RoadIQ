@@ -3,7 +3,7 @@
 ## Task D integration/release preparation — 2026-10-15
 
 - **Date/time and owner:** 2026-10-15 22:31 Asia/Calcutta; a human Task D owner is not recorded in TASKS.md.
-- **Branch/base:** task/d-integration-release is based on fetched origin/main at 7995ff4, which merges Task A PR #1. The previous D pointer is preserved as local backup/task-d-integration-release-prebase-7995ff4.
+- **Branch/base/commit:** task/d-integration-release is based on fetched origin/main at 7995ff4, which merges Task A PR #1. Task D documentation preparation commit ef647675adf8b1e723c69c0d5559155c7b6aebba is pushed to origin/task/d-integration-release and is under review in [PR #3](https://github.com/Sine-Ads/RoadIQ/pull/3). The previous D pointer is preserved as local backup/task-d-integration-release-prebase-7995ff4.
 - **Live dependency state:** PR #1 is merged. PR #2 for Task B is open at 4718ac6; GitHub reported no submitted reviews or check runs at inspection. Task C is at origin/task/c-computer-vision commit 2afa289, five commits behind and ten ahead of main, with no PR. Its own handoff marks the implementation not ready for integration. No Task D route or runtime contract change has been made.
 - **Preparation completed:** updated TASKS.md to reflect live task status and add the Task D integration checklist; added docs/INTEGRATION_CHECKLIST.md with field names, units, status/provenance/null conventions, unresolved proposals, scenario matrix, commands, and environment needs; updated CHANGELOG.md. No shared runtime contract or A/B/C implementation was changed. README.md was not changed because no verified startup or demo instruction correction was identified.
 - **Verification run on this Task D checkout:**
@@ -17,8 +17,8 @@
   - git diff --cached --check passed for all four staged Task D documentation files.
 - **Demo available today:** the current main frontend can be served and its page returns HTTP 200, but the backend health endpoint could not be started in this environment. PR #2 contains a fixture-backed schematic dashboard and local-only image preview with an Unrated report shell; it has no live image/segment API. No complete frontend/backend demo sequence is currently verified.
 - **Known issues and release readiness:** no approved Task B integration, no Task C PR or agreed scorer mapping, no active India-only model, no image-analysis route, no labelled aggregate/metal dataset, no held-out evaluation, and no backend test/startup pass on this host. Task A’s default profiles remain empty, so its scorer is unrated without a complete fixed profile. The integration/release goal is not complete.
-- **Release commit:** none; this change is Task D preparation only. Record the Task D documentation commit and push/PR outcome after they occur.
-- **Exact next action:** review PR #2 with its owner; have the Task C owner align its branch to current main and agree output fields and Task A mapping with affected owners; then implement and test the Task D route only after that agreement. Keep the PR unmerged pending human task-owner approval.
+- **Release commit:** none; this is Task D documentation preparation only. The preparation commit is ef647675adf8b1e723c69c0d5559155c7b6aebba; it is pushed and PR #3 is open. No integration or release code has been committed.
+- **Exact next action:** review PR #3 and PR #2 with their owners; have the Task C owner align its branch to current main and agree output fields and Task A mapping with affected owners; then implement and test the Task D route only after that agreement. Keep all PRs unmerged pending their approved review process and human task-owner approval.
 
 ## Previous handoff: Task A scoring engine (preserved)
 

@@ -108,11 +108,11 @@ Task A implementation is on `task/a-scoring-engine` in `backend/app/services/sco
 
 - Task A’s provisional RSQI scorer was merged into `main` by PR #1 at `7995ff4`; its RoadIQ normalization and confidence calibration still lack labelled data.
 - Task B’s fixture-backed dashboard is in open PR #2. Task C’s partial observation service is on its remote branch without a PR. Neither is approved for integration; no image API, active India-only model, dataset, held-out evaluation, or end-to-end flow is available.
-- Task D preparation is underway on `task/d-integration-release`, based on `origin/main` at `7995ff4`; no route or runtime contract change has been made.
+- Task D documentation preparation commit `ef64767` is pushed on `task/d-integration-release` and open in PR #3 against `main`; it adds no route or runtime contract change.
 
 ## Four-owner kickoff checklist
 
 - [ ] **Task A owner/reviewer:** still not recorded; PR #1 is merged. Resolve the remaining labelled-data normalization and confidence-calibration dependency before claiming a validated score.
 - [ ] **Task B owner/reviewer:** not recorded; review open PR #2. Its fixture-backed dashboard and local image-preview shell are not live segment or image API integration.
 - [ ] **Task C owner:** not recorded; update the partial `task/c-computer-vision` branch against current `main`, resolve the India-only data/model and output-contract gaps, then open a PR. No C PR is currently open.
-- [ ] **Task D owner:** not recorded; the D branch now starts from fetched `origin/main`. Complete the checklist, keep proposed mappings uncommitted as shared-contract changes until reviewed, then integrate only approved dependency outputs and open/update a PR.
+- [ ] **Task D owner:** not recorded; docs-only preparation commit `ef64767` is in open PR #3. Review it, keep shared-contract mappings proposed until affected owners agree, then integrate only approved outputs and add tests.

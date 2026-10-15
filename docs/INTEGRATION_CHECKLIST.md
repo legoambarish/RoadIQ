@@ -7,7 +7,7 @@
 - **Task A:** PR #1 is merged into main at commit 7995ff4. The provisional scorer and its tests are present. Its default normalization profiles are empty, so it returns an unrated result unless a caller supplies a complete fixed profile and all required evidence. No RoadIQ-labelled calibration set exists.
 - **Task B:** PR #2, “Task B: Build map and dashboard,” is open against main at 4718ac6. The GitHub API showed no submitted reviews or check runs when inspected. Its dashboard uses static demo fixtures; the image panel only previews a local file and does not upload or analyze it. The B handoff reports that TypeScript build, Oxlint, and Vite build passed, but that is author-recorded evidence, not a check on this Task D checkout.
 - **Task C:** remote branch task/c-computer-vision is at 2afa289, five commits behind and ten ahead of current main. There is no C PR. Its observation service and tests are not an approved integration dependency. The service has no HTTP route, no usable-pavement segmentation or material classifier, and no configured India-only model. Its handoff says it is not ready for integration.
-- **Task D:** task/d-integration-release is based on fetched origin/main commit 7995ff4. The previous D pointer was preserved locally as backup/task-d-integration-release-prebase-7995ff4.
+- **Task D:** docs-only preparation commit ef64767 is pushed on task/d-integration-release and open in PR #3 against main. The branch is based on fetched origin/main commit 7995ff4; the previous D pointer was preserved locally as backup/task-d-integration-release-prebase-7995ff4.
 
 ## Field crosswalk
 
