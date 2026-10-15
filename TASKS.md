@@ -133,6 +133,7 @@ The local synthetic/local-image demo and optional experimental ROI-gated texture
 - Task C's local image-analysis demo, evaluation scaffold, and optional experimental India-road ROI gating are merged into `main` by PRs #4, #7, #8, #10, and #11. A 20-image ACAD synthetic-concrete sample has limited pixel-region metrics; there are no India-road aggregate labels or held-out RoadIQ road metrics. Physical measurements, material classification, aggregate/metal instance analysis, broad validated damage detection, and the image HTTP endpoint remain unavailable.
 - Task D's integration checklist is merged into `main` by PR #3. The current D branch adds Windows desktop packaging and runtime tests, but no segment or image-analysis API; PR #12 is open and unmerged, with no GitHub CI checks or review decision shown. Task B PR #13 is also open; its local report import does not provide live image-analysis integration. Live C-to-A scoring remains blocked on agreed mappings, calibrated references, and a ready model/data set.
 - Branch alignment (2026-10-16): with user approval, remote Task A and Task C branches were fast-forwarded to `origin/main` at `f83b4d7` after confirming both old tips were strict ancestors with no unique commits. No PR was merged or history rewritten.
+- Current Task D checkout verification (2026-10-16): backend pytest passed (93 passed, 2 skipped); frontend `npm run build` and `npm run lint` passed. The recorded Windows build and startup/restart smoke remain from the earlier packaging run.
 
 ## Four-owner kickoff checklist
 
