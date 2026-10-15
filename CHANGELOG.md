@@ -1,11 +1,12 @@
 # Changelog
 
 ## Unreleased
-- Added the Task A deterministic candidate RSQI scoring service with configurable weights and labels, fixed surface/capture-specific reference normalization, strict evidence gates, auditable component contributions, null confidence/coverage, and null mode-suitability outputs. No RoadIQ normalization references, inference, API route, or calibrated evaluation are claimed.
-- Added focused scoring tests for the formula, thresholds, normalization, evidence gates, units/provenance, deterministic output, mode outputs, and proposed API object shape.
+- Reworked the Task B dashboard presentation with a larger, earlier schematic map, higher-contrast road network styling, clearer type sizes, and a dark, data-inspection Engineer mode. Everyday and Engineer views now show different summary metrics and copy; map geometry remains fixture-only with no basemap.
+- Added the Task B fixture-backed map/dashboard: selectable schematic road segments, Road Quality and five travel-profile overlays, ranked/filterable lists, quality/profile charts, Everyday/Engineer detail views, and a local-only image preview with explicitly unavailable report outputs. No live basemap, segment API, upload, inference, or score generation is connected.
+- Added nine typed illustrative dashboard fixtures and documented the demo boundaries in the frontend, root README, and architecture guide. No dependency or shared API-contract changes were made.
 - Aligned the product objective around image-based pavement analysis, with aggregate structure, visible defects, and texture proxies as core evidence.
 - Added a provisional image-feature RSQI proposal, measurement/calibration constraints, dataset annotation/split requirements, and held-out evaluation metrics; no metrics or model results are claimed.
-- Updated Task A-D ownership/acceptance criteria, architecture pipeline, proposed image-analysis API payload, README demo goal/limitations, and handoff. No inference, scoring, UI, image API, or evaluation feature was implemented.
+- Updated Task A-D ownership/acceptance criteria, architecture pipeline, proposed image-analysis API payload, README goal/limitations, and handoff. No inference, scoring engine, image API, or evaluation feature was implemented.
 - Added a mandatory model-agnostic agent workflow covering repository inspection, task branches, ownership, contract coordination, verification, handoff, commits, and pull requests.
 - Recorded the four agreed task branch names, ownership boundaries, owner-assignment placeholders, and kickoff checklist.
 - Standardized the handoff template; no feature task implementation or runtime contract change was made.
