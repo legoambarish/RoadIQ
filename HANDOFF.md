@@ -8,7 +8,7 @@
 ## Current branch and latest commit hash
 
 - Branch: `main`
-- Latest commit at handoff preparation: `b9365a2` (previous session's handoff record)
+- Latest coordination commit: `513ce78` (`Establish agent coordination workflow`); this handoff metadata update follows that documentation commit.
 - Remote check: fetched `origin`; `origin/main` remains at `a6c2498`; current local `main` had two commits ahead before this task's changes.
 
 ## Goal and completed work
