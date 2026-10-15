@@ -22,9 +22,11 @@ The route is implemented without external-service dependencies.
 
 Image analysis is the primary product workflow. The endpoint below is a proposed integration contract for Task C (inference), Task A (RSQI), Task B (report display), and Task D (API/evaluation). It is **not present in the current FastAPI app**. Exact upload limits, supported formats, storage/retention, and calibration request shape remain unresolved.
 
-Task C now exposes the synchronous service `app.services.vision.analyze_road_image(image_bytes, *, source_name="unknown", calibration=None, detector=None, confidence_threshold=0.25)`. It returns a JSON-ready observation payload and performs no scoring. The current service payload includes image metadata, `reason` fields for unavailable measurements, bounding boxes under each supported defect's `detections` list, and a separate `metal_fragments` observation. These are Task C service outputs pending Task D's review before the planned HTTP response is frozen; they do not mean the HTTP endpoint exists. ROI, surface type, aggregate, metal-fragment, raveling, and calibrated physical outputs currently remain unavailable/null.
+Task C exposes `app.services.vision.analyze_road_image(image_bytes, *, source_name="unknown", calibration=None, detector=None, segmentation_model=None, confidence_threshold=0.25)`. It returns a JSON-ready observation payload and performs no scoring. A configured, trained India-only semantic segmentation checkpoint can populate a road ROI mask and pothole pixel mask; both use optional `mask_rle` fields encoded as `row_major_binary_rle_v1` (row-major, alternating background/foreground run lengths, `size_px: [height, width]`). The service also returns image metadata, unavailable-value reasons, detector boxes, and a separate `metal_fragments` observation. These Task C outputs require Task D review before the proposed HTTP response is frozen; no endpoint exists yet. Material type, aggregate analysis, metal fragments, raveling, calibrated physical measures, and damage detector outputs remain unavailable without suitable model/data/checkpoint.
 
 ### `POST /api/v1/image-analyses`
+
+The optional `pavement_region.mask_rle` and `defects[].mask_rle` fields use `row_major_binary_rle_v1`. `size_px` is `[height, width]`; `counts` begins with the background run (which may be zero), then alternates foreground/background. The counts must sum to `height * width`. A semantic pothole mask does not imply an instance count: keep `count.value` null unless instances are separately detected.
 
 Proposed request: `multipart/form-data` with required `image` file and optional `calibration` JSON part. Calibration must identify its method and scale/unit and associate it with the submitted image; unverified or absent calibration does not enable physical measurements. Do not accept remote image URLs unless a separately reviewed SSRF-safe design is adopted.
 
@@ -45,7 +47,8 @@ Proposed response (HTTP 200 after synchronous analysis; asynchronous/job behavio
       "value": 0.78, "unit": "ratio", "status": "estimated",
       "source": "image_inference"
     },
-    "annotation": { "value": null, "unit": "uri", "status": "unavailable", "source": null }
+    "annotation": { "value": null, "unit": "uri", "status": "unavailable", "source": null },
+    "mask_rle": null
   },
   "surface_type": {
     "value": "unknown",
@@ -90,7 +93,9 @@ Proposed response (HTTP 200 after synchronous analysis; asynchronous/job behavio
         "value": null, "unit": "ratio", "status": "unavailable", "source": null
       },
       "confidence": null,
-      "annotation": null
+      "annotation": null,
+      "detections": [],
+      "mask_rle": null
     }
   ],
   "texture_features": {

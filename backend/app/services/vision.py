@@ -20,6 +20,10 @@ from typing import Any, Protocol
 from PIL import Image, ImageFilter, ImageOps, ImageStat, UnidentifiedImageError
 
 from app.schemas.image_analysis import ImageAnalysisResponse
+from app.services.india_road_segmentation import (
+    IndiaRoadSegmentationModel,
+    encode_binary_mask_rle,
+)
 
 
 MAX_IMAGE_BYTES = 10 * 1024 * 1024
@@ -73,6 +77,8 @@ class ImageCalibration:
 
 _detector: RoadDamageDetector | None = None
 _detector_lock = threading.Lock()
+_segmentation_model: IndiaRoadSegmentationModel | None = None
+_segmentation_lock = threading.Lock()
 
 
 def _load_detector() -> RoadDamageDetector | None:
@@ -102,11 +108,27 @@ def _load_detector() -> RoadDamageDetector | None:
             raise RuntimeError(f"{type(exc).__name__}: {exc}") from exc
 
 
+def _load_segmentation_model() -> IndiaRoadSegmentationModel | None:
+    """Load the optional India-only road/pothole baseline from a local checkpoint."""
+    global _segmentation_model
+    model_path = os.getenv("ROADIQ_SEGMENTATION_MODEL_PATH")
+    if not model_path:
+        return None
+    with _segmentation_lock:
+        if _segmentation_model is not None:
+            return _segmentation_model
+        device = os.getenv("ROADIQ_SEGMENTATION_DEVICE")
+        _segmentation_model = IndiaRoadSegmentationModel(model_path, device=device)
+        return _segmentation_model
+
+
 def reset_detector_for_tests() -> None:
-    """Clear the lazy singleton so tests can verify loading failures independently."""
-    global _detector
+    """Clear lazy model singletons so tests can verify load failures independently."""
+    global _detector, _segmentation_model
     with _detector_lock:
         _detector = None
+    with _segmentation_lock:
+        _segmentation_model = None
 
 
 def _measurement(
@@ -294,7 +316,12 @@ def _detection_objects(rows: list[tuple[str, float, list[float]]], width: int, h
     return output
 
 
-def _defect_report(detections: dict[str, list[dict[str, Any]]], detector_available: bool, reason: str | None) -> list[dict[str, Any]]:
+def _defect_report(
+    detections: dict[str, list[dict[str, Any]]],
+    detector_available: bool,
+    reason: str | None,
+    segmentation_output: dict[str, Any] | None = None,
+) -> list[dict[str, Any]]:
     result: list[dict[str, Any]] = []
     for class_name in ("crack", "pothole", "raveling", "other_visible_deterioration"):
         supported = class_name in {"crack", "pothole"}
@@ -310,7 +337,26 @@ def _defect_report(detections: dict[str, list[dict[str, Any]]], detector_availab
             "confidence": round(confidence, 6) if confidence is not None else None,
             "annotation": _measurement(None, "uri", reason="annotated image storage is not part of the Task C service"),
             "detections": class_detections,
+            "mask_rle": None,
         })
+    if segmentation_output is not None:
+        pothole = next(item for item in result if item["class"] == "pothole")
+        pothole["visible_area_ratio"] = _measurement(
+            segmentation_output["pothole_area_ratio"],
+            "ratio",
+            source="image_inference",
+            status="estimated",
+            reason="semantic predicted pixel fraction of the full image; not calibrated to physical pavement area",
+        )
+        pothole["mask_rle"] = segmentation_output["pothole_mask_rle"]
+        if not detector_available:
+            pothole["count"] = _measurement(
+                None,
+                "defects_per_image",
+                reason="semantic masks do not separate pothole instances; count is unavailable",
+            )
+            raw_confidence = segmentation_output.get("pothole_confidence_raw")
+            pothole["confidence"] = raw_confidence
     return result
 
 
@@ -322,6 +368,7 @@ def _unavailable_metal_fragments() -> dict[str, Any]:
         "confidence": None,
         "annotation": _measurement(None, "uri", reason="annotated-image storage is not part of the Task C service"),
         "detections": [],
+        "mask_rle": None,
     }
 
 
@@ -359,6 +406,7 @@ def analyze_road_image(
     source_name: str = "unknown",
     calibration: ImageCalibration | dict[str, Any] | None = None,
     detector: RoadDamageDetector | None = None,
+    segmentation_model: Any | None = None,
     confidence_threshold: float = DEFAULT_CONFIDENCE_THRESHOLD,
 ) -> dict[str, Any]:
     """Validate and analyze a road image; return the Task C observation payload.
@@ -387,6 +435,54 @@ def analyze_road_image(
                 "retryable": False,
             })
     detector_available = actual_detector is not None and quality["usable"]
+    actual_segmentation_model = segmentation_model
+    segmentation_error: str | None = None
+    if actual_segmentation_model is None:
+        try:
+            actual_segmentation_model = _load_segmentation_model()
+        except Exception as exc:
+            segmentation_error = f"{type(exc).__name__}: {exc}"
+            processing_errors.append({
+                "code": "segmentation_model_load_failed",
+                "message": "The configured India road segmentation model could not be loaded.",
+                "details": type(exc).__name__,
+                "retryable": False,
+            })
+    segmentation_output: dict[str, Any] | None = None
+    if actual_segmentation_model is not None and quality["usable"]:
+        try:
+            prediction = actual_segmentation_model.predict(image)
+            label_mask = prediction.get("mask") if isinstance(prediction, dict) else None
+            if not isinstance(label_mask, Image.Image) or label_mask.size != image.size:
+                raise ValueError("segmentation output must contain an image-sized PIL label mask")
+            label_mask = label_mask.convert("L")
+            road_mask = label_mask.point(lambda value: 255 if value == 0 else 0)
+            pothole_mask = label_mask.point(lambda value: 255 if value == 3 else 0)
+            road_pixels = road_mask.histogram()[255]
+            pothole_pixels = pothole_mask.histogram()[255]
+            class_confidence = prediction.get("class_confidence_raw_mean") or {}
+            raw_confidence = class_confidence.get("pothole") if isinstance(class_confidence, dict) else None
+            if raw_confidence is not None:
+                raw_confidence = float(raw_confidence)
+                if not math.isfinite(raw_confidence) or not 0 <= raw_confidence <= 1:
+                    raw_confidence = None
+            segmentation_output = {
+                "road_area_ratio": round(road_pixels / (width * height), 8),
+                "road_mask_rle": encode_binary_mask_rle(road_mask, "road"),
+                "pothole_area_ratio": round(pothole_pixels / (width * height), 8),
+                "pothole_mask_rle": encode_binary_mask_rle(pothole_mask, "pothole"),
+                "pothole_confidence_raw": raw_confidence,
+                "confidence_raw_mean": prediction.get("confidence_raw_mean"),
+                "confidence_calibrated": prediction.get("confidence_calibrated", False),
+            }
+        except Exception as exc:
+            segmentation_error = f"{type(exc).__name__}: {exc}"
+            processing_errors.append({
+                "code": "segmentation_inference_failed",
+                "message": "India road segmentation failed; ROI and mask-derived values are unavailable.",
+                "details": type(exc).__name__,
+                "retryable": False,
+            })
     detections = {"crack": [], "pothole": []}
     if actual_detector is not None and quality["usable"]:
         try:
@@ -406,7 +502,20 @@ def analyze_road_image(
     unavailable_reason = "image quality gate failed" if not quality["usable"] else (
         detector_error or "no road-damage checkpoint is configured" if actual_detector is None else detector_error
     )
-    defects = _defect_report(detections, detector_available, unavailable_reason)
+    defects = _defect_report(detections, detector_available, unavailable_reason, segmentation_output)
+    segmentation_metadata = {
+        "name": getattr(actual_segmentation_model, "model_name", MODEL_NAME) if actual_segmentation_model else None,
+        "version": getattr(actual_segmentation_model, "model_version", "not_configured") if actual_segmentation_model else "not_configured",
+        "training_status": getattr(actual_segmentation_model, "training_status", "not_reported") if actual_segmentation_model else "not_reported",
+        "provider": getattr(actual_segmentation_model, "provider", "pytorch") if actual_segmentation_model else None,
+        "checkpoint": str(getattr(actual_segmentation_model, "path", "")) or None if actual_segmentation_model else None,
+        "runtime": {"device": str(getattr(actual_segmentation_model, "device", "unknown"))} if actual_segmentation_model else None,
+        "input_size_px": getattr(actual_segmentation_model, "input_size_px", None) if actual_segmentation_model else None,
+        "dataset_id": "eyantraiit/semantic-segmentation-datasets-of-indian-roads" if actual_segmentation_model else None,
+        "dataset_license": "GPL-2.0 (reported by public Kaggle metadata)" if actual_segmentation_model else None,
+        "confidence_calibrated": False if actual_segmentation_model else None,
+        "load_status": "loaded" if actual_segmentation_model else ("failed" if segmentation_error else "not_configured"),
+    }
     model = {
         "name": getattr(actual_detector, "model_name", MODEL_NAME) if actual_detector else MODEL_NAME,
         "version": getattr(actual_detector, "model_version", MODEL_VERSION) if actual_detector else "not_configured",
@@ -417,6 +526,7 @@ def analyze_road_image(
         "input_size_px": getattr(actual_detector, "input_size_px", None) if actual_detector is not None else None,
         "confidence_threshold": confidence_threshold,
         "load_status": "loaded" if actual_detector else ("failed" if detector_error else "not_configured"),
+        "segmentation": segmentation_metadata,
     }
     model_observed = actual_detector is not None and detector_available
     surface_reason = "no validated asphalt/concrete classifier is configured"
@@ -433,8 +543,19 @@ def analyze_road_image(
         },
         "image_quality": quality,
         "pavement_region": {
-            "usable_area_ratio": _measurement(None, "ratio", reason="no validated pavement-region segmentation model is configured"),
-            "annotation": _measurement(None, "uri", reason="pavement ROI mask is unavailable"),
+            "usable_area_ratio": (
+                _measurement(
+                    segmentation_output["road_area_ratio"],
+                    "ratio",
+                    source="image_inference",
+                    status="estimated",
+                    reason="predicted road-pixel fraction; semantic road class may include adjacent paved areas",
+                )
+                if segmentation_output is not None
+                else _measurement(None, "ratio", reason="no validated pavement-region segmentation model is configured")
+            ),
+            "annotation": _measurement(None, "uri", reason="mask storage is not part of the Task C service; use inline mask_rle"),
+            "mask_rle": segmentation_output["road_mask_rle"] if segmentation_output is not None else None,
         },
         "surface_type": {
             "value": "unknown",
@@ -455,6 +576,7 @@ def analyze_road_image(
             {"field_path": "image_quality", "source": "image_inference"},
             {"field_path": "texture_features", "source": "image_inference"},
             *([{"field_path": "defects", "source": "image_inference"}] if model_observed else []),
+            *([{"field_path": "pavement_region", "source": "image_inference"}] if segmentation_output is not None else []),
         ],
     }
     # Defect-only inference cannot yield the complete RoadIQ evidence required for a rating.

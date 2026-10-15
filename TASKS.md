@@ -94,7 +94,7 @@ RoadIQ is primarily an image-based road-surface quality assessment prototype. It
 ## Current status
 
 - Core requirements alignment: image-analysis objectives and ownership are documented. Task C's partial service is implemented locally; RSQI, report UI, project-labeled dataset/evaluation, and image API remain unimplemented.
-- Tasks A, B, and D remain planned. Task C is in progress: image validation/quality heuristics, a named texture proxy, structured observations, and a mockable detector wrapper exist. The previously configured multinational checkpoint is blocked by the India-only data policy, so production damage inference is unavailable. India-specific candidate datasets are documented but not downloaded, license/data audited, or evaluated. ROI, surface classification, stone/metal segmentation, raveling, and physical measures remain unavailable; see `docs/VISION_PIPELINE.md`.
+- Tasks A, B, and D remain planned. Task C is in progress: image validation/quality heuristics, a named texture proxy, structured observations, mockable detection, and an optional binary-RLE mask contract exist. One free India-only road/pothole semantic dataset (3,227 images) has been downloaded and audited; an experimental U-Net trainer and checkpoint loader are implemented. Only CPU smoke plumbing was verified; no trained checkpoint or held-out quality result exists, and this runner currently cannot access CUDA. The dataset has no stone-aggregate-instance or metal-fragment labels. Pavement ROI/pothole inference is inactive until a checkpoint is trained/configured; material classification, aggregates, metal, broader damage, raveling, and physical measures remain unavailable; see `docs/VISION_PIPELINE.md`.
 
 ## Four-owner kickoff checklist
 

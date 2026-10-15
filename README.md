@@ -5,7 +5,7 @@ RoadIQ is a hackathon prototype whose primary objective is image-based road-surf
 ## Current status
 - Frontend scaffold: React + TypeScript + Vite
 - Backend scaffold: FastAPI + Pydantic
-- Computer vision: Task C validates images and extracts a named pixel-texture proxy; production damage inference is disabled until a reviewed India-only checkpoint is configured, and aggregate/material/ROI analysis and the HTTP image route remain unavailable
+- Computer vision: Task C validates images and extracts a named pixel-texture proxy; an experimental India-only road/pothole segmentation trainer and optional RLE masks are implemented, but no trained checkpoint is active. Aggregate/material analysis, damage detector, and HTTP image route remain unavailable
 - Scoring: provisional image-feature RSQI proposal only; no scoring engine exists
 - Dataset/evaluation: no labelled RoadIQ dataset or held-out evaluation metrics are available
 - Mapping: Leaflet-based boundary ready for future provider swap
@@ -95,4 +95,4 @@ This sequence is a product goal, not implemented functionality. A 2D image does 
 
 ## Notes
 - This repository remains a prototype scaffold and is not production-ready. The Task C vision service is partial and has no RoadIQ held-out evaluation.
-- Image-quality checks and a named texture proxy are implemented in the Task C service. The former crack/pothole checkpoint is blocked because it used multinational road data; no India-only inference checkpoint is active. Pavement ROI, surface classification, aggregate/metal-fragment segmentation, broader defect classes, RSQI calculation, annotated report UI, image API, and held-out RoadIQ evaluation remain unimplemented.
+- Image-quality checks and a named texture proxy are implemented in the Task C service. The former crack/pothole checkpoint is blocked because it used multinational road data. A single free India-only road segmentation dataset has been downloaded and audited; a compact experimental trainer is in place, but no usable checkpoint has been trained. Semantic ROI/pothole inference remains inactive, and surface classification, aggregate/metal-fragment segmentation, broader defect classes, RSQI calculation, annotated report UI, image API, and held-out RoadIQ evaluation remain unimplemented.

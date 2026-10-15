@@ -19,6 +19,22 @@ MeasurementStatus = Literal["observed", "estimated", "unavailable"]
 MeasurementSource = Literal["image_inference", "user_input"]
 
 
+class BinaryRLEMask(ImageContractModel):
+    encoding: Literal["row_major_binary_rle_v1"]
+    size_px: tuple[int, int] = Field(min_length=2, max_length=2)
+    foreground_label: str = Field(min_length=1)
+    counts: list[int] = Field(min_length=1)
+
+    @model_validator(mode="after")
+    def validate_runs(self) -> BinaryRLEMask:
+        height, width = self.size_px
+        if height <= 0 or width <= 0 or any(count < 0 for count in self.counts):
+            raise ValueError("mask dimensions and RLE counts must be non-negative, with positive dimensions")
+        if sum(self.counts) != height * width:
+            raise ValueError("binary RLE run lengths must cover exactly height_px * width_px pixels")
+        return self
+
+
 class ImageMeasurement(ImageContractModel):
     value: Any | None = None
     unit: str
@@ -70,6 +86,7 @@ class DefectObservation(ImageContractModel):
     confidence: float | None = Field(default=None, ge=0, le=1)
     annotation: ImageMeasurement
     detections: list[Detection] = Field(default_factory=list)
+    mask_rle: BinaryRLEMask | None = None
 
 
 class ImageAnalysisResponse(ImageContractModel):
