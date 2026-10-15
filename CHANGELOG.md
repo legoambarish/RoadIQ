@@ -30,6 +30,7 @@
 - Added desktop runtime tests and build instructions. Backend tests, frontend build/lint, Windows packaging, browser startup, health, and graceful second-launch restart passed on the development host.
 - The desktop package still exposes only health at runtime. The map and scores are fixtures; there is no live image/segment API, C-to-A scoring, active model, or RoadIQ-held-out evaluation.
 - Current integration status: Task B PR #13 at 58ac332 (ten commits ahead of main) includes local Task C CLI report import, separately selected annotation, and a map-overlay selection fix. Its handoff reports frontend checks and browser verification of overlay selection; the report-import interaction remains unverified in a browser. The branch adds no browser-triggered analysis, image API, or C-to-A scoring.
+- With explicit user approval, fast-forwarded remote `task/a-scoring-engine` (`18326f4`) and `task/c-computer-vision` (`ba2d98a`) to `origin/main` (`f83b4d7`) using a normal push after confirming neither had unique commits. PR #12 and PR #13 remain open with no submitted reviews or CI check runs.
 
 ## Unreleased
 - Added a sticky, responsive dashboard control dock with all five full travel-profile names and the Everyday/Engineer switch visible while scrolling; refined spacing and a comfortable sage/forest palette while preserving a distinct Engineer theme.
