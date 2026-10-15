@@ -1,6 +1,6 @@
 # RoadIQ
 
-RoadIQ is a hackathon prototype whose primary objective is image-based road-surface quality assessment. The planned image analysis focuses on visible pavement structure—individual stone aggregates, aggregate boundaries/gaps and coverage, surface texture, and deterioration. Literal metal fragments are a separate target from stone aggregates. Mapping and transport-mode dashboards are secondary.
+RoadIQ is a hackathon prototype whose primary objective is image-based road-surface quality assessment. Image analysis focuses on visible pavement structure—individual stone aggregates, their boundaries/gaps and coverage, surface texture, and deterioration. Literal metal fragments are a separate analysis target from stone aggregates. Mapping and transport-mode dashboards are secondary.
 
 ## Current status
 - Frontend: React + TypeScript + Vite dashboard with an interactive schematic map, five illustrative travel-profile overlays, filters, rankings, charts, distinct Everyday/Engineer assessment views, and a local-only image preview shell
@@ -8,8 +8,8 @@ RoadIQ is a hackathon prototype whose primary objective is image-based road-surf
 - Computer vision: Task C’s India-only branch has dataset-manifest validation, an untrained texture-region baseline, and evaluation scaffolding; it is not merged into `main`, has no active trained checkpoint or HTTP endpoint, and ROI/material/aggregate/metal analysis remains unavailable. The multi-country RDD2022 detector is disabled under the India-only dataset policy, not because it is technically incompatible with Indian roads.
 - Scoring: deterministic provisional RSQI scorer exists in `backend/app/services/scoring.py`; default normalization references are intentionally empty, so results remain `unrated` until fixed surface-type/capture-specific references and adequate component evidence are supplied. Weights and label cutoffs are unvalidated hypotheses.
 - Dataset/evaluation: no labelled RoadIQ dataset or held-out evaluation metrics are available
-- Mapping: dashboard geometry and values are typed illustrative fixtures; no live basemap or segment retrieval API is connected
-- Testing: backend pytest checks and frontend build/type validation
+- Mapping: Leaflet-based boundary ready for future provider swap
+- Testing: backend pytest checks include image-validation and inference-wrapper cases; frontend build/type validation remains available
 
 ## Repository structure
 - `frontend/` — Vite React + TypeScript application
@@ -79,7 +79,7 @@ The initial backend exposes a versioned health endpoint:
 
 The endpoint returns a simple status payload and intentionally avoids external dependencies, model downloads, or network calls.
 
-Road-segment retrieval and image-analysis routes are planned but are not implemented. The backend validates the existing segment contract; it does not accept images or perform inference. Scoring is available only through the provisional candidate service described in [`docs/SCORING_SPEC.md`](docs/SCORING_SPEC.md). The proposed image-analysis response shape and measurement rules are documented in [`docs/API_CONTRACT.md`](docs/API_CONTRACT.md); there is no image API or held-out evaluation.
+Road-segment retrieval and image-analysis routes are planned but are not implemented. Task C exposes an image-analysis service for direct backend integration; see [`docs/VISION_PIPELINE.md`](docs/VISION_PIPELINE.md) for its exact call, model setup, and limitations. It does not calculate scores. The proposed HTTP response shape and measurement rules are documented in [`docs/API_CONTRACT.md`](docs/API_CONTRACT.md); the scoring and dataset/evaluation proposal is in [`docs/SCORING_SPEC.md`](docs/SCORING_SPEC.md).
 
 ## Core image-analysis workflow (planned, not yet available)
 
@@ -94,5 +94,5 @@ The intended first image-analysis demo is:
 This sequence is a product goal, not implemented functionality. The dashboard currently previews a selected local image in the browser but does not upload it or analyze it; report values and annotated overlays remain unavailable. Map segments, quality values, and mode profiles are illustrative fixtures only. A 2D image does not measure true 3D roughness, subsurface strength, weather resistance, or skid resistance. Counts per square metre and physical widths require calibration. Missing or unreliable evidence is unavailable, not zero. There are no labelled-data evaluation results yet; do not claim model quality until held-out metrics are reported. See [`TASKS.md`](TASKS.md) for task ownership and boundaries.
 
 ## Notes
-- This repository is intentionally scoped to an initial scaffold and requirements documentation; it is not production-ready.
-- Image-quality validation, aggregate segmentation, defect/texture inference, RSQI calculation, annotated report integration, image API, and held-out evaluation remain planned work. The current fixture dashboard is not connected to a live map or scoring service.
+- This repository remains a prototype scaffold and is not production-ready. The Task C vision service is partial and has no RoadIQ held-out evaluation.
+- Image-quality checks, a named texture proxy, an untrained high-frequency texture-region heuristic, and a documented dataset-manifest validator are implemented in the Task C service. The texture heuristic does not segment/count individual particles and reports confidence/physical values as unknown. The former crack/pothole checkpoint is blocked because it used multinational road data. A single free India-only road segmentation dataset has been downloaded and audited; a compact experimental trainer is in place, but no usable checkpoint has been trained. Semantic ROI/pothole inference remains inactive, and surface classification, aggregate/metal-fragment instance segmentation, broader validated defect classes, calibrated RSQI output, annotated report UI, image API, and held-out RoadIQ evaluation remain unavailable.
