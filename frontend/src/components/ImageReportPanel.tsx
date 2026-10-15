@@ -98,10 +98,16 @@ export function ImageReportPanel() {
 
   const image = report?.image
   const quality = report?.image_quality
-  const surfaceRegion = nested(report?.aggregate_analysis, 'surface_region')
+  const aggregateAnalysis = report?.aggregate_analysis
+  const surfaceRegion = nested(aggregateAnalysis, 'surface_region')
   const reportedTextureFeatures = nested(report?.texture_features, 'features')
   const textureList = Array.isArray(reportedTextureFeatures) ? reportedTextureFeatures : []
   const sourceName = displayValue(image?.source_name)
+  const roiApplied = nested(surfaceRegion, 'road_roi_applied')
+  const roiStatus = roiApplied === true
+    ? 'Applied · experimental, uncalibrated'
+    : roiApplied === false ? 'Not applied' : 'Not reported'
+  const runtimeMs = nested(aggregateAnalysis, 'inference_time_ms')
 
   return (
     <section className="image-report-section" id="image-report" aria-labelledby="image-report-heading">
@@ -173,6 +179,11 @@ export function ImageReportPanel() {
             <div><span>Quality issues</span><strong>{report && Array.isArray(quality?.issues) ? (quality.issues.length ? quality.issues.join(', ') : 'None reported') : 'Unavailable'}</strong></div>
             <div><span>Texture candidate area</span><strong>{report ? `${displayValue(nested(surfaceRegion, 'candidate_area_ratio'))} ratio` : 'Unavailable'}</strong></div>
             <div><span>Candidate pixels</span><strong>{report ? displayValue(nested(surfaceRegion, 'candidate_area_px')) : 'Unavailable'}</strong></div>
+            <div><span>Candidate method</span><strong>{report ? displayValue(nested(aggregateAnalysis, 'method')) : 'Unavailable'}</strong></div>
+            <div><span>Analysis path</span><strong>{report ? displayValue(nested(aggregateAnalysis, 'analysis_type')) : 'Unavailable'}</strong></div>
+            <div><span>Road region gate</span><strong>{report ? roiStatus : 'Unavailable'}</strong></div>
+            <div><span>Candidate confidence</span><strong>{report ? displayValue(nested(surfaceRegion, 'confidence_status')) : 'Unavailable'}</strong></div>
+            <div><span>Analysis runtime</span><strong>{report ? `${displayValue(runtimeMs)} ms` : 'Unavailable'}</strong></div>
             <div><span>Texture features</span><strong>{report ? `${textureList.length} reported` : 'Unavailable'}</strong></div>
             <div><span>Aggregate instances</span><strong>{report ? displayValue(nested(nested(report.aggregate_analysis, 'aggregate_count'), 'value')) : 'Unavailable'}</strong></div>
             <div><span>Surface type</span><strong>{report ? displayValue(nested(report.surface_type, 'value')) : 'Unavailable'}</strong></div>

@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-16 — Task B alignment with latest Task C report output
+
+- Audited the latest merged Task C, Task A, and Task D state. B can continue importing saved C reports; there is still no browser image endpoint and A's default scorer references remain empty.
+- Added report-backed candidate method, analysis path, optional road-ROI-gate status, confidence calibration state, and inference runtime to the Task B report view.
+- Corrected frontend/root README and architecture text to distinguish local report import from browser-triggered image upload/inference, and to describe the optional experimental ROI gate accurately.
+- Frontend TypeScript/Vite build, Oxlint, and diff checks are recorded in `HANDOFF.md`.
+
 ## 2026-10-16 — Task B Surface Quality overlay selection
 
 - Made travel-profile and Surface Quality overlay selection mutually exclusive in both pressed state and selected styling. The previous travel profile no longer remains highlighted when the map is displaying Surface Quality.

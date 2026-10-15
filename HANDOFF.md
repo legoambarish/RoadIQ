@@ -1,5 +1,16 @@
 # RoadIQ handoff
 
+## Task B alignment with latest Task A/C/D updates — 2026-10-16
+
+- **Branch/repository review:** on `task/b-map-dashboard`. Ran `git fetch --all --prune`; working tree was clean at `58ac332eb40ed050eb8bf37b0dea6f6f2e0f2394` before edits. `origin/main`, `origin/task/a-scoring-engine`, and `origin/task/c-computer-vision` point to `f83b4d7` after Task C PR #11. `origin/task/d-integration-release` is `1e732a9`; its latest commit is a docs/status update, and its branch still has the earlier Windows package implementation but no image-analysis route.
+- **Task A/C findings:** A's evidence-gated scorer is present, but normalization profiles are empty by default, keeping results unrated. C's current local report includes the untrained texture method, `analysis_type`, candidate-region fields, `road_roi_applied`, confidence calibration status, and measured heuristic runtime. ROI gating is optional and experimental when a checkpoint is explicitly configured; the default remains ungated. The report contract has no RSQI field.
+- **Task B changes:** the report UI now renders the imported candidate method/path, ROI gate state (including experimental/uncalibrated status), candidate confidence status, and inference runtime. Updated root/frontend README and `docs/ARCHITECTURE.md` to describe the local report import and optional ROI behavior accurately. No backend code or shared API contract changed.
+- **Files changed:** `frontend/src/components/ImageReportPanel.tsx`, `frontend/README.md`, `README.md`, `docs/ARCHITECTURE.md`, `TASKS.md`, `CHANGELOG.md`, and `HANDOFF.md`.
+- **Checks actually run:** from `frontend/`, `node_modules/.bin/tsc.CMD -b` passed; `node_modules/.bin/vite.CMD build` passed (24 modules transformed); `node_modules/.bin/oxlint.CMD src` passed. Browser reload on `http://127.0.0.1:4173/#image-report` confirmed the updated field labels render and Surface quality is the active map overlay. No report was imported in this pass, so displayed ROI values were not end-to-end verified with an imported C report. From the repository root, `git diff --check` passed. No backend tests were run because no backend code changed.
+- **Known issues:** browser-triggered analysis and the HTTP image endpoint remain unimplemented. ROI gating requires a separately configured checkpoint and remains uncalibrated. No active default scorer references, aggregate-instance labels, or validated RSQI are available. No saved CLI report was imported in the browser during this audit, so report-backed ROI display is source/build verified but not end-to-end browser verified.
+- **Single next task:** Task D should agree the Task C observation mapping with Task A and implement the reviewed image-analysis endpoint before Task B adds live request integration.
+- **Commit/push:** implementation and documentation are committed as `256a3cebbc23958bbf1402f79fc94f79996cdcf2` (`Show Task C ROI provenance in report panel`); branch publication and final status are verified after push.
+
 ## Task B Surface Quality overlay selection — 2026-10-16
 
 - **Branch:** `task/b-map-dashboard`; started from clean branch tip `215c3f4cd85253408d324bd2b839b38a2b296b5a` after `git fetch --all --prune`.

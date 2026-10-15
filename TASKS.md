@@ -1,5 +1,9 @@
 # RoadIQ task tracker
 
+## Task B alignment with latest Task A/C/D updates — 2026-10-16
+
+Reviewed the merged Task C report fields, current Task A scorer defaults, and the latest Task D branch. The B frontend remains API-compatible: Task D's latest changes are docs-only for dependency status, the desktop package still has no image-analysis route, and Task A's scorer defaults remain unrated without configured references. Updated local Task C report rendering to expose the candidate method, analysis path, experimental ROI-gate state, uncalibrated confidence, and measured runtime when present. Refreshed README and architecture status text that still described report import as unavailable. No shared API contract or backend code changed. See root `HANDOFF.md` for branch, changed files, and checks.
+
 ## Task B cross-task UI refresh — 2026-10-16
 
 Updated the image-report workspace to reflect the current Task A scorer, Task C local CLI baseline, and Task D Windows package branch. The panel now explains that Task C's untrained texture-region output is CLI-only and not individual aggregate/defect segmentation, that Task A's scorer remains Unrated without evidence and fixed normalization references, and that Task D's package serves the dashboard/health service without an image-analysis route. Production health checks now default to the same-origin `/api/v1`, as used by the Task D package build; `VITE_API_BASE_URL` remains configurable and development retains `http://localhost:8000/api/v1`. Image selection was preview-only at this point; the follow-up below adds manual import of Task C's local JSON report and annotated image without claiming browser-triggered inference.
