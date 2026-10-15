@@ -140,3 +140,9 @@ An authenticated repository owner should push the existing `main` commits, assig
 - Searched for free India-only road-surface data with both stone-aggregate instances and metal-fragment labels. No suitable source was found. The Indian Footpath Damage dataset labels footpath damage masks, so it does not close either class gap and was not downloaded.
 - Added `docs/INDIA_AGGREGATE_METAL_ANNOTATION_GUIDE.md` with India provenance, route-group split, distinct per-object polygon labels, review rules, and evaluation expectations. RoadIQ's current trainer still only supports semantic road/pothole classes; a COCO instance adapter is still required after labels arrive.
 - No images or annotations were added. The owner may provide close-range Indian road photographs, separately masked polygons for `stone_aggregate` and `metal_fragment`, a route/session-grouped train/validation/test manifest, and license/permission evidence.
+
+## Task C branch publication update — 2026-10-15
+
+- The SSH-authenticated push succeeded. `origin/task/c-computer-vision` now points to `35d88c03ffedbdd29f50b1b9c50b6527589c1954` (`Document India aggregate and metal annotation needs`); the worktree is clean and branch is synchronized.
+- The latest added annotation guide documents the manual Indian image/label needs. Eight original selected-dataset frames were visually reviewed; the road-scene views do not resolve individual aggregate grains and have no metal-fragment labels.
+- No PR has been created. The GitHub comparison page is available at `https://github.com/Sine-Ads/RoadIQ/compare/main...task/c-computer-vision`, but this browser session is signed out. Continue PR creation after the owner authenticates in the open browser tab, or the owner may create it directly.
