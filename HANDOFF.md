@@ -2,7 +2,7 @@
 
 ## Current Task C status — 2026-10-16
 
-- **Merged:** PR #8 added the one-command local image demo to `main` as merge commit `5049ce6`. The shared Task C branch currently has no newer implementation commits.
+- **Merged:** PR #8 added the one-command local image demo to `main` as merge commit `5049ce6`; the PR #9 handoff refresh subsequently merged as `e2b0918`. PR #10 proposes optional India-road ROI gating for the texture-candidate preview and is awaiting review.
 - **Demo:** `PYTHONPATH=backend python -m scripts.demo_road_image --output-dir /tmp/roadiq-demo --seed 42`; pass `--image /path/to/road.jpg` to analyze a local image. Both flows write an annotated JPEG and structured JSON report.
 - **Verification:** focused Task C suite on the merged code — 28 passed, 2 skipped. Runtime was Python 3.10; the repository documents Python 3.12. The backend full-suite check still excludes the known hanging health TestClient case.
 - **Limitations:** the untrained texture mask is only a high-frequency candidate, not a verified pavement/aggregate/defect mask. Aggregate counts, calibrated measurements, confidence, and real-world metrics remain unavailable. No India-only aggregate-instance labels or trained aggregate checkpoint are available.
