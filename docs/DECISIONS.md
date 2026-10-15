@@ -1,22 +1,51 @@
-# Architecture and tooling decisions
+# RoadIQ decisions and open questions
 
-## Frontend stack
-The initial frontend uses React + TypeScript + Vite because it is a streamlined, well-supported combination for a small project that needs a low-friction developer experience and a clean production build.
+This log records scaffold decisions and provisional contract choices. A provisional choice is not evidence of a validated road-engineering standard or production approval.
 
-## Backend stack
-FastAPI and Pydantic were chosen for the backend because the project requires a Python-based API with strict validation and a simple path to health checks and future typed endpoints.
+## Recorded decisions
 
-## Mapping provider
-The initial scaffold avoids a hard dependence on Google Maps for two reasons: it requires a valid key and license management, and the repository does not yet have a guaranteed integration environment. Leaflet with OpenStreetMap is the safer default for early prototype work and is easy to replace with a provider abstraction later.
+| Decision | Current choice | Rationale / limit |
+| --- | --- | --- |
+| Frontend | React + TypeScript + Vite | Small, typed prototype boundary. |
+| Backend | FastAPI + Pydantic | Python API and validation scaffold. |
+| API prefix | `/api/v1` | Current health endpoint is versioned here. |
+| Shared segment geometry | GeoJSON `LineString`, WGS 84 `[longitude, latitude]` | Standard interoperable coordinate order; coordinate reference assumes RFC 7946. |
+| Unknown data | Explicit null with `status: "unavailable"` for measurements | Missing data is not zero and must not imply good condition. |
+| Data provenance | `sensor`, `image_inference`, `user_input`, `demo_fixture` | Makes the origin distinguishable at field level. |
+| Surface score proposal | `Damage = 0.35A + 0.25D + 0.25S + 0.15R`; `Surface Quality = 100 - Damage` | Hackathon assumption only; no scoring implementation or calibration is included in this contract freeze. |
+| Surface labels proposal | Good 80-100, Fair 60-<80, Poor 40-<60, Very Poor 0-<40 | Configurable, provisional thresholds; not an engineering standard. |
+| Mode suitability | Separate nullable scores from surface quality | Surface condition alone cannot establish suitability or safety for any travel mode. |
+| Grade fields | Longitudinal grade along the road; crossfall across the road | Distinct measurements. No real-world grade from pixels without calibration. |
+| Current API scope | Health endpoint only | Segment endpoints are specified as planned and do not exist yet. |
+| Demo records | Isolated fixture; unrated absent evidence | Prevents fixture values from being mistaken for sensor/model results. |
 
-## Computer-vision boundary
-The placeholder vision module keeps the model boundary separate from the API so future integration can be added without rewriting routes or schemas. This avoids downloading or shipping unsupported model weights during the initial scaffold.
+## Unresolved decisions (must not be silently assumed)
 
-## Data model approach
-The road-segment schema is intentionally small and deterministic. It is designed for incremental extension without implying that the sample output represents a production scoring system.
+### Data and surveying
 
-## Security
-The repository does not permit secrets in source control. Each service-specific configuration value is kept in environment variables, with `.env.example` acting as the only template checked into the repo.
+- Who issues stable segment IDs; how roads are split, merged, directed, and versioned.
+- Survey boundary and aggregation method; method to compute segment length and defect density.
+- Provenance reference format, sensor calibration metadata, and evidence retention.
+- Crossfall sign/direction convention and acceptable grade ranges/precision.
+- Which data source is authoritative when sources conflict.
 
-## Scope guardrail
-The scaffold is intentionally limited to documentation, health checks, sample validation, and buildability. It excludes the final dashboard, real scoring logic, and production-grade infra to stay aligned with the hackathon scope.
+### Scoring and rankings
+
+- Reference normalization anchors for damaged-area ratio, defect density, and IRI; severity rubric.
+- Whether formula weights and provisional label thresholds are accepted, and who can change/version them.
+- Minimum evidence sufficiency, comparability, and freshness rules.
+- Confidence calibration, evidence-coverage denominator, and how samples are counted.
+- Mode-specific scoring rules, required evidence, and disclosure language; walking/access/crossings require separate evidence.
+- Ranking cohort, percentile method, ties, sample size, survey period, and handling of unrated records.
+- Ground-truth data, validation design, error bounds, and owner for engineering review.
+
+### API and operations
+
+- Persistence, pagination semantics and stable ordering, query filters, contract generation/versioning.
+- Authentication/authorization, privacy, data deletion, monitoring, and operational error envelope.
+- Map provider, basemap licensing, and geocoding.
+- Image upload, storage, and supported image/model execution environments.
+
+## Review rule
+
+Changes to the shared road-segment schema must update both backend Pydantic and frontend TypeScript types, contract tests, API examples, and this decision log as appropriate. A score must not be treated as calibrated or safety-certified until the relevant open decisions are resolved and validated.

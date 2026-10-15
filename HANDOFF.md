@@ -1,47 +1,30 @@
 # Handoff summary
 
 ## Repository state
-- Current branch: `main`
-- Latest commit: `bcd9e87` (`Initial commit`)
-- Working tree: clean at the start of the scaffold exercise; subsequent file creation and edits are not committed
 
-## Completed work
-- Inspected the repository and confirmed that it started as a minimal README-only project.
-- Created the project documentation files and architecture references.
-- Established a minimal FastAPI backend with a versioned health endpoint.
-- Added a validated road-segment schema and deterministic sample fixture.
-- Created a minimal React + TypeScript + Vite frontend landing page.
-- Documented configuration and environment boundaries.
+- Branch: `main` (the agreed branch at task start).
+- Latest commit before this handoff's changes: `a6c2498` (`Set up initial project structure with backend and frontend directories, including necessary configuration files, API routes, schemas, services, tests, and documentation.`).
+- Contract-freeze changes are to be committed on `main` after validation.
+- This handoff records the base commit and actual verification results; consult Git history for the resulting contract-freeze commit.
 
-## Files changed
-- `.gitignore`
-- `.env.example`
-- `AGENTS.md`
-- `README.md`
-- `TASKS.md`
-- `CHANGELOG.md`
-- `HANDOFF.md`
-- `docs/ARCHITECTURE.md`
-- `docs/SCORING_SPEC.md`
-- `docs/API_CONTRACT.md`
-- `docs/DECISIONS.md`
-- `backend/requirements.txt`
-- `backend/tests/test_health.py`
-- `backend/tests/test_road_segment_schema.py`
-- `backend/app/...`
-- `frontend/...`
+## Completed in this task
+
+- Documented a shared road-segment contract with GeoJSON LineString, survey metadata, unit-tagged observations/estimates/unavailable values, damage inputs, mode suitability, pedestrian context, confidence, coverage, status, explanation, and provenance.
+- Aligned backend Pydantic validation and frontend TypeScript types; updated the demo fixture to remain unrated without evidence.
+- Documented provisional scoring and ranking rules, task boundaries/dependencies/ownership, and planned endpoints distinctly from the implemented health route.
+- Added schema tests for unknowns, provenance, units/ranges, geometry, rated-state requirements, labels, and timezone validation.
+- Did not implement Task A scoring, Task B dashboard, Task C inference, Task D retrieval/integration, or persistence.
 
 ## Verification run
-- Python compatibility check: detected Python 3.14 in the default environment is incompatible with the pinned Pydantic release.
-- Backend install was retried using Python 3.12, which is the supported interpreter for this scaffold.
-- Frontend setup was initialized with Vite and dependencies are installed via npm.
 
-## Known issues
-- The Pydantic dependency must be installed under a Python 3.12 environment to avoid the PyO3 compatibility issue in Python 3.14.
-- No production-ready scoring or computer-vision pipeline is implemented yet.
+- `.venv/bin/pytest backend/tests -q` — **passed**, 9 tests; one existing Starlette deprecation warning (`anyio.abc.BlockingPortal`). Root `pytest.ini` supplies the backend import path for this command.
+- `cd frontend && npm run build && npm run lint` — **passed** (TypeScript/Vite build and oxlint).
+- `git diff --check` — **passed**.
 
-## Recommended next steps
-1. Run the backend in Python 3.12 and confirm `/api/v1/health`.
-2. Run the frontend build and type-check once dependencies are installed.
-3. Expand the road-segment data model once scoring requirements are approved.
-4. Add a real map provider abstraction and future API endpoints only after requirements are clarified.
+## Known issues and unresolved decisions
+
+- Scoring weights, reference normalizations, severity rubric, labels, minimum evidence, freshness, confidence calibration, and evidence-coverage denominator remain provisional or undecided.
+- Mode-specific suitability methods/evidence are not agreed or implemented; walking requires separate pedestrian access/context evidence and is not a safety certification.
+- Segment ID generation/lifecycle, persistence, pagination semantics, API error envelope, auth, and ranking cohorts remain unresolved.
+- API currently exposes the health endpoint only; documented segment list/detail routes are planned and not implemented.
+- No production scoring algorithm, dashboard, computer-vision pipeline, or ground-truth validation is available.

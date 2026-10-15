@@ -77,6 +77,8 @@ The initial backend exposes a versioned health endpoint:
 
 The endpoint returns a simple status payload and intentionally avoids external dependencies, model downloads, or network calls.
 
+Road-segment retrieval routes are planned but are not implemented. The shared road-segment shape and provisional scoring assumptions are documented in [`docs/SCORING_SPEC.md`](docs/SCORING_SPEC.md) and [`docs/API_CONTRACT.md`](docs/API_CONTRACT.md). The backend validates the contract; it does not calculate scores.
+
 ## Notes
 - This repository is intentionally scoped to the initial scaffold and documentation required for review.
 - Production features such as road-quality scoring, machine-vision inference, and dashboard behavior remain planned work rather than implemented functionality.

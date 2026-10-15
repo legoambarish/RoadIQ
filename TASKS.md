@@ -1,26 +1,67 @@
 # RoadIQ task tracker
 
-## Current status
-- Status: Initial scaffold complete
-- Owner: RoadIQ team
-- Current branch: main
+## Contract baseline
 
-## Completed tasks
-| Task | Owner | Status | Acceptance criteria |
+- Current agreed working branch: `main` (also the branch at task start).
+- Shared contract: [SCORING_SPEC.md](docs/SCORING_SPEC.md), [API_CONTRACT.md](docs/API_CONTRACT.md), and [ARCHITECTURE.md](docs/ARCHITECTURE.md).
+- The backend Pydantic schema and frontend TypeScript types are aligned. Changes require coordination across owners and matching tests/docs.
+- Segment retrieval routes, persistence, scoring, dashboard, and computer-vision inference are not implemented by this contract-freeze task.
+- Score weights, normalization and labels are provisional hackathon assumptions. Open choices are listed in [DECISIONS.md](docs/DECISIONS.md); do not treat them as silently approved engineering thresholds.
+
+## Cross-task boundaries and ownership
+
+| Task | Scope and file ownership | Explicitly out of scope | Dependencies |
 | --- | --- | --- | --- |
-| Repository inspection | Repo setup engineer | Completed | Verified repo state and preserved the clean initial branch |
-| Root documentation | Repo setup engineer | Completed | AGENTS, README, CHANGELOG, HANDOFF, and task docs exist |
-| Frontend scaffold | Repo setup engineer | Completed | Vite + React + TypeScript app created and configured |
-| Backend scaffold | Repo setup engineer | Completed | FastAPI app exposes a health endpoint under `/api/v1` |
-| Sample road-segment model | Repo setup engineer | Completed | Schema validates a deterministic sample fixture |
-| Architecture and API docs | Repo setup engineer | Completed | Documentation covers architecture, API contract, and scoring boundary |
+| A — Scoring | Implement configurable normalization/scoring, evidence sufficiency, confidence/explanation production, and scoring tests in a dedicated backend scoring service and its tests. Consume `backend/app/schemas/road_segment.py`; own scoring-service files only. | API routes, dashboard, image inference, changing shared schema without coordination. No safety certification. | Frozen shared schema and written scoring assumptions; may develop independently of B/C. |
+| B — Dashboard | Implement frontend UX, data display, unrated/error states, accessible explanations, and API integration in `frontend/`. Own frontend UI/API modules; use `frontend/src/types/road-segment.ts`. | Scoring or inference logic; implying missing data means good. | Frozen shared schema and API contract; may develop independently of A/C against typed fixtures. |
+| C — Computer vision | Implement image inference, supported measurement extraction, source attribution, uncertainty, and image/calibration tests in `backend/app/services/vision.py` and dedicated vision modules/tests. | Segment API, dashboard, claiming ground dimensions/grade from pixels without calibration. | Frozen measurement/provenance schema; may develop independently of A/B. |
+| D — Integration/release | Implement planned retrieval routes, service wiring, persistence boundary only if approved, contract/integration tests, release checks, and API runtime behavior. Own `backend/app/api/routes/`, `backend/app/main.py`, integration tests, and release configuration. | Taking over A scoring, B UI, or C inference implementations; claiming planned routes already exist. | Depends on A, B, and C outputs for end-to-end integration; API routes may be scaffolded against the frozen contract before all implementations are complete. |
 
-## Planned follow-up work
-- Replace the placeholder quality rules with an approved production grading algorithm.
-- Add a concrete map provider abstraction and UI once requirements are clearer.
-- Implement a future defect-detection service and a real model interface.
-- Expand API endpoints beyond the health check as the product evolves.
+### Shared file ownership
 
-## Notes
-- This project intentionally avoids full dashboard and production road-quality implementation during the scaffold phase.
-- Computer-vision and map-provider features remain future work rather than implemented functionality.
+- `backend/app/schemas/road_segment.py` and `frontend/src/types/road-segment.ts` are frozen cross-task contract files, not owned for unilateral redesign. The task implementing a compatible contract update must coordinate with affected owners and update tests, examples, and documentation.
+- `docs/SCORING_SPEC.md`, `docs/API_CONTRACT.md`, `docs/ARCHITECTURE.md`, and `docs/DECISIONS.md` are shared specifications. Task A proposes scoring changes; Task D owns API runtime alignment; any owner may propose amendments through coordinated review.
+- Keep demo data under `backend/app/fixtures/` and clearly mark it as a fixture. Do not treat fixture values as production telemetry.
+
+## Acceptance criteria
+
+### Contract freeze — completed in this change
+
+- [x] One schema defines stable ID, GeoJSON line geometry, survey source/time, typed measurements and units, unknowns, damage fields, surface and mode scores, confidence/coverage, status, explanation, and provenance.
+- [x] Backend validation and frontend TypeScript field names/types agree; schema tests cover key valid/invalid boundaries.
+- [x] Scoring assumptions, no-imputation/missing-data behavior, limitations, rankings, and unresolved calibration decisions are documented.
+- [x] Actual health endpoint is distinguished from planned segment retrieval endpoints.
+- [x] Task boundaries, file ownership, dependencies, and outcomes are specified without implementing all four tasks.
+
+### Task A — scoring (planned)
+
+- [ ] Implements formula only with approved, versioned normalizations and all four supported inputs; no partial weight renormalization.
+- [ ] Returns `unrated` and null surface score/label if evidence is insufficient; never maps unknown to zero.
+- [ ] Keeps surface quality separate from every mode score; emits reproducible explanations and reports confidence/coverage only with documented methods.
+- [ ] Tests normalization boundaries, exact formula behavior, missing inputs, version/config selection, and score labels.
+
+### Task B — dashboard (planned)
+
+- [ ] Consumes the shared types and planned API contract, while handling the currently implemented health-only API honestly.
+- [ ] Distinguishes absolute score from relative percentile and never presents unrated as good.
+- [ ] Displays survey date, available sample/coverage, confidence, provenance/explanation, and uncertainty.
+- [ ] Separates surface quality from mode suitability and pedestrian access/context; does not infer pedestrian-friendliness from missing lane markings.
+- [ ] Passes frontend TypeScript checks, lint, and Vite production build.
+
+### Task C — computer vision (planned)
+
+- [ ] Keeps inference behind a replaceable service boundary; preserves source=`image_inference`, nulls, and uncertainty in outputs.
+- [ ] Does not emit calibrated physical grade/roughness/area from pixels without documented calibration.
+- [ ] Tests supported/unsupported inputs and malformed/unavailable inference results without requiring production model weights.
+
+### Task D — integration and release (planned)
+
+- [ ] Implements only the documented routes and response/error shapes, including mode scores in segment retrieval.
+- [ ] Validates contract boundaries and service integrations; protects health route behavior.
+- [ ] Runs backend pytest and frontend build/type/lint checks; records actual commands/results and unresolved issues in `HANDOFF.md`.
+- [ ] Confirms configuration/secrets safety and release readiness without claiming production algorithm/model validation.
+
+## Current status
+
+- Contract freeze: complete for the prototype baseline; this does not approve the provisional scoring assumptions as engineering standards.
+- Tasks A-D: planned; none of their end-user features is claimed as complete here.
