@@ -48,7 +48,7 @@ function EverydayCharts({ records }: { records: DemoRoadRecord[] }) {
             </div>
           ))}
         </div>
-        <p className="chart-note">Unrated roads remain separate; missing evidence is never counted as zero quality.</p>
+        <p className="chart-note">Network distribution across the currently filtered demo segments; this is not the selected map road or an uploaded image. Unrated roads remain separate.</p>
       </article>
 
       <article className="chart-card">
@@ -68,7 +68,7 @@ function EverydayCharts({ records }: { records: DemoRoadRecord[] }) {
             </div>
           ))}
         </div>
-        <p className="chart-note">Demo-only values. These are not safety ratings or a live Task A score.</p>
+        <p className="chart-note">Fixture averages across the currently filtered segments, not the selected road or uploaded image. These are not safety ratings or a live Task A score.</p>
       </article>
   </>
 }
@@ -123,7 +123,7 @@ function EngineerEvidenceCharts({ records }: { records: DemoRoadRecord[] }) {
           <tbody>{rows.map((row) => <tr key={row.key}><th scope="row">{row.label}</th><td>{row.observed}</td><td>{row.estimated}</td><td>{row.unavailable}</td></tr>)}</tbody>
         </table>
       </div>
-      <p className="chart-note">Counts reflect the current demo records. Non-null fixture values are not measured evidence.</p>
+      <p className="chart-note">Counts reflect the currently filtered demo records, not just the selected map road or uploaded image. Non-null fixture values are not measured evidence.</p>
     </article>
 
     <article className="chart-card gate-audit-card">

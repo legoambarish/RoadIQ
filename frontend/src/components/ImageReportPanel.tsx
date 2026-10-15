@@ -123,11 +123,14 @@ export function ImageReportPanel() {
       <div className="image-report-grid">
         <div className="image-input-card">
           <div className="subsection-heading"><strong>Road image</strong><span>Local preview</span></div>
-          {previewUrl ? (
+          {previewUrl || annotationUrl ? (
             <div className="image-preview-frame">
-              <img src={previewUrl} alt="Selected road image preview" />
-              {annotationUrl && <img className="annotation-preview" src={annotationUrl} alt="Task C texture candidate annotation" />}
-              {!annotationUrl && <span className="annotation-placeholder">Annotation not imported</span>}
+              {previewUrl
+                ? <img src={previewUrl} alt="Selected road image preview" />
+                : <img src={annotationUrl ?? undefined} alt="Task C annotated texture-candidate preview" />}
+              {previewUrl && annotationUrl && <img className="annotation-preview" src={annotationUrl} alt="Task C texture candidate annotation overlay" />}
+              {previewUrl && !annotationUrl && <span className="annotation-placeholder">Annotation not imported</span>}
+              {annotationUrl && <span className="annotation-label">{previewUrl ? 'Task C annotation overlay' : 'Task C annotated preview'}</span>}
             </div>
           ) : (
             <label className="image-dropzone" htmlFor="road-image-input" onDragOver={(event) => event.preventDefault()} onDrop={onDrop}>
@@ -146,16 +149,18 @@ export function ImageReportPanel() {
             </div>
           )}
           <label className="report-file-picker" htmlFor="task-c-report-input">
-            <span>Import Task C report JSON</span>
+            <span>Import Task C analysis report (.json)</span>
+            <small>Loads saved image quality, texture, and candidate-region results. It does not run analysis.</small>
             <input id="task-c-report-input" type="file" accept=".json,application/json" onChange={importReport} />
           </label>
           <label className="report-file-picker" htmlFor="task-c-annotation-input">
-            <span>Import annotated preview (optional)</span>
+            <span>Import annotated preview image (optional)</span>
+            <small>Displays Task C’s saved texture-candidate visualization. The CLI report stores a local path, so select this image separately.</small>
             <input id="task-c-annotation-input" type="file" accept="image/jpeg,image/png,image/webp" onChange={importAnnotation} />
           </label>
           <div className="image-status-row"><span>Analysis report</span><strong>{report ? 'Imported · local CLI' : 'Not imported'}</strong></div>
           {error && <p className="report-import-error" role="alert">{error}</p>}
-          <p className="image-local-note">Run Task C’s local CLI first, then import its analysis-report.json and annotated-preview.jpg. Selecting an image here does not run analysis.</p>
+          <p className="image-local-note">The Task C CLI creates both files. Import the JSON to fill the report; import the preview to see its annotation. Neither file picker runs analysis or sends your road image anywhere.</p>
         </div>
 
         <div className="image-result-card">

@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-16 — Task B traveler brief and report-import clarity
+
+- Reflowed Everyday traveler profile checklists into a responsive layout with the label above the items; verified all five profiles in the browser.
+- Labeled Insights as summaries of currently filtered demo records, distinct from the selected map segment and uploaded image.
+- Explained the Task C JSON and annotated-image imports and made an imported annotation preview visible even when no original road image is selected.
+- Frontend TypeScript/Vite build and Oxlint passed; see `HANDOFF.md` for browser verification and limitations.
+
 ## 2026-10-16 — Task B alignment with latest Task C report output
 
 - Audited the latest merged Task C, Task A, and Task D state. B can continue importing saved C reports; there is still no browser image endpoint and A's default scorer references remain empty.

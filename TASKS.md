@@ -1,5 +1,9 @@
 # RoadIQ task tracker
 
+## Task B Everyday brief layout and explainer clarity — 2026-10-16
+
+Fixed traveler checklist layout so “What matters for this profile” sits above wrapped, responsive items rather than sharing a cramped row; checked the Everyday state for all five profiles in the built site. Clarified in Insights that charts summarize the currently filtered demo network, not the selected map segment or imported image. Expanded image-import help: JSON loads saved report data; optional annotated preview displays the CLI visualization, and the CLI JSON stores its preview as a local path. An annotation can now display on its own or overlay the selected road image. See root `HANDOFF.md` for verification and branch status.
+
 ## Task B alignment with latest Task A/C/D updates — 2026-10-16
 
 Reviewed the merged Task C report fields, current Task A scorer defaults, and the latest Task D branch. The B frontend remains API-compatible: Task D's latest changes are docs-only for dependency status, the desktop package still has no image-analysis route, and Task A's scorer defaults remain unrated without configured references. Updated local Task C report rendering to expose the candidate method, analysis path, experimental ROI-gate state, uncalibrated confidence, and measured runtime when present. Refreshed README and architecture status text that still described report import as unavailable. No shared API contract or backend code changed. See root `HANDOFF.md` for branch, changed files, and checks.
