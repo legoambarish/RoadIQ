@@ -6,25 +6,25 @@ RoadIQ remains an initial prototype scaffold; it is not production-ready.
 
 - **Frontend:** React + TypeScript + Vite under `frontend/`, with a fixture-backed interactive schematic map, Road Quality and five travel-profile overlays, filters, rankings, charts, Everyday/Engineer segment details, a health-only API badge, and a local-only image preview/report shell. It uses illustrative typed fixtures; there is no live basemap, segment API, scoring connection, image upload, or inference display.
 - **Backend:** FastAPI + Pydantic under `backend/`. The implemented HTTP API exposes `GET /api/v1/health` and `/`. `backend/app/schemas/road_segment.py` validates the shared road-segment shape. A deterministic demo fixture is isolated in `backend/app/fixtures/`.
-- **Computer vision:** `backend/app/services/vision.py` is a placeholder only. It does not perform inference, calibrate pixels to ground dimensions, or download model weights.
+- **Computer vision:** `backend/app/services/vision.py` validates JPEG/PNG/WebP uploads and reports heuristic image-quality observations plus one image-texture proxy. The only previously wired checkpoint was trained on multinational data and is now blocked under the India-only policy; no India-only detector is configured. Pavement ROI, material classification, aggregate/metal segmentation, physical measurement, and HTTP route integration are not implemented.
 - **Scoring:** no scoring engine is implemented. [SCORING_SPEC.md](./SCORING_SPEC.md) describes provisional rules and explicit evidence limits.
 - **Persistence and mapping:** no segment database, segment retrieval API, or live basemap exists. The current schematic map plots illustrative fixture geometry; mapping provider choice remains open.
 
 ## Product objective and planned image-analysis pipeline
 
-The primary product objective is image-based road-surface quality assessment. Aggregate structure—individual visible stone aggregates, their size/distribution, boundaries and gaps—plus visible aggregate loss, image texture, and deterioration are core evidence. Map and transport-mode dashboard features are secondary. “Metal chips” is currently interpreted as stone aggregates; confirm with the project owner. Asphalt/bituminous and cement-concrete surfaces are targets where validated; uncertain classification is `unknown`.
+The primary product objective is image-based road-surface quality assessment. Aggregate structure—individual visible stone aggregates, their size/distribution, boundaries and gaps—plus visible aggregate loss, image texture, and deterioration are core evidence. Map and transport-mode dashboard features are secondary. Literal metal fragments are a separate analysis target from stone aggregates per project-owner direction. Asphalt/bituminous and cement-concrete surfaces are targets where validated; uncertain classification is `unknown`.
 
-The following end-to-end pipeline is **proposed, not implemented**:
+The following end-to-end pipeline is **partially implemented**:
 
-1. **Image intake and quality gate (Task C):** accept a future image-analysis request; validate decodability, dimensions, focus/blur, exposure, occlusion, perspective, and supported capture conditions. Reject/unrate unusable images with explicit reasons.
-2. **Pavement ROI and surface type (Task C):** mask usable pavement, exclude occlusions/non-pavement, estimate usable coverage, and classify asphalt/bituminous, cement concrete, or unknown with confidence.
-3. **Aggregate analysis (Task C):** segment/count individual aggregates only when resolution permits; produce pixel-space size distribution, visible coverage, boundary/gap statistics, and an aggregate-loss proxy. Count per m² and physical width/size require known ground scale, usable physical area, and sufficient resolution; otherwise return null physical values and retain pixel-space features.
-4. **Defect and texture analysis (Task C):** detect/segment visible cracks, potholes, raveling, and deterioration. Extract named image-texture features and label them as proxies, not physical roughness/IRI.
+1. **Image intake and quality gate (Task C):** the service validates JPEG, PNG, and WebP bytes, dimension/size bounds, decodability, and heuristic exposure/edge-detail indicators. Occlusion, perspective, and capture-specific gates are not yet implemented; heuristic thresholds are not labelled-data validated.
+2. **Pavement ROI and surface type (Task C):** not implemented; the service returns null ROI coverage and `unknown` surface type with unavailable status.
+3. **Aggregate analysis (Task C):** not implemented; aggregate and physical measurements remain null. Literal metal-fragment count is represented separately and unavailable. Physical widths/counts require calibration and valid masks even after a model is added.
+4. **Defect and texture analysis (Task C):** damage inference is unavailable without a reviewed India-only checkpoint; test-injected detectors exercise the adapter only. Raveling and mask-based area are unavailable. A named tile grayscale contrast proxy is emitted and is not physical roughness/IRI.
 5. **Surface-quality index (Task A):** normalize supported feature components under a versioned, surface-type-aware configuration; calculate the provisional RSQI only with adequate evidence, else return Low Confidence or Unrated with contributions and explanation.
 6. **Evaluation and integration (Task D):** validate payloads/routes, organize grouped data splits, run held-out evaluations against expert labels and field measures where available, and report actual metrics. Never substitute proposed metrics for evaluation results.
 7. **Report UI (Task B):** display image, annotated overlay, score/status, component contributions, confidence, unavailable values, and limitations. An overlay is model output, not verified ground truth.
 
-The fixture-backed map and dashboard are implemented in Task B. No image-analysis pipeline stage, image endpoint, annotated output, trained RoadIQ model, or evaluation result is implemented today. See [SCORING_SPEC.md](./SCORING_SPEC.md) for feature definitions and the minimum dataset/evaluation plan.
+Image validation/quality observations and a named pixel-texture proxy are implemented in Task C. No production damage inference is active under the India-only data policy. The pavement ROI/surface-type/aggregate/metal stages, HTTP image endpoint, annotated output, trained RoadIQ model, scoring, and RoadIQ evaluation are not implemented. India-specific damage/segmentation datasets are under source, license, and split review; see [VISION_PIPELINE.md](./VISION_PIPELINE.md). See [SCORING_SPEC.md](./SCORING_SPEC.md) for feature definitions and the minimum dataset/evaluation plan.
 
 ## Shared contract
 
