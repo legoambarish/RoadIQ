@@ -1,5 +1,9 @@
 # RoadIQ task tracker
 
+## Task B continuation audit — 2026-10-16
+
+The active checkout is the clean `task/b-map-dashboard` branch at `f83b4d7`, tracking `origin/task/b-map-dashboard`; `git fetch --all --prune` completed and found no newer Task B commit. The assigned Task B UI acceptance items are complete. Its only unchecked acceptance item—displaying reviewed image-analysis output and annotations—depends on Task C/Task D finalizing the response mapping and implementing the image endpoint. Those dependencies remain unresolved, and `docs/API_CONTRACT.md` confirms the endpoint is not implemented. No new UI behavior was added or represented as integrated in this continuation. Frontend typecheck, Vite build, and Oxlint were run directly with the bundled Node runtime and all passed; see root `HANDOFF.md` for exact commands and the npm/pnpm environment limitations.
+
 ## Task C MVP continuation — 2026-10-16
 
 The Task C local hackathon MVP is demonstrable on the assigned `task/c-computer-vision` branch. It analyzes a deterministic synthetic texture or a local road image, applies quality checks, produces an untrained texture-candidate mask and annotated JPEG, and writes a structured JSON report. An explicitly configured experimental India-road semantic checkpoint can optionally gate candidates to a predicted road ROI. API and frontend integration remain owned by Task D and Task B.
