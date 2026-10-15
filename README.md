@@ -5,8 +5,8 @@ RoadIQ is a hackathon prototype whose primary objective is image-based road-surf
 ## Current status
 - Frontend: React + TypeScript + Vite dashboard with an interactive schematic map, five illustrative travel-profile overlays, filters, rankings, charts, Everyday/Engineer segment details, and a local-only image preview shell
 - Backend scaffold: FastAPI + Pydantic
-- Computer vision: placeholder module only; no image inference exists
-- Scoring: deterministic provisional RSQI scorer exists in `backend/app/services/scoring.py`; default normalization references are intentionally empty, so scoring remains `unrated` until fixed surface-type/capture-specific references and adequate component evidence are supplied
+- Computer vision: a partial image-analysis service is available on `task/c-computer-vision`, but it is not merged into `main`; there is no configured India-only damage model or HTTP endpoint, and ROI/material/aggregate/metal analysis remains unavailable
+- Scoring: deterministic provisional RSQI scorer exists in `backend/app/services/scoring.py`; default normalization references are intentionally empty, so results remain `unrated` until fixed surface-type/capture-specific references and adequate component evidence are supplied. Weights and label cutoffs are unvalidated hypotheses.
 - Dataset/evaluation: no labelled RoadIQ dataset or held-out evaluation metrics are available
 - Mapping: dashboard geometry and values are typed illustrative fixtures; no live basemap or segment retrieval API is connected
 - Testing: backend pytest checks and frontend build/type validation
