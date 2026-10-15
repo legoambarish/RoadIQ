@@ -5,7 +5,7 @@
 ## Dependency readiness
 
 - **Task A:** PR #1 is merged into main at commit 7995ff4. The provisional scorer and its tests are present. Its default normalization profiles are empty, so it returns an unrated result unless a caller supplies a complete fixed profile and all required evidence. No RoadIQ-labelled calibration set exists.
-- **Task B:** PRs #2, #5, and #6 are merged into main. Its dashboard uses static demo fixtures; the image panel only previews a local file and does not upload or analyze it. The frontend build and lint passed on this Task D checkout.
+- **Task B:** PRs #2, #5, and #6 are merged into main. PR #13 is open from task/b-map-dashboard (six commits ahead of main at e9d3b70) and refreshes the preview-only image-report copy/state plus production health URL default. Its PR description records passing TypeScript, Vite build, Oxlint, and git diff checks; the GitHub Checks tab has no CI runs. No backend/API contract changed, and the image panel still does not upload or analyze images.
 - **Task C:** PRs #4, #7, #8, #10, and #11 are merged into main. The local observation/demo service and tests exist, but there is no image HTTP route or active trained checkpoint. Usable-pavement/material classification, individual aggregate/metal analysis, calibrated physical measurements, and held-out RoadIQ evaluation remain unavailable; Task C is not ready as a complete production analysis dependency.
 - **Task D:** checklist PR #3 is merged. This package branch is task/d-integration-release, based on current origin/main at f83b4d7. Windows packaging and desktop-runtime tests are published for review in [PR #12](https://github.com/Sine-Ads/RoadIQ/pull/12) against main. The PR is open and unmerged.
 
