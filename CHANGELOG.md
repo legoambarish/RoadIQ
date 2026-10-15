@@ -24,12 +24,21 @@
 - Added a one-command Task C demo runner for either a generated sample or a local image, saving the annotation and structured report together.
 - Added an end-to-end regression test for the synthetic 640×480 image. It validates baseline plumbing only; no real-world model performance is claimed.
 
+## 2026-10-16 — Task D Windows desktop package
+
+- Added a Windows one-file build that bundles the FastAPI health service and compiled dashboard; the launcher binds only to loopback, checks readiness, opens the browser, and safely restarts a verified existing RoadIQ instance.
+- Added desktop runtime tests and build instructions. Backend tests, frontend build/lint, Windows packaging, browser startup, health, and graceful second-launch restart passed on the development host.
+- The desktop package still exposes only health at runtime. The map and scores are fixtures; there is no live image/segment API, C-to-A scoring, active model, or RoadIQ-held-out evaluation.
+- Current integration status: Task B PR #13 at `86f397c` (12 commits ahead of main) supports local Task C CLI report/annotation import and displays report-backed candidate method, analysis path, optional experimental ROI-gate state, candidate confidence calibration status, and runtime. It still does not upload an image or call an API. Its latest handoff reports frontend build/lint and label/overlay browser checks, but no saved report import; GitHub has no submitted reviews or CI checks.
+- With explicit user approval, fast-forwarded remote `task/a-scoring-engine` (`18326f4`) and `task/c-computer-vision` (`ba2d98a`) to `origin/main` (`f83b4d7`) using a normal push after confirming neither had unique commits. PR #12 and PR #13 remain open with no submitted reviews or CI check runs.
+- Re-ran current Task D checkout verification: backend pytest 93 passed/2 skipped; frontend TypeScript/Vite production build and Oxlint passed. Windows packaging and startup/restart smoke were not rerun because application code is unchanged.
+
 ## Unreleased
 - Added a sticky, responsive dashboard control dock with all five full travel-profile names and the Everyday/Engineer switch visible while scrolling; refined spacing and a comfortable sage/forest palette while preserving a distinct Engineer theme.
 - Reworked Everyday and Engineer into distinct assessment experiences: Everyday gets profile-specific plain-language briefs; Engineer gets evidence/status/provenance tables and record-readiness audits. Surface condition, mode suitability, and pedestrian infrastructure remain separate, with all fixture values identified as illustrative.
 - Updated the Task B branch against the latest `main` integration checklist and refreshed the Task B/C/D status from their current branches. No score formula, API contract, backend scorer, or Task C inference code changed.
-- Added Task D integration preparation with a cross-task field audit, unresolved mapping proposals, end-to-end failure scenarios, and verified environment requirements. No route, shared contract, or end-to-end integration is claimed.
-- Updated live task status: Task A PR #1, Task B dashboard PR #2, Task B view distinction PR #5, and Task D checklist PR #3 are merged. Task C has an India-only experimental baseline and evaluation scaffold on its branch but no active trained checkpoint or PR. The RDD2022 detector remains disabled under the India-only policy, not for technical incompatibility.
+- Added Task D integration preparation with a cross-task field audit, unresolved mapping proposals, end-to-end failure scenarios, and verified environment requirements. The desktop package serves the bundled dashboard and health route; no image-analysis route, shared image contract, or full end-to-end integration is claimed.
+- Updated live task status: Task A PR #1, Task B dashboard PRs #2, #5, and #6, Task D checklist PR #3, and Task C PRs #4, #7, #8, #10, and #11 are merged. Task C has no active trained checkpoint. The RDD2022 detector remains disabled under the India-only policy, not for technical incompatibility.
 
 - Added the Task A deterministic candidate RSQI scoring service with configurable weights and labels, fixed surface/capture-specific reference normalization, strict evidence gates, auditable component contributions, null confidence/coverage, and null mode-suitability outputs. No RoadIQ normalization references, inference, API route, or calibrated evaluation are claimed.
 - Added focused scoring tests for the formula, thresholds, normalization, evidence gates, units/provenance, deterministic output, mode outputs, and proposed API object shape.

@@ -41,8 +41,8 @@ RoadIQ is primarily an image-based road-surface quality assessment prototype. It
 | --- | --- | --- |
 | A — Scoring | Human owner/reviewer not assigned; implementation merged in PR #1; calibration dependencies remain | `task/a-scoring-engine` |
 | B — Frontend/reporting | Project owner confirmed; dashboard merged in PR #2, view distinction in PR #5, and sticky-control refinement in PR #6 | `task/b-map-dashboard` |
-| C — Aggregate/image analysis | Human owner not recorded; India-only experimental baseline and evaluation scaffold on remote branch; no trained checkpoint or PR | `task/c-computer-vision` |
-| D — Integration/evaluation | Human owner not recorded; integration checklist merged in PR #3; runtime integration remains pending | `task/d-integration-release` |
+| C — Aggregate/image analysis | Human owner not recorded; Task C PRs #4, #7, #8, #10, and #11 are merged; no active trained checkpoint or held-out RoadIQ evaluation | `task/c-computer-vision` |
+| D — Integration/evaluation | Human owner not recorded; integration checklist merged in PR #3; Windows desktop package is in PR #12 for review; live image integration remains pending | `task/d-integration-release` |
 
 `main` is the shared integration branch. At this workflow freeze no task branches existed locally or remotely. Each task branch must be based on fetched `main`; send completed task work through reviewed pull requests. Task D coordinates integration, but does not take over A/B/C modules. Dependency manifests and lockfiles are shared-impact files and require review from affected owners.
 
@@ -73,7 +73,7 @@ RoadIQ is primarily an image-based road-surface quality assessment prototype. It
 
 Task A implementation is on `task/a-scoring-engine` in `backend/app/services/scoring.py` with focused tests in `backend/tests/test_scoring.py`; PR #1 is merged into `main` at `7995ff4`. It provides a scorer/API boundary only and does not implement Task C feature extraction or Task D API routes/evaluation.
 
-### Task B — dashboard (core merged in PR #2 and view follow-up in PR #5; current UI refinement on branch)
+### Task B — dashboard (core and view follow-ups merged in PRs #2, #5, and #6; current remote branch adds handoff documentation only)
 
 - [x] Renders an interactive schematic map from typed GeoJSON fixtures, with selectable, zoomable segments and a color-coded Road Quality overlay. No live basemap is claimed while provider choice is unresolved.
 - [x] Offers five separate travel-profile overlays (walking, cycling, two-wheeler, car, bus), ranked segment lists, quality/search/minimum-score filters, and quality/profile charts.
@@ -100,33 +100,40 @@ Task A implementation is on `task/a-scoring-engine` in `backend/app/services/sco
 - [x] Preserves unavailable values as null and documents model/checkpoint, preprocessing, calibration method, and limitations.
 - [x] Tests image validation, low-quality gates, manifest/label parsing, missing labels, exact and near duplicates, aggregate-versus-defect separation, RLE mask formats, evaluator test-split gates, and response compatibility without production weights.
 
-The local synthetic/local-image demo and optional experimental ROI-gated texture preview are implemented and tested; PRs #7, #8, and #10 have merged into `main`. The one-command demo writes an annotated JPEG and structured JSON report without network access. The texture overlay is only an untrained high-frequency candidate, not a pavement, aggregate, or defect segmentation. The 20-image ACAD result is supplemental synthetic-concrete region-overlap evidence only (IoU 0.488, precision 0.822, recall 0.545); it is not India-road performance, training evidence, or instance-count validation. No India-only aggregate-instance or metal-fragment labels, active trained checkpoint, calibrated confidence, or held-out RoadIQ road evaluation are available. Browser upload/report and the HTTP image API remain owned by Tasks B/D. The multi-country RDD2022 detector remains disabled under the India-only data policy; that is a dataset-policy choice, not a technical incompatibility with Indian roads.
+The local synthetic/local-image demo and optional experimental ROI-gated texture preview are implemented and tested; Task C PRs #7, #8, #10, and #11 have merged into `main`. The one-command demo writes an annotated JPEG and structured JSON report without network access. The texture overlay is only an untrained high-frequency candidate, not a pavement, aggregate, or defect segmentation. The 20-image ACAD result is supplemental synthetic-concrete region-overlap evidence only (IoU 0.488, precision 0.822, recall 0.545); it is not India-road performance, training evidence, or instance-count validation. No India-only aggregate-instance or metal-fragment labels, active trained checkpoint, calibrated confidence, or held-out RoadIQ road evaluation are available. Browser upload/report and the HTTP image API remain owned by Tasks B/D. The multi-country RDD2022 detector remains disabled under the India-only data policy; that is a dataset-policy choice, not a technical incompatibility with Indian roads.
 
-### Task D — integration and release (integration checklist merged; runtime integration blocked on dependencies)
+### Task D — integration and release (Windows package implemented; live image integration blocked on reviewed dependencies)
 
 - [ ] Implements reviewed image-analysis request/response contract and validation/error behavior; keeps current health route working and marks segment/image routes planned until implemented.
 - [ ] Defines dataset manifest/annotation protocol and grouped train/validation/test split; prevents road-segment and feasible near-duplicate leakage across splits.
 - [ ] Runs evaluation on a held-out, labelled test set and reports actual counts/metrics by surface class and task (detection/segmentation, aggregate measures, surface index, confidence); never fabricates metrics.
 - [ ] Distinguishes untouched pretrained baseline from frozen/finetuned/RoadIQ-trained models and records training data/split/version.
-- [ ] Runs backend pytest and frontend build/type/lint checks; records actual commands/results and unresolved issues in `HANDOFF.md`.
-- [ ] Confirms configuration/secrets safety and release readiness without claiming production algorithm/model validation.
+- [x] Runs backend pytest and frontend build/type/lint checks for the desktop package; records exact commands/results and unresolved issues in `HANDOFF.md`. Full image-flow checks remain pending because the HTTP contract is not implemented.
+- [x] Records configuration/secrets, model/download, map-provider, storage, and network requirements; distinguishes the runnable desktop demo from production analysis/release readiness.
+- [x] Builds a one-file Windows desktop package and verifies bundled dashboard/health startup, token-gated restart, and safe replacement of a verified RoadIQ process.
 
 #### Task D integration checklist
 
-- [ ] Compare frontend fixtures, Task A scorer input/output, Task C observations, and the proposed API field by field; record exact names, units, statuses, provenance, and null rules. Keep mismatches as proposals until affected owners agree.
-- [ ] Define tests for valid image analysis; malformed/unsupported/invalid images; failed quality, pavement-region, and resolution gates; unknown surface type; missing/null/unavailable/invalid measurements; unit/status/provenance mismatches; incomplete scorer input and `unrated`; and unavailable model, backend, or API.
-- [ ] Verify the frontend shows backend explanations and unavailable fields, keeps mode suitability separate from surface quality, and never presents missing or unrated evidence as a good road.
-- [ ] Use clearly labeled fixtures; once an agreed end-to-end flow exists, verify explanations, unavailable values, map colors, mode changes, and details against backend values.
-- [ ] Verify repository-documented backend/frontend startup, test, build, and lint commands; record only commands and results confirmed in this environment.
-- [ ] Inspect environment variables, secrets handling, model/download requirements, map-provider keys, storage, and network needs without exposing secrets.
+- [x] Add desktop-runtime tests for dashboard asset serving and the authenticated restart boundary; full image-route scenarios remain pending the agreed API.
+- [x] Verify the Windows build, startup and second-launch graceful restart on the available Windows 11 host; record the clean-VM limitation.
+
+- [x] Compare frontend fixtures, Task A scorer input/output, Task C observations, and the proposed API field by field; record exact names, units, statuses, provenance, and null rules. Keep mismatches as proposals until affected owners agree.
+- [x] Specify expected behavior for valid image analysis; malformed/unsupported/invalid images; failed quality, pavement-region, and resolution gates; unknown surface type; missing/null/unavailable/invalid measurements; unit/status/provenance mismatches; incomplete scorer input and `unrated`; and unavailable model, backend, or API. This is a scenario specification only; route-level tests await the agreed API.
+- [ ] Verify the API-connected frontend shows backend explanations and unavailable fields, keeps mode suitability separate from surface quality, and never presents missing or unrated evidence as a good road; the current fixture UI is not connected to the analysis API.
+- [x] Keep dashboard fixture values tagged demo_fixture; they are illustrative, not RoadIQ observations or model predictions.
+- [ ] After an agreed end-to-end flow exists, verify explanations, unavailable values, map colors, mode changes, and details against backend values.
+- [x] Verify repository-documented backend/frontend startup, test, build, and lint commands; record only commands and results confirmed in this environment.
+- [x] Inspect environment variables, secrets handling, model/download requirements, map-provider keys, storage, and network needs without exposing secrets. The .env.example file contains development settings and URLs only; the packaged app needs no runtime credentials, map key, model download, storage service, or internet connection. No real credential is required or present in .env.example; no tracked .env, key, or certificate file was found.
 - [ ] Add Task D integration tests and attempt release checks only after dependency outputs and the shared mapping are reviewed and agreed.
 
 ## Current status
 
 - Task A's provisional RSQI scorer is merged into `main` by PR #1 at `7995ff4`; its RoadIQ normalization and confidence calibration still lack labelled data.
-- The Task B dashboard and Everyday/Engineer follow-up are merged into `main` by PRs #2, #5, and #6. Road values remain illustrative fixtures; no live segment or image API is connected.
-- Task C's branch `task/c-computer-vision` provides a tested local image-analysis demo with image validation/quality heuristics, a named texture proxy, structured observations, annotated texture-candidate mask, and optional experimental India-road ROI gating. PRs #4, #7, #8, and #10 are merged into `main`. A 20-image ACAD synthetic-concrete sample has limited pixel-region metrics; there are no India-road aggregate labels or held-out RoadIQ road metrics. Physical measurements, material classification, aggregate/metal instance analysis, broad validated damage detection, and the image HTTP endpoint remain unavailable.
-- Task D's docs-only integration checklist is merged into `main` by PR #3; runtime integration remains blocked on reviewed A/B/C mappings and dependencies.
+- The Task B dashboard and Everyday/Engineer follow-up are merged into `main` by PRs #2, #5, and #6. Road values remain illustrative fixtures; no live segment or image API is connected. The remote Task B branch is 12 commits ahead of main at `86f397c`; PR #13 is open and unmerged. It supports local Task C CLI report/annotation import and now displays report-backed candidate method, analysis path, optional experimental road-ROI gate state, confidence calibration status, and runtime. The browser still does not upload an image or run analysis. The latest Task B handoff reports TypeScript, Vite, Oxlint, and label/overlay browser checks passed, but no saved report was imported in that pass. No backend tests were run; GitHub shows no PR reviews or CI checks.
+- Task C's local image-analysis demo, evaluation scaffold, and optional experimental India-road ROI gating are merged into `main` by PRs #4, #7, #8, #10, and #11. A 20-image ACAD synthetic-concrete sample has limited pixel-region metrics; there are no India-road aggregate labels or held-out RoadIQ road metrics. Physical measurements, material classification, aggregate/metal instance analysis, broad validated damage detection, and the image HTTP endpoint remain unavailable.
+- Task D's integration checklist is merged into `main` by PR #3. The current D branch adds Windows desktop packaging and runtime tests, but no segment or image-analysis API; PR #12 is open and unmerged, with no GitHub CI checks or review decision shown. Task B PR #13 is also open; its local report import does not provide live image-analysis integration. Live C-to-A scoring remains blocked on agreed mappings, calibrated references, and a ready model/data set.
+- Branch alignment (2026-10-16): with user approval, remote Task A and Task C branches were fast-forwarded to `origin/main` at `f83b4d7` after confirming both old tips were strict ancestors with no unique commits. No PR was merged or history rewritten.
+- Current Task D checkout verification (2026-10-16): backend pytest passed (93 passed, 2 skipped); frontend `npm run build` and `npm run lint` passed. The recorded Windows build and startup/restart smoke remain from the earlier packaging run.
 
 ## Four-owner kickoff checklist
 
