@@ -113,4 +113,11 @@ An authenticated repository owner should push the existing `main` commits, assig
 - ThirdEye's Hugging Face record confirms CC BY 4.0 and Delhi NCR coverage, but labels are machine-generated, not human-verified, and access requires acceptance of the repository conditions. Do not use it for gold held-out evaluation.
 - No aggregate/metal-labeled images were received in this update. The owner said they are looking for such labels.
 - **Verification:** web source review only plus `git diff --check`; no data was downloaded and no model trained or evaluated. Existing backend result remains 21 tests passed with one existing deprecation warning.
-- **Open product choice:** whether non-commercial-only source datasets are acceptable for RoadIQ's prototype; the owner has been asked. Until answered, do not acquire or train with RDD2020.
+- **Open product choice:** none on non-commercial-only use; the owner approved non-commercial licensed sources for the free prototype.
+
+## Task C free/open-source constraint — 2026-10-15
+
+- The owner clarified that all tools and data must be free; paid APIs and paid dataset tiers are out. They also approved non-commercial licenses for this prototype.
+- RDD2020's CC BY-NC 3.0 license is therefore eligible for consideration, but only an India-only partition may be used. Its public metadata lists 1.85 GB total files. Mendeley's file download endpoint returned an internal error while retrieving the small file-structure listing, so no archive or image was fetched.
+- No paid service or dataset export was used. The Kaggle card for BharatPotHole and the other Kaggle source still needs a verifiable license and free-access path.
+- No model/data implementation changed in this step; only documentation was updated. Continue by resolving free India-only image/label access and verify source split grouping before training or evaluation.
