@@ -94,3 +94,23 @@ An authenticated repository owner should push the existing `main` commits, assig
 - **Implementation change:** loader refuses the pinned six-country checkpoint and reports no India-only model configured. Detector mocks remain available for wrapper tests only. No India dataset was downloaded and no training/evaluation metrics are claimed.
 - **Verification:** `PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 /tmp/roadiq-taskc-venv/bin/pytest backend/tests -q` — 21 passed, 1 existing Starlette/AnyIO deprecation warning. `python3 -m py_compile backend/app/services/vision.py backend/app/schemas/image_analysis.py backend/scripts/analyze_road_image.py` passed. `git diff --check` passed. Frontend checks were not run because no frontend files changed.
 - **Push/PR:** `git push origin task/c-computer-vision` failed because this environment has no GitHub HTTPS credentials (`could not read Username for 'https://github.com': No such device or address`). No PR was opened. Commits `aebb91b`, `a31e425`, and `6bed43a` remain local and ahead of origin. Real model training remains blocked on auditable India-only data, split/license review, and model/annotation coverage for aggregate plus metal-fragment targets.
+
+## Task C India-only follow-up — 2026-10-15
+
+- Re-read the required repository instructions, task tracker, handoff, architecture, API, and scoring documents on `task/c-computer-vision`; working tree was clean at the start of this session.
+- Added the public [RSPNet](https://github.com/YLong-maker/RSPNet) IDD segmentation weights as an ROI candidate only. Its README links Semantic-FPN/U-Net `.pth` files and reports mIoU, but this review did not fetch/hash the weights; repository code/weight licensing, preprocessing, and mask semantics are not established. Do not enable it until those are reviewed. Road/drivable masks may not equal the usable pavement area.
+- The user is looking for India road images with distinct stone-aggregate and metal-fragment labels. No data has been received or used yet; no non-Indian imagery or ACAD is permitted.
+- **Current branch tip before this follow-up:** `a936cb1` (`Record non-India dataset exclusion`); branch remains ahead of origin. This update is documentation-only; prior backend verification remains 21 passed with one pre-existing Starlette/AnyIO deprecation warning. `git diff --check` passed for the follow-up documentation changes.
+- **Remaining:** implement reviewed ROI/material/aggregate/metal/defect models and held-out India evaluation once suitable labeled data and reviewed weights are available; coordinate observation mapping with Task A/D. Push and PR remain blocked by absent GitHub credentials (see prior entry).
+
+## Task C user-provided data-source audit — 2026-10-15
+
+- Rechecked the eight links supplied by the owner against the India-only policy. Findings and restrictions are recorded in `docs/VISION_PIPELINE.md`.
+- Siddhesh Roboflow currently lists 7,706 images, CC BY 4.0, and nine RDD-style damage box classes; no aggregate or metal class. India-only image provenance and duplicate-safe splits still need export review.
+- Mendeley RDD2020 is mixed India/Japan/Czechia and CC BY-NC 3.0. Do not use the full set; a verified India-only partition could be considered only if the owner accepts non-commercial-only data.
+- BharatPotHole is described by its associated project as 7,000+ India dashcam pothole frames, but the Kaggle card/license was inaccessible. Treat as a pothole-only candidate pending rights and split review. Mitangshu's Kaggle dataset license and labels were also not independently verified; do not download/use yet.
+- TiHAN describes DriveIndia as an annotated India camera dataset with pothole among its traffic classes, but access requires an EULA/request. It has no aggregate/metal masks. The user's RDS Roboflow debris URL remains inaccessible and generic debris labels cannot identify metal.
+- ThirdEye's Hugging Face record confirms CC BY 4.0 and Delhi NCR coverage, but labels are machine-generated, not human-verified, and access requires acceptance of the repository conditions. Do not use it for gold held-out evaluation.
+- No aggregate/metal-labeled images were received in this update. The owner said they are looking for such labels.
+- **Verification:** web source review only plus `git diff --check`; no data was downloaded and no model trained or evaluated. Existing backend result remains 21 tests passed with one existing deprecation warning.
+- **Open product choice:** whether non-commercial-only source datasets are acceptable for RoadIQ's prototype; the owner has been asked. Until answered, do not acquire or train with RDD2020.

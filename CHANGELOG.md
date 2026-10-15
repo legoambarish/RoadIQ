@@ -1,6 +1,8 @@
 # Changelog
 
 ## Unreleased
+- Audited additional owner-provided India data leads: verified Siddhesh Roboflow damage classes/license, documented mixed-country RDD2020's India-only subset constraints, and flagged Kaggle pothole/road datasets for license and split verification; confirmed TiHAN/DriveIndia access requires an EULA.
+- Added an India-only RSPNet/IDD pavement-ROI checkpoint lead to the Task C audit; weights, label semantics, and license remain unverified and are not enabled.
 - Enforced the project owner's India-only data direction: block the legacy multinational road-damage checkpoint and mark production inference unavailable until an India-only model is reviewed and pinned. Audited India-specific dataset leads and documented limits on geography, labels, licensing, checkpoint availability, and split evidence; ACAD and non-Indian road data are excluded.
 - Added the Task C observation schema and image-analysis service, with safe input validation, explicit unavailable measurements, separate stone-aggregate/metal-fragment fields, and a mockable RF-DETR adapter.
 - Originally added pinned optional RF-DETR setup/download workflow; this checkpoint is now blocked because it was trained on multinational data, and no India-only checkpoint is active.
