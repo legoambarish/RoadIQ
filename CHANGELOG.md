@@ -1,10 +1,11 @@
 # Changelog
 
 ## Unreleased
+- Added a sticky, responsive dashboard control dock with all five full travel-profile names and the Everyday/Engineer switch visible while scrolling; refined spacing and a comfortable sage/forest palette while preserving a distinct Engineer theme.
 - Reworked Everyday and Engineer into distinct assessment experiences: Everyday gets profile-specific plain-language briefs; Engineer gets evidence/status/provenance tables and record-readiness audits. Surface condition, mode suitability, and pedestrian infrastructure remain separate, with all fixture values identified as illustrative.
 - Updated the Task B branch against the latest `main` integration checklist and refreshed the Task B/C/D status from their current branches. No score formula, API contract, backend scorer, or Task C inference code changed.
 - Added Task D integration preparation with a cross-task field audit, unresolved mapping proposals, end-to-end failure scenarios, and verified environment requirements. No route, shared contract, or end-to-end integration is claimed.
-- Updated live task status: Task A PR #1, original Task B dashboard PR #2, and Task D checklist PR #3 are merged. Task B mode-view follow-up is published in PR #5; Task C has an India-only segmentation experiment on its branch but no active trained checkpoint or PR.
+- Updated live task status: Task A PR #1, Task B dashboard PR #2, Task B view distinction PR #5, and Task D checklist PR #3 are merged. Task C has an India-only experimental baseline and evaluation scaffold on its branch but no active trained checkpoint or PR. The RDD2022 detector remains disabled under the India-only policy, not for technical incompatibility.
 
 - Added the Task A deterministic candidate RSQI scoring service with configurable weights and labels, fixed surface/capture-specific reference normalization, strict evidence gates, auditable component contributions, null confidence/coverage, and null mode-suitability outputs. No RoadIQ normalization references, inference, API route, or calibrated evaluation are claimed.
 - Added focused scoring tests for the formula, thresholds, normalization, evidence gates, units/provenance, deterministic output, mode outputs, and proposed API object shape.
