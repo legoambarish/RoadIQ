@@ -1,6 +1,8 @@
 # Changelog
 
 ## Unreleased
+- Recorded the owner's free-only tool/data constraint and approval of non-commercial data for the prototype; noted Mendeley archive retrieval failure and retained the India-only partition restriction.
+- Expanded the India-only ROI/pothole lead with the free e-Yantra/IIT Bombay Indian Roads segmentation dataset facts and GPL-2.0 license; no data or weights were downloaded.
 - Audited additional owner-provided India data leads: verified Siddhesh Roboflow damage classes/license, documented mixed-country RDD2020's India-only subset constraints, and flagged Kaggle pothole/road datasets for license and split verification; confirmed TiHAN/DriveIndia access requires an EULA.
 - Added an India-only RSPNet/IDD pavement-ROI checkpoint lead to the Task C audit; weights, label semantics, and license remain unverified and are not enabled.
 - Enforced the project owner's India-only data direction: block the legacy multinational road-damage checkpoint and mark production inference unavailable until an India-only model is reviewed and pinned. Audited India-specific dataset leads and documented limits on geography, labels, licensing, checkpoint availability, and split evidence; ACAD and non-Indian road data are excluded.
