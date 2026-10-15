@@ -6,7 +6,7 @@ RoadIQ is a hackathon prototype whose primary objective is image-based road-surf
 - Frontend scaffold: React + TypeScript + Vite
 - Backend scaffold: FastAPI + Pydantic
 - Computer vision: placeholder module only; no image inference exists
-- Scoring: provisional image-feature RSQI proposal only; no scoring engine exists
+- Scoring: deterministic provisional RSQI scorer exists in `backend/app/services/scoring.py`; default normalization references are intentionally empty, so scoring remains `unrated` until fixed surface-type/capture-specific references and adequate component evidence are supplied
 - Dataset/evaluation: no labelled RoadIQ dataset or held-out evaluation metrics are available
 - Mapping: Leaflet-based boundary ready for future provider swap
 - Testing: backend pytest checks and frontend build/type validation
@@ -79,7 +79,7 @@ The initial backend exposes a versioned health endpoint:
 
 The endpoint returns a simple status payload and intentionally avoids external dependencies, model downloads, or network calls.
 
-Road-segment retrieval and image-analysis routes are planned but are not implemented. The backend validates the existing segment contract; it does not accept images, perform inference, or calculate scores. The provisional image-analysis response shape and measurement rules are documented in [`docs/API_CONTRACT.md`](docs/API_CONTRACT.md); the scoring and dataset/evaluation proposal is in [`docs/SCORING_SPEC.md`](docs/SCORING_SPEC.md).
+Road-segment retrieval and image-analysis routes are planned but are not implemented. The backend validates the existing segment contract; it does not accept images or perform inference. Scoring is available only through the provisional candidate service described in [`docs/SCORING_SPEC.md`](docs/SCORING_SPEC.md). The proposed image-analysis response shape and measurement rules are documented in [`docs/API_CONTRACT.md`](docs/API_CONTRACT.md); there is no image API or held-out evaluation.
 
 ## Core demo workflow (planned, not yet available)
 

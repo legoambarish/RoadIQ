@@ -2,7 +2,7 @@
 
 ## Status and scope
 
-This is a provisional hackathon contract, not a validated engineering standard or an implemented production scorer. The backend currently validates the segment data shape; it does not accept or analyse images and does not calculate a score. Image-based pavement structure and visible distress—especially stone aggregates, their boundaries and gaps, texture, aggregate loss, and defects—are the primary product objective. Mapping and mode dashboards are secondary.
+This is a provisional hackathon contract, not a validated engineering standard or production scorer. The backend includes a standalone candidate scorer, but the HTTP API does not accept or analyse images and no vision pipeline supplies it with measurements. Image-based pavement structure and visible distress—especially stone aggregates, their boundaries and gaps, texture, aggregate loss, and defects—are the primary product objective. Mapping and mode dashboards are secondary.
 
 The existing segment contract is implemented in `backend/app/schemas/road_segment.py` and mirrored by `frontend/src/types/road-segment.ts`. The richer image-analysis result below is proposed and requires coordinated schema/API implementation; no image-analysis endpoint currently exists. See [API_CONTRACT.md](./API_CONTRACT.md).
 
@@ -141,6 +141,12 @@ For each feature, normalization must be defined against versioned, labelled refe
 The reference ranges, class-specific handling, feature extractors, annotation rubric, and configuration version are not yet agreed. A feature that cannot be extracted reliably or normalized comparably is null. Do not adjust or renormalize weights around missing features. The candidate full index is `unrated` if any required component `V/L/G/T/M` is unavailable, the surface type is unknown where the component depends on it, the image-quality gate fails, or usable area/resolution is inadequate. A future, explicitly versioned alternative may be proposed, but cannot silently treat absent evidence as no damage.
 
 No values for `V/L/G/T/M`, weights, normalizations, thresholds, or confidence are validated today. Task A owns index implementation and must version the weights/normalization; Task C owns extracting image observations and documenting model/output provenance; Task D coordinates held-out evaluation. The existing `damage_components` fields are the current generic scaffold, not a complete image-analysis response contract.
+
+### Task A scorer implementation boundary
+
+`backend/app/services/scoring.py` implements the candidate weighting and label formula as a deterministic service. `score_surface_quality` accepts one explicitly-unit-tagged component measurement for each of `visible_defect_burden`, `aggregate_loss`, `gap_anomaly`, `texture_anomaly`, and `aggregate_distribution_anomaly`, together with upstream image-quality, usable-region, resolution, surface-type, and capture-profile gate decisions. A caller-supplied `ScoringConfig` must provide fixed normalization profiles keyed by surface type and capture profile; each profile contains component-specific units and reference intervals plus a reference-set identifier. Normalization clamps to `[0,100]` and follows the configured damage direction. The service never fits ranges per image/cohort and never renormalizes weights.
+
+The default configuration deliberately contains no normalization references. The scorer therefore returns `unrated` unless a complete applicable profile and all required evidence are supplied. The current repository has no labelled dataset from which to supply or validate RoadIQ reference ranges. Confidence and spatial evidence coverage remain null because their calibration method and denominator are unresolved. Mode suitability for walking, cycling, two-wheeler, car, and bus remains null because no mode-specific formulas/evidence requirements have been agreed. The `rsqi` model serializes to the proposed `API_CONTRACT.md` RSQI object; labels, scoring-config version, and nullable mode outputs are returned as adjacent service metadata for callers that also consume the segment contract.
 
 ### Provisional labels
 
