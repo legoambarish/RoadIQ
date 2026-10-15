@@ -1,5 +1,13 @@
 import { useEffect, useState, type ChangeEvent, type DragEvent } from 'react'
 
+const rsqiComponents = [
+  { label: 'Visible defect burden', weight: '35%' },
+  { label: 'Aggregate loss', weight: '20%' },
+  { label: 'Gap anomaly', weight: '15%' },
+  { label: 'Texture anomaly', weight: '15%' },
+  { label: 'Aggregate distribution anomaly', weight: '15%' },
+]
+
 export function ImageReportPanel() {
   const [file, setFile] = useState<File | null>(null)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
@@ -61,19 +69,34 @@ export function ImageReportPanel() {
         <div className="image-result-card">
           <div className="result-header">
             <div><div className="section-kicker">Analysis report</div><h3>Unrated</h3></div>
-            <span className="unrated-pill">NO RESULT</span>
+            <span className="unrated-pill">SCORER NOT CONNECTED</span>
           </div>
-          <p className="result-explanation">No inference has run. A selected image does not produce a road score until a reviewed image-analysis API and scorer are connected.</p>
+          <p className="result-explanation">The backend now contains a provisional, evidence-gated RSQI scorer. This dashboard does not call it: there is no image-analysis API, and the default scorer has no fixed normalization references. It returns Unrated until all required evidence and reviewed references are available.</p>
           <div className="result-index-row"><span>Road Surface Quality Index</span><strong>— <small>/100</small></strong></div>
           <div className="report-evidence-grid">
-            <div><span>Image quality / pavement region</span><strong>Unavailable</strong></div>
-            <div><span>Surface type</span><strong>Unknown</strong></div>
-            <div><span>Aggregates / metal fragments</span><strong>Unavailable</strong></div>
-            <div><span>Defects / texture proxies</span><strong>Unavailable</strong></div>
-            <div><span>Confidence / coverage</span><strong>Unavailable</strong></div>
-            <div><span>Annotated overlay</span><strong>Unavailable</strong></div>
+            <div><span>Image quality / pavement region</span><strong>Not analyzed</strong></div>
+            <div><span>Surface type</span><strong>Not classified</strong></div>
+            <div><span>Stone aggregates</span><strong>No validated model</strong></div>
+            <div><span>Metal fragments</span><strong>Separate target · unavailable</strong></div>
+            <div><span>Defects / texture proxies</span><strong>Not connected</strong></div>
+            <div><span>Confidence / coverage / overlay</span><strong>Unavailable</strong></div>
           </div>
-          <div className="component-unavailable"><strong>Score contributions</strong><span>Every component is unavailable. Missing evidence is not treated as zero.</span></div>
+          <div className="rsqi-breakdown">
+            <div className="rsqi-breakdown-heading">
+              <strong>Candidate RSQI weighting</strong>
+              <span>Provisional · not validated</span>
+            </div>
+            <ul>
+              {rsqiComponents.map((component) => (
+                <li key={component.label}>
+                  <span>{component.label}</span>
+                  <strong>{component.weight}</strong>
+                  <small>Contribution unavailable</small>
+                </li>
+              ))}
+            </ul>
+            <p>RSQI = 100 − weighted damage. Missing evidence stays unavailable; weights are not redistributed.</p>
+          </div>
           <p className="report-limitation">Image texture is not physical roughness or IRI. A 2D image cannot establish strength, skid resistance, or travel safety.</p>
         </div>
       </div>

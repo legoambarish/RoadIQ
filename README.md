@@ -1,12 +1,12 @@
 # RoadIQ
 
-RoadIQ is a hackathon prototype whose primary objective is image-based road-surface quality assessment. The planned image analysis focuses on visible pavement structure—individual stone aggregates, aggregate boundaries/gaps and coverage, surface texture, and deterioration. Mapping and transport-mode dashboards are secondary. Literal metal fragments are a separate analysis target from stone aggregates per the project owner’s direction.
+RoadIQ is a hackathon prototype whose primary objective is image-based road-surface quality assessment. Image analysis focuses on visible pavement structure—individual stone aggregates, their boundaries/gaps and coverage, surface texture, and deterioration. Literal metal fragments are a separate analysis target from stone aggregates. Mapping and transport-mode dashboards are secondary.
 
 ## Current status
-- Frontend: React + TypeScript + Vite dashboard with an interactive schematic map, five illustrative travel-profile overlays, filters, rankings, charts, Everyday/Engineer segment details, and a local-only image preview shell
+- Frontend: React + TypeScript + Vite dashboard with an interactive schematic map, five illustrative travel-profile overlays, filters, rankings, charts, distinct Everyday/Engineer assessment views, and a local-only image preview shell
 - Backend scaffold: FastAPI + Pydantic
-- Computer vision: Task C validates images and extracts a named pixel-texture proxy; an experimental India-only road/pothole segmentation trainer and optional RLE masks are implemented, but no trained checkpoint is active. Aggregate/material analysis, damage detector, and HTTP image route remain unavailable
-- Scoring: provisional image-feature RSQI proposal only; no scoring engine exists
+- Computer vision: Task C provides image validation, heuristic quality observations, a named pixel-texture proxy, an experimental India-only road/pothole segmentation trainer, and optional RLE masks. No trained checkpoint is active; aggregate/material analysis, validated damage detection, and an HTTP image route remain unavailable.
+- Scoring: a deterministic provisional RSQI scorer exists in `backend/app/services/scoring.py`. Its default normalization references are intentionally empty, so it returns `unrated` until fixed references and adequate component evidence are supplied. Weights and label cutoffs remain unvalidated hypotheses.
 - Dataset/evaluation: no labelled RoadIQ dataset or held-out evaluation metrics are available
 - Mapping: Leaflet-based boundary ready for future provider swap
 - Testing: backend pytest checks include image-validation and inference-wrapper cases; frontend build/type validation remains available

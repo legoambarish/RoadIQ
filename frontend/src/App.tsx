@@ -2,10 +2,11 @@ import { useEffect, useMemo, useState } from 'react'
 import './App.css'
 import { DashboardCharts } from './components/DashboardCharts'
 import { ImageReportPanel } from './components/ImageReportPanel'
+import { ModeAssessmentPanel } from './components/ModeAssessmentPanel'
 import { SegmentMap } from './components/SegmentMap'
 import { demoRoadRecords, getOverlayValue, overlayLabel, scoreTone, travelModes, type DemoRoadRecord, type OverlayKey } from './data/demoRoadSegments'
 import { fetchHealth } from './lib/api'
-import type { QualityLabel, RoadSegment } from './types/road-segment'
+import type { QualityLabel, RoadSegment, TravelMode } from './types/road-segment'
 
 type DashboardView = 'everyday' | 'engineer'
 type HealthStatus = 'loading' | 'ok' | 'error'
@@ -24,10 +25,6 @@ function formatScore(value: number | null): string {
   return value === null ? '—' : `${Math.round(value)}`
 }
 
-function formatDate(value: string): string {
-  return new Date(value).toLocaleDateString('en', { day: '2-digit', month: 'short', year: 'numeric' })
-}
-
 function HealthBadge({ status }: { status: HealthStatus }) {
   const label = status === 'ok' ? 'API online · health only' : status === 'error' ? 'API offline · demo mode' : 'Checking API…'
   return <span className={`health-badge ${status}`}><i />{label}</span>
@@ -43,10 +40,9 @@ function MetricCard({ label, value, detail, icon, tone = '' }: { label: string; 
   )
 }
 
-function SegmentDetail({ record, view, overlay }: { record: DemoRoadRecord; view: DashboardView; overlay: OverlayKey }) {
+function SegmentDetail({ record, view, profileMode }: { record: DemoRoadRecord; view: DashboardView; profileMode: TravelMode }) {
   const { segment } = record
   const qualityTone = scoreTone(segment.surface_quality_score)
-  const activeValue = getOverlayValue(record, overlay)
 
   return (
     <section className="detail-card" aria-labelledby="detail-heading">
@@ -59,15 +55,9 @@ function SegmentDetail({ record, view, overlay }: { record: DemoRoadRecord; view
         <span className={`quality-chip ${qualityTone}`}>{qualityLabel(segment)}</span>
       </div>
 
-      <div className={`detail-score ${qualityTone}`}>
-        <div>
-          <span>{overlay === 'surface_quality_score' ? 'Road quality' : `${overlayLabel(overlay)} profile`}</span>
-          <small>{segment.assessment_status === 'unrated' ? 'No assessment available' : 'Illustrative demo score · out of 100'}</small>
-        </div>
-        <strong>{activeValue === null ? '—' : Math.round(activeValue)}<small>{activeValue === null ? '' : '/100'}</small></strong>
-      </div>
-
       <p className="detail-note">{record.note}</p>
+
+      <ModeAssessmentPanel record={record} mode={profileMode} view={view} />
 
       <div className="profile-list">
         <div className="subsection-heading"><strong>Travel profiles</strong><span>Illustrative fixtures</span></div>
@@ -83,32 +73,6 @@ function SegmentDetail({ record, view, overlay }: { record: DemoRoadRecord; view
         })}
       </div>
 
-      {view === 'everyday' ? (
-        <div className="everyday-callout">
-          <span className="callout-icon">i</span>
-          <p>Condition and travel suitability are separate. These demo values do not establish safety or accessibility.</p>
-        </div>
-      ) : (
-        <div className="engineer-detail">
-          <div className="subsection-heading"><strong>Evidence & provenance</strong><span>Contract fields</span></div>
-          <div className="evidence-grid">
-            <div><span>Assessment</span><strong>{segment.assessment_status}</strong></div>
-            <div><span>Surveyed</span><strong>{formatDate(segment.surveyed_at)}</strong></div>
-            <div><span>Confidence</span><strong>{segment.confidence === null ? 'Unavailable' : `${Math.round(segment.confidence * 100)}%`}</strong></div>
-            <div><span>Coverage</span><strong>{segment.evidence_coverage === null ? 'Unavailable' : `${Math.round(segment.evidence_coverage * 100)}%`}</strong></div>
-            <div><span>Defects / image</span><strong>{segment.measurements.defect_count.value ?? 'Unavailable'}</strong></div>
-            <div><span>IRI / roughness</span><strong>{segment.measurements.roughness_iri.value === null ? 'Unavailable' : `${segment.measurements.roughness_iri.value} m/km`}</strong></div>
-          </div>
-          <div className="provenance-note"><strong>Source:</strong> {segment.survey_source}. Numeric demo values are illustrative only; no live segment API is connected.</div>
-          <div className="component-strip" aria-label="Illustrative damage component values">
-            {Object.entries(segment.damage_components).map(([key, value]) => (
-              <span key={key}><small>{key.replaceAll('_', ' ')}</small><strong>{value === null ? '—' : `${Math.round(value)}`}</strong></span>
-            ))}
-          </div>
-          <p className="chart-note">Component values are arbitrary UI fixtures; they are not produced by Task A’s scoring engine.</p>
-        </div>
-      )}
-
       <div className="detail-footer"><span>Geometry: GeoJSON LineString</span><span>Source tag: demo_fixture</span></div>
     </section>
   )
@@ -117,6 +81,7 @@ function SegmentDetail({ record, view, overlay }: { record: DemoRoadRecord; view
 function App() {
   const [view, setView] = useState<DashboardView>('everyday')
   const [overlay, setOverlay] = useState<OverlayKey>('surface_quality_score')
+  const [profileMode, setProfileMode] = useState<TravelMode>('two_wheeler')
   const [search, setSearch] = useState('')
   const [qualityFilter, setQualityFilter] = useState('all')
   const [minimumScore, setMinimumScore] = useState('all')
@@ -217,7 +182,7 @@ function App() {
             <div className="overlay-switch" role="group" aria-label="Map overlay">
               <button type="button" className={overlay === 'surface_quality_score' ? 'active' : ''} aria-pressed={overlay === 'surface_quality_score'} onClick={() => setOverlay('surface_quality_score')}>Road quality</button>
               {travelModes.map((mode) => (
-                <button type="button" key={mode.key} className={overlay === mode.key ? 'active' : ''} aria-pressed={overlay === mode.key} onClick={() => setOverlay(mode.key)}><span>{mode.icon}</span>{mode.shortLabel}</button>
+                <button type="button" key={mode.key} className={overlay === mode.key ? 'active' : ''} aria-pressed={overlay === mode.key} onClick={() => { setOverlay(mode.key); setProfileMode(mode.key) }}><span>{mode.icon}</span>{mode.shortLabel}</button>
               ))}
             </div>
             <div className="filter-controls">
@@ -268,8 +233,8 @@ function App() {
 
         {selectedRecord ? (
           <section className="insight-grid" aria-label="Segment details and insights">
-            <SegmentDetail record={selectedRecord} view={view} overlay={overlay} />
-            <DashboardCharts records={filteredRecords} />
+            <SegmentDetail record={selectedRecord} view={view} profileMode={profileMode} />
+            <DashboardCharts records={filteredRecords} view={view} />
           </section>
         ) : (
           <section className="filtered-empty"><strong>No segment selected</strong><span>Adjust your filters to explore the demo network.</span></section>
