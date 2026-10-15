@@ -80,6 +80,8 @@ def test_segmentation_inference_returns_rle_and_keeps_instance_count_unavailable
     report = analyze_road_image(buffer.getvalue(), segmentation_model=FakeSegmentationModel())
     ImageAnalysisResponse.model_validate(report)
     pothole = next(item for item in report["defects"] if item["class"] == "pothole")
+    assert report["aggregate_analysis"]["surface_region"]["road_roi_applied"] is True
+    assert report["aggregate_analysis"]["analysis_type"] == "road_roi_gated_texture_candidates"
     assert report["pavement_region"]["mask_rle"]["foreground_label"] == "road"
     assert pothole["mask_rle"]["foreground_label"] == "pothole"
     assert pothole["count"]["value"] is None

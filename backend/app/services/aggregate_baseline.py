@@ -71,7 +71,7 @@ def _boundary_length(mask: Image.Image) -> int:
     return perimeter
 
 
-def _annotated_data_uri(image: Image.Image, mask: Image.Image) -> str:
+def _annotated_data_uri(image: Image.Image, mask: Image.Image, *, roi_gated: bool = False) -> str:
     preview = image.copy()
     scale = min(1.0, MAX_ANNOTATION_EDGE / max(preview.size))
     if scale < 1:
@@ -84,15 +84,30 @@ def _annotated_data_uri(image: Image.Image, mask: Image.Image) -> str:
     tint.putalpha(mask.point(lambda pixel: 105 if pixel else 0))
     annotated = Image.alpha_composite(preview.convert("RGBA"), tint)
     draw = ImageDraw.Draw(annotated)
-    draw.rectangle((8, 8, min(348, annotated.width - 1), 34), fill=(20, 28, 30, 220))
-    draw.text((14, 14), "TEXTURE CANDIDATE · NOT PARTICLE SEGMENTATION", fill=(255, 255, 255, 255))
+    label = (
+        "ROAD-GATED TEXTURE · NOT PARTICLE SEGMENTATION"
+        if roi_gated
+        else "TEXTURE CANDIDATE · NOT PARTICLE SEGMENTATION"
+    )
+    label_box = draw.textbbox((0, 0), label)
+    label_width = label_box[2] - label_box[0]
+    label_height = label_box[3] - label_box[1]
+    draw.rectangle(
+        (8, 8, min(20 + label_width, annotated.width - 1), min(14 + label_height, annotated.height - 1)),
+        fill=(20, 28, 30, 220),
+    )
+    draw.text((14, 14), label, fill=(255, 255, 255, 255))
     buffer = io.BytesIO()
     annotated.convert("RGB").save(buffer, format="JPEG", quality=82, optimize=True)
     return "data:image/jpeg;base64," + base64.b64encode(buffer.getvalue()).decode("ascii")
 
 
-def analyze_aggregate_texture_regions(image: Image.Image) -> dict[str, Any]:
-    """Return conservative image-space texture candidates, never an aggregate count."""
+def analyze_aggregate_texture_regions(
+    image: Image.Image,
+    *,
+    pavement_mask: Image.Image | None = None,
+) -> dict[str, Any]:
+    """Return conservative texture candidates, optionally constrained by a road ROI."""
     rgb = image.convert("RGB")
     scale = min(1.0, MAX_ANALYSIS_EDGE / max(rgb.size))
     analysis = rgb if scale == 1 else rgb.resize(
@@ -105,6 +120,10 @@ def analyze_aggregate_texture_regions(image: Image.Image) -> dict[str, Any]:
     candidate = high_frequency.point(lambda pixel: 255 if pixel > threshold else 0)
     # Remove isolated single-pixel noise and close tiny gaps without inventing instances.
     candidate = candidate.filter(ImageFilter.MaxFilter(3)).filter(ImageFilter.MinFilter(3))
+    roi_gated = pavement_mask is not None
+    if pavement_mask is not None:
+        road_roi = pavement_mask.convert("L").resize(candidate.size, Image.Resampling.NEAREST)
+        candidate = ImageChops.multiply(candidate, road_roi.point(lambda pixel: 255 if pixel else 0))
     candidate_pixels = candidate.histogram()[255]
     area = candidate.width * candidate.height
     bbox = _bbox(candidate)
@@ -122,7 +141,9 @@ def analyze_aggregate_texture_regions(image: Image.Image) -> dict[str, Any]:
     ratio = candidate_pixels / area if area else 0.0
     return {
         "segmentation_status": "estimated",
-        "analysis_type": "aggregate_rich_surface_region_candidates",
+        "analysis_type": (
+            "road_roi_gated_texture_candidates" if roi_gated else "aggregate_rich_surface_region_candidates"
+        ),
         "method": METHOD,
         "training_status": "untrained_baseline",
         "individual_particles_segmented": False,
@@ -140,6 +161,7 @@ def analyze_aggregate_texture_regions(image: Image.Image) -> dict[str, Any]:
             "confidence": None,
             "confidence_status": "uncalibrated",
             "pixel_boundary_length": _boundary_length(candidate),
+            "road_roi_applied": roi_gated,
         },
         "size_distribution": {"value": None, "unit": "pixel_distribution", "status": "unavailable", "source": None,
                               "reason": "individual aggregate boundaries are not identified"},
@@ -158,6 +180,8 @@ def analyze_aggregate_texture_regions(image: Image.Image) -> dict[str, Any]:
             "Texture candidates are not confirmed pavement or aggregate regions.",
             "The baseline has no learned weights and has not been evaluated on held-out labeled images.",
             "No individual aggregate count, size, coverage, gap, or physical measurement is produced.",
-        ],
-        "annotated_image_data_uri": _annotated_data_uri(rgb, candidate),
+        ] + ([
+            "Candidates were gated by the configured semantic road mask; that ROI model is experimental and uncalibrated."
+        ] if roi_gated else []),
+        "annotated_image_data_uri": _annotated_data_uri(rgb, candidate, roi_gated=roi_gated),
     }

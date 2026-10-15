@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-16 — Optional Task C road-ROI gating
+
+- When an India-road semantic segmentation checkpoint is explicitly configured, constrain high-frequency texture candidates and their preview to the predicted road region. The default remains the existing ungated texture baseline.
+- Label ROI-gated previews and structured results as experimental, uncalibrated road-gated texture candidates; aggregate counts, confidence, and physical measurements remain unavailable.
+- Added focused tests for mask intersection, default behavior, and integration through the existing image-analysis service.
+
 ## 2026-10-16 — Task C demonstrable baseline
 
 - Fixed annotated-preview mask scaling when the source image exceeds the 512-pixel analysis resolution; larger valid images now produce previews instead of failing during alpha composition.

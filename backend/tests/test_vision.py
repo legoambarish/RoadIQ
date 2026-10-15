@@ -78,6 +78,7 @@ def test_valid_image_produces_contract_payload_and_pixel_boxes() -> None:
     assert aggregate["training_status"] == "untrained_baseline"
     assert aggregate["individual_particles_segmented"] is False
     assert aggregate["surface_region"]["confidence"] is None
+    assert aggregate["surface_region"]["road_roi_applied"] is False
     assert BinaryRLEMask.model_validate(aggregate["surface_region"]["mask_rle"])
     assert aggregate["surface_region"]["bbox_xyxy_px"] is not None
     assert report["annotated_image"]["status"] == "estimated"

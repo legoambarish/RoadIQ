@@ -9,6 +9,13 @@
 - **Remaining integration:** browser upload/report display belongs to Task B; the image-analysis HTTP endpoint belongs to Task D. Task C exposes the local image-analysis service and demo CLI but does not cross those task boundaries.
 - **Next:** keep outputs explicitly unrated until reviewed India-only labels and held-out evaluation are available; integrate the service through the agreed B/D contract when those owners complete their parts.
 
+## Optional road-ROI-gated preview — 2026-10-16
+
+- When `ROADIQ_SEGMENTATION_MODEL_PATH` points to an India-only semantic road checkpoint, the service now intersects the untrained high-frequency candidate mask with its predicted road-class mask. The default remains ungated if no checkpoint is configured. The report marks `road_roi_applied`, changes the analysis type to `road_roi_gated_texture_candidates`, and adds an experimental/uncalibrated limitation; the preview label explicitly says it is not particle segmentation.
+- Verified qualitatively on a published validation-sequence frame (`1_017_frame0280_leftImg8bit.jpg`). The temporary 10-epoch CPU feasibility checkpoint predicted a 0.478 road-area ratio against 0.719 in the semantic label (per-frame IoU 0.602); this confirms the ROI is imperfect and must remain optional. The resulting candidate-area ratio was 0.09963. These are not aggregate metrics and are not a held-out RoadIQ aggregate evaluation.
+- Focused tests: `PYTHONPATH=backend /tmp/roadiq-venv/bin/python -m pytest -q -p no:cacheprovider backend/tests/test_aggregate_baseline.py backend/tests/test_aggregate_evaluation.py backend/tests/test_dataset_manifest.py backend/tests/test_demo_image.py backend/tests/test_demo_road_image.py backend/tests/test_india_road_segmentation.py backend/tests/test_vision.py` — 29 passed, 2 skipped. `git diff --check` passes. The real-frame demo also produced `/tmp/roadiq-demo-india-val-masked/annotated-preview.jpg` and `analysis-report.json`; the sample input/checkpoint are not bundled.
+- No frontend or HTTP endpoint changes. Tasks B/D still own browser upload and API integration. The image-analysis output remains unrated; aggregate counting and calibrated confidence remain unavailable.
+
 ## Current Task C demo update — 2026-10-16
 
 - **Branch/base:** `task/c-computer-vision`, at `08d447d` before this update; this branch is the assigned Task C branch and its base is contained in merged PR #4. Task C owner remains unrecorded.
