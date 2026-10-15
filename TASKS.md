@@ -10,7 +10,7 @@
 
 ## Core product objective
 
-RoadIQ is primarily an image-based road-surface quality assessment prototype. Its core image engine should analyze pavement region/quality, individual visible stone aggregates (provisionally interpreting “metal chips” as aggregates, pending owner confirmation), aggregate boundaries/gaps/coverage/loss, image texture, and visible deterioration. Map and travel-mode dashboard features are secondary. Support asphalt/bituminous and cement-concrete when evidence supports them; otherwise return unknown. Current software remains a scaffold: no image analysis, RSQI scorer, report UI, image API, or held-out model evaluation is implemented.
+RoadIQ is primarily an image-based road-surface quality assessment prototype. Its core image engine should analyze pavement region/quality, individual visible stone aggregates (provisionally interpreting “metal chips” as aggregates, pending owner confirmation), aggregate boundaries/gaps/coverage/loss, image texture, and visible deterioration. Map and travel-mode dashboard features are secondary. Support asphalt/bituminous and cement-concrete when evidence supports them; otherwise return unknown. A provisional RSQI scoring service is implemented on `task/a-scoring-engine` and is under review in PR #1. Image analysis, report UI, image API, and held-out model evaluation are not implemented.
 
 ## Contract baseline
 
@@ -56,13 +56,16 @@ RoadIQ is primarily an image-based road-surface quality assessment prototype. It
 - [x] Actual health endpoint is distinguished from planned segment retrieval endpoints.
 - [x] Task boundaries, file ownership, dependencies, and outcomes are specified without implementing all four tasks.
 
-### Task A — scoring (planned)
+### Task A — scoring (implemented; PR #1 open; calibration dependencies remain)
 
-- [ ] Implements configurable, versioned candidate image-feature index and exposes every component contribution; initial weights remain hypotheses pending evaluation.
-- [ ] Uses surface-type/capture-aware normalization, with frozen training references and no per-image/test-cohort normalization.
-- [ ] Returns `unrated` with null score when required image quality, usable ROI, material-specific features, or component evidence is absent; never fills missing values with zero or renormalizes weights silently.
-- [ ] Separates surface condition from vehicle/pedestrian suitability; produces transparent score reasons and calibrated confidence only.
-- [ ] Tests formula, normalization boundaries, configuration/version, missing evidence, unknown surface type, confidence/status, and label cutoffs.
+- [x] Implements configurable, versioned candidate image-feature index and exposes every component contribution; initial weights remain hypotheses pending evaluation.
+- [x] Selects fixed normalization profiles by surface type and capture profile; never normalizes per image/test cohort. RoadIQ training-derived ranges remain unavailable until a labelled dataset is prepared and reviewed.
+- [x] Returns `unrated` with null score when required image quality, usable ROI, material-specific references, resolution, or component evidence is absent; never fills missing values with zero or renormalizes weights silently.
+- [x] Separates surface condition from vehicle/pedestrian suitability; mode scores remain null because formulas/evidence rules are unresolved. Confidence and evidence coverage remain null until calibrated.
+- [x] Tests formula, normalization boundaries, configuration/version, missing evidence, unknown surface type, confidence/status, mode outputs, and label cutoffs.
+- [ ] Supply and validate frozen RoadIQ normalization ranges and confidence/coverage calibration against a labelled dataset; no such dataset currently exists.
+
+Task A implementation is on `task/a-scoring-engine` in `backend/app/services/scoring.py` with focused tests in `backend/tests/test_scoring.py`. PR #1 is open against `main`. It provides a scorer/API boundary only and does not implement Task C feature extraction or Task D API routes/evaluation.
 
 ### Task B — map and dashboard (in progress)
 

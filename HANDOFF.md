@@ -2,59 +2,48 @@
 
 ## Date/time and task owner
 
-- Date/time: 2026-10-15 13:53 UTC
-- Task owner: Core requirements alignment
+- Date/time: 2026-10-15 21:14 Asia/Calcutta
+- Task: A - scoring engine
+- Human owner: not assigned in `TASKS.md`; review is pending.
 
-## Current branch and latest commit hash
+## Current branch and implementation commit
 
-- Branch: `main`
-- Base commit: `a0df601` (`Record coordination workflow handoff`), verified after fetching `origin`.
-- Alignment commit: `3a4f776` (`Align RoadIQ requirements around image analysis`); handoff metadata commit: `3950cb6` (`Record image-analysis alignment handoff`).
-- Push: attempted `git push origin main`; blocked because Git could not obtain a password/credential. Local `main` is ahead of `origin/main`; push must be performed by an authenticated repository owner.
+- Branch: `task/a-scoring-engine`
+- Base: `8b0df94` (`origin/main`), fetched before implementation; the working tree was clean.
+- Task implementation commit: `8bfba348270b4d0cd9fe0350f08cc84954a42f62` (`Implement provisional RSQI scoring service`).
+- Push: succeeded; `origin/task/a-scoring-engine` tracks the published task branch.
+- Pull request: [#1 — Implement provisional RSQI scoring service](https://github.com/Sine-Ads/RoadIQ/pull/1), open against `main`.
 
-## Goal and completed work
+## Completed work
 
-- Recentered the product objective on image-based pavement analysis, especially visible stone aggregates, aggregate boundaries/gaps, surface texture, aggregate-loss indicators, and deterioration.
-- Documented a candidate image-feature RoadIQ Surface Quality Index (RSQI), evidence/confidence rules, calibration limits, labelled dataset structure, grouped split hygiene, and held-out evaluation metrics.
-- Updated task ownership: C aggregate/image analysis, A scoring, B frontend/reporting, D integration/evaluation. Existing branch names are preserved.
-- Updated the architecture pipeline, proposed image-analysis API payload, README core demo goal/limitations, task acceptance criteria, and changelog.
-- No image-analysis, scoring, frontend, API route, dataset, or evaluation implementation was started. No model metrics are available or claimed.
+- Added `backend/app/services/scoring.py`: typed inputs, finite/unit/provenance validation, fixed surface-type and capture-profile normalization references, configurable versioned weights/labels, formula and contribution explanations, evidence gates, and `unrated` behavior without imputing missing values or renormalizing weights.
+- The default config has no normalization references and therefore returns `unrated`. No RoadIQ training-derived reference ranges or calibration are claimed.
+- Confidence and spatial evidence coverage remain null. Walking, cycling, two-wheeler, car, and bus suitability remain null because their formulas and evidence requirements are unresolved.
+- The `rsqi` payload serializes to the proposed object in `docs/API_CONTRACT.md`. No shared runtime schema, HTTP route, frontend code, or dependency manifest changed.
+- Updated `TASKS.md`, `CHANGELOG.md`, `README.md`, `docs/SCORING_SPEC.md`, and `docs/ARCHITECTURE.md` to reflect the implementation and limits.
 
 ## Files changed
 
+- `backend/app/services/scoring.py`
+- `backend/tests/test_scoring.py`
 - `TASKS.md`
+- `CHANGELOG.md`
+- `README.md`
 - `docs/SCORING_SPEC.md`
 - `docs/ARCHITECTURE.md`
-- `docs/API_CONTRACT.md`
-- `README.md`
-- `CHANGELOG.md`
 - `HANDOFF.md`
 
-## Tests/builds run and actual results
+## Verification
 
-- `.venv/bin/pytest backend/tests -q` — passed, 9 tests; one Starlette deprecation warning for `anyio.abc.BlockingPortal`.
-- `cd frontend && npm run build && npm run lint` — passed; TypeScript/Vite production build and oxlint succeeded.
-- Parsed fenced JSON examples in `docs/API_CONTRACT.md` and `docs/SCORING_SPEC.md` with Python's standard JSON parser — passed.
-- `git diff --check` — passed.
+- Python 3.12.14 with the pinned `backend/requirements.txt`: `python -m pytest backend/tests -q -p no:cacheprovider` - passed, 60 tests. One existing Starlette/AnyIO deprecation warning was emitted.
+- `git diff --check` - passed.
+- Frontend build and lint were not run; no frontend files changed.
 
-## Tests not run
+## Known limitations and readiness
 
-- No image-analysis, scoring, or evaluation tests exist yet; these capabilities remain unimplemented.
-- No separate frontend unit-test suite was run; the repository verification path is build/type-check and lint.
-
-## Known issues and blockers
-
-- Confirm with project owner that “metal chips” means stone aggregates.
-- No labelled RoadIQ dataset, annotated images, trained/fine-tuned model, or held-out metrics exist in this repository.
-- Feature definitions, image-quality/resolution thresholds, normalization references, RSQI weights, confidence calibration/cutoffs, and evaluation acceptance criteria need owner/domain review.
-- Image-analysis endpoint, image-specific runtime schemas, upload/storage/privacy policy, calibration format, and annotated-image handling remain proposed only.
-- Human names are unassigned for all four task owners; task branches should be created from current `main` when work begins.
-
-## Contract or dependency changes
-
-- Documentation-only proposal for a future image-analysis request/response with units, provenance, confidence, and explicit unavailable values.
-- No implementation schema, API runtime, or dependency manifest changed. The future image contract requires review and coordinated backend/frontend schema/test changes before implementation.
-- Candidate RSQI feature weights are hypotheses, not approved engineering standards.
+- The service requires Task C or its caller to provide all five component-level measurements, their units/provenance, quality/ROI/resolution gates, material type, capture profile, and fixed reference ranges. No labelled dataset is available to derive and validate RoadIQ ranges.
+- Initial weights and label thresholds remain provisional. Confidence, evidence-coverage calibration, mode-specific suitability, image inference, and an HTTP scoring route remain unimplemented.
+- Ready for human review on the task branch; end-to-end integration depends on Task A and Task C agreeing the component input boundary and frozen reference sets, followed by Task D API integration.
 
 ## Exact next action
 
