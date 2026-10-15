@@ -59,3 +59,17 @@
 ## Exact next action
 
 An authenticated repository owner should push the existing `main` commits, assign the four human task owners, and confirm aggregate terminology with the project owner. Then Task C should define/validate the annotation and inference output contract with Task A and Task D before implementing image/aggregate analysis on `task/c-computer-vision`.
+
+
+## Task C computer-vision handoff — 2026-10-15
+
+- **Branch/base:** `task/c-computer-vision`, based on fetched `origin/main` at `8b0df94`; working tree was clean before this task.
+- **Status:** partial implementation committed as `Add Task C road image analysis MVP` on `task/c-computer-vision`; not ready for integration as the aggregate/metal/ROI/material requirements remain unmet.
+- **Implemented:** synchronous `app.services.vision.analyze_road_image(image_bytes, *, source_name="unknown", calibration=None, detector=None, confidence_threshold=0.25)`; JPEG/PNG/WebP validation; byte/dimension guards; heuristic quality checks; image-texture proxy; optional RF-DETR crack/pothole observations and normalized/pixel bounding boxes; structured unavailable values, calibration binding, and processing errors. It does not add an HTTP route or scoring.
+- **Model:** `dronefreak/rdd2022-rfdetr-nano`, immutable revision `66429f39b916e56c6a33243d776718088f5f43ad`; checkpoint SHA-256 `2d1fba21b829ebc42f7c74f76285d97b2e3295aebe8d97e497d0cc186be98cc9`. Publisher reports Apache-2.0 model; RDD2022 training data is CC BY-SA 4.0. No RoadIQ training or evaluation. Runtime setup and limitations are in `docs/VISION_PIPELINE.md`.
+- **Owner direction:** stone aggregates and literal metal fragments are separate targets. Neither has an available validated detector; both measurements remain null.
+- **Dependencies:** Task A needs stable observations; Task D must review service-to-HTTP mapping before exposing extra fields (`image`, `reason`, bounding-box detections, `metal_fragments`). No Task A/D owners or sibling implementation threads were available for direct coordination in this workspace.
+- **Known gaps:** no pavement ROI, asphalt/concrete classifier, stone/metal instance segmentation, aggregate geometry/loss, raveling, defect masks/area, or RoadIQ held-out evaluation. The complete Task C acceptance list is not met.
+- **Verification:** `PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 /tmp/roadiq-taskc-venv/bin/pytest backend/tests -q` — 20 passed, 1 existing Starlette/AnyIO deprecation warning. `python -m py_compile` passed for the service, schema, and both scripts; `git diff --check` passed. The documented CLI with pinned RF-DETR weights loaded on CPU and returned 1 crack/0 potholes on a synthetic image (smoke check only, no quality claim).
+- **Environment:** host Python 3.10.12, no usable NVIDIA driver/GPU; project docs recommend Python 3.12. The optional CPU model stack and checkpoint were installed in temporary `/tmp` environments/cache only, not committed.
+- **Push/PR:** `git push origin task/c-computer-vision` could not authenticate (`could not read Username for 'https://github.com': No such device or address`); `gh` is not installed. No PR was opened. Retry push and create a PR against `main` from an authenticated GitHub environment.

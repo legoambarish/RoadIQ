@@ -1,15 +1,15 @@
 # RoadIQ
 
-RoadIQ is a hackathon prototype whose primary objective is image-based road-surface quality assessment. The planned image analysis focuses on visible pavement structure—individual stone aggregates, aggregate boundaries/gaps and coverage, surface texture, and deterioration. Mapping and transport-mode dashboards are secondary. “Metal chips” currently means stone aggregates as a working assumption; confirm with the project owner.
+RoadIQ is a hackathon prototype whose primary objective is image-based road-surface quality assessment. The planned image analysis focuses on visible pavement structure—individual stone aggregates, aggregate boundaries/gaps and coverage, surface texture, and deterioration. Mapping and transport-mode dashboards are secondary. Literal metal fragments are a separate analysis target from stone aggregates per the project owner’s direction.
 
 ## Current status
 - Frontend scaffold: React + TypeScript + Vite
 - Backend scaffold: FastAPI + Pydantic
-- Computer vision: placeholder module only; no image inference exists
+- Computer vision: Task C validates images, extracts a named pixel-texture proxy, and supports optional pretrained crack/pothole inference; aggregate/material/ROI analysis and the HTTP image route remain unavailable
 - Scoring: provisional image-feature RSQI proposal only; no scoring engine exists
 - Dataset/evaluation: no labelled RoadIQ dataset or held-out evaluation metrics are available
 - Mapping: Leaflet-based boundary ready for future provider swap
-- Testing: backend pytest checks and frontend build/type validation
+- Testing: backend pytest checks include image-validation and inference-wrapper cases; frontend build/type validation remains available
 
 ## Repository structure
 - `frontend/` — Vite React + TypeScript application
@@ -79,7 +79,7 @@ The initial backend exposes a versioned health endpoint:
 
 The endpoint returns a simple status payload and intentionally avoids external dependencies, model downloads, or network calls.
 
-Road-segment retrieval and image-analysis routes are planned but are not implemented. The backend validates the existing segment contract; it does not accept images, perform inference, or calculate scores. The provisional image-analysis response shape and measurement rules are documented in [`docs/API_CONTRACT.md`](docs/API_CONTRACT.md); the scoring and dataset/evaluation proposal is in [`docs/SCORING_SPEC.md`](docs/SCORING_SPEC.md).
+Road-segment retrieval and image-analysis routes are planned but are not implemented. Task C exposes an image-analysis service for direct backend integration; see [`docs/VISION_PIPELINE.md`](docs/VISION_PIPELINE.md) for its exact call, model setup, and limitations. It does not calculate scores. The proposed HTTP response shape and measurement rules are documented in [`docs/API_CONTRACT.md`](docs/API_CONTRACT.md); the scoring and dataset/evaluation proposal is in [`docs/SCORING_SPEC.md`](docs/SCORING_SPEC.md).
 
 ## Core demo workflow (planned, not yet available)
 
@@ -94,5 +94,5 @@ The intended first image-analysis demo is:
 This sequence is a product goal, not implemented functionality. A 2D image does not measure true 3D roughness, subsurface strength, weather resistance, or skid resistance. Counts per square metre and physical widths require calibration. Missing or unreliable evidence is unavailable, not zero. There are no labelled-data evaluation results yet; do not claim model quality until held-out metrics are reported. See [`TASKS.md`](TASKS.md) for task ownership and boundaries.
 
 ## Notes
-- This repository is intentionally scoped to an initial scaffold and requirements documentation; it is not production-ready.
-- Image-quality validation, aggregate segmentation, defect/texture inference, RSQI calculation, annotated report UI, image API, and held-out evaluation remain planned work.
+- This repository remains a prototype scaffold and is not production-ready. The Task C vision service is partial and has no RoadIQ held-out evaluation.
+- Image-quality checks, optional crack/pothole inference, and a named texture proxy are implemented in the Task C service. Pavement ROI, surface classification, aggregate/metal-fragment segmentation, broader defect classes, RSQI calculation, annotated report UI, image API, and held-out RoadIQ evaluation remain unimplemented.

@@ -1,9 +1,12 @@
 # Changelog
 
 ## Unreleased
+- Added the Task C observation schema and image-analysis service, with safe input validation, explicit unavailable measurements, separate stone-aggregate/metal-fragment fields, and a mockable RF-DETR adapter.
+- Added pinned optional RF-DETR setup/download workflow and documented its provenance, licensing, resource estimate, exact Task D call, and known capability gaps.
+- Added focused image-pipeline tests and updated architecture, task status, API notes, README, and handoff.
 - Aligned the product objective around image-based pavement analysis, with aggregate structure, visible defects, and texture proxies as core evidence.
 - Added a provisional image-feature RSQI proposal, measurement/calibration constraints, dataset annotation/split requirements, and held-out evaluation metrics; no metrics or model results are claimed.
-- Updated Task A-D ownership/acceptance criteria, architecture pipeline, proposed image-analysis API payload, README demo goal/limitations, and handoff. No inference, scoring, UI, image API, or evaluation feature was implemented.
+- Updated Task A-D ownership/acceptance criteria and the proposed image-analysis API payload. Task C now provides image validation, heuristic quality observations, a named texture proxy, and optional RF-DETR crack/pothole inference; aggregate/material/ROI analysis, scoring, UI, HTTP upload route, and RoadIQ evaluation remain unimplemented.
 - Added a mandatory model-agnostic agent workflow covering repository inspection, task branches, ownership, contract coordination, verification, handoff, commits, and pull requests.
 - Recorded the four agreed task branch names, ownership boundaries, owner-assignment placeholders, and kickoff checklist.
 - Standardized the handoff template; no feature task implementation or runtime contract change was made.

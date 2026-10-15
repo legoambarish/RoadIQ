@@ -2,11 +2,11 @@
 
 ## Status and scope
 
-This is a provisional hackathon contract, not a validated engineering standard or an implemented production scorer. The backend currently validates the segment data shape; it does not accept or analyse images and does not calculate a score. Image-based pavement structure and visible distress—especially stone aggregates, their boundaries and gaps, texture, aggregate loss, and defects—are the primary product objective. Mapping and mode dashboards are secondary.
+This is a provisional hackathon contract, not a validated engineering standard or an implemented production scorer. The backend validates the segment data shape and Task C exposes a direct image-observation service; no image HTTP endpoint or scoring engine exists. Image-based pavement structure and visible distress—especially stone aggregates, their boundaries and gaps, texture, aggregate loss, and defects—are the primary product objective. Mapping and mode dashboards are secondary.
 
 The existing segment contract is implemented in `backend/app/schemas/road_segment.py` and mirrored by `frontend/src/types/road-segment.ts`. The richer image-analysis result below is proposed and requires coordinated schema/API implementation; no image-analysis endpoint currently exists. See [API_CONTRACT.md](./API_CONTRACT.md).
 
-The phrase “metal chips” is interpreted provisionally as visible **stone aggregates**. Confirm this with the project owner before model or annotation work. Target surfaces are asphalt/bituminous and cement concrete where evidence permits; return surface type `unknown` when uncertain.
+Per project-owner direction, visible **stone aggregates** and literal **metal fragments** are separate analysis targets. They require separate annotations and model outputs; ordinary aggregate texture must not be labelled as metal. Target surfaces are asphalt/bituminous and cement concrete where evidence permits; return surface type `unknown` when uncertain.
 
 ## Road-segment data contract
 
@@ -213,7 +213,7 @@ Walking must not be derived from pavement condition alone: access, comfort, foot
 
 ## Limitations and unresolved decisions
 
-- Owner confirmation that “metal chips” means stone aggregates.
+- A labelled protocol/model for distinguishing metal fragments from ordinary aggregate and other reflective material.
 - Annotation protocol, dataset availability/licensing, image-quality/resolution gate, and surface-specific aggregate references.
 - Calibration data, validation process, feature normalization references, component definitions, RSQI formula/threshold approval.
 - Minimum image evidence and calibration requirements; confidence calibration, Low Confidence cutoff, and usable-area denominator.

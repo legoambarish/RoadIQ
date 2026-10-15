@@ -10,11 +10,11 @@
 
 ## Core product objective
 
-RoadIQ is primarily an image-based road-surface quality assessment prototype. Its core image engine should analyze pavement region/quality, individual visible stone aggregates (provisionally interpreting “metal chips” as aggregates, pending owner confirmation), aggregate boundaries/gaps/coverage/loss, image texture, and visible deterioration. Map and travel-mode dashboard features are secondary. Support asphalt/bituminous and cement-concrete when evidence supports them; otherwise return unknown. Current software remains a scaffold: no image analysis, RSQI scorer, report UI, image API, or held-out model evaluation is implemented.
+RoadIQ is primarily an image-based road-surface quality assessment prototype. Its core image engine should analyze pavement region/quality, individual visible stone aggregates and their boundaries/gaps/coverage/loss, literal metal fragments as a separate class per the project owner’s direction, image texture, and visible deterioration. Map and travel-mode dashboard features are secondary. Support asphalt/bituminous and cement-concrete when evidence supports them; otherwise return unknown. The Task C service now validates images and supports optional crack/pothole inference, but aggregate/metal segmentation, ROI/material models, RSQI scorer, report UI, image API, and held-out RoadIQ evaluation are not implemented.
 
 ## Contract baseline
 
-- Current agreed working branch: `main` (also the branch at task start).
+- Historical contract-freeze branch: `main`. Task C started on `task/c-computer-vision`, which was clean and matched fetched `origin/main` at `8b0df94`.
 - Shared contract: [SCORING_SPEC.md](docs/SCORING_SPEC.md), [API_CONTRACT.md](docs/API_CONTRACT.md), and [ARCHITECTURE.md](docs/ARCHITECTURE.md).
 - The backend Pydantic schema and frontend TypeScript types are aligned. Changes require coordination across owners and matching tests/docs.
 - Segment retrieval routes, persistence, scoring, dashboard, and computer-vision inference are not implemented by this contract-freeze task.
@@ -26,7 +26,7 @@ RoadIQ is primarily an image-based road-surface quality assessment prototype. It
 | --- | --- | --- | --- |
 | A — Scoring | Own versioned image-feature normalization, provisional RoadIQ Surface Quality Index (RSQI), evidence sufficiency, transparent contributions/explanations, confidence policy, and scorer tests in a dedicated backend scoring service. Consume Task C outputs and the shared contract. | Image inference/annotations, frontend/reporting, API integration, unilateral shared schema changes. No safety/engineering certification. | Written candidate feature/weight proposal in `docs/SCORING_SPEC.md`; C output shape and adequate labelled evidence. |
 | B — Frontend/reporting | Own image upload/report experience, annotated-image display, RSQI contribution/evidence/uncertainty presentation, unrated/error states, and secondary map/mode UI in `frontend/`. | Scoring or inference logic; portraying masks as truth; implying missing data means good. | Shared proposed image-analysis response/API contract; can use clearly marked typed fixtures until API exists. |
-| C — Aggregate analysis | Own image quality gate, pavement ROI, asphalt/concrete/unknown classification, aggregate instance segmentation/features, defect detection, texture proxies, calibration handling, provenance, and inference tests in `backend/app/services/vision.py` and dedicated modules/tests. | RSQI weighting/score decisions, dashboard, map API; no ground dimensions from pixels without calibration. | Confirm “metal chips” means stone aggregates; shared field/unit contract and annotated-label protocol. |
+| C — Aggregate/image analysis | Own image quality gate, pavement ROI, asphalt/concrete/unknown classification, stone-aggregate instance segmentation/features, separate metal-fragment detection, visible defect detection, texture proxies, calibration handling, provenance, and inference tests in the Task C service and focused modules/tests. | RSQI weighting/score decisions, dashboard, map API; no ground dimensions from pixels without calibration. | Task A observation requirements; Task D review of the exact service/HTTP mapping; labelled aggregate/metal annotations and a held-out evaluation set. |
 | D — Integration/evaluation | Own API integration and release checks; coordinate dataset versioning/split hygiene and held-out end-to-end/model evaluation reporting with actual metrics. Own `backend/app/api/routes/`, `backend/app/main.py`, integration/evaluation tests and reports. | Replacing A scoring, B UI, or C inference; claiming planned API/model/results exist. | Integrates A/B/C reviewed outputs; dataset/label availability and a frozen held-out test set for evaluation. |
 
 ### Branch assignment and human owner
@@ -38,7 +38,7 @@ RoadIQ is primarily an image-based road-surface quality assessment prototype. It
 | C — Aggregate/image analysis | TBD; assign before implementation | `task/c-computer-vision` |
 | D — Integration/evaluation | TBD; assign before implementation | `task/d-integration-release` |
 
-`main` is the shared integration branch. At this workflow freeze no task branches existed locally or remotely. Create task branches from up-to-date `main`; send completed task work through reviewed pull requests. Task D coordinates integration, but does not take over A/B/C modules. Dependency manifests and lockfiles are shared-impact files and require review from affected owners.
+`main` is the shared integration branch. At this workflow freeze no task branches existed locally or remotely. Each task branch must be based on fetched `main`; send completed task work through reviewed pull requests. Task D coordinates integration, but does not take over A/B/C modules. Dependency manifests and lockfiles are shared-impact files and require review from affected owners.
 
 ### Shared file ownership
 
@@ -73,7 +73,7 @@ RoadIQ is primarily an image-based road-surface quality assessment prototype. It
 - [ ] Handles the currently implemented health-only API honestly; no claim that planned image/segment APIs exist.
 - [ ] Passes frontend TypeScript checks, lint, and Vite production build.
 
-### Task C — computer vision (planned)
+### Task C — computer vision (in progress)
 
 - [ ] Implements testable image validation/quality gating, usable pavement ROI, and surface-type output (`asphalt_bituminous`, `cement_concrete`, or `unknown`).
 - [ ] Segments/counts individual stone aggregates only where resolution permits and reports count, pixel size distribution, visible coverage, boundary/gap statistics, and aggregate-loss proxy with explicit provenance/confidence.
@@ -94,11 +94,11 @@ RoadIQ is primarily an image-based road-surface quality assessment prototype. It
 ## Current status
 
 - Core requirements alignment: documentation only; image pipeline, RSQI implementation, report UI, dataset, evaluation, and image API remain planned.
-- Tasks A-D: planned; none of their end-user features is claimed as complete here.
+- Tasks A, B, and D remain planned. Task C is in progress: image validation/quality heuristics, a named texture proxy, structured observations, and an optional pretrained crack/pothole wrapper exist. ROI, surface classification, stone/metal segmentation, raveling, and physical measures remain unavailable; see `docs/VISION_PIPELINE.md`.
 
 ## Four-owner kickoff checklist
 
 - [ ] **Task A owner:** confirm human owner; read `AGENTS.md`, relevant docs, and `HANDOFF.md`; fetch latest remote; use `task/a-scoring-engine`; implement only scoring scope; test, update status/changelog/handoff, push, and open/update a PR.
 - [ ] **Task B owner:** confirm human owner; read `AGENTS.md`, relevant docs, and `HANDOFF.md`; fetch latest remote; use `task/b-map-dashboard`; implement only frontend/image report scope; test/build/lint, update status/changelog/handoff, push, and open/update a PR.
-- [ ] **Task C owner:** confirm human owner and confirm “metal chips” means stone aggregates; read `AGENTS.md`, relevant docs, and `HANDOFF.md`; fetch latest remote; use `task/c-computer-vision`; implement only image/aggregate-analysis scope; test, update status/changelog/handoff, push, and open/update a PR.
+- [ ] **Task C owner:** human name remains unrecorded; implementation is in progress on `task/c-computer-vision`. The project owner confirmed stone aggregates and literal metal fragments are separate targets. Remaining: obtain A/D review of output/dependency changes, add reviewed aggregate/metal/ROI/material models and labelled evaluation data, then complete the acceptance list.
 - [ ] **Task D owner:** confirm human owner; read `AGENTS.md`, relevant docs, and `HANDOFF.md`; fetch latest remote; use `task/d-integration-release`; coordinate dependencies, dataset hygiene, held-out evaluation, and reviewed PR integration; run release checks, update status/changelog/handoff, and open/update a PR.

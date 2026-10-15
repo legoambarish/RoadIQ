@@ -22,6 +22,8 @@ The route is implemented without external-service dependencies.
 
 Image analysis is the primary product workflow. The endpoint below is a proposed integration contract for Task C (inference), Task A (RSQI), Task B (report display), and Task D (API/evaluation). It is **not present in the current FastAPI app**. Exact upload limits, supported formats, storage/retention, and calibration request shape remain unresolved.
 
+Task C now exposes the synchronous service `app.services.vision.analyze_road_image(image_bytes, *, source_name="unknown", calibration=None, detector=None, confidence_threshold=0.25)`. It returns a JSON-ready observation payload and performs no scoring. The current service payload includes image metadata, `reason` fields for unavailable measurements, bounding boxes under each supported defect's `detections` list, and a separate `metal_fragments` observation. These are Task C service outputs pending Task D's review before the planned HTTP response is frozen; they do not mean the HTTP endpoint exists. ROI, surface type, aggregate, metal-fragment, raveling, and calibrated physical outputs currently remain unavailable/null.
+
 ### `POST /api/v1/image-analyses`
 
 Proposed request: `multipart/form-data` with required `image` file and optional `calibration` JSON part. Calibration must identify its method and scale/unit and associate it with the submitted image; unverified or absent calibration does not enable physical measurements. Do not accept remote image URLs unless a separately reviewed SSRF-safe design is adopted.
