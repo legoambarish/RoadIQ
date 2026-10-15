@@ -29,7 +29,7 @@
 - Added a Windows one-file build that bundles the FastAPI health service and compiled dashboard; the launcher binds only to loopback, checks readiness, opens the browser, and safely restarts a verified existing RoadIQ instance.
 - Added desktop runtime tests and build instructions. Backend tests, frontend build/lint, Windows packaging, browser startup, health, and graceful second-launch restart passed on the development host.
 - The desktop package still exposes only health at runtime. The map and scores are fixtures; there is no live image/segment API, C-to-A scoring, active model, or RoadIQ-held-out evaluation.
-- Current integration status: Task B PR #13 now imports Task C CLI reports from local JSON and accepts its annotation as a separately selected file. The report fields displayed by the panel are present in Task C's current payload, but this does not add browser-triggered analysis, an image API, or C-to-A scoring.
+- Current integration status: Task B PR #13 at 58ac332 (ten commits ahead of main) includes local Task C CLI report import, separately selected annotation, and a map-overlay selection fix. Its handoff reports frontend checks and browser verification of overlay selection; the report-import interaction remains unverified in a browser. The branch adds no browser-triggered analysis, image API, or C-to-A scoring.
 
 ## Unreleased
 - Added a sticky, responsive dashboard control dock with all five full travel-profile names and the Everyday/Engineer switch visible while scrolling; refined spacing and a comfortable sage/forest palette while preserving a distinct Engineer theme.
