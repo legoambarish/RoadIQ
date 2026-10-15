@@ -10,7 +10,7 @@
 
 ## Core product objective
 
-RoadIQ is primarily an image-based road-surface quality assessment prototype. Its core image engine should analyze pavement region/quality, individual visible stone aggregates and their boundaries/gaps/coverage/loss, literal metal fragments as a separate target, image texture, and visible deterioration. Map and travel-mode dashboard features are secondary. Support asphalt/bituminous and cement-concrete when evidence supports them; otherwise return unknown. Task A’s provisional RSQI scorer was merged by PR #1. Task B’s fixture-backed dashboard is under review in PR #2, with a follow-up adding distinct Everyday/Engineer presentation. Task C has an India-only segmentation experiment on its remote branch, but no active trained checkpoint, image API, or held-out RoadIQ evaluation. Task D’s integration checklist is merged; no end-to-end flow is implemented.
+RoadIQ is primarily an image-based road-surface quality assessment prototype. Its core image engine should analyze pavement region/quality, individual visible stone aggregates and their boundaries/gaps/coverage/loss, literal metal fragments as a separate target, image texture, and visible deterioration. Map and travel-mode dashboard features are secondary. Support asphalt/bituminous and cement-concrete when evidence supports them; otherwise return unknown. Task A’s provisional RSQI scorer was merged by PR #1. The fixture-backed Task B dashboard was merged by PR #2; this branch contains an unpushed Everyday/Engineer presentation follow-up that needs a new PR. Task C has an India-only segmentation experiment on its remote branch, but no active trained checkpoint, image API, or held-out RoadIQ evaluation. Task D’s integration checklist is merged; no end-to-end flow is implemented.
 
 ## Contract baseline
 
@@ -34,7 +34,7 @@ RoadIQ is primarily an image-based road-surface quality assessment prototype. It
 | Task | Human owner | Assigned branch |
 | --- | --- | --- |
 | A — Scoring | Human owner/reviewer not assigned; implementation merged in PR #1; calibration dependencies remain | `task/a-scoring-engine` |
-| B — Frontend/reporting | Project owner confirmed; dashboard implementation and view-distinction follow-up on task branch; PR #2 open | `task/b-map-dashboard` |
+| B — Frontend/reporting | Project owner confirmed; dashboard merged in PR #2; view-distinction follow-up committed locally and not yet pushed | `task/b-map-dashboard` |
 | C — Aggregate/image analysis | Human owner not recorded; India-only segmentation experiment on remote branch; no active trained checkpoint or PR | `task/c-computer-vision` |
 | D — Integration/evaluation | Human owner not recorded; integration checklist merged in PR #3; runtime integration remains pending | `task/d-integration-release` |
 
@@ -112,13 +112,13 @@ The latest Task C remote branch is `task/c-computer-vision` at `023da26`. Its ha
 ## Current status
 
 - Task A’s provisional RSQI scorer was merged into `main` by PR #1 at `7995ff4`; its RoadIQ normalization and confidence calibration still lack labelled data.
-- Task B’s fixture-backed dashboard and Everyday/Engineer follow-up are on `task/b-map-dashboard`; PR #2 remains open and must be refreshed after the follow-up is pushed.
+- The fixture-backed dashboard was merged by PR #2. The Everyday/Engineer follow-up is committed locally on `task/b-map-dashboard`; it must be pushed before opening a new PR.
 - Task C’s latest remote work is `023da26`; its India-only dataset/segmentation experiment is not a trained active detector and no aggregate/metal labels, image API, or held-out RoadIQ evaluation are available.
 - Task D’s docs-only integration checklist was merged in PR #3; runtime integration remains blocked on reviewed A/B/C mappings and dependencies.
 
 ## Four-owner kickoff checklist
 
 - [ ] **Task A owner/reviewer:** still not recorded; PR #1 is merged. Resolve the remaining labelled-data normalization and confidence-calibration dependency before claiming a validated score.
-- [x] **Task B owner/reviewer:** project owner confirmed; review the dashboard branch and refresh PR #2 after follow-up push. Current fixtures and image preview are not live segment or image API integration.
+- [x] **Task B owner/reviewer:** project owner confirmed; dashboard PR #2 merged. Push the current view-distinction follow-up and open a new PR. Current fixtures and image preview are not live segment or image API integration.
 - [ ] **Task C owner:** not recorded; update the partial `task/c-computer-vision` branch against current `main`, train/evaluate only with India-only data, resolve aggregate/metal labels and output-contract gaps, then open a PR. No C PR is currently open.
 - [ ] **Task D owner:** not recorded; PR #3 integration checklist is merged. Keep shared-contract mappings proposed until affected owners agree, then integrate only approved outputs and add tests.
