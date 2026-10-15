@@ -1,5 +1,14 @@
 # RoadIQ handoff
 
+## Current Task C status — 2026-10-16
+
+- **Merged:** PR #8 added the one-command local image demo to `main` as merge commit `5049ce6`. The shared Task C branch currently has no newer implementation commits.
+- **Demo:** `PYTHONPATH=backend python -m scripts.demo_road_image --output-dir /tmp/roadiq-demo --seed 42`; pass `--image /path/to/road.jpg` to analyze a local image. Both flows write an annotated JPEG and structured JSON report.
+- **Verification:** focused Task C suite on the merged code — 28 passed, 2 skipped. Runtime was Python 3.10; the repository documents Python 3.12. The backend full-suite check still excludes the known hanging health TestClient case.
+- **Limitations:** the untrained texture mask is only a high-frequency candidate, not a verified pavement/aggregate/defect mask. Aggregate counts, calibrated measurements, confidence, and real-world metrics remain unavailable. No India-only aggregate-instance labels or trained aggregate checkpoint are available.
+- **Remaining integration:** browser upload/report display belongs to Task B; the image-analysis HTTP endpoint belongs to Task D. Task C exposes the local image-analysis service and demo CLI but does not cross those task boundaries.
+- **Next:** keep outputs explicitly unrated until reviewed India-only labels and held-out evaluation are available; integrate the service through the agreed B/D contract when those owners complete their parts.
+
 ## Current Task C demo update — 2026-10-16
 
 - **Branch/base:** `task/c-computer-vision`, at `08d447d` before this update; this branch is the assigned Task C branch and its base is contained in merged PR #4. Task C owner remains unrecorded.
