@@ -1,5 +1,9 @@
 # RoadIQ task tracker
 
+## Task B Leaflet/OpenStreetMap map implementation — 2026-10-16
+
+Replaced the hand-drawn SVG schematic with a Leaflet map using OpenStreetMap tiles and the existing typed GeoJSON fixture lines. Routes remain selectable, keyboard accessible, zoomable, and recolored by Road Quality or any of the five travel-profile overlays; existing filters, rankings, legend, details, and fixture warnings remain in place. The Engineer panel now surfaces survey source and timestamp, explicitly labeled fixture metadata. Added frontend tests for overlay lookup, status bands, unrated/null handling, filtering/ranking, and visible-segment selection. The map’s route names/scores are still fixture data, distinct from the OSM basemap; map tiles require an internet connection. Verification and exact branch state are in `docs/HANDOFF.md` and root `HANDOFF.md`.
+
 ## Task B Everyday brief layout and explainer clarity — 2026-10-16
 
 Fixed traveler checklist layout so “What matters for this profile” sits above wrapped, responsive items rather than sharing a cramped row; checked the Everyday state for all five profiles in the built site. Clarified in Insights that charts summarize the currently filtered demo network, not the selected map segment or imported image. Expanded image-import help: JSON loads saved report data; optional annotated preview displays the CLI visualization, and the CLI JSON stores its preview as a local path. An annotation can now display on its own or overlay the selected road image. See root `HANDOFF.md` for verification and branch status.
@@ -99,9 +103,9 @@ Task A implementation is on `task/a-scoring-engine` in `backend/app/services/sco
 
 ### Task B — dashboard (core merged in PR #2 and view follow-up in PR #5; current UI refinement on branch)
 
-- [x] Renders an interactive schematic map from typed GeoJSON fixtures, with selectable, zoomable segments and a color-coded Road Quality overlay. No live basemap is claimed while provider choice is unresolved.
+- [x] Renders an interactive Leaflet map with OpenStreetMap tiles and selectable, zoomable polylines from the typed GeoJSON schema; color-codes the selected Road Quality or travel-profile overlay. Clearly separates illustrative RoadIQ fixture routes and scores from OSM basemap data.
 - [x] Offers five separate travel-profile overlays (walking, cycling, two-wheeler, car, bus), ranked segment lists, quality/search/minimum-score filters, and quality/profile charts.
-- [x] Provides materially distinct Everyday traveler briefs and Engineer evidence/provenance audits, with unknown-value gates and score explanations in segment details.
+- [x] Provides materially distinct Everyday traveler briefs and Engineer evidence/provenance audits, including source, survey timestamp, underlying fields, confidence, limitations, unknown-value gates, and score explanations in segment details.
 - [x] Keeps all five full travel-profile choices and the Everyday/Engineer switch visible in a sticky control dock while scrolling; controls adapt to narrow screens.
 - [x] Uses a calmer sage/forest Everyday palette, a distinct high-contrast Engineer palette, clearer spacing, and larger rounded panels.
 - [x] Keeps pedestrian infrastructure and comfort separate; lane markings are not treated as a walkability proxy, and unknown observations remain distinct from observed absence.

@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-10-16 — Task B Leaflet/OpenStreetMap map and dashboard tests
+
+- Replaced the drawn SVG street schematic with an interactive Leaflet map using OpenStreetMap tiles, attribution, accessible selectable fixture polylines, and map zoom controls. Tile failures show a notice while fixture routes remain available.
+- Kept the fixture routes, scores, overlays, ranking, and score legend explicitly identified as illustrative RoadIQ data; the basemap is not evidence that those segments were surveyed.
+- Added survey source and timestamp to the Engineer record audit, labeled the values as fixture metadata, and clarified that the demo timestamps are not actual surveys.
+- Extracted dashboard filter/ranking/selection helpers and added tests for all five profile overlays, surface overlay, quality tone boundaries, null/unrated behavior, active-overlay minimum filters, ranking order, and visible segment selection.
+- Added pinned Leaflet/TypeScript definitions and Vitest dependencies. TypeScript build, Vite production build, Oxlint, and six frontend unit tests passed. See `docs/HANDOFF.md` for exact commands and browser verification.
+
 ## 2026-10-16 — Task B traveler brief and report-import clarity
 
 - Reflowed Everyday traveler profile checklists into a responsive layout with the label above the items; verified all five profiles in the browser.

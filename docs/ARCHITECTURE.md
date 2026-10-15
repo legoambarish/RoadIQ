@@ -4,11 +4,11 @@
 
 RoadIQ remains an initial prototype scaffold; it is not production-ready.
 
-- **Frontend:** React + TypeScript + Vite under `frontend/`, with a fixture-backed interactive schematic map, Road Quality and five travel-profile overlays, filters, rankings, charts, Everyday/Engineer segment details, a health-only API badge, local image preview, and manual Task C CLI JSON/annotation import. It uses illustrative typed segment fixtures; there is no live basemap, segment API, browser-triggered image upload/inference, or scoring connection.
+- **Frontend:** React + TypeScript + Vite under `frontend/`, with Leaflet/OpenStreetMap tiles under selectable, color-coded typed GeoJSON fixture polylines; Road Quality and five travel-profile overlays; filters, rankings, charts, Everyday/Engineer segment details; a health-only API badge; local image preview; and manual Task C CLI JSON/annotation import. RoadIQ routes and values are illustrative fixtures, not OSM-derived survey observations. Segment retrieval, browser-triggered image upload/inference, and scoring connection are unavailable.
 - **Backend:** FastAPI + Pydantic under `backend/`. The implemented HTTP API exposes `GET /api/v1/health` and `/`. `backend/app/schemas/road_segment.py` validates the shared road-segment shape. A deterministic demo fixture is isolated in `backend/app/fixtures/`.
 - **Computer vision:** `backend/app/services/vision.py` validates JPEG/PNG/WebP input and reports heuristic image-quality observations, a named texture proxy, and an untrained texture-region candidate annotation. An optional experimental India-road semantic checkpoint can gate those candidates when explicitly configured; this does not provide validated pavement ROI, material classification, aggregate/metal segmentation, or physical measurements. No image HTTP route is implemented.
 - **Scoring:** the provisional evidence-gated RSQI scorer exists in `backend/app/services/scoring.py`; no fixed default normalization profiles are configured, so its default result stays `unrated`. [SCORING_SPEC.md](./SCORING_SPEC.md) describes provisional rules and evidence limits.
-- **Persistence and mapping:** no segment database, segment retrieval API, or live basemap exists. The current schematic map plots illustrative fixture geometry; mapping provider choice remains open.
+- **Persistence and mapping:** no segment database or segment retrieval API exists. The prototype map uses an OSM basemap and plots illustrative fixture geometry over it; OSM tiles require network access and do not validate the fixture road names or scores. Production basemap provider, licensing, caching, and availability remain open.
 
 ## Product objective and planned image-analysis pipeline
 

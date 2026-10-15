@@ -3,12 +3,12 @@
 RoadIQ is a hackathon prototype whose primary objective is image-based road-surface quality assessment. Image analysis focuses on visible pavement structure—individual stone aggregates, their boundaries/gaps and coverage, surface texture, and deterioration. Literal metal fragments are a separate analysis target from stone aggregates. Mapping and transport-mode dashboards are secondary.
 
 ## Current status
-- Frontend: React + TypeScript + Vite dashboard with an interactive schematic map, five illustrative travel-profile overlays, filters, rankings, charts, distinct Everyday/Engineer assessment views, local image preview, and manual import of Task C CLI reports and annotations
+- Frontend: React + TypeScript + Vite dashboard with an interactive Leaflet/OpenStreetMap map, five illustrative travel-profile overlays, filters, rankings, charts, distinct Everyday/Engineer assessment views, local image preview, and manual import of Task C CLI reports and annotations
 - Backend scaffold: FastAPI + Pydantic
 - Computer vision: Task C has a working local image-analysis service and one-command demo. It produces an annotated texture-candidate preview, structured observations, quality warnings, a named texture proxy, and optional experimental road-ROI gating. It has no active trained checkpoint or HTTP endpoint; individual aggregate/metal analysis remains unavailable. The multi-country RDD2022 detector is disabled under the India-only dataset policy, not because it is technically incompatible with Indian roads.
 - Scoring: deterministic provisional RSQI scorer exists in `backend/app/services/scoring.py`; default normalization references are intentionally empty, so results remain `unrated` until fixed surface-type/capture-specific references and adequate component evidence are supplied. Weights and label cutoffs are unvalidated hypotheses.
 - Dataset/evaluation: no labelled India-road aggregate dataset or held-out RoadIQ road metrics are available. A 20-image, visually reviewed low-occlusion ACAD synthetic-concrete test sample produced pixel IoU 0.488 / precision 0.822 / recall 0.545 for the texture-region baseline; it does not measure individual counting or road performance.
-- Mapping: Leaflet-based boundary ready for future provider swap
+- Mapping: Leaflet/OpenStreetMap is used for the prototype basemap; demo polylines/scores remain fixture data, and the OSM tiles require network access
 - Testing: backend pytest checks include image-validation and inference-wrapper cases; frontend build/type validation remains available
 
 ## Repository structure
