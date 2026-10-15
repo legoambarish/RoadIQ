@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import io
+from pathlib import Path
 
 import pytest
 from PIL import Image, ImageDraw
@@ -73,6 +74,9 @@ def test_valid_image_produces_contract_payload_and_pixel_boxes() -> None:
     assert report["aggregate_analysis"]["aggregate_count"]["value"] is None
     assert report["aggregate_analysis"]["aggregate_count_per_m2"]["value"] is None
     assert report["texture_features"]["is_physical_roughness"] is False
+    assert report["model"]["provider"] == "injected detector"
+    assert report["model"]["runtime"] is None
+    assert report["model"]["input_size_px"] is None
 
 
 def test_no_detections_are_observed_as_zero_only_for_supported_classes() -> None:
@@ -145,6 +149,23 @@ def test_missing_configured_checkpoint_is_a_structured_model_error(monkeypatch: 
     assert report["model"]["load_status"] == "failed"
     assert report["processing_errors"][0]["code"] == "model_load_failed"
     assert by_class(report)["crack"]["count"]["value"] is None
+    reset_detector_for_tests()
+
+
+def test_multinational_checkpoint_is_refused_under_india_only_policy(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    checkpoint = tmp_path / "legacy-checkpoint.pth"
+    checkpoint.write_bytes(b"legacy-model")
+    monkeypatch.setattr(vision, "MODEL_SHA256", hashlib.sha256(b"legacy-model").hexdigest())
+    monkeypatch.setenv("ROADIQ_VISION_MODEL_PATH", str(checkpoint))
+    reset_detector_for_tests()
+    report = analyze_road_image(road_image_bytes())
+    assert report["model"]["load_status"] == "failed"
+    assert report["processing_errors"][0]["code"] == "model_load_failed"
+    assert by_class(report)["crack"]["count"]["value"] is None
+    assert report["processing_errors"][0]["details"] == "RuntimeError"
+    assert "India-only data policy" in by_class(report)["crack"]["count"]["reason"]
     reset_detector_for_tests()
 
 

@@ -1,7 +1,8 @@
 """Road-image validation and inference boundary for Task C.
 
 The service returns observations only. It never calculates an RSQI or infers physical
-measurements from pixels. Optional RF-DETR inference is loaded lazily from a local checkpoint.
+measurements from pixels. Production inference is unavailable until an India-only
+checkpoint is reviewed and configured; detector injection is retained for tests.
 """
 
 from __future__ import annotations
@@ -13,7 +14,6 @@ import os
 import threading
 import warnings
 from dataclasses import dataclass
-from importlib.metadata import PackageNotFoundError, version as package_version
 from pathlib import Path
 from typing import Any, Protocol
 
@@ -27,13 +27,12 @@ MAX_IMAGE_PIXELS = 40_000_000
 MAX_IMAGE_EDGE = 10_000
 MIN_IMAGE_WIDTH = 320
 MIN_IMAGE_HEIGHT = 240
-MODEL_NAME = "RF-DETR Nano fine-tuned on RDD2022"
+MODEL_NAME = "India-only road-damage model (not configured)"
 MODEL_REPO = "dronefreak/rdd2022-rfdetr-nano"
 MODEL_REVISION = "66429f39b916e56c6a33243d776718088f5f43ad"
 MODEL_SHA256 = "2d1fba21b829ebc42f7c74f76285d97b2e3295aebe8d97e497d0cc186be98cc9"
 MODEL_VERSION = f"{MODEL_REPO}@{MODEL_REVISION}"
 MODEL_CLASSES = ("longitudinal_crack", "transverse_crack", "alligator_crack", "pothole")
-MODEL_INPUT_SIZE = (384, 384)
 DEFAULT_CONFIDENCE_THRESHOLD = 0.25
 TEXTURE_METHOD = "tile_grayscale_contrast_v1"
 
@@ -77,7 +76,7 @@ _detector_lock = threading.Lock()
 
 
 def _load_detector() -> RoadDamageDetector | None:
-    """Load RF-DETR only when a local fine-tuned checkpoint is configured."""
+    """Reject the pinned legacy checkpoint until an India-only model is configured."""
     global _detector
     model_path = os.getenv("ROADIQ_VISION_MODEL_PATH")
     if not model_path:
@@ -94,11 +93,11 @@ def _load_detector() -> RoadDamageDetector | None:
                 for chunk in iter(lambda: checkpoint_file.read(1024 * 1024), b""):
                     digest.update(chunk)
             if digest.hexdigest() != MODEL_SHA256:
-                raise ValueError("Configured checkpoint does not match the pinned RF-DETR RDD2022 revision.")
-            from rfdetr import RFDETRNano  # optional dependency
-
-            _detector = RFDETRNano(pretrain_weights=str(path), device="cpu")
-            return _detector
+                raise ValueError("Configured checkpoint does not match the pinned legacy road-damage checkpoint.")
+            raise ValueError(
+                "The pinned checkpoint was trained on a multinational dataset and is disabled by the India-only data policy. "
+                "No India-only road-damage checkpoint is currently configured."
+            )
         except Exception as exc:  # model/runtime errors become structured processing errors
             raise RuntimeError(f"{type(exc).__name__}: {exc}") from exc
 
@@ -405,21 +404,17 @@ def analyze_road_image(
                 "retryable": False,
             })
     unavailable_reason = "image quality gate failed" if not quality["usable"] else (
-        "no road-damage checkpoint is configured" if actual_detector is None else detector_error
+        detector_error or "no road-damage checkpoint is configured" if actual_detector is None else detector_error
     )
     defects = _defect_report(detections, detector_available, unavailable_reason)
-    try:
-        rfdetr_version = package_version("rfdetr")
-    except PackageNotFoundError:
-        rfdetr_version = None
     model = {
         "name": getattr(actual_detector, "model_name", MODEL_NAME) if actual_detector else MODEL_NAME,
-        "version": getattr(actual_detector, "model_version", MODEL_VERSION) if actual_detector else MODEL_VERSION,
-        "training_status": getattr(actual_detector, "training_status", "pretrained_baseline") if actual_detector else "pretrained_baseline",
-        "provider": "RF-DETR Nano / DetectionBench RDD2022" if actual_detector is not None else None,
-        "checkpoint": {"repo": MODEL_REPO, "revision": MODEL_REVISION, "sha256": MODEL_SHA256},
-        "runtime": {"package": "rfdetr", "version": rfdetr_version, "device": "cpu"},
-        "input_size_px": {"width": MODEL_INPUT_SIZE[0], "height": MODEL_INPUT_SIZE[1]},
+        "version": getattr(actual_detector, "model_version", MODEL_VERSION) if actual_detector else "not_configured",
+        "training_status": getattr(actual_detector, "training_status", "pretrained_baseline") if actual_detector else "not_reported",
+        "provider": getattr(actual_detector, "provider", "injected detector") if actual_detector is not None else None,
+        "checkpoint": getattr(actual_detector, "checkpoint_metadata", None) if actual_detector is not None else None,
+        "runtime": getattr(actual_detector, "runtime_metadata", None) if actual_detector is not None else None,
+        "input_size_px": getattr(actual_detector, "input_size_px", None) if actual_detector is not None else None,
         "confidence_threshold": confidence_threshold,
         "load_status": "loaded" if actual_detector else ("failed" if detector_error else "not_configured"),
     }

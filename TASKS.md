@@ -10,14 +10,14 @@
 
 ## Core product objective
 
-RoadIQ is primarily an image-based road-surface quality assessment prototype. Its core image engine should analyze pavement region/quality, individual visible stone aggregates and their boundaries/gaps/coverage/loss, literal metal fragments as a separate class per the project owner’s direction, image texture, and visible deterioration. Map and travel-mode dashboard features are secondary. Support asphalt/bituminous and cement-concrete when evidence supports them; otherwise return unknown. The Task C service now validates images and supports optional crack/pothole inference, but aggregate/metal segmentation, ROI/material models, RSQI scorer, report UI, image API, and held-out RoadIQ evaluation are not implemented.
+RoadIQ is primarily an image-based road-surface quality assessment prototype. Its core image engine should analyze pavement region/quality, individual visible stone aggregates and their boundaries/gaps/coverage/loss, literal metal fragments as a separate class per the project owner’s direction, image texture, and visible deterioration. Map and travel-mode dashboard features are secondary. Support asphalt/bituminous and cement-concrete when evidence supports them; otherwise return unknown. The Task C service validates images and emits a texture proxy, but active damage inference, aggregate/metal segmentation, ROI/material models, RSQI scorer, report UI, image API, and held-out RoadIQ evaluation are not implemented. The owner has directed that all datasets/model training/evaluation use Indian road data only.
 
 ## Contract baseline
 
 - Historical contract-freeze branch: `main`. Task C started on `task/c-computer-vision`, which was clean and matched fetched `origin/main` at `8b0df94`.
 - Shared contract: [SCORING_SPEC.md](docs/SCORING_SPEC.md), [API_CONTRACT.md](docs/API_CONTRACT.md), and [ARCHITECTURE.md](docs/ARCHITECTURE.md).
 - The backend Pydantic schema and frontend TypeScript types are aligned. Changes require coordination across owners and matching tests/docs.
-- Segment retrieval routes, persistence, scoring, dashboard, and HTTP image-analysis integration are not implemented by this contract-freeze task. Task C now has a local image-analysis service with optional crack/pothole inference.
+- Segment retrieval routes, persistence, scoring, dashboard, and HTTP image-analysis integration are not implemented by this contract-freeze task. Task C has a local image-analysis service; its previous multinational checkpoint is blocked under the India-only data policy.
 - Score weights, normalization and labels are provisional hackathon assumptions. Open choices are listed in [DECISIONS.md](docs/DECISIONS.md); do not treat them as silently approved engineering thresholds.
 
 ## Cross-task boundaries and ownership
@@ -94,7 +94,7 @@ RoadIQ is primarily an image-based road-surface quality assessment prototype. It
 ## Current status
 
 - Core requirements alignment: image-analysis objectives and ownership are documented. Task C's partial service is implemented locally; RSQI, report UI, project-labeled dataset/evaluation, and image API remain unimplemented.
-- Tasks A, B, and D remain planned. Task C is in progress: image validation/quality heuristics, a named texture proxy, structured observations, and an optional pretrained crack/pothole wrapper exist. ROI, surface classification, stone/metal segmentation, raveling, and physical measures remain unavailable; see `docs/VISION_PIPELINE.md`.
+- Tasks A, B, and D remain planned. Task C is in progress: image validation/quality heuristics, a named texture proxy, structured observations, and a mockable detector wrapper exist. The previously configured multinational checkpoint is blocked by the India-only data policy, so production damage inference is unavailable. India-specific candidate datasets are documented but not downloaded, license/data audited, or evaluated. ROI, surface classification, stone/metal segmentation, raveling, and physical measures remain unavailable; see `docs/VISION_PIPELINE.md`.
 
 ## Four-owner kickoff checklist
 

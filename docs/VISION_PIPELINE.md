@@ -18,18 +18,26 @@ The function returns a JSON-ready dictionary validated by `ImageAnalysisResponse
 
 The service is observation-only. It does not implement an API route or RSQI. `analysis_status` remains `unrated` while the required pavement ROI, material, and aggregate evidence is unavailable. Detected boxes include pixel and normalized coordinates; confidence values are raw model scores and are not calibrated probabilities.
 
-## Model baseline
+## India-only model policy
 
-- **Checkpoint:** RF-DETR Nano fine-tuned on RDD2022 by DetectionBench, Hugging Face repo `dronefreak/rdd2022-rfdetr-nano`.
-- **Pinned revision:** `66429f39b916e56c6a33243d776718088f5f43ad`.
-- **Checkpoint file:** `checkpoint_best_total.pth`, 120,825,211 bytes; SHA-256 `2d1fba21b829ebc42f7c74f76285d97b2e3295aebe8d97e497d0cc186be98cc9`.
-- **Supported classes:** longitudinal crack, transverse crack, alligator crack, and pothole. The service groups the three crack classes under `crack` while preserving each original class in `model_label`.
-- **Input size:** 384×384 pixels as documented for this checkpoint. RF-DETR handles its internal preprocessing; the service supplies an EXIF-corrected RGB Pillow image.
-- **Model code and checkpoint license:** the publisher identifies the model as Apache-2.0. The source RDD2022 dataset is identified by the model card as CC BY-SA 4.0. Review those terms before redistribution or commercial use; the checkpoint is not included in this repository.
-- **Training/evaluation provenance:** pretrained baseline, fine-tuned on RDD2022, not trained on RoadIQ. The publisher reports 60.85 mAP@50 on its own grouped 70/15/15 held-out split. This is not a RoadIQ result and is not an independent validation by this project. The card notes that the test slice differs from the official CRDDC2022 leaderboard test set and that the model drops the dataset's “other” bucket.
-- **Runtime:** CPU inference is supported by the selected backend; GPU is optional. RF-DETR 1.11.2 with the resolved Transformers 5.19.0 requires a newer PyTorch stack than the workspace’s original PyTorch 2.5.1; the actual smoke run succeeded with PyTorch 2.9.1+cpu and TorchVision 0.24.1+cpu. Runtime latency has not been benchmarked. The checkpoint is about 115 MiB; a 2 GiB RAM budget is a planning estimate for loading/inference, not a measured minimum. Expect slower CPU inference than a GPU deployment.
+The project owner directed that model data remain India-only. Therefore no non-Indian road imagery may be used for training, fine-tuning, validation, or evaluation. The previously wired DetectionBench RF-DETR checkpoint was fine-tuned on the six-country RDD2022 corpus, so the service now refuses to load it. No India-only damage checkpoint is currently active; without an injected test detector, damage outputs remain unavailable. The RF-DETR smoke test from the earlier implementation is historical plumbing evidence only and is not a current India-focused quality result.
 
-References: [checkpoint card and metrics](https://huggingface.co/dronefreak/rdd2022-rfdetr-nano), [RF-DETR source and license](https://github.com/roboflow/rf-detr), [RDD2022 paper](https://arxiv.org/abs/2209.08538).
+India-only damage candidates have improved, but data are not downloaded or pinned yet:
+
+- The official [RDD2022 release](https://github.com/sekilab/RoadDamageDetector) documents an India-specific partition with 7,706 labelled training images and 1,959 unlabelled test images. Its archive returned HTTP 403 in this environment.
+- The user-provided [Siddhesh Roboflow project](https://universe.roboflow.com/siddhesh-onuvb/road-damage-detection-india/dataset/2) advertises 7,706 images, CC BY 4.0, and object-detection exports. The opened v2 page reports 5,394/1,541/771 train/validation/test images, Auto-Orient and stretch-resize to 720×720. The dataset page does not establish that every source image or split is independent, and its taxonomy/source relationship must be checked against the original RDD2022 India annotations before use. Do not train or claim metrics from it until a local export is reviewed, split leakage is checked, labels are mapped, and a checksum is recorded.
+- A separate [Roboflow RDD2022-India copy](https://universe.roboflow.com/prakhar-kpb1v/rdd2022-india-il8ju/dataset/5) advertises different split sizes and a ten-class taxonomy. Its export was inaccessible here. Treat it as a separate copy/version, not interchangeable with the Siddhesh project.
+
+India-specific adjacent segmentation data are candidates, not replacements for road pavement data:
+
+- The [Indian Roads semantic segmentation dataset](https://platform.ultralytics.com/ultralytics/datasets/indian-roads-semantic-segmentation) corresponds to the e-Yantra/IIT Bombay Indian Roads dataset. The dataset listing describes road/footpath/pothole-related pixel annotations; a public catalog reports 3,227 images and GPL-2.0. It may inform pavement ROI/pothole masks after the original files and license are verified, but does not annotate individual aggregate instances or metal fragments. The Ultralytics platform page itself could not be fetched in this review.
+- The peer-reviewed [Indian Footpath Damage Segmentation dataset](https://www.nature.com/articles/s41597-025-06207-x) and [Zenodo record](https://zenodo.org/records/17154852) provide 583 India-collected footpath images with pixel masks; the archive is 4.5 GB. The paper describes Pune pedestrian footpaths (not carriageway pavement), so it is adjacent-domain data only and must not be presented as validation of the road-surface model. Review the record's license and mask schema before any use.
+- [iWatchRoadv2](https://arxiv.org/html/2510.16375v1) describes 7,000+ manually box-annotated pothole frames from Indian dashcam footage and links a Kaggle dataset. The paper is licensed CC BY-NC-SA 4.0; separately verify the dataset's license and files. It reports pothole boxes, not aggregate or metal labels, and is a preprint rather than an independently reproduced RoadIQ result.
+- [DriveIndia](https://arxiv.org/html/2507.19912v1) describes a large India traffic-object dataset with pothole among 24 classes, but not aggregate or metal-fragment labels. The paper says release is for academic/non-commercial research through TiHAN-IIT Hyderabad; confirm actual availability and terms before considering it. It is not required for the current image-surface MVP.
+
+The user-provided [Indian Road Damage & Infrastructure Dataset (IRDID)](https://github.com/ahs695/Indian-Road-Damage-Infrastructure-Dataset) was audited at commit `98b12608720a2903878176598a3c94cf4d5561b6`. Its repository declares CC BY 4.0 and 1,200 image-level labels across six classes, but the checked-out copy has only 1,049 images; 151 labelled image records have no matching file after normalizing the documented class-folder names. The supplied split lists have 840/180/180 IDs, but exact duplicate image bytes occur across splits (77 train/validation, 67 train/test, and 11 validation/test duplicate groups). Metadata also names third-party map, news, stock-photo, and social-media sources; rights for those individual images have not been independently verified. The labels are image-level only: there are no crack/pothole boxes, aggregate masks, or metal-fragment annotations. Do not train or report held-out metrics from its published split without repairing missing files, grouping duplicate images before splitting, and resolving image provenance.
+
+None of the reviewed India-only candidates provides individual stone-aggregate masks or a separate metal-fragment class. Those remain unavailable until India-only labels are supplied or collected and reviewed. The roadside-debris Roboflow link provided by the user did not resolve to an inspectable dataset page in this review; available search results did not confirm its geography, label taxonomy, or license. In particular, generic debris labels cannot stand in for metal-fragment labels. The user explicitly directed that ACAD and all non-Indian data be excluded.
 
 ## Setup and local workflow
 
@@ -39,21 +47,11 @@ From the repository root, using the project's supported Python 3.12 environment:
 python -m venv .venv
 . .venv/bin/activate
 python -m pip install -r backend/requirements.txt
-python -m pip install torch==2.9.1 torchvision==0.24.1 --index-url https://download.pytorch.org/whl/cpu
-python -m pip install -r backend/requirements-vision.txt
 cd backend
-python -m scripts.download_road_damage_model
-```
-
-For CUDA, install a matching Torch/TorchVision pair from the [official PyTorch install instructions](https://pytorch.org/get-started/locally/) before installing `requirements-vision.txt`. The optional requirements enforce PyTorch 2.9.1 or newer because the resolved RF-DETR/Transformers stack needs APIs absent from the older system Torch 2.5.1.
-
-The downloader pins the model revision and verifies the checkpoint SHA-256. Set the printed `ROADIQ_VISION_MODEL_PATH` value in the environment, then run:
-
-```bash
 python -m scripts.analyze_road_image /path/to/your/road-image.jpg
 ```
 
-Without the optional detector requirements or checkpoint, the service still validates the image and returns an explicit `unrated` report with defect measurements unavailable. The local workflow uses a caller-provided image; no RoadIQ-labelled evaluation set is currently available. A CPU CLI smoke run loaded the pinned checkpoint and inferred on a generated, synthetic road-like image at threshold 0.25; it returned one crack and zero potholes with no processing error. This validates model loading and response wiring only, not detector quality.
+No checkpoint download is configured. The legacy `ROADIQ_VISION_MODEL_PATH` is rejected when it points to the known multinational checkpoint. The local CLI validates the caller-provided image and returns an `unrated` report with defect measurements unavailable. The Roboflow India-specific datasets and papers are data candidates only; no candidate checkpoint is configured or verified. Once an India-only dataset and checkpoint are selected and pinned, their preprocessing, architecture, hardware requirements, licensing, and evaluation protocol must replace this placeholder guidance.
 
 ## What the MVP can and cannot report
 
@@ -62,8 +60,8 @@ Implemented:
 - image byte/type/dimension validation and EXIF orientation handling;
 - heuristic resolution, exposure, and edge-detail quality observations, explicitly unvalidated on RoadIQ data;
 - a named tile grayscale contrast proxy, never described as physical roughness/IRI;
-- RF-DETR crack/pothole bounding boxes and per-image counts when a checkpoint loads;
-- model-load and inference errors in the response, with unsupported or unavailable measurements left null.
+- test-injected detector outputs for wrapper tests only;
+- structured model-load and inference errors, with unsupported or unavailable measurements left null.
 
 Unavailable until a reviewed model and labels exist:
 
@@ -74,11 +72,7 @@ Unavailable until a reviewed model and labels exist:
 - raveling and other visible deterioration classes;
 - mask-derived defect area, calibrated physical sizes, and counts per square metre.
 
-No RoadIQ held-out evaluation has run. Empty detector results mean no supported defects were detected above the selected threshold; they do not prove the road is undamaged. A 2D image does not establish internal structural strength, weather resistance, or actual skid resistance. All heuristic cutoffs and confidence thresholds need review against labelled, held-out RoadIQ images before product interpretation.
-
-### Aggregate-data investigation
-
-No RoadIQ-labelled stone-aggregate or metal-fragment images or pretrained checkpoints are present in this repository. The public [ACAD Amodal Concrete Aggregate Dataset](https://huggingface.co/datasets/igtsd/acad_dataset) provides 10,000 procedurally generated, instance-annotated concrete aggregate images under CC BY 4.0, with train/validation/test splits. It is a possible transfer-learning source, not evidence of performance on real asphalt/concrete road imagery; no checkpoint trained on ACAD is supplied here. A model trained or fine-tuned on ACAD must remain explicitly experimental until tested on a held-out set of real road images. It does not cover literal metal fragments.
+No RoadIQ held-out India-only evaluation has run. Missing defect detections must never be interpreted as evidence that the road is undamaged. A 2D image does not establish internal structural strength, weather resistance, or actual skid resistance. All heuristic cutoffs and confidence thresholds need review against labelled, held-out Indian road images before product interpretation.
 
 ## Calibration behavior
 
