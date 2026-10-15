@@ -4,6 +4,7 @@
 
 - Fixed annotated-preview mask scaling when the source image exceeds the 512-pixel analysis resolution; larger valid images now produce previews instead of failing during alpha composition.
 - Added deterministic synthetic road-texture sample generation and CLI flags to export the annotation and structured JSON report separately.
+- Added a one-command Task C demo runner for either a generated sample or a local image, saving the annotation and structured report together.
 - Added an end-to-end regression test for the synthetic 640×480 image. It validates baseline plumbing only; no real-world model performance is claimed.
 
 ## Unreleased
