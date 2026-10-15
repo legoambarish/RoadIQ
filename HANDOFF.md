@@ -1,5 +1,27 @@
 # RoadIQ handoff
 
+## Task D integration/release preparation — 2026-10-15
+
+- **Date/time and owner:** 2026-10-15 22:31 Asia/Calcutta; a human Task D owner is not recorded in TASKS.md.
+- **Branch/base:** task/d-integration-release is based on fetched origin/main at 7995ff4, which merges Task A PR #1. The previous D pointer is preserved as local backup/task-d-integration-release-prebase-7995ff4.
+- **Live dependency state:** PR #1 is merged. PR #2 for Task B is open at 4718ac6; GitHub reported no submitted reviews or check runs at inspection. Task C is at origin/task/c-computer-vision commit 2afa289, five commits behind and ten ahead of main, with no PR. Its own handoff marks the implementation not ready for integration. No Task D route or runtime contract change has been made.
+- **Preparation completed:** updated TASKS.md to reflect live task status and add the Task D integration checklist; added docs/INTEGRATION_CHECKLIST.md with field names, units, status/provenance/null conventions, unresolved proposals, scenario matrix, commands, and environment needs; updated CHANGELOG.md. No shared runtime contract or A/B/C implementation was changed. README.md was not changed because no verified startup or demo instruction correction was identified.
+- **Verification run on this Task D checkout:**
+  - From frontend: npm install — passed; 27 packages installed, zero vulnerabilities reported.
+  - From frontend: npm run build — passed; TypeScript check and Vite production build completed.
+  - From frontend: npm run lint — passed; Oxlint completed.
+  - From frontend: npm run dev -- --host 0.0.0.0 — Vite started; GET http://127.0.0.1:5173/ returned HTTP 200. This verifies the current main frontend scaffold, not PR #2’s dashboard.
+  - From repository root: pytest backend/tests -q — could not start; pytest is not recognized. No backend tests ran.
+  - From backend: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000 — could not start; uvicorn is not recognized. The host has Python 3.11.15 on PATH and Python 3.14 through the launcher, while README requires 3.12.x. No root .venv exists.
+  - Task B’s handoff reports its frontend TypeScript build, Oxlint, and Vite production build passed; that report was not independently rerun against PR #2. Task C’s handoff reports 21 backend tests passed in a temporary environment; that historical result was not rerun here.
+  - git diff --cached --check passed for all four staged Task D documentation files.
+- **Demo available today:** the current main frontend can be served and its page returns HTTP 200, but the backend health endpoint could not be started in this environment. PR #2 contains a fixture-backed schematic dashboard and local-only image preview with an Unrated report shell; it has no live image/segment API. No complete frontend/backend demo sequence is currently verified.
+- **Known issues and release readiness:** no approved Task B integration, no Task C PR or agreed scorer mapping, no active India-only model, no image-analysis route, no labelled aggregate/metal dataset, no held-out evaluation, and no backend test/startup pass on this host. Task A’s default profiles remain empty, so its scorer is unrated without a complete fixed profile. The integration/release goal is not complete.
+- **Release commit:** none; this change is Task D preparation only. Record the Task D documentation commit and push/PR outcome after they occur.
+- **Exact next action:** review PR #2 with its owner; have the Task C owner align its branch to current main and agree output fields and Task A mapping with affected owners; then implement and test the Task D route only after that agreement. Keep the PR unmerged pending human task-owner approval.
+
+## Previous handoff: Task A scoring engine (preserved)
+
 ## Date/time and task owner
 
 - Date/time: 2026-10-15 21:14 Asia/Calcutta
