@@ -9,7 +9,7 @@
 - **Documentation gap:** the requested `docs/HANDOFF.md` does not exist. Repository `AGENTS.md` instructs contributors to update root `HANDOFF.md`, so this file is the handoff record; no duplicate file was created.
 - **Known blockers:** real reviewed analysis output cannot be rendered until the Task C/Task D mapping and HTTP endpoint are agreed and available. The `npm` command is unavailable, and bundled pnpm will not operate against the existing modules in this non-interactive session; direct frontend checks all passed.
 - **Next task:** Task D should finalize the compatible image-analysis HTTP response mapping with Task C, then Task B can connect the existing local-only image report shell to that reviewed endpoint.
-- **Commit/push:** documentation changes are being prepared on `task/b-map-dashboard`; record the resulting commit and final status after commit/push.
+- **Commit/push:** audit documentation was committed as `c7749a8a8bb9ef88f4830bfd561941a525f0144` (`Document Task B continuation audit`) and pushed to `origin/task/b-map-dashboard`. The branch was clean and in sync after push. This handoff correction will be committed as a follow-up; its identifier will be reported in the task result.
 
 ## Current Task C status — 2026-10-16
 
