@@ -99,3 +99,12 @@ An authenticated repository owner should push the existing `main` commits, assig
 - Map provider, live segment retrieval, and score production remain unimplemented. Demo measurements are illustrative only.
 - Push the branch using an authenticated GitHub account, open a PR against `main`, and request the required review. Do not force-push.
 - Readiness: implementation is ready for review on the local branch; integration is pending remote push and PR review.
+
+### Task B presentation follow-up — 2026-10-15
+
+- The project owner has since pushed the original Task B branch; this follow-up is based on and tracks `origin/task/b-map-dashboard`.
+- Made the schematic map the first major dashboard panel, before summary metrics, and made its interactive route colors and no-basemap status more visible.
+- Added larger, clearer text and a warm editorial Everyday palette. Engineer mode now switches to a dark inspection-console theme, changes the page heading and summary metrics, and keeps technical provenance/evidence details visible.
+- The map is still schematic fixture geometry; a real tile basemap remains unavailable pending map-provider selection and integration.
+- Verification: frontend TypeScript build check, Oxlint, and Vite production build passed after the UI changes. Browser accessibility snapshot confirmed the map is present immediately after the header/notice and the dashboard has differentiated Everyday/Engineer content.
+- Latest changes are recorded in the follow-up commit on `task/b-map-dashboard`.

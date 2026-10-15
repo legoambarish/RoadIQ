@@ -58,8 +58,9 @@ export function SegmentMap({ records, selectedId, overlay, onSelect }: SegmentMa
     <section className="map-card" aria-labelledby="map-heading">
       <div className="map-card-header">
         <div>
-          <div className="section-kicker">Network view</div>
-          <h2 id="map-heading">Road quality overlay</h2>
+          <div className="section-kicker">Interactive network map</div>
+          <h2 id="map-heading">Road segments</h2>
+          <p className="map-description">Select a colored route to inspect its demo record. Geometry is schematic; no basemap is connected.</p>
         </div>
         <div className="map-tools" aria-label="Map controls">
           <span className="map-tool-label">Illustrative geometry</span>

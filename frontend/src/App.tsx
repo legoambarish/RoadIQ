@@ -159,11 +159,24 @@ function App() {
     ? Math.round(ratedRecords.reduce((sum, record) => sum + (record.segment.surface_quality_score ?? 0), 0) / ratedRecords.length)
     : null
   const reviewCount = ratedRecords.filter((record) => (record.segment.surface_quality_score ?? 100) < 60).length
+  const summaryCards = view === 'engineer'
+    ? [
+        { label: 'Segment records', value: `${filteredRecords.length}`, detail: 'Illustrative fixture rows', icon: '▤' },
+        { label: 'Rated examples', value: `${ratedRecords.length}`, detail: 'Not scorer output', icon: '◒', tone: 'metric-green' },
+        { label: 'Confidence fields', value: 'Unavailable', detail: 'No verified evidence source', icon: '∅', tone: 'metric-muted' },
+        { label: 'Record provenance', value: 'demo_fixture', detail: 'No live segment API', icon: '⌁', tone: 'metric-amber' },
+      ]
+    : [
+        { label: 'Roads in view', value: `${filteredRecords.length}`, detail: 'Illustrative segments', icon: '⌁' },
+        { label: 'Average road quality', value: averageQuality === null ? '—' : `${averageQuality}`, detail: 'Rated fixtures only · /100', icon: '◒', tone: 'metric-green' },
+        { label: 'Need a closer look', value: `${reviewCount}`, detail: 'Demo scores below 60', icon: '↗', tone: 'metric-amber' },
+        { label: 'Evidence coverage', value: 'Unavailable', detail: 'No live survey feed connected', icon: '◌', tone: 'metric-muted' },
+      ]
 
   const chooseSegment = (segmentId: string) => setSelectedId(segmentId)
 
   return (
-    <main className="app-shell">
+    <main className={`app-shell ${view === 'engineer' ? 'engineer-view' : 'everyday-view'}`}>
       <header className="topbar">
         <a className="brand" href="#top" aria-label="RoadIQ home">
           <span className="brand-mark"><i /><i /><i /></span>
@@ -183,9 +196,9 @@ function App() {
       <div className="page-content" id="top">
         <section className="page-heading">
           <div>
-            <div className="eyebrow-line"><span className="live-dot" /> ROAD NETWORK INTELLIGENCE <span className="eyebrow-divider">/</span> DEMO WORKSPACE</div>
-            <h1>Know the road <em>ahead.</em></h1>
-            <p>Explore road condition and compare travel profiles across an illustrative segment network.</p>
+            <div className="eyebrow-line"><span className="live-dot" /> {view === 'engineer' ? 'ENGINEERING CONSOLE' : 'ROAD NETWORK INTELLIGENCE'} <span className="eyebrow-divider">/</span> DEMO WORKSPACE</div>
+            <h1>{view === 'engineer' ? <>Inspect the <em>evidence.</em></> : <>Know the road <em>ahead.</em></>}</h1>
+            <p>{view === 'engineer' ? 'Review record provenance, measurement availability, and contract fields for each fixture.' : 'Compare route examples and see how condition differs from travel-profile suitability.'}</p>
           </div>
           <div className="view-switch" role="group" aria-label="Dashboard view">
             <button type="button" className={view === 'everyday' ? 'selected' : ''} aria-pressed={view === 'everyday'} onClick={() => setView('everyday')}><span>◉</span> Everyday</button>
@@ -197,13 +210,6 @@ function App() {
           <span className="notice-icon">✳</span>
           <p><strong>Demo data:</strong> this workspace uses illustrative fixtures. The API currently exposes health status only; road scores and travel profiles below are not live measurements or safety ratings.</p>
           <span className="notice-tag">FIXTURE DATA</span>
-        </section>
-
-        <section className="metrics-grid" aria-label="Network summary">
-          <MetricCard label="Roads in view" value={`${filteredRecords.length}`} detail="Illustrative segments" icon="⌁" />
-          <MetricCard label="Average road quality" value={averageQuality === null ? '—' : `${averageQuality}`} detail="Rated fixtures only · /100" icon="◒" tone="metric-green" />
-          <MetricCard label="Need a closer look" value={`${reviewCount}`} detail="Demo scores below 60" icon="↗" tone="metric-amber" />
-          <MetricCard label="Evidence coverage" value="Unavailable" detail="No live survey feed connected" icon="◌" tone="metric-muted" />
         </section>
 
         <section className="workspace-section" id="network">
@@ -252,6 +258,10 @@ function App() {
               <div className="ranking-footer"><span>Ranked by active overlay</span><span>Fixtures only</span></div>
             </aside>
           </div>
+        </section>
+
+        <section className="metrics-grid" aria-label={view === 'engineer' ? 'Record inspection summary' : 'Network summary'}>
+          {summaryCards.map((card) => <MetricCard key={card.label} {...card} />)}
         </section>
 
         <ImageReportPanel />

@@ -5,11 +5,11 @@ React + TypeScript + Vite dashboard for the RoadIQ prototype.
 ## Current experience
 
 - Interactive schematic map of demo road segments with Road Quality and five travel-profile overlays.
-- Everyday and Engineer detail views, searchable/filtered rankings, quality and profile charts, and segment evidence details.
+- Everyday and Engineer detail views with distinct presentation and summary metrics, searchable/filtered rankings, quality and profile charts, and segment evidence details.
 - Local-only road-image preview with explicit Unrated/unavailable report states. The selected file is not sent anywhere and no inference runs.
 - API badge checks `GET /api/v1/health`; segment retrieval and image-analysis endpoints are not implemented.
 
-The segment network and numeric values are isolated in `src/data/demoRoadSegments.ts` and marked as illustrative `demo_fixture` data. There is no live basemap, model result, travel-safety rating, or scoring engine behind those values. Map-provider selection remains open. The SVG map displays fixture GeoJSON geometry and supports segment selection and zoom.
+The segment network and numeric values are isolated in `src/data/demoRoadSegments.ts` and marked as illustrative `demo_fixture` data. There is no live basemap, model result, travel-safety rating, or scoring engine behind those values. Map-provider selection remains open. The prominent SVG map displays fixture GeoJSON geometry and supports segment selection and zoom; it is a schematic network view, not a tiled street map.
 
 ## Development
 
