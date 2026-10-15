@@ -18,7 +18,7 @@
 - **Verification:** focused Task C tests — 28 passed, 2 skipped; backend suite excluding the known hanging health TestClient case — 87 passed, 2 skipped, 1 deselected; `git diff --check` passed. Test runtime was the existing temporary Python 3.10 environment; the repository documents Python 3.12.
 - **Remaining:** no India-only aggregate-instance labels or trained checkpoint. The annotation is a high-frequency texture candidate, not particle segmentation. Task B owns browser upload/report display; Task D owns HTTP image-analysis integration. PR review remains necessary; do not merge without review.
 - **Dataset search:** a brief candidate check found an India-affiliated RoadDefects-ISeg publication with crack/lane/pothole/speed-breaker classes, broad-surface labels in MTRSD, and a CC BY synthetic concrete-aggregate dataset (ACAD) from Bali. None is India-only aggregate-instance imagery of real roads, so none was downloaded or presented as model evidence; links and limits are recorded in `docs/DATASET_MANIFEST.md`.
-- **Commits:** implementation, regression tests, and docs are ready for a normal commit and push to update PR #7. Replace this note with the resulting commit IDs after publication.
+- **Commits:** implementation, regression tests, and docs are in `05118d2` (`Add one-command local Task C demo runner`). This handoff refresh is being committed and pushed to update PR #7.
 
 ## Task C continuation — current repository audit, conflict refresh, and analysis baseline — 2026-10-15
 
