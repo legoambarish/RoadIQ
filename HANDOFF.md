@@ -9,7 +9,7 @@
 - **Checks actually run:** from `frontend/`, `node_modules/.bin/tsc.CMD -b` passed; `node_modules/.bin/vite.CMD build` passed (24 modules transformed); `node_modules/.bin/oxlint.CMD src` passed. Browser reload on `http://127.0.0.1:4173/#image-report` confirmed the updated field labels render and Surface quality is the active map overlay. No report was imported in this pass, so displayed ROI values were not end-to-end verified with an imported C report. From the repository root, `git diff --check` passed. No backend tests were run because no backend code changed.
 - **Known issues:** browser-triggered analysis and the HTTP image endpoint remain unimplemented. ROI gating requires a separately configured checkpoint and remains uncalibrated. No active default scorer references, aggregate-instance labels, or validated RSQI are available. No saved CLI report was imported in the browser during this audit, so report-backed ROI display is source/build verified but not end-to-end browser verified.
 - **Single next task:** Task D should agree the Task C observation mapping with Task A and implement the reviewed image-analysis endpoint before Task B adds live request integration.
-- **Commit/push:** implementation and documentation are committed as `256a3cebbc23958bbf1402f79fc94f79996cdcf2` (`Show Task C ROI provenance in report panel`); branch publication and final status are verified after push.
+- **Commit/push:** implementation and documentation are committed as `b16e60a3e7218bb4bd79b416b54e51a85ac9861c` (`Show Task C ROI provenance in report panel`) and pushed to `origin/task/b-map-dashboard`; the branch was synchronized and clean after that push, before this handoff metadata commit.
 
 ## Task B Surface Quality overlay selection — 2026-10-16
 
