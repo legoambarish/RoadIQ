@@ -93,7 +93,7 @@ The local JSON result places this texture-region candidate under `aggregate_anal
 
 ## Dataset manifest and evaluation
 
-The JSONL manifest fields, annotation states, source/provenance requirements, scene-group split policy, duplicate checks, command, and limitations are documented in [`DATASET_MANIFEST.md`](DATASET_MANIFEST.md). No aggregate-instance dataset is bundled or downloaded. The existing India-road trainer can compute semantic segmentation metrics on its published validation sequences, but those sequences are not an independent test split and do not label aggregate instances. No RoadIQ aggregate metrics or model-quality claims are available.
+The JSONL manifest fields, annotation states, source/provenance requirements, scene-group split policy, duplicate checks, evaluator command, and limitations are documented in [`DATASET_MANIFEST.md`](DATASET_MANIFEST.md). `scripts.evaluate_aggregate_baseline` uses reviewed aggregate-instance labels in the untouched `test` split, runs the same image service, and emits pixel IoU/precision/recall plus file hashes and per-image timing. It explicitly leaves instance-count MAE null because the heuristic cannot count instances. COCO polygons/uncompressed RLE and grayscale instance-ID PNG masks are supported; compressed COCO RLE is not. No aggregate-instance dataset is bundled or downloaded, so no RoadIQ aggregate metrics exist. The India-road trainer can compute semantic segmentation metrics on its published validation sequences, but these are not independent test results and do not label aggregates.
 
 ## Calibration behavior
 

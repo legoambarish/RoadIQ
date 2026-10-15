@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+- Added `evaluate_aggregate_baseline` for reviewed test-split COCO polygon/uncompressed-RLE or grayscale instance masks. It reports pixel IoU/precision/recall, manifest and per-file hashes, per-image timing, and explicitly unavailable instance-count MAE. No labeled RoadIQ aggregate test set is present, so no accuracy result is claimed.
 - Added a documented JSONL dataset manifest and validator for label/provenance parsing, scene-group split isolation, exact-image hashes, and perceptual near-duplicate leakage; it does not fetch datasets.
 - Added an explicitly untrained Pillow texture-region candidate baseline to the Task C image service. It returns an RLE mask, bounding box, image-space candidate area/boundary statistics, an annotated JPEG data URI, and inference time while keeping individual aggregate count, confidence, coverage, gaps, and physical measurements unavailable.
 - Updated Task C tests and docs to distinguish aggregate-rich texture regions from individual particles and from road defects. No aggregate model was trained and no held-out metrics are claimed.
