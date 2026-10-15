@@ -142,6 +142,12 @@ The reference ranges, class-specific handling, feature extractors, annotation ru
 
 No values for `V/L/G/T/M`, weights, normalizations, thresholds, or confidence are validated today. Task A owns index implementation and must version the weights/normalization; Task C owns extracting image observations and documenting model/output provenance; Task D coordinates held-out evaluation. The existing `damage_components` fields are the current generic scaffold, not a complete image-analysis response contract.
 
+### Task A scorer implementation boundary
+
+`backend/app/services/scoring.py` implements the candidate weighting and label formula as a deterministic service. `score_surface_quality` accepts one explicitly-unit-tagged component measurement for each of `visible_defect_burden`, `aggregate_loss`, `gap_anomaly`, `texture_anomaly`, and `aggregate_distribution_anomaly`, together with upstream image-quality, usable-region, resolution, surface-type, and capture-profile gate decisions. A caller-supplied `ScoringConfig` must provide fixed normalization profiles keyed by surface type and capture profile; each profile contains component-specific units and reference intervals plus a reference-set identifier. Normalization clamps to `[0,100]` and follows the configured damage direction. The service never fits ranges per image/cohort and never renormalizes weights.
+
+The default configuration deliberately contains no normalization references. The scorer therefore returns `unrated` unless a complete applicable profile and all required evidence are supplied. The current repository has no labelled dataset from which to supply or validate RoadIQ reference ranges. Confidence and spatial evidence coverage remain null because their calibration method and denominator are unresolved. Mode suitability for walking, cycling, two-wheeler, car, and bus remains null because no mode-specific formulas/evidence requirements have been agreed. The `rsqi` model serializes to the proposed `API_CONTRACT.md` RSQI object; labels, scoring-config version, and nullable mode outputs are returned as adjacent service metadata for callers that also consume the segment contract.
+
 ### Provisional labels
 
 | Surface Quality | Label |

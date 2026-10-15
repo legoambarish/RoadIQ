@@ -4,8 +4,8 @@
 
 - Current integration branch: `main`.
 - Agreed task branches: `task/a-scoring-engine`, `task/b-map-dashboard`, `task/c-computer-vision`, and `task/d-integration-release`.
-- At the coordination workflow freeze, only `main` existed locally/remotely; create each task branch from an up-to-date `main` when its owner begins work.
-- Human owner names have not been supplied; assign one human owner to each task before implementation. Task labels identify scope, not a person.
+- At the initial coordination freeze, only `main` existed locally/remotely. Task B is now assigned to the project owner on `task/b-map-dashboard`; remaining task branches follow the ownership table below.
+- Human owners are still to be confirmed for Tasks A, C, and D. Task labels identify scope, not a person.
 - Follow the mandatory read/inspect/branch/test/handoff/PR workflow in `AGENTS.md`. GitHub's committed repository state is authoritative, independent of any agent's memory.
 
 ## Core product objective
@@ -33,10 +33,10 @@ RoadIQ is primarily an image-based road-surface quality assessment prototype. It
 
 | Task | Human owner | Assigned branch |
 | --- | --- | --- |
-| A — Scoring | TBD; assign before implementation | `task/a-scoring-engine` |
-| B — Frontend/reporting | TBD; assign before implementation | `task/b-map-dashboard` |
-| C — Aggregate/image analysis | TBD; assign before implementation | `task/c-computer-vision` |
-| D — Integration/evaluation | TBD; assign before implementation | `task/d-integration-release` |
+| A — Scoring | Human owner/reviewer not assigned; implementation merged in PR #1; calibration dependencies remain | `task/a-scoring-engine` |
+| B — Frontend/reporting | Human owner/reviewer not recorded; dashboard implementation is in open PR #2 | `task/b-map-dashboard` |
+| C — Aggregate/image analysis | Human owner not recorded; partial branch implementation, no PR, not ready for integration | `task/c-computer-vision` |
+| D — Integration/evaluation | Human owner not recorded; Task D preparation underway | `task/d-integration-release` |
 
 `main` is the shared integration branch. At this workflow freeze no task branches existed locally or remotely. Each task branch must be based on fetched `main`; send completed task work through reviewed pull requests. Task D coordinates integration, but does not take over A/B/C modules. Dependency manifests and lockfiles are shared-impact files and require review from affected owners.
 
@@ -56,22 +56,18 @@ RoadIQ is primarily an image-based road-surface quality assessment prototype. It
 - [x] Actual health endpoint is distinguished from planned segment retrieval endpoints.
 - [x] Task boundaries, file ownership, dependencies, and outcomes are specified without implementing all four tasks.
 
-### Task A — scoring (planned)
+### Task A — scoring (merged in PR #1; calibration dependencies remain)
 
-- [ ] Implements configurable, versioned candidate image-feature index and exposes every component contribution; initial weights remain hypotheses pending evaluation.
-- [ ] Uses surface-type/capture-aware normalization, with frozen training references and no per-image/test-cohort normalization.
-- [ ] Returns `unrated` with null score when required image quality, usable ROI, material-specific features, or component evidence is absent; never fills missing values with zero or renormalizes weights silently.
-- [ ] Separates surface condition from vehicle/pedestrian suitability; produces transparent score reasons and calibrated confidence only.
-- [ ] Tests formula, normalization boundaries, configuration/version, missing evidence, unknown surface type, confidence/status, and label cutoffs.
+- [x] Implements configurable, versioned candidate image-feature index and exposes every component contribution; initial weights remain hypotheses pending evaluation.
+- [x] Selects fixed normalization profiles by surface type and capture profile; never normalizes per image/test cohort. RoadIQ training-derived ranges remain unavailable until a labelled dataset is prepared and reviewed.
+- [x] Returns `unrated` with null score when required image quality, usable ROI, material-specific references, resolution, or component evidence is absent; never fills missing values with zero or renormalizes weights silently.
+- [x] Separates surface condition from vehicle/pedestrian suitability; mode scores remain null because formulas/evidence rules are unresolved. Confidence and evidence coverage remain null until calibrated.
+- [x] Tests formula, normalization boundaries, configuration/version, missing evidence, unknown surface type, confidence/status, mode outputs, and label cutoffs.
+- [ ] Supply and validate frozen RoadIQ normalization ranges and confidence/coverage calibration against a labelled dataset; no such dataset currently exists.
 
-### Task B — dashboard (planned)
+Task A implementation is on `task/a-scoring-engine` in `backend/app/services/scoring.py` with focused tests in `backend/tests/test_scoring.py`; PR #1 is merged into `main` at `7995ff4`. It provides a scorer/API boundary only and does not implement Task C feature extraction or Task D API routes/evaluation.
 
-- [ ] Supports the future image-analysis workflow and renders the submitted image with an annotated overlay and explanatory report.
-- [ ] Shows image-quality/ROI status, surface type or unknown, aggregate/defect/texture evidence and units, index contributions, confidence, unavailable values, and limitations.
-- [ ] Clearly renders Low Confidence or Unrated and never presents unrated as good; distinguishes image-derived texture proxies from physical roughness.
-- [ ] Keeps surface condition separate from mode suitability and pedestrian access/context; does not infer pedestrian-friendliness from missing lane markings.
-- [ ] Handles the currently implemented health-only API honestly; no claim that planned image/segment APIs exist.
-- [ ] Passes frontend TypeScript checks, lint, and Vite production build.
+### Task B — dashboard (implementation on branch; PR #2 open; integration pending review)
 
 ### Task C — computer vision (in progress)
 
@@ -82,7 +78,7 @@ RoadIQ is primarily an image-based road-surface quality assessment prototype. It
 - [ ] Preserves unavailable values as null and documents model/checkpoint, preprocessing, calibration method, and limitations.
 - [ ] Tests malformed/low-quality inputs, unsupported material/resolution, unit/calibration gates, masks, and unavailable outputs without requiring production weights.
 
-### Task D — integration and release (planned)
+### Task D — integration and release (preparation in progress; integration blocked on dependencies)
 
 - [ ] Implements reviewed image-analysis request/response contract and validation/error behavior; keeps current health route working and marks segment/image routes planned until implemented.
 - [ ] Defines dataset manifest/annotation protocol and grouped train/validation/test split; prevents road-segment and feasible near-duplicate leakage across splits.
@@ -90,6 +86,16 @@ RoadIQ is primarily an image-based road-surface quality assessment prototype. It
 - [ ] Distinguishes untouched pretrained baseline from frozen/finetuned/RoadIQ-trained models and records training data/split/version.
 - [ ] Runs backend pytest and frontend build/type/lint checks; records actual commands/results and unresolved issues in `HANDOFF.md`.
 - [ ] Confirms configuration/secrets safety and release readiness without claiming production algorithm/model validation.
+
+#### Task D integration checklist
+
+- [ ] Compare frontend fixtures, Task A scorer input/output, Task C observations, and the proposed API field by field; record exact names, units, statuses, provenance, and null rules. Keep mismatches as proposals until affected owners agree.
+- [ ] Define tests for valid image analysis; malformed/unsupported/invalid images; failed quality, pavement-region, and resolution gates; unknown surface type; missing/null/unavailable/invalid measurements; unit/status/provenance mismatches; incomplete scorer input and `unrated`; and unavailable model, backend, or API.
+- [ ] Verify the frontend shows backend explanations and unavailable fields, keeps mode suitability separate from surface quality, and never presents missing or unrated evidence as a good road.
+- [ ] Use clearly labeled fixtures; once an agreed end-to-end flow exists, verify explanations, unavailable values, map colors, mode changes, and details against backend values.
+- [ ] Verify repository-documented backend/frontend startup, test, build, and lint commands; record only commands and results confirmed in this environment.
+- [ ] Inspect environment variables, secrets handling, model/download requirements, map-provider keys, storage, and network needs without exposing secrets.
+- [ ] Add Task D integration tests and attempt release checks only after dependency outputs and the shared mapping are reviewed and agreed.
 
 ## Current status
 

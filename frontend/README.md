@@ -1,32 +1,33 @@
-# React + TypeScript + Vite
+# RoadIQ frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+React + TypeScript + Vite dashboard for the RoadIQ prototype.
 
-Currently, two official plugins are available:
+## Current experience
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Interactive schematic map of demo road segments with Road Quality and five travel-profile overlays.
+- Everyday and Engineer detail views with distinct presentation and summary metrics, searchable/filtered rankings, quality and profile charts, and segment evidence details.
+- Local-only road-image preview with explicit Unrated/unavailable report states. The selected file is not sent anywhere and no inference runs.
+- API badge checks `GET /api/v1/health`; segment retrieval and image-analysis endpoints are not implemented.
 
-## React Compiler
+The segment network and numeric values are isolated in `src/data/demoRoadSegments.ts` and marked as illustrative `demo_fixture` data. There is no live basemap, model result, travel-safety rating, or scoring engine behind those values. Map-provider selection remains open. The prominent SVG map displays fixture GeoJSON geometry and supports segment selection and zoom; it is a schematic network view, not a tiled street map.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Development
 
-## Expanding the Oxlint configuration
+From this directory, install the npm dependencies and run:
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm run dev
+npm run build
+npm run lint
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Set `VITE_API_BASE_URL` to the FastAPI `/api/v1` base URL to change the health-check target. The frontend currently sends only the health request; it does not upload images or retrieve road segments.
+
+## Structure
+
+- `src/components/SegmentMap.tsx` — interactive fixture geometry and overlay.
+- `src/components/DashboardCharts.tsx` — fixture-based quality and travel-profile summaries.
+- `src/components/ImageReportPanel.tsx` — local preview and honest unavailable report shell.
+- `src/data/demoRoadSegments.ts` — typed, clearly marked demo fixture records.
+- `src/types/road-segment.ts` — shared road-segment TypeScript contract.
+- `src/lib/api.ts` — health-only API client.
