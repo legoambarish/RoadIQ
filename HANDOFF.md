@@ -9,7 +9,7 @@
 - **Answers for the owner:** Everyday and Engineer Insights summarize the currently filtered fixture records; they are not details for the selected segment or uploaded image. Import Task C report JSON to populate saved analysis fields. Import the optional annotated preview to view the CLI's texture-candidate image; use both road image and preview to overlay it. Neither input runs analysis.
 - **Known limitations:** Insights remain demo-fixture summaries. The image report is a manual import only; selecting the original image does not run the CLI or send it to an API. Candidate texture regions are not aggregate instances or verified defects.
 - **Next task:** Task D should finalize the Task C-to-Task A mapping and image-analysis endpoint before Task B adds browser-triggered analysis.
-- **Commit/push:** committed as `632bc06850f2a7b28e325f736c607d9f45701ab4` (`Improve traveler brief and report import clarity`); this handoff file is amended before publication, then push and final status are verified.
+- **Commit/push:** code is committed as `37c4d15320c5ab1925efd82e7d4d6cabf1128241` (`Improve traveler brief and report import clarity`) and pushed to `origin/task/b-map-dashboard`; branch was synchronized and clean immediately after the push, before this handoff metadata correction.
 
 ## Task B alignment with latest Task A/C/D updates — 2026-10-16
 
