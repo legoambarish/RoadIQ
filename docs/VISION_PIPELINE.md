@@ -51,6 +51,8 @@ An additional similarly named [IRD-Dataset on Zenodo](https://zenodo.org/records
 
 None of the reviewed India-only candidates provides individual stone-aggregate masks or a separate metal-fragment class. Those remain unavailable until India-only labels are supplied or collected and reviewed. The roadside-debris Roboflow link provided by the user did not resolve to an inspectable dataset page in this review; available search results did not confirm its geography, label taxonomy, or license. In particular, generic debris labels cannot stand in for metal-fragment labels. The user explicitly directed that ACAD and all non-Indian data be excluded. The owner may still provide separate India road labels for stone aggregates and metal fragments; neither is present in the selected dataset.
 
+The follow-up source search did not identify a free India-only set with both instance-level aggregate and metal-fragment labels. The [Indian Footpath Damage set](https://www.nature.com/articles/s41597-025-06207-x) has masks for cracks and surface irregularities on Pune pedestrian footpaths, but it does not add these two classes and was not downloaded. A visual sample of eight full-resolution frames from the selected Indian Roads dataset showed wide road scenes, including interlocking paving blocks rather than exposed aggregate grains; those frames are not useful aggregate instances. For manual collection, see the [India aggregate/metal annotation guide](INDIA_AGGREGATE_METAL_ANNOTATION_GUIDE.md).
+
 ## Setup and local workflow
 
 From the repository root, using the project's supported Python 3.12 environment:
