@@ -17,7 +17,7 @@ RoadIQ is primarily an image-based road-surface quality assessment prototype. It
 - Historical contract-freeze branch: `main`. Task C started on `task/c-computer-vision`, which was clean and matched fetched `origin/main` at `8b0df94`.
 - Shared contract: [SCORING_SPEC.md](docs/SCORING_SPEC.md), [API_CONTRACT.md](docs/API_CONTRACT.md), and [ARCHITECTURE.md](docs/ARCHITECTURE.md).
 - The backend Pydantic schema and frontend TypeScript types are aligned. Changes require coordination across owners and matching tests/docs.
-- Segment retrieval routes, persistence, scoring, dashboard, and computer-vision inference are not implemented by this contract-freeze task.
+- Segment retrieval routes, persistence, scoring, dashboard, and HTTP image-analysis integration are not implemented by this contract-freeze task. Task C now has a local image-analysis service with optional crack/pothole inference.
 - Score weights, normalization and labels are provisional hackathon assumptions. Open choices are listed in [DECISIONS.md](docs/DECISIONS.md); do not treat them as silently approved engineering thresholds.
 
 ## Cross-task boundaries and ownership
@@ -93,7 +93,7 @@ RoadIQ is primarily an image-based road-surface quality assessment prototype. It
 
 ## Current status
 
-- Core requirements alignment: documentation only; image pipeline, RSQI implementation, report UI, dataset, evaluation, and image API remain planned.
+- Core requirements alignment: image-analysis objectives and ownership are documented. Task C's partial service is implemented locally; RSQI, report UI, project-labeled dataset/evaluation, and image API remain unimplemented.
 - Tasks A, B, and D remain planned. Task C is in progress: image validation/quality heuristics, a named texture proxy, structured observations, and an optional pretrained crack/pothole wrapper exist. ROI, surface classification, stone/metal segmentation, raveling, and physical measures remain unavailable; see `docs/VISION_PIPELINE.md`.
 
 ## Four-owner kickoff checklist

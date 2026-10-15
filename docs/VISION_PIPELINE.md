@@ -76,6 +76,10 @@ Unavailable until a reviewed model and labels exist:
 
 No RoadIQ held-out evaluation has run. Empty detector results mean no supported defects were detected above the selected threshold; they do not prove the road is undamaged. A 2D image does not establish internal structural strength, weather resistance, or actual skid resistance. All heuristic cutoffs and confidence thresholds need review against labelled, held-out RoadIQ images before product interpretation.
 
+### Aggregate-data investigation
+
+No RoadIQ-labelled stone-aggregate or metal-fragment images or pretrained checkpoints are present in this repository. The public [ACAD Amodal Concrete Aggregate Dataset](https://huggingface.co/datasets/igtsd/acad_dataset) provides 10,000 procedurally generated, instance-annotated concrete aggregate images under CC BY 4.0, with train/validation/test splits. It is a possible transfer-learning source, not evidence of performance on real asphalt/concrete road imagery; no checkpoint trained on ACAD is supplied here. A model trained or fine-tuned on ACAD must remain explicitly experimental until tested on a held-out set of real road images. It does not cover literal metal fragments.
+
 ## Calibration behavior
 
 Calibration may be passed as `ImageCalibration` or a matching dictionary with `method`, `pixels_per_mm`, `usable_area_m2`, `image_sha256`, and `verified`. It is considered bound to the image only when verified, positive, and associated with the exact uploaded-byte SHA-256. The current baseline does not segment aggregates or gaps, so physical measurements remain unavailable even when calibration is valid. Calibration alone never creates an aggregate count or pixel-to-ground measurement.
