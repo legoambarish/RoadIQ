@@ -7,7 +7,7 @@ RoadIQ is a hackathon prototype whose primary objective is image-based road-surf
 - Backend scaffold: FastAPI + Pydantic
 - Computer vision: Task C’s India-only branch has dataset-manifest validation, an untrained texture-region baseline, optional experimental road-ROI gating, and evaluation scaffolding; it has no active trained checkpoint or HTTP endpoint, and individual aggregate/metal analysis remains unavailable. The multi-country RDD2022 detector is disabled under the India-only dataset policy, not because it is technically incompatible with Indian roads.
 - Scoring: deterministic provisional RSQI scorer exists in `backend/app/services/scoring.py`; default normalization references are intentionally empty, so results remain `unrated` until fixed surface-type/capture-specific references and adequate component evidence are supplied. Weights and label cutoffs are unvalidated hypotheses.
-- Dataset/evaluation: no labelled RoadIQ dataset or held-out evaluation metrics are available
+- Dataset/evaluation: no labelled India-road aggregate dataset or held-out RoadIQ road metrics are available. A 20-image, visually reviewed low-occlusion ACAD synthetic-concrete test sample produced pixel IoU 0.488 / precision 0.822 / recall 0.545 for the texture-region baseline; it does not measure individual counting or road performance.
 - Mapping: Leaflet-based boundary ready for future provider swap
 - Testing: backend pytest checks include image-validation and inference-wrapper cases; frontend build/type validation remains available
 
