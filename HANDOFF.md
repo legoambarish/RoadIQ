@@ -1,30 +1,52 @@
-# Handoff summary
+# RoadIQ handoff
 
-## Repository state
+## Date/time and task owner
 
-- Branch: `main` (the agreed branch at task start).
-- Base commit reviewed before changes: `a6c2498` (`Set up initial project structure with backend and frontend directories, including necessary configuration files, API routes, schemas, services, tests, and documentation.`).
-- Latest task implementation commit: `5634f93` (`Freeze RoadIQ data contracts and scoring rules`), committed on `main` after validation.
-- This handoff metadata update follows the implementation commit; Git history is authoritative for the current repository HEAD.
+- Date/time: 2026-10-15 13:47 UTC
+- Task owner: Coordination engineer
 
-## Completed in this task
+## Current branch and latest commit hash
 
-- Documented a shared road-segment contract with GeoJSON LineString, survey metadata, unit-tagged observations/estimates/unavailable values, damage inputs, mode suitability, pedestrian context, confidence, coverage, status, explanation, and provenance.
-- Aligned backend Pydantic validation and frontend TypeScript types; updated the demo fixture to remain unrated without evidence.
-- Documented provisional scoring and ranking rules, task boundaries/dependencies/ownership, and planned endpoints distinctly from the implemented health route.
-- Added schema tests for unknowns, provenance, units/ranges, geometry, rated-state requirements, labels, and timezone validation.
-- Did not implement Task A scoring, Task B dashboard, Task C inference, Task D retrieval/integration, or persistence.
+- Branch: `main`
+- Latest commit at handoff preparation: `b9365a2` (previous session's handoff record)
+- Remote check: fetched `origin`; `origin/main` remains at `a6c2498`; current local `main` had two commits ahead before this task's changes.
 
-## Verification run
+## Goal and completed work
 
-- `.venv/bin/pytest backend/tests -q` — **passed**, 9 tests; one existing Starlette deprecation warning (`anyio.abc.BlockingPortal`). Root `pytest.ini` supplies the backend import path for this command.
-- `cd frontend && npm run build && npm run lint` — **passed** (TypeScript/Vite build and oxlint).
-- `git diff --check` — **passed**.
+- Goal: establish a repository-backed, model-agnostic collaboration workflow for the four task owners.
+- Added mandatory pre-edit inspection, task-branch, ownership, contract-change, testing, handoff, commit, push, and PR rules.
+- Recorded the agreed task branch names and file ownership; human owner names remain to be assigned.
+- Added a four-owner kickoff checklist.
+- No Task A/B/C/D feature implementation, schema change, or API change was made.
 
-## Known issues and unresolved decisions
+## Files changed
 
-- Scoring weights, reference normalizations, severity rubric, labels, minimum evidence, freshness, confidence calibration, and evidence-coverage denominator remain provisional or undecided.
-- Mode-specific suitability methods/evidence are not agreed or implemented; walking requires separate pedestrian access/context evidence and is not a safety certification.
-- Segment ID generation/lifecycle, persistence, pagination semantics, API error envelope, auth, and ranking cohorts remain unresolved.
-- API currently exposes the health endpoint only; documented segment list/detail routes are planned and not implemented.
-- No production scoring algorithm, dashboard, computer-vision pipeline, or ground-truth validation is available.
+- `AGENTS.md`
+- `TASKS.md`
+- `CHANGELOG.md`
+- `HANDOFF.md`
+
+## Tests/builds run and actual results
+
+- `git fetch origin` — passed; no new remote commits were found.
+- `git status --short --branch`, `git branch -avv`, `git remote -v`, and `git log -5 --oneline --decorate` — inspected branch, remote, and history.
+- Documentation-only changes: no application test suite or build was run.
+- `git diff --check` — passed.
+
+## Tests not run
+
+- Backend pytest, frontend build/type check, and frontend lint were not run; no runtime code changed.
+
+## Known issues and blockers
+
+- Human owner names have not been provided; assign one person to each task before starting implementation.
+- Task branches do not yet exist; create each named branch from a current `main` when the corresponding task starts.
+- No pull request is required for this coordination-only change on the agreed integration branch; future task work must use reviewed PRs.
+
+## Contract or dependency changes
+
+- None. Existing contracts and dependency manifests were not changed.
+
+## Exact next action
+
+Assign the four human owners, then have each owner fetch the latest remote, create/use their assigned task branch from current `main`, and start only their documented scope.

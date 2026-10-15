@@ -1,6 +1,9 @@
 # Changelog
 
 ## Unreleased
+- Added a mandatory model-agnostic agent workflow covering repository inspection, task branches, ownership, contract coordination, verification, handoff, commits, and pull requests.
+- Recorded the four agreed task branch names, ownership boundaries, owner-assignment placeholders, and kickoff checklist.
+- Standardized the handoff template; no feature task implementation or runtime contract change was made.
 - Froze a shared, unit-explicit road-segment contract with GeoJSON geometry, explicit unknown values, status, confidence, coverage, suitability, and provenance.
 - Aligned backend Pydantic validation and frontend TypeScript types; updated the demo fixture to remain unrated when evidence is absent.
 - Documented provisional damage scoring, ranking constraints, planned (not implemented) segment API routes, task boundaries, and unresolved decisions.
