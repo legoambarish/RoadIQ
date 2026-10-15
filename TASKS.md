@@ -42,7 +42,7 @@ RoadIQ is primarily an image-based road-surface quality assessment prototype. It
 | A — Scoring | Human owner/reviewer not assigned; implementation merged in PR #1; calibration dependencies remain | `task/a-scoring-engine` |
 | B — Frontend/reporting | Project owner confirmed; dashboard merged in PR #2, view distinction in PR #5, and sticky-control refinement in PR #6 | `task/b-map-dashboard` |
 | C — Aggregate/image analysis | Human owner not recorded; India-only experimental baseline and evaluation scaffold on remote branch; no trained checkpoint or PR | `task/c-computer-vision` |
-| D — Integration/evaluation | Human owner not recorded; integration checklist merged in PR #3; Windows desktop package pending Task D PR review; live image integration remains pending | `task/d-integration-release` |
+| D — Integration/evaluation | Human owner not recorded; integration checklist merged in PR #3; Windows desktop package is in PR #12 for review; live image integration remains pending | `task/d-integration-release` |
 
 `main` is the shared integration branch. At this workflow freeze no task branches existed locally or remotely. Each task branch must be based on fetched `main`; send completed task work through reviewed pull requests. Task D coordinates integration, but does not take over A/B/C modules. Dependency manifests and lockfiles are shared-impact files and require review from affected owners.
 

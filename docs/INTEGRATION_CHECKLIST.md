@@ -7,7 +7,7 @@
 - **Task A:** PR #1 is merged into main at commit 7995ff4. The provisional scorer and its tests are present. Its default normalization profiles are empty, so it returns an unrated result unless a caller supplies a complete fixed profile and all required evidence. No RoadIQ-labelled calibration set exists.
 - **Task B:** PRs #2, #5, and #6 are merged into main. Its dashboard uses static demo fixtures; the image panel only previews a local file and does not upload or analyze it. The frontend build and lint passed on this Task D checkout.
 - **Task C:** PRs #4, #7, #8, #10, and #11 are merged into main. The local observation/demo service and tests exist, but there is no image HTTP route or active trained checkpoint. Usable-pavement/material classification, individual aggregate/metal analysis, calibrated physical measurements, and held-out RoadIQ evaluation remain unavailable; Task C is not ready as a complete production analysis dependency.
-- **Task D:** checklist PR #3 is merged. This package branch is task/d-integration-release, based on current origin/main at f83b4d7. It adds a Windows one-file launcher and desktop-runtime tests; a new PR is pending publication.
+- **Task D:** checklist PR #3 is merged. This package branch is task/d-integration-release, based on current origin/main at f83b4d7. Windows packaging and desktop-runtime tests are published for review in [PR #12](https://github.com/Sine-Ads/RoadIQ/pull/12) against main. The PR is open and unmerged.
 
 ## Field crosswalk
 
