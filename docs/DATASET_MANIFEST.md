@@ -2,6 +2,10 @@
 
 RoadIQ does not bundle or download an aggregate dataset. Each dataset owner must record source, provenance, license/permission evidence, annotation type, review state, and a route/session scene group before using images. Keep aggregate-instance annotations separate from road-defect and semantic road masks.
 
+## Quick dataset candidate audit — 2026-10-16
+
+A short search did not identify a rights-cleared, India-only dataset of individually annotated stone aggregates in in-service road-surface photos. The India-affiliated [RoadDefects-ISeg record](https://zenodo.org/records/17194814) describes crack, lane, pothole, and speed-breaker labels, not aggregate particles; its acknowledgments also identify several upstream sources, so its imagery should not be presumed India-only. The [MTRSD repository](https://github.com/fjaklj/Multi-Type-Road-Surface-Dataset-MTRSD) labels broad road-surface categories such as asphalt and cement, not aggregate instances. [ACAD](https://huggingface.co/datasets/igtsd/acad_dataset) provides CC BY 4.0 procedurally generated concrete aggregate instances, but its synthetic controlled images are not India-collected road photos. None is treated as RoadIQ aggregate training/evaluation data in this branch; no dataset was downloaded. For the hackathon demo, use the clearly labeled synthetic input and keep real aggregate metrics pending.
+
 ## JSON Lines format
 
 Create one UTF-8 JSON object per image in `manifest.jsonl`. Paths are relative to the manifest directory and must stay inside it. The validator accepts these fields:
