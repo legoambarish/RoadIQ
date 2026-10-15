@@ -10,14 +10,14 @@
 
 ## Core product objective
 
-RoadIQ is primarily an image-based road-surface quality assessment prototype. Its core image engine should analyze pavement region/quality, individual visible stone aggregates, literal metal fragments as a separate target, aggregate boundaries/gaps/coverage/loss, image texture, and visible deterioration. Map and travel-mode dashboard features are secondary. Support asphalt/bituminous and cement-concrete when evidence supports them; otherwise return unknown. The provisional RSQI scoring service is merged into `main`; its default normalization references are empty and it returns `unrated` until complete evidence and reviewed references are provided. Task C has partial image-analysis work on `task/c-computer-vision`, not yet integrated. The report UI, image API, and held-out model evaluation remain incomplete.
+RoadIQ is primarily an image-based road-surface quality assessment prototype. Its core image engine should analyze pavement region/quality, individual visible stone aggregates and their boundaries/gaps/coverage/loss, literal metal fragments as a separate target, image texture, and visible deterioration. Map and travel-mode dashboard features are secondary. Support asphalt/bituminous and cement-concrete when evidence supports them; otherwise return unknown. Task A’s provisional RSQI scorer was merged by PR #1. Task B’s fixture-backed dashboard is under review in PR #2, with a follow-up adding distinct Everyday/Engineer presentation. Task C has an India-only segmentation experiment on its remote branch, but no active trained checkpoint, image API, or held-out RoadIQ evaluation. Task D’s integration checklist is merged; no end-to-end flow is implemented.
 
 ## Contract baseline
 
 - Current agreed working branch: `main` (also the branch at task start).
 - Shared contract: [SCORING_SPEC.md](docs/SCORING_SPEC.md), [API_CONTRACT.md](docs/API_CONTRACT.md), and [ARCHITECTURE.md](docs/ARCHITECTURE.md).
 - The backend Pydantic schema and frontend TypeScript types are aligned. Changes require coordination across owners and matching tests/docs.
-- The original contract-freeze task did not implement these features. Since then, the provisional Task A scorer has merged to `main`, and Task B's fixture-backed dashboard is on its task branch. Segment/image API routes and production computer-vision inference remain unavailable.
+- Segment retrieval routes, persistence, scoring, dashboard, and computer-vision inference are not implemented by this contract-freeze task.
 - Score weights, normalization and labels are provisional hackathon assumptions. Open choices are listed in [DECISIONS.md](docs/DECISIONS.md); do not treat them as silently approved engineering thresholds.
 
 ## Cross-task boundaries and ownership
@@ -33,10 +33,10 @@ RoadIQ is primarily an image-based road-surface quality assessment prototype. It
 
 | Task | Human owner | Assigned branch |
 | --- | --- | --- |
-| A — Scoring | TBD; assign before implementation | `task/a-scoring-engine` |
-| B — Map and dashboard | Project owner (confirmed 2026-10-15) | `task/b-map-dashboard` |
-| C — Aggregate/image analysis | TBD; assign before implementation | `task/c-computer-vision` |
-| D — Integration/evaluation | TBD; assign before implementation | `task/d-integration-release` |
+| A — Scoring | Human owner/reviewer not assigned; implementation merged in PR #1; calibration dependencies remain | `task/a-scoring-engine` |
+| B — Frontend/reporting | Project owner confirmed; dashboard implementation and view-distinction follow-up on task branch; PR #2 open | `task/b-map-dashboard` |
+| C — Aggregate/image analysis | Human owner not recorded; India-only segmentation experiment on remote branch; no active trained checkpoint or PR | `task/c-computer-vision` |
+| D — Integration/evaluation | Human owner not recorded; integration checklist merged in PR #3; runtime integration remains pending | `task/d-integration-release` |
 
 `main` is the shared integration branch. At this workflow freeze no task branches existed locally or remotely. Create task branches from up-to-date `main`; send completed task work through reviewed pull requests. Task D coordinates integration, but does not take over A/B/C modules. Dependency manifests and lockfiles are shared-impact files and require review from affected owners.
 
@@ -56,7 +56,7 @@ RoadIQ is primarily an image-based road-surface quality assessment prototype. It
 - [x] Actual health endpoint is distinguished from planned segment retrieval endpoints.
 - [x] Task boundaries, file ownership, dependencies, and outcomes are specified without implementing all four tasks.
 
-### Task A — scoring (implemented on `main`; calibration dependencies remain)
+### Task A — scoring (merged in PR #1; calibration dependencies remain)
 
 - [x] Implements configurable, versioned candidate image-feature index and exposes every component contribution; initial weights remain hypotheses pending evaluation.
 - [x] Selects fixed normalization profiles by surface type and capture profile; never normalizes per image/test cohort. RoadIQ training-derived ranges remain unavailable until a labelled dataset is prepared and reviewed.
@@ -65,20 +65,21 @@ RoadIQ is primarily an image-based road-surface quality assessment prototype. It
 - [x] Tests formula, normalization boundaries, configuration/version, missing evidence, unknown surface type, confidence/status, mode outputs, and label cutoffs.
 - [ ] Supply and validate frozen RoadIQ normalization ranges and confidence/coverage calibration against a labelled dataset; no such dataset currently exists.
 
-Task A implementation is in `backend/app/services/scoring.py` with focused tests in `backend/tests/test_scoring.py`; PR #1 has been merged into `main`. It provides a scorer boundary only and does not implement Task C feature extraction or Task D API routes/evaluation. Its default configuration contains no normalization profiles, so it cannot currently produce a rated RoadIQ result.
+Task A implementation is on `task/a-scoring-engine` in `backend/app/services/scoring.py` with focused tests in `backend/tests/test_scoring.py`; PR #1 is merged into `main` at `7995ff4`. It provides a scorer/API boundary only and does not implement Task C feature extraction or Task D API routes/evaluation.
 
-### Task B — map and dashboard (in progress)
+### Task B — dashboard (implementation on branch; PR #2 open; integration pending review)
 
 - [x] Renders an interactive schematic map from typed GeoJSON fixtures, with selectable, zoomable segments and a color-coded Road Quality overlay. No live basemap is claimed while provider choice is unresolved.
 - [x] Offers five separate travel-profile overlays (walking, cycling, two-wheeler, car, bus), ranked segment lists, quality/search/minimum-score filters, and quality/profile charts.
-- [x] Provides materially distinct Everyday traveler briefs and Engineer evidence audits; keeps surface condition, mode suitability, and pedestrian infrastructure as separate assessments. Profile explanations identify relevant considerations without inventing formulas or treating missing values as good.
+- [x] Provides materially distinct Everyday traveler briefs and Engineer evidence/provenance audits, with unknown-value gates and score explanations in segment details.
+- [x] Keeps pedestrian infrastructure and comfort separate; lane markings are not treated as a walkability proxy, and unknown observations remain distinct from observed absence.
 - [x] Keeps unrated values null/Unrated and separates surface condition from mode suitability and pedestrian context.
 - [x] Clearly marks all sample values as illustrative `demo_fixture` data; retains the health-only API honestly and does not claim segment retrieval or image analysis is connected.
 - [x] Provides a local-only image preview and Unrated/unavailable report shell. It does not upload files or imply inference/annotation occurred.
 - [ ] Displays real reviewed image-analysis outputs and annotated images after Task C/Task D finalize the compatible API response and endpoint.
 - [x] Passes frontend TypeScript checks, lint, and Vite production build.
 
-### Task C — computer vision (partial implementation on task branch; not integrated)
+### Task C — computer vision (partial branch implementation; no PR; not ready for integration)
 
 - [ ] Implements testable image validation/quality gating, usable pavement ROI, and surface-type output (`asphalt_bituminous`, `cement_concrete`, or `unknown`).
 - [ ] Segments/counts individual stone aggregates only where resolution permits and reports count, pixel size distribution, visible coverage, boundary/gap statistics, and aggregate-loss proxy with explicit provenance/confidence.
@@ -87,9 +88,9 @@ Task A implementation is in `backend/app/services/scoring.py` with focused tests
 - [ ] Preserves unavailable values as null and documents model/checkpoint, preprocessing, calibration method, and limitations.
 - [ ] Tests malformed/low-quality inputs, unsupported material/resolution, unit/calibration gates, masks, and unavailable outputs without requiring production weights.
 
-Task C's latest remote branch, `task/c-computer-vision` at `2afa289`, contains image byte/format validation, heuristic image-quality checks, a texture proxy, calibration binding, a mockable damage-detector adapter, and structured unavailable outputs with focused tests. The previously selected multi-country checkpoint is disabled under the India-only data policy; no India-only damage checkpoint is configured. Pavement ROI, asphalt/concrete classification, aggregate and metal-fragment models, usable production defect inference, image API, and held-out RoadIQ evaluation are still unavailable. This work has not been merged into `main`; its response schema and dependency changes need Task A/D review before frontend integration.
+The latest Task C remote branch is `task/c-computer-vision` at `023da26`. Its handoff records a free 3,227-image Indian Roads semantic-segmentation dataset download/audit, a compact U-Net trainer/checkpoint loader, and CPU smoke plumbing only. There is no trained/active checkpoint or held-out model-quality result; the dataset has no stone-aggregate-instance or metal-fragment labels. The previously selected multi-country RDD2022 checkpoint remains disabled to follow the India-only data policy; this is a policy choice, not technical incompatibility with Indian roads. No image API is integrated, and C response/dependency changes still need A/D review. This branch has no PR.
 
-### Task D — integration and release (planned)
+### Task D — integration and release (integration checklist merged; runtime integration blocked on dependencies)
 
 - [ ] Implements reviewed image-analysis request/response contract and validation/error behavior; keeps current health route working and marks segment/image routes planned until implemented.
 - [ ] Defines dataset manifest/annotation protocol and grouped train/validation/test split; prevents road-segment and feasible near-duplicate leakage across splits.
@@ -98,14 +99,26 @@ Task C's latest remote branch, `task/c-computer-vision` at `2afa289`, contains i
 - [ ] Runs backend pytest and frontend build/type/lint checks; records actual commands/results and unresolved issues in `HANDOFF.md`.
 - [ ] Confirms configuration/secrets safety and release readiness without claiming production algorithm/model validation.
 
+#### Task D integration checklist
+
+- [ ] Compare frontend fixtures, Task A scorer input/output, Task C observations, and the proposed API field by field; record exact names, units, statuses, provenance, and null rules. Keep mismatches as proposals until affected owners agree.
+- [ ] Define tests for valid image analysis; malformed/unsupported/invalid images; failed quality, pavement-region, and resolution gates; unknown surface type; missing/null/unavailable/invalid measurements; unit/status/provenance mismatches; incomplete scorer input and `unrated`; and unavailable model, backend, or API.
+- [ ] Verify the frontend shows backend explanations and unavailable fields, keeps mode suitability separate from surface quality, and never presents missing or unrated evidence as a good road.
+- [ ] Use clearly labeled fixtures; once an agreed end-to-end flow exists, verify explanations, unavailable values, map colors, mode changes, and details against backend values.
+- [ ] Verify repository-documented backend/frontend startup, test, build, and lint commands; record only commands and results confirmed in this environment.
+- [ ] Inspect environment variables, secrets handling, model/download requirements, map-provider keys, storage, and network needs without exposing secrets.
+- [ ] Add Task D integration tests and attempt release checks only after dependency outputs and the shared mapping are reviewed and agreed.
+
 ## Current status
 
-- Core requirements alignment: Task B now has an interactive fixture-backed map/dashboard and local-only image-report shell; image API integration remains unimplemented.
-- Task A's provisional scorer is merged into `main`; validated normalization references and confidence calibration remain unavailable. Task B's map/dashboard and distinct Everyday/Engineer assessment surfaces are implemented with fixtures, while live image-report integration remains blocked on reviewed Task C/A result mapping and Task D's API route. Task C has partial work on its remote branch that is not integrated into `main`.
+- Task A’s provisional RSQI scorer was merged into `main` by PR #1 at `7995ff4`; its RoadIQ normalization and confidence calibration still lack labelled data.
+- Task B’s fixture-backed dashboard and Everyday/Engineer follow-up are on `task/b-map-dashboard`; PR #2 remains open and must be refreshed after the follow-up is pushed.
+- Task C’s latest remote work is `023da26`; its India-only dataset/segmentation experiment is not a trained active detector and no aggregate/metal labels, image API, or held-out RoadIQ evaluation are available.
+- Task D’s docs-only integration checklist was merged in PR #3; runtime integration remains blocked on reviewed A/B/C mappings and dependencies.
 
 ## Four-owner kickoff checklist
 
-- [ ] **Task A owner:** confirm human owner; review the scorer merged through PR #1; develop and validate fixed normalization references and confidence/coverage calibration only when suitable labelled data exists; record follow-up work and tests.
-- [x] **Task B owner:** Project owner confirmed ownership on 2026-10-15. Work on `task/b-map-dashboard`; map/dashboard implementation and frontend checks are recorded in `HANDOFF.md`. Live image-analysis response/annotation display still depends on A/C interface agreement and Task D API integration.
-- [ ] **Task C owner:** confirm human owner; review and complete the partial work on `task/c-computer-vision`; coordinate response/dependency review with A and D; test, update status/changelog/handoff, push, and open/update a PR. The project owner has confirmed stone aggregates and literal metal fragments are separate targets.
-- [ ] **Task D owner:** confirm human owner; read `AGENTS.md`, relevant docs, and `HANDOFF.md`; fetch latest remote; use `task/d-integration-release`; coordinate dependencies, dataset hygiene, held-out evaluation, and reviewed PR integration; run release checks, update status/changelog/handoff, and open/update a PR.
+- [ ] **Task A owner/reviewer:** still not recorded; PR #1 is merged. Resolve the remaining labelled-data normalization and confidence-calibration dependency before claiming a validated score.
+- [x] **Task B owner/reviewer:** project owner confirmed; review the dashboard branch and refresh PR #2 after follow-up push. Current fixtures and image preview are not live segment or image API integration.
+- [ ] **Task C owner:** not recorded; update the partial `task/c-computer-vision` branch against current `main`, train/evaluate only with India-only data, resolve aggregate/metal labels and output-contract gaps, then open a PR. No C PR is currently open.
+- [ ] **Task D owner:** not recorded; PR #3 integration checklist is merged. Keep shared-contract mappings proposed until affected owners agree, then integrate only approved outputs and add tests.
