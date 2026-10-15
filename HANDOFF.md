@@ -9,7 +9,7 @@
 
 - Branch: `main`
 - Base commit: `a0df601` (`Record coordination workflow handoff`), verified after fetching `origin`.
-- Alignment commit: pending validation and commit.
+- Alignment commit: `3a4f776` (`Align RoadIQ requirements around image analysis`); this handoff metadata update follows that commit.
 
 ## Goal and completed work
 
