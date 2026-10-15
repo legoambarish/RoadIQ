@@ -50,7 +50,7 @@ All frontend commands below ran from `frontend/` with the locally installed proj
 
 ## Current status, limitations, and next task
 
-- At the start: clean `task/b-map-dashboard`, commit `6ddcc117e72d4522009ba3ee4766f7c80d4dc01e`. The verified implementation and documentation changes are currently uncommitted on the assigned branch; commit identifiers and post-push status will be recorded in the follow-up handoff commit and completion message.
+- Starting point: clean `task/b-map-dashboard`, commit `6ddcc117e72d4522009ba3ee4766f7c80d4dc01e`. The verified implementation is committed as `8a06f0c6bf5d2f14637e5a4d52db52d6272f4066`; this handoff follow-up records the commit. Branch push and final status will be confirmed after the documentation commit.
 - Known limitations: map segments and every displayed road value remain illustrative fixtures; they are not OSM road observations or validated measurements. Public OSM tiles require a connection and are best-effort. Production tile-provider/caching policy remains open. There is still no live segment API, no browser-triggered image analysis endpoint, and no connection to Task A scoring; image report import remains manual. Task C's report schema and the proposed API/scorer mappings remain unresolved by Task D.
 - Readiness: frontend changes are locally verified; integration still requires review of the new dependency and map provider choice. No backend/API contract changes are included.
 - Single most useful next task: Task D should finish and obtain affected-owner review for the Task C-to-Task A response mapping and image-analysis endpoint, then Task B can replace manual report import with live, contract-backed results.

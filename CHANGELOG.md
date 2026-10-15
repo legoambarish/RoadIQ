@@ -6,7 +6,7 @@
 - Kept the fixture routes, scores, overlays, ranking, and score legend explicitly identified as illustrative RoadIQ data; the basemap is not evidence that those segments were surveyed.
 - Added survey source and timestamp to the Engineer record audit, labeled the values as fixture metadata, and clarified that the demo timestamps are not actual surveys.
 - Extracted dashboard filter/ranking/selection helpers and added tests for all five profile overlays, surface overlay, quality tone boundaries, null/unrated behavior, active-overlay minimum filters, ranking order, and visible segment selection.
-- Added pinned Leaflet/TypeScript definitions and Vitest dependencies. TypeScript build, Vite production build, Oxlint, and six frontend unit tests passed. See `docs/HANDOFF.md` for exact commands and browser verification.
+- Added pinned Leaflet/TypeScript definitions and Vitest dependencies. TypeScript build, Vite production build, Oxlint, and six frontend unit tests passed. Implementation commit: `8a06f0c6bf5d2f14637e5a4d52db52d6272f4066` on `task/b-map-dashboard`; see `docs/HANDOFF.md` for exact commands, browser verification, and final branch status.
 
 ## 2026-10-16 — Task B traveler brief and report-import clarity
 
