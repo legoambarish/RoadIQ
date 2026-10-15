@@ -1,8 +1,10 @@
 # Changelog
 
 ## Unreleased
+- Reworked Everyday and Engineer into distinct assessment experiences: Everyday gets profile-specific plain-language briefs; Engineer gets evidence/status/provenance tables and record-readiness audits. Surface condition, mode suitability, and pedestrian infrastructure remain separate, with all fixture values identified as illustrative.
+- Updated the Task B branch against the latest `main` integration checklist and refreshed the Task B/C/D status from their current branches. No score formula, API contract, backend scorer, or Task C inference code changed.
 - Added Task D integration preparation with a cross-task field audit, unresolved mapping proposals, end-to-end failure scenarios, and verified environment requirements. No route, shared contract, or end-to-end integration is claimed.
-- Updated live task status: Task A PR #1 is merged, Task B PR #2 is open, Task C has a partial branch without a PR or active India-only model, and Task D preparation PR #3 is open.
+- Updated live task status: Task A PR #1, original Task B dashboard PR #2, and Task D checklist PR #3 are merged. The latest Task B mode-view follow-up remains local; Task C has an India-only segmentation experiment on its branch but no active trained checkpoint or PR.
 
 - Added the Task A deterministic candidate RSQI scoring service with configurable weights and labels, fixed surface/capture-specific reference normalization, strict evidence gates, auditable component contributions, null confidence/coverage, and null mode-suitability outputs. No RoadIQ normalization references, inference, API route, or calibrated evaluation are claimed.
 - Added focused scoring tests for the formula, thresholds, normalization, evidence gates, units/provenance, deterministic output, mode outputs, and proposed API object shape.
