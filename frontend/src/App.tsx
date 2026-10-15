@@ -165,10 +165,6 @@ function App() {
             <h1>{view === 'engineer' ? <>Inspect the <em>evidence.</em></> : <>Know the road <em>ahead.</em></>}</h1>
             <p>{view === 'engineer' ? 'Review record provenance, measurement availability, and contract fields for each fixture.' : 'Compare route examples and see how condition differs from travel-profile suitability.'}</p>
           </div>
-          <div className="view-switch" role="group" aria-label="Dashboard view">
-            <button type="button" className={view === 'everyday' ? 'selected' : ''} aria-pressed={view === 'everyday'} onClick={() => setView('everyday')}><span>◉</span> Everyday</button>
-            <button type="button" className={view === 'engineer' ? 'selected' : ''} aria-pressed={view === 'engineer'} onClick={() => setView('engineer')}><span>⌘</span> Engineer</button>
-          </div>
         </section>
 
         <section className="demo-notice" role="note">
@@ -177,14 +173,24 @@ function App() {
           <span className="notice-tag">FIXTURE DATA</span>
         </section>
 
+        <div className="sticky-assessment-controls" role="region" aria-label="Dashboard controls">
+          <div className="sticky-controls-label"><span>Explore by travel mode</span><span>Switch view</span></div>
+          <div className="sticky-controls-row">
+            <div className="overlay-switch" role="group" aria-label="Travel profile">
+              {travelModes.map((mode) => (
+                <button type="button" key={mode.key} className={profileMode === mode.key ? 'active' : ''} aria-pressed={profileMode === mode.key} onClick={() => { setOverlay(mode.key); setProfileMode(mode.key) }}><span aria-hidden="true">{mode.icon}</span>{mode.label}</button>
+              ))}
+              <button type="button" className={`surface-mode-button ${overlay === 'surface_quality_score' ? 'surface-active' : ''}`} aria-pressed={overlay === 'surface_quality_score'} onClick={() => setOverlay('surface_quality_score')}>Surface quality</button>
+            </div>
+            <div className="view-switch" role="group" aria-label="Dashboard view">
+              <button type="button" className={view === 'everyday' ? 'selected' : ''} aria-pressed={view === 'everyday'} onClick={() => setView('everyday')}>Everyday</button>
+              <button type="button" className={view === 'engineer' ? 'selected' : ''} aria-pressed={view === 'engineer'} onClick={() => setView('engineer')}>Engineer</button>
+            </div>
+          </div>
+        </div>
+
         <section className="workspace-section" id="network">
           <div className="section-toolbar">
-            <div className="overlay-switch" role="group" aria-label="Map overlay">
-              <button type="button" className={overlay === 'surface_quality_score' ? 'active' : ''} aria-pressed={overlay === 'surface_quality_score'} onClick={() => setOverlay('surface_quality_score')}>Road quality</button>
-              {travelModes.map((mode) => (
-                <button type="button" key={mode.key} className={overlay === mode.key ? 'active' : ''} aria-pressed={overlay === mode.key} onClick={() => { setOverlay(mode.key); setProfileMode(mode.key) }}><span>{mode.icon}</span>{mode.shortLabel}</button>
-              ))}
-            </div>
             <div className="filter-controls">
               <label className="search-field"><span aria-hidden="true">⌕</span><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search a road or ID" aria-label="Search road segments" /><kbd>⌘ K</kbd></label>
               <label className="select-field"><span className="sr-only">Filter by quality label</span><select value={qualityFilter} onChange={(event) => setQualityFilter(event.target.value)}><option value="all">All quality</option>{qualityOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>

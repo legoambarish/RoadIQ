@@ -5,8 +5,8 @@ RoadIQ is a hackathon prototype whose primary objective is image-based road-surf
 ## Current status
 - Frontend: React + TypeScript + Vite dashboard with an interactive schematic map, five illustrative travel-profile overlays, filters, rankings, charts, distinct Everyday/Engineer assessment views, and a local-only image preview shell
 - Backend scaffold: FastAPI + Pydantic
-- Computer vision: Task C provides image validation, heuristic quality observations, a named pixel-texture proxy, and an explicitly untrained texture-region candidate baseline. An experimental India-only road/pothole segmentation trainer and optional RLE masks exist, but no trained checkpoint is active. Individual aggregate/material analysis, validated damage detection, and an HTTP image route remain unavailable.
-- Scoring: a deterministic provisional RSQI scorer exists in `backend/app/services/scoring.py`. Its default normalization references are intentionally empty, so it returns `unrated` until fixed references and adequate component evidence are supplied. Weights and label cutoffs remain unvalidated hypotheses.
+- Computer vision: Task C’s India-only branch has dataset-manifest validation, an untrained texture-region baseline, and evaluation scaffolding; it is not merged into `main`, has no active trained checkpoint or HTTP endpoint, and ROI/material/aggregate/metal analysis remains unavailable. The multi-country RDD2022 detector is disabled under the India-only dataset policy, not because it is technically incompatible with Indian roads.
+- Scoring: deterministic provisional RSQI scorer exists in `backend/app/services/scoring.py`; default normalization references are intentionally empty, so results remain `unrated` until fixed surface-type/capture-specific references and adequate component evidence are supplied. Weights and label cutoffs are unvalidated hypotheses.
 - Dataset/evaluation: no labelled RoadIQ dataset or held-out evaluation metrics are available
 - Mapping: Leaflet-based boundary ready for future provider swap
 - Testing: backend pytest checks include image-validation and inference-wrapper cases; frontend build/type validation remains available
