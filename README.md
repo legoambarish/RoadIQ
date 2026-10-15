@@ -3,12 +3,12 @@
 RoadIQ is a hackathon prototype whose primary objective is image-based road-surface quality assessment. The planned image analysis focuses on visible pavement structure—individual stone aggregates, aggregate boundaries/gaps and coverage, surface texture, and deterioration. Mapping and transport-mode dashboards are secondary. “Metal chips” currently means stone aggregates as a working assumption; confirm with the project owner.
 
 ## Current status
-- Frontend scaffold: React + TypeScript + Vite
+- Frontend: React + TypeScript + Vite dashboard with an interactive schematic map, five illustrative travel-profile overlays, filters, rankings, charts, Everyday/Engineer segment details, and a local-only image preview shell
 - Backend scaffold: FastAPI + Pydantic
 - Computer vision: placeholder module only; no image inference exists
 - Scoring: provisional image-feature RSQI proposal only; no scoring engine exists
 - Dataset/evaluation: no labelled RoadIQ dataset or held-out evaluation metrics are available
-- Mapping: Leaflet-based boundary ready for future provider swap
+- Mapping: dashboard geometry and values are typed illustrative fixtures; no live basemap or segment retrieval API is connected
 - Testing: backend pytest checks and frontend build/type validation
 
 ## Repository structure
@@ -81,7 +81,7 @@ The endpoint returns a simple status payload and intentionally avoids external d
 
 Road-segment retrieval and image-analysis routes are planned but are not implemented. The backend validates the existing segment contract; it does not accept images, perform inference, or calculate scores. The provisional image-analysis response shape and measurement rules are documented in [`docs/API_CONTRACT.md`](docs/API_CONTRACT.md); the scoring and dataset/evaluation proposal is in [`docs/SCORING_SPEC.md`](docs/SCORING_SPEC.md).
 
-## Core demo workflow (planned, not yet available)
+## Core image-analysis workflow (planned, not yet available)
 
 The intended first image-analysis demo is:
 1. Submit a road image and identify any available camera/calibration metadata.
@@ -91,8 +91,8 @@ The intended first image-analysis demo is:
 5. Report physical measurements (such as aggregates/m² or gap widths in mm) only if ground scale, usable physical area, and resolution support them.
 6. Show an annotated image and transparent provisional surface index, or **Unrated** when required evidence is unavailable.
 
-This sequence is a product goal, not implemented functionality. A 2D image does not measure true 3D roughness, subsurface strength, weather resistance, or skid resistance. Counts per square metre and physical widths require calibration. Missing or unreliable evidence is unavailable, not zero. There are no labelled-data evaluation results yet; do not claim model quality until held-out metrics are reported. See [`TASKS.md`](TASKS.md) for task ownership and boundaries.
+This sequence is a product goal, not implemented functionality. The dashboard currently previews a selected local image in the browser but does not upload it or analyze it; report values and annotated overlays remain unavailable. Map segments, quality values, and mode profiles are illustrative fixtures only. A 2D image does not measure true 3D roughness, subsurface strength, weather resistance, or skid resistance. Counts per square metre and physical widths require calibration. Missing or unreliable evidence is unavailable, not zero. There are no labelled-data evaluation results yet; do not claim model quality until held-out metrics are reported. See [`TASKS.md`](TASKS.md) for task ownership and boundaries.
 
 ## Notes
 - This repository is intentionally scoped to an initial scaffold and requirements documentation; it is not production-ready.
-- Image-quality validation, aggregate segmentation, defect/texture inference, RSQI calculation, annotated report UI, image API, and held-out evaluation remain planned work.
+- Image-quality validation, aggregate segmentation, defect/texture inference, RSQI calculation, annotated report integration, image API, and held-out evaluation remain planned work. The current fixture dashboard is not connected to a live map or scoring service.

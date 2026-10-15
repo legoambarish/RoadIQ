@@ -4,11 +4,11 @@
 
 RoadIQ remains an initial prototype scaffold; it is not production-ready.
 
-- **Frontend:** React + TypeScript + Vite under `frontend/`, with a landing/status page, minimal health API client, and TypeScript road-segment contract. A dashboard and segment retrieval UI are not implemented.
+- **Frontend:** React + TypeScript + Vite under `frontend/`, with a fixture-backed interactive schematic map, Road Quality and five travel-profile overlays, filters, rankings, charts, Everyday/Engineer segment details, a health-only API badge, and a local-only image preview/report shell. It uses illustrative typed fixtures; there is no live basemap, segment API, scoring connection, image upload, or inference display.
 - **Backend:** FastAPI + Pydantic under `backend/`. The implemented HTTP API exposes `GET /api/v1/health` and `/`. `backend/app/schemas/road_segment.py` validates the shared road-segment shape. A deterministic demo fixture is isolated in `backend/app/fixtures/`.
 - **Computer vision:** `backend/app/services/vision.py` is a placeholder only. It does not perform inference, calibrate pixels to ground dimensions, or download model weights.
 - **Scoring:** no scoring engine is implemented. [SCORING_SPEC.md](./SCORING_SPEC.md) describes provisional rules and explicit evidence limits.
-- **Persistence and mapping:** no segment database, segment retrieval API, or dashboard map exists. Mapping provider choice remains open.
+- **Persistence and mapping:** no segment database, segment retrieval API, or live basemap exists. The current schematic map plots illustrative fixture geometry; mapping provider choice remains open.
 
 ## Product objective and planned image-analysis pipeline
 
@@ -24,7 +24,7 @@ The following end-to-end pipeline is **proposed, not implemented**:
 6. **Evaluation and integration (Task D):** validate payloads/routes, organize grouped data splits, run held-out evaluations against expert labels and field measures where available, and report actual metrics. Never substitute proposed metrics for evaluation results.
 7. **Report UI (Task B):** display image, annotated overlay, score/status, component contributions, confidence, unavailable values, and limitations. An overlay is model output, not verified ground truth.
 
-No pipeline stage, image endpoint, annotated output, trained RoadIQ model, or evaluation result is implemented today. See [SCORING_SPEC.md](./SCORING_SPEC.md) for feature definitions and the minimum dataset/evaluation plan.
+The fixture-backed map and dashboard are implemented in Task B. No image-analysis pipeline stage, image endpoint, annotated output, trained RoadIQ model, or evaluation result is implemented today. See [SCORING_SPEC.md](./SCORING_SPEC.md) for feature definitions and the minimum dataset/evaluation plan.
 
 ## Shared contract
 
@@ -53,7 +53,7 @@ The shared schema is a cross-task interface. Changes to it require compatibility
 4. Task D exposes validated analysis reports through planned routes and evaluates predictions on grouped held-out images; actual metrics and data splits are recorded.
 5. Task B renders the annotated image/report, score contributions, evidence, confidence, and unavailable fields without implying a score or mask is ground truth.
 
-No database, inference execution, scoring execution, segment API, or production dashboard is implied by this proposed flow.
+No database, inference execution, scoring execution, segment API, or production map data is implied by this proposed flow. The existing dashboard remains a demo fixture interface.
 
 ## Unresolved architecture decisions
 
