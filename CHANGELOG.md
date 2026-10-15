@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-16 — Task B local Task C report import
+
+- Added local JSON report import and optional annotated-image import to the image analysis workspace. Available Task C image quality, metadata, texture proxy, and texture-candidate area values are displayed from the saved report; missing evidence remains unavailable and RSQI stays Unrated.
+- Kept CLI execution local and manual. The browser does not upload images, run analysis, or call a new API. The CLI report's annotation path requires selecting the accompanying preview file.
+- Frontend TypeScript/Vite production build and Oxlint passed; see `HANDOFF.md` for exact commands and current branch state.
+
 ## 2026-10-16 — Task B cross-task UI refresh
 
 - Updated the image-report workspace with the current Task A scorer evidence/reference gates, Task C local-only untrained texture-region MVP and limitations, and Task D desktop package scope. The browser image preview remains local and does not claim inference.

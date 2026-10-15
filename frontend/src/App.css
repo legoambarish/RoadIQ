@@ -268,6 +268,15 @@
 .file-hint { margin-top: 10px; color: #abb4ad; font-size: 7px; }
 .image-preview-frame { position: relative; display: flex; height: 190px; align-items: center; justify-content: center; overflow: hidden; border-radius: 8px; background: #e5ebe5; }
 .image-preview-frame img { width: 100%; height: 100%; object-fit: contain; }
+.image-preview-frame .annotation-preview { position: absolute; inset: 0; opacity: .68; pointer-events: none; }
+.report-file-picker { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 7px; padding: 8px; border: 1px solid #e7ece7; border-radius: 6px; color: #607168; font-size: 8px; cursor: pointer; }
+.report-file-picker:hover { border-color: #79ae8f; background: #f9fbf9; }
+.report-file-picker input { max-width: 150px; color: #87938b; font-size: 7px; }
+.report-import-error { margin: 7px 0 0; color: #a83d35; font-size: 8px; line-height: 1.4; }
+.imported-texture-list { display: grid; gap: 5px; margin-top: 8px; }
+.imported-texture-list > div { display: flex; justify-content: space-between; gap: 8px; padding: 7px; border: 1px solid #eef1ee; border-radius: 6px; font-size: 8px; }
+.imported-texture-list strong { color: #53675b; }
+.imported-texture-list span { color: #7f8c83; text-align: right; }
 .annotation-placeholder { position: absolute; right: 8px; bottom: 8px; padding: 5px 7px; border-radius: 5px; background: rgba(30, 48, 43, .83); color: #fff; font-size: 7px; font-weight: 700; }
 .selected-file-row { display: flex; align-items: center; gap: 8px; padding: 9px 0 0; }
 .file-image-icon { display: grid; width: 25px; height: 25px; place-items: center; border-radius: 6px; background: #edf5ef; color: #568268; }
@@ -506,6 +515,9 @@
 .engineer-view .image-report-heading p, .engineer-view .image-local-note, .engineer-view .report-limitation { color: #a6b6b2; }
 .engineer-view .image-input-card, .engineer-view .image-result-card { border-color: #354950; background: #223139; }
 .engineer-view .image-dropzone { border-color: #566b6c; background: #1b2a31; color: #e1e9df; }
+.engineer-view .report-file-picker { border-color: #354950; background: #1b2a31; color: #e1e9df; }
+.engineer-view .imported-texture-list > div { border-color: #354950; }
+.engineer-view .imported-texture-list strong, .engineer-view .imported-texture-list span { color: #edf2e9; }
 .engineer-view .report-evidence-grid > div, .engineer-view .rsqi-breakdown { border-color: #354950; background: #1b2a31; }
 .engineer-view .pipeline-status-grid > div { border-color: #354950; background: #1b2a31; }
 .engineer-view .report-evidence-grid span, .engineer-view .rsqi-breakdown li > span, .engineer-view .rsqi-breakdown > p { color: #a6b6b2; }

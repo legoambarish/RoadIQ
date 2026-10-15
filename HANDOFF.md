@@ -1,5 +1,17 @@
 # RoadIQ handoff
 
+## Task B local Task C report import — 2026-10-16
+
+- **Assignment and branch:** continued Task B on `task/b-map-dashboard`, tracking `origin/task/b-map-dashboard`. The checkout was clean at `e9d3b70d89a5393c69fa9cb704579ba72301e06e` before edits; `git fetch --all --prune` completed and the branch had no new upstream commits.
+- **Completed:** `frontend/src/components/ImageReportPanel.tsx` can import the JSON file saved by Task C's local CLI and display report-backed image metadata, quality gate, texture features, candidate-region pixel area/ratio, and explicit unavailable values. It accepts the embedded safe image data URI where present and supports selecting the CLI's separate annotated preview file because the CLI JSON stores a local path. RSQI remains Unrated. This is not browser-triggered analysis or API integration.
+- **Files changed:** `frontend/src/components/ImageReportPanel.tsx`, `frontend/src/App.css`, `TASKS.md`, `CHANGELOG.md`, and `HANDOFF.md`.
+- **Checks actually run:** from `frontend/`, `node_modules/.bin/tsc.CMD -b` passed; `node_modules/.bin/vite.CMD build` passed (24 modules transformed); `node_modules/.bin/oxlint.CMD src` passed. From the repository root, `git diff --check` passed before documentation updates. No backend tests were run because backend code and contracts were not changed. No browser interaction check was run in this pass.
+- **Git status/commit:** committed as `91789c7ecedeb8bc6e569d3621456b448bf0a7df` (`Import local Task C analysis reports in dashboard`). The branch was one commit ahead of origin immediately after commit; push and final clean status are to be verified before handoff.
+- **Known issues:** importing a report only displays saved observations; it does not run the CLI or verify the selected road photo matches the report's source image. The annotation is not shown from a CLI-generated path unless the companion image file is selected. Candidate texture region is not particle/defect segmentation; there are no aggregate instance counts or validated score, and Task D still owns the compatible image HTTP integration.
+- **Review:** update the existing Task B PR #13 after publishing the branch; no contract or backend change is included.
+- **Single next task:** Task D should finalize the reviewed Task C-to-Task A observation mapping and image-analysis HTTP route so Task B can replace manual report import with connected browser analysis.
+- This repository has no `docs/HANDOFF.md`; `AGENTS.md` specifies root `HANDOFF.md`, which is updated here.
+
 ## Task B cross-task UI refresh — 2026-10-16
 
 - **Branch/base:** `task/b-map-dashboard` was clean at `32ac8ac` and tracking `origin/task/b-map-dashboard` before the refresh. Latest Task A code is already in `origin/main`; Task C's local baseline is also merged in `origin/main`. `origin/task/d-integration-release` is at `def9c98`; its unmerged changes add a Windows desktop bundle/runtime, not image-analysis API integration.
