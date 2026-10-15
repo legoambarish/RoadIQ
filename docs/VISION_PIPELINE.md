@@ -67,6 +67,14 @@ python -m scripts.analyze_road_image /path/to/your/road-image.jpg
 
 No usable trained India-only checkpoint is active. `ROADIQ_SEGMENTATION_MODEL_PATH` can point to a locally trained checkpoint; set `ROADIQ_SEGMENTATION_DEVICE` to `cuda` or `cpu` as available. To prepare the selected archive, run `python -m scripts.train_indian_road_segmentation prepare --archive /path/to/indian-roads.zip --output /path/to/indian-roads`. Full training defaults to CUDA and writes an India-only checkpoint with sequence split and validation metadata; use `train --data-root ... --output ...`. Sample/batch-limited runs are smoke-only and never save checkpoints. The smoke test completed on CPU, but it is not a quality result. In this runner, `nvidia-smi` fails and PyTorch reports `cuda.is_available() == False`; no full training was attempted. The legacy `ROADIQ_VISION_MODEL_PATH` is rejected when it points to the known multinational checkpoint. The local CLI validates the caller-provided image and returns an `unrated` report with defect measurements unavailable. No paid API, paid dataset tier, or paid checkpoint is required or configured. The Roboflow India-specific datasets and papers are data candidates only; no candidate checkpoint is configured or verified. The selected semantic dataset and trainer are documented above; a reviewed and trained checkpoint plus a separately labelled damage dataset are still absent.
 
+For a repeatable no-download demo, use the synthetic-image generator and CLI annotation/report outputs documented in the root README. The generated file is explicitly synthetic, and candidate masks demonstrate only analyzer plumbing. For a real image, the CLI can save the preview and JSON separately:
+
+```bash
+PYTHONPATH=backend python -m scripts.analyze_road_image /path/to/road.jpg \
+  --annotated-output /tmp/road-annotated.jpg \
+  --report-output /tmp/road-report.json
+```
+
 ## What the MVP can and cannot report
 
 Implemented:

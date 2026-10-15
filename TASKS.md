@@ -1,5 +1,11 @@
 # RoadIQ task tracker
 
+## Task C MVP continuation — 2026-10-16
+
+Current work is on the assigned `task/c-computer-vision` branch. It fixes annotation resizing for images larger than the 512-pixel analysis edge and adds a deterministic synthetic road-texture demo plus CLI options to save an annotated JPEG and structured JSON report. This stays within Task C; API and frontend integration remain owned by Task D and Task B.
+
+Verified demo: a 640×480 synthetic image generated with seed 42 completes the analysis, reports `unrated`, identifies method `pillow_high_frequency_texture_regions_v1` as `untrained_baseline`, returns a candidate area ratio (not aggregate coverage), keeps individual particle count null, and writes an annotated preview. Focused Task C/backend tests: 26 passed, 2 skipped. Full backend suite excluding the unrelated health TestClient case: 85 passed, 2 skipped, 1 deselected. No India-only aggregate-instance labels or active trained checkpoint are present; real model metrics remain pending. See `HANDOFF.md` and `README.md` for commands and caveats.
+
 ## Coordination baseline
 
 - Current integration branch: `main`.
@@ -117,14 +123,14 @@ The latest Task C remote branch is `task/c-computer-vision` at `3e5f791`. Its ha
 
 ## Current status
 
-- Task A’s provisional RSQI scorer was merged into `main` by PR #1 at `7995ff4`; its RoadIQ normalization and confidence calibration still lack labelled data.
-- The fixture-backed dashboard was merged by PR #2 and the Everyday/Engineer distinction by PR #5. This branch carries a new sticky selector and presentation refinement, pending publication/review.
-- Task C’s latest remote work is `3e5f791`; its India-only experimental baseline is not a trained active detector and no aggregate/metal labels, image API, or held-out RoadIQ evaluation are available.
-- Task D’s docs-only integration checklist was merged in PR #3; runtime integration remains blocked on reviewed A/B/C mappings and dependencies.
+- Task A's provisional RSQI scorer is merged into `main` by PR #1 at `7995ff4`; its RoadIQ normalization and confidence calibration still lack labelled data.
+- The Task B dashboard and Everyday/Engineer follow-up are merged into `main` by PRs #2, #5, and #6. Road values remain illustrative fixtures; no live segment or image API is connected.
+- Task C's branch `task/c-computer-vision` contains image validation/quality heuristics, a named texture proxy, structured observations, a mockable detector, optional RLE masks, and an experimental India-only road/pothole semantic segmentation trainer. PR #4's implementation is merged into `main`; this branch adds the synthetic demo and annotation-scaling follow-up. No trained checkpoint or held-out model-quality result exists. The dataset has no aggregate-instance or metal-fragment labels. Physical measurements, material classification, aggregate/metal instance analysis, broad validated damage detection, and an image API remain unavailable from Task C.
+- Task D's docs-only integration checklist is merged into `main` by PR #3; runtime integration remains blocked on reviewed A/B/C mappings and dependencies.
 
 ## Four-owner kickoff checklist
 
 - [ ] **Task A owner/reviewer:** still not recorded; PR #1 is merged. Resolve the remaining labelled-data normalization and confidence-calibration dependency before claiming a validated score.
-- [x] **Task B owner/reviewer:** project owner confirmed; dashboard PR #2 and view follow-up PR #5 merged. Publish the current sticky-control/presentation refinement for review. Current fixtures and image preview are not live segment or image API integration.
-- [ ] **Task C owner:** not recorded; continue the India-only experimental baseline on `task/c-computer-vision`, obtain appropriate India-only aggregate/metal labels, validate the output contract and held-out evaluation, then open a PR. No C PR is currently open.
+- [x] **Task B owner/reviewer:** project owner confirmed; dashboard PR #2 and view follow-ups PRs #5 and #6 merged. Current fixtures and image preview are not live segment or image API integration.
+- [ ] **Task C owner:** not recorded; the demo/scaling follow-up is in PR #7 against `main`. Obtain appropriate India-only aggregate/metal labels, validate the output contract and held-out evaluation before claiming model quality.
 - [ ] **Task D owner:** not recorded; PR #3 integration checklist is merged. Keep shared-contract mappings proposed until affected owners agree, then integrate only approved outputs and add tests.

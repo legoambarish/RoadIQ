@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-16 — Task C demonstrable baseline
+
+- Fixed annotated-preview mask scaling when the source image exceeds the 512-pixel analysis resolution; larger valid images now produce previews instead of failing during alpha composition.
+- Added deterministic synthetic road-texture sample generation and CLI flags to export the annotation and structured JSON report separately.
+- Added an end-to-end regression test for the synthetic 640×480 image. It validates baseline plumbing only; no real-world model performance is claimed.
+
 ## Unreleased
 - Added a sticky, responsive dashboard control dock with all five full travel-profile names and the Everyday/Engineer switch visible while scrolling; refined spacing and a comfortable sage/forest palette while preserving a distinct Engineer theme.
 - Reworked Everyday and Engineer into distinct assessment experiences: Everyday gets profile-specific plain-language briefs; Engineer gets evidence/status/provenance tables and record-readiness audits. Surface condition, mode suitability, and pedestrian infrastructure remain separate, with all fixture values identified as illustrative.
