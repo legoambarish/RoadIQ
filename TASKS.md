@@ -34,7 +34,7 @@ RoadIQ is primarily an image-based road-surface quality assessment prototype. It
 | Task | Human owner | Assigned branch |
 | --- | --- | --- |
 | A — Scoring | Human owner/reviewer not assigned; implementation merged in PR #1; calibration dependencies remain | `task/a-scoring-engine` |
-| B — Frontend/reporting | Project owner confirmed; dashboard merged in PR #2; view-distinction follow-up committed locally and not yet pushed | `task/b-map-dashboard` |
+| B — Frontend/reporting | Project owner confirmed; dashboard merged in PR #2; Everyday/Engineer follow-up published in PR #5 | `task/b-map-dashboard` |
 | C — Aggregate/image analysis | Human owner not recorded; India-only segmentation experiment on remote branch; no active trained checkpoint or PR | `task/c-computer-vision` |
 | D — Integration/evaluation | Human owner not recorded; integration checklist merged in PR #3; runtime integration remains pending | `task/d-integration-release` |
 
@@ -112,7 +112,7 @@ The latest Task C remote branch is `task/c-computer-vision` at `023da26`. Its ha
 ## Current status
 
 - Task A’s provisional RSQI scorer was merged into `main` by PR #1 at `7995ff4`; its RoadIQ normalization and confidence calibration still lack labelled data.
-- The fixture-backed dashboard was merged by PR #2. The Everyday/Engineer follow-up is committed locally on `task/b-map-dashboard`; it must be pushed before opening a new PR.
+- The fixture-backed dashboard was merged by PR #2. The Everyday/Engineer follow-up is published on `task/b-map-dashboard` and open for review in PR #5.
 - Task C’s latest remote work is `023da26`; its India-only dataset/segmentation experiment is not a trained active detector and no aggregate/metal labels, image API, or held-out RoadIQ evaluation are available.
 - Task D’s docs-only integration checklist was merged in PR #3; runtime integration remains blocked on reviewed A/B/C mappings and dependencies.
 
