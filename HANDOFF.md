@@ -2,12 +2,14 @@
 
 ## Current Task C status — 2026-10-16
 
-- **Merged:** PR #8 added the one-command local image demo to `main` as merge commit `5049ce6`; the PR #9 handoff refresh subsequently merged as `e2b0918`. PR #10 proposes optional India-road ROI gating for the texture-candidate preview and is awaiting review.
-- **Demo:** `PYTHONPATH=backend python -m scripts.demo_road_image --output-dir /tmp/roadiq-demo --seed 42`; pass `--image /path/to/road.jpg` to analyze a local image. Both flows write an annotated JPEG and structured JSON report.
-- **Verification:** focused Task C suite on the merged code — 28 passed, 2 skipped. Runtime was Python 3.10; the repository documents Python 3.12. The backend full-suite check still excludes the known hanging health TestClient case.
-- **Limitations:** the untrained texture mask is only a high-frequency candidate, not a verified pavement/aggregate/defect mask. Aggregate counts, calibrated measurements, confidence, and real-world metrics remain unavailable. No India-only aggregate-instance labels or trained aggregate checkpoint are available.
-- **Remaining integration:** browser upload/report display belongs to Task B; the image-analysis HTTP endpoint belongs to Task D. Task C exposes the local image-analysis service and demo CLI but does not cross those task boundaries.
-- **Next:** keep outputs explicitly unrated until reviewed India-only labels and held-out evaluation are available; integrate the service through the agreed B/D contract when those owners complete their parts.
+- **Branch:** `task/c-computer-vision`; pre-update tip `cb49e7d` (clean and in sync with `origin/task/c-computer-vision` before this handoff update).
+- **MVP:** local image analysis works through `PYTHONPATH=backend python -m scripts.demo_road_image --output-dir /tmp/roadiq-demo --seed 42`; use `--image /path/to/road.jpg` for a local JPEG/PNG/WebP. The runner writes an annotated JPEG and structured JSON, and does not upload input. Optional India-road semantic ROI gating is experimental and requires a separately trained/configured checkpoint.
+- **Verification in this session:** `PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 /tmp/roadiq-taskc-venv/bin/python -m pytest -q backend/tests/test_aggregate_baseline.py backend/tests/test_aggregate_evaluation.py backend/tests/test_dataset_manifest.py backend/tests/test_demo_image.py backend/tests/test_demo_road_image.py backend/tests/test_india_road_segmentation.py backend/tests/test_vision.py` — 29 passed, 2 skipped. The Python 3.10 temporary environment was installed from `backend/requirements.txt`; plugin autoload was disabled because unrelated host ROS pytest plugins are incompatible with the project runner. `PYTHONPATH=backend /tmp/roadiq-taskc-venv/bin/python -m scripts.demo_road_image --output-dir /tmp/roadiq-taskc-verify --seed 42` completed and wrote both outputs. Reported analysis `unrated`, method `pillow_high_frequency_texture_regions_v1`, candidate area ratio `0.048869`, aggregate count `null`.
+- **Supplemental evaluation:** a 20-image, visually reviewed sample from ACAD's published low-occlusion synthetic-concrete test split scored pixel IoU 0.487652, precision 0.822176, and recall 0.545149 for the untrained texture-region baseline. This does not measure India-road performance, training quality, or instance counting; details and attribution are in `docs/DATASET_MANIFEST.md`.
+- **Limitations:** texture candidates are not confirmed road, aggregate, or defect masks. No India-only aggregate-instance/metal labels or active trained checkpoint exists. Material/particle detections, physical measurements, calibrated confidence, and held-out RoadIQ road metrics remain unavailable. The semantic road ROI is optional and uncalibrated.
+- **Integration boundary:** browser upload/report display belongs to Task B; the HTTP image-analysis endpoint belongs to Task D. Those flows remain unimplemented; Task C provides the local service/demo only.
+- **Not run:** frontend checks, full backend suite, and Python 3.12 checks. The default system Python has no project Pydantic and an incompatible pytest plugin; targeted tests succeeded in the isolated temporary Python 3.10 environment.
+- **Next:** Task B/D should integrate the local service only after their shared contract review; obtain reviewed India-only aggregate/metal labels and a grouped held-out road test set before claiming those model features or metrics.
 
 ## Optional road-ROI-gated preview — 2026-10-16
 
@@ -15,6 +17,13 @@
 - Verified qualitatively on a published validation-sequence frame (`1_017_frame0280_leftImg8bit.jpg`). The temporary 10-epoch CPU feasibility checkpoint predicted a 0.478 road-area ratio against 0.719 in the semantic label (per-frame IoU 0.602); this confirms the ROI is imperfect and must remain optional. The resulting candidate-area ratio was 0.09963. These are not aggregate metrics and are not a held-out RoadIQ aggregate evaluation.
 - Focused tests: `PYTHONPATH=backend /tmp/roadiq-venv/bin/python -m pytest -q -p no:cacheprovider backend/tests/test_aggregate_baseline.py backend/tests/test_aggregate_evaluation.py backend/tests/test_dataset_manifest.py backend/tests/test_demo_image.py backend/tests/test_demo_road_image.py backend/tests/test_india_road_segmentation.py backend/tests/test_vision.py` — 29 passed, 2 skipped. `git diff --check` passes. The real-frame demo also produced `/tmp/roadiq-demo-india-val-masked/annotated-preview.jpg` and `analysis-report.json`; the sample input/checkpoint are not bundled.
 - No frontend or HTTP endpoint changes. Tasks B/D still own browser upload and API integration. The image-analysis output remains unrated; aggregate counting and calibrated confidence remain unavailable.
+
+## Synthetic aggregate-region baseline check — 2026-10-16
+
+- Used the CC BY 4.0 [ACAD dataset](https://huggingface.co/datasets/igtsd/acad_dataset), DOI `10.57967/hf/9612`, as supplemental controlled synthetic-concrete evidence after no India-road aggregate instance labels were found. Dataset authors and the subset provenance are recorded in `docs/DATASET_MANIFEST.md`.
+- Evaluated the existing baseline on 20 evenly spaced images from the untouched 300-image low-occlusion test split. Their aggregate polygons were visually checked on a contact sheet; reference-coin category 2 was excluded. The temporary manifest validated with no errors or duplicate warnings.
+- Results: pixel IoU `0.487652`, precision `0.822176`, recall `0.545149`, null instance-count MAE, and mean analysis time `68.21 ms` per image. Manifest SHA-256 `f4bc51a94e6a02ee3cd1240511fb7b298559f142e1e83756bf761f7aeabc948b`. Download, manifest, review sheet, and full report are in `/tmp/roadiq-acad-ccby`; no dataset files were added to the repository.
+- These are synthetic region-overlap metrics only. They are not India-road metrics, not training results, and do not validate particle counting or physical measurement.
 
 ## Current Task C demo update — 2026-10-16
 

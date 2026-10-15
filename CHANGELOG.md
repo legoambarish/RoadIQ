@@ -1,10 +1,21 @@
 # Changelog
 
+## 2026-10-16 — Task C MVP status and evaluation clarification
+
+- Clarified that the local Task C image-analysis demo is runnable today while browser upload and HTTP API integration remain pending Tasks B/D.
+- Recorded the synthetic ACAD pixel-region result as supplemental evidence only; it does not establish India-road performance, instance counting, or training accuracy.
+- Documented that aggregate/material/metal detections and calibrated physical values remain unavailable rather than presenting texture candidates as those outputs.
+
 ## 2026-10-16 — Optional Task C road-ROI gating
 
 - When an India-road semantic segmentation checkpoint is explicitly configured, constrain high-frequency texture candidates and their preview to the predicted road region. The default remains the existing ungated texture baseline.
 - Label ROI-gated previews and structured results as experimental, uncalibrated road-gated texture candidates; aggregate counts, confidence, and physical measurements remain unavailable.
 - Added focused tests for mask intersection, default behavior, and integration through the existing image-analysis service.
+
+## 2026-10-16 — Supplemental synthetic aggregate evaluation
+
+- Evaluated the existing texture-region baseline on 20 visually reviewed images sampled evenly from ACAD's published low-occlusion synthetic-concrete test split. Recorded CC BY 4.0 attribution, subset construction, manifest digest, and limitations in `docs/DATASET_MANIFEST.md`.
+- Measured pixel IoU 0.487652, precision 0.822176, and recall 0.545149 against aggregate polygon unions; individual-instance count MAE remains null. These controlled synthetic results are not RoadIQ road performance or training evidence.
 
 ## 2026-10-16 — Task C demonstrable baseline
 

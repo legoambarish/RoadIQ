@@ -5,9 +5,9 @@ RoadIQ is a hackathon prototype whose primary objective is image-based road-surf
 ## Current status
 - Frontend: React + TypeScript + Vite dashboard with an interactive schematic map, five illustrative travel-profile overlays, filters, rankings, charts, distinct Everyday/Engineer assessment views, and a local-only image preview shell
 - Backend scaffold: FastAPI + Pydantic
-- Computer vision: Task C’s India-only branch has dataset-manifest validation, an untrained texture-region baseline, optional experimental road-ROI gating, and evaluation scaffolding; it has no active trained checkpoint or HTTP endpoint, and individual aggregate/metal analysis remains unavailable. The multi-country RDD2022 detector is disabled under the India-only dataset policy, not because it is technically incompatible with Indian roads.
+- Computer vision: Task C has a working local image-analysis service and one-command demo. It produces an annotated texture-candidate preview, structured observations, quality warnings, a named texture proxy, and optional experimental road-ROI gating. It has no active trained checkpoint or HTTP endpoint; individual aggregate/metal analysis remains unavailable. The multi-country RDD2022 detector is disabled under the India-only dataset policy, not because it is technically incompatible with Indian roads.
 - Scoring: deterministic provisional RSQI scorer exists in `backend/app/services/scoring.py`; default normalization references are intentionally empty, so results remain `unrated` until fixed surface-type/capture-specific references and adequate component evidence are supplied. Weights and label cutoffs are unvalidated hypotheses.
-- Dataset/evaluation: no labelled RoadIQ dataset or held-out evaluation metrics are available
+- Dataset/evaluation: no labelled India-road aggregate dataset or held-out RoadIQ road metrics are available. A 20-image, visually reviewed low-occlusion ACAD synthetic-concrete test sample produced pixel IoU 0.488 / precision 0.822 / recall 0.545 for the texture-region baseline; it does not measure individual counting or road performance.
 - Mapping: Leaflet-based boundary ready for future provider swap
 - Testing: backend pytest checks include image-validation and inference-wrapper cases; frontend build/type validation remains available
 
@@ -95,18 +95,24 @@ The endpoint returns a simple status payload and intentionally avoids external d
 
 Road-segment retrieval and image-analysis routes are planned but are not implemented. Task C exposes an image-analysis service for direct backend integration; see [`docs/VISION_PIPELINE.md`](docs/VISION_PIPELINE.md) for its exact call, model setup, and limitations. It does not calculate scores. The proposed HTTP response shape and measurement rules are documented in [`docs/API_CONTRACT.md`](docs/API_CONTRACT.md); the scoring and dataset/evaluation proposal is in [`docs/SCORING_SPEC.md`](docs/SCORING_SPEC.md).
 
-## Core image-analysis workflow (planned, not yet available)
+## Task C local image-analysis MVP (available)
+
+The local Task C service accepts a road image and returns a structured observation report. The demo command above exercises the image validation and quality gate, named texture proxy, untrained high-frequency texture-candidate mask, annotated JPEG, and JSON report. A configured India-road segmentation checkpoint can optionally gate candidate regions with its predicted road mask; this remains experimental and uncalibrated.
+
+The texture overlay is not a confirmed pavement, aggregate, or defect segmentation. Particle count, material classification, metal-fragment observations, physical measurements, and calibrated confidence remain unavailable; analysis status stays **Unrated**. The supplemental ACAD result is limited to synthetic-concrete region overlap and is not India-road or instance-count evidence.
+
+## Full image-analysis workflow (planned; browser/API integration unavailable)
 
 The intended first image-analysis demo is:
-1. Submit a road image and identify any available camera/calibration metadata.
+1. Upload a road image through the dashboard and identify any available camera/calibration metadata.
 2. Reject or mark low-confidence images that fail quality checks; isolate the usable pavement region.
 3. Classify asphalt/bituminous, cement-concrete, or unknown; segment visible individual aggregates only where resolution permits.
 4. Report pixel-space aggregate size, coverage, boundaries/gaps, visible defect detections, and named image-texture proxies with provenance and confidence.
 5. Report physical measurements (such as aggregates/m² or gap widths in mm) only if ground scale, usable physical area, and resolution support them.
 6. Show an annotated image and transparent provisional surface index, or **Unrated** when required evidence is unavailable.
 
-This sequence is a product goal, not implemented functionality. The dashboard currently previews a selected local image in the browser but does not upload it or analyze it; report values and annotated overlays remain unavailable. Map segments, quality values, and mode profiles are illustrative fixtures only. A 2D image does not measure true 3D roughness, subsurface strength, weather resistance, or skid resistance. Counts per square metre and physical widths require calibration. Missing or unreliable evidence is unavailable, not zero. There are no labelled-data evaluation results yet; do not claim model quality until held-out metrics are reported. See [`TASKS.md`](TASKS.md) for task ownership and boundaries.
+The browser upload/report experience and HTTP image-analysis endpoint are not implemented; they remain owned by Tasks B and D. The local service/demo is available independently and does not upload images. Map segments, quality values, and mode profiles are illustrative fixtures only. A 2D image does not measure true 3D roughness, subsurface strength, weather resistance, or skid resistance. Counts per square metre and physical widths require calibration. Missing or unreliable evidence is unavailable, not zero. The limited synthetic result is not a held-out RoadIQ road evaluation; do not claim model quality until suitable held-out road metrics are reported. See [`TASKS.md`](TASKS.md) for task ownership and boundaries.
 
 ## Notes
-- This repository remains a prototype scaffold and is not production-ready. The Task C vision service is partial and has no RoadIQ held-out evaluation.
+- This repository remains a prototype scaffold and is not production-ready. The Task C local demo is functional, but the broader vision task remains partial and has no RoadIQ held-out evaluation.
 - Image-quality checks, a named texture proxy, an untrained high-frequency texture-region heuristic, and a documented dataset-manifest validator are implemented in the Task C service. The optional semantic road ROI can restrict texture candidates when an India-only checkpoint is explicitly configured; this does not segment/count individual particles and reports confidence/physical values as unknown. The former crack/pothole checkpoint is blocked because it used multinational road data. A single free India-only road segmentation dataset has been downloaded and audited; its compact experimental trainer has a weak CPU feasibility result, and no checkpoint is active by default. Surface classification, aggregate/metal-fragment instance segmentation, broader validated defect classes, calibrated RSQI output, annotated report UI, image API, and held-out RoadIQ aggregate evaluation remain unavailable.
