@@ -132,5 +132,5 @@ The latest Task C remote branch is `task/c-computer-vision` at `3e5f791`. Its ha
 
 - [ ] **Task A owner/reviewer:** still not recorded; PR #1 is merged. Resolve the remaining labelled-data normalization and confidence-calibration dependency before claiming a validated score.
 - [x] **Task B owner/reviewer:** project owner confirmed; dashboard PR #2 and view follow-ups PRs #5 and #6 merged. Current fixtures and image preview are not live segment or image API integration.
-- [ ] **Task C owner:** not recorded; the demo/scaling follow-up is pushed on `task/c-computer-vision` and needs a follow-up PR. Obtain appropriate India-only aggregate/metal labels, validate the output contract and held-out evaluation before claiming model quality.
+- [ ] **Task C owner:** not recorded; the demo/scaling follow-up is in PR #7 against `main`. Obtain appropriate India-only aggregate/metal labels, validate the output contract and held-out evaluation before claiming model quality.
 - [ ] **Task D owner:** not recorded; PR #3 integration checklist is merged. Keep shared-contract mappings proposed until affected owners agree, then integrate only approved outputs and add tests.
