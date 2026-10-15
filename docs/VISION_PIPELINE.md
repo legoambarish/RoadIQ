@@ -74,6 +74,7 @@ Implemented:
 - image byte/type/dimension validation and EXIF orientation handling;
 - heuristic resolution, exposure, and edge-detail quality observations, explicitly unvalidated on RoadIQ data;
 - a named tile grayscale contrast proxy, never described as physical roughness/IRI;
+- an untrained Pillow high-frequency texture heuristic that emits an image-space RLE mask, bounding box, candidate area ratio, boundary-pixel statistic, preview annotation, and measured per-call time for textured regions; the output is explicitly not a particle mask or verified pavement ROI;
 - test-injected detector outputs for wrapper tests only;
 - structured model-load and inference errors, with unsupported or unavailable measurements left null.
 
@@ -81,12 +82,18 @@ Unavailable until a reviewed model and labels exist:
 
 - trained India-only segmentation inference (the code path and optional RLE output exist, but no trained checkpoint is available);
 - asphalt/concrete classification;
-- individual stone-aggregate segmentation, counts, size/coverage/boundary statistics, and aggregate-loss proxy;
+- individual stone-aggregate segmentation, counts, size/coverage/gap statistics, and aggregate-loss proxy. The texture heuristic cannot separate particles; its confidence and aggregate measurements remain null;
 - literal metal-fragment detection (reported separately from ordinary stone aggregates);
 - raveling and other visible deterioration classes;
 - mask-derived defect area, calibrated physical sizes, and counts per square metre.
 
 No RoadIQ held-out India-only evaluation has run. Missing defect detections must never be interpreted as evidence that the road is undamaged. A 2D image does not establish internal structural strength, weather resistance, or actual skid resistance. All heuristic cutoffs and confidence thresholds need review against labelled, held-out Indian road images before product interpretation.
+
+The local JSON result places this texture-region candidate under `aggregate_analysis.surface_region` and returns the annotated JPEG data URI in the existing top-level `annotated_image` measurement. Its RLE uses the existing `row_major_binary_rle_v1` mask format. The aggregate and defect observations remain separate. The preview highlights high-frequency texture only; it does not identify stone versus binder, pavement boundaries, cracks, or metal. Do not use candidate area as aggregate coverage or the bounding box as a particle measurement. Overall road analysis remains `unrated`.
+
+## Dataset manifest and evaluation
+
+The JSONL manifest fields, annotation states, source/provenance requirements, scene-group split policy, duplicate checks, command, and limitations are documented in [`DATASET_MANIFEST.md`](DATASET_MANIFEST.md). No aggregate-instance dataset is bundled or downloaded. The existing India-road trainer can compute semantic segmentation metrics on its published validation sequences, but those sequences are not an independent test split and do not label aggregate instances. No RoadIQ aggregate metrics or model-quality claims are available.
 
 ## Calibration behavior
 

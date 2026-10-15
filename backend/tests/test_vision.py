@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import base64
 import hashlib
 import io
 from pathlib import Path
@@ -7,7 +8,7 @@ from pathlib import Path
 import pytest
 from PIL import Image, ImageDraw
 
-from app.schemas.image_analysis import ImageAnalysisResponse
+from app.schemas.image_analysis import BinaryRLEMask, ImageAnalysisResponse
 from app.services.vision import (
     ImageValidationError,
     analyze_road_image,
@@ -73,6 +74,21 @@ def test_valid_image_produces_contract_payload_and_pixel_boxes() -> None:
     assert report["surface_type"]["value"] == "unknown"
     assert report["aggregate_analysis"]["aggregate_count"]["value"] is None
     assert report["aggregate_analysis"]["aggregate_count_per_m2"]["value"] is None
+    aggregate = report["aggregate_analysis"]
+    assert aggregate["training_status"] == "untrained_baseline"
+    assert aggregate["individual_particles_segmented"] is False
+    assert aggregate["surface_region"]["confidence"] is None
+    assert BinaryRLEMask.model_validate(aggregate["surface_region"]["mask_rle"])
+    assert aggregate["surface_region"]["bbox_xyxy_px"] is not None
+    assert report["annotated_image"]["status"] == "estimated"
+    assert report["annotated_image"]["value"].startswith("data:image/jpeg;base64,")
+    base64.b64decode(report["annotated_image"]["value"].split(",", 1)[1], validate=True)
+    assert aggregate["size_distribution"]["value"] is None
+    assert aggregate["boundary_gap_statistics"]["value"] is None
+    assert report["model"]["aggregate_analysis"]["training_status"] == "untrained_baseline"
+    assert report["metal_fragments"]["class"] == "metal_fragment"
+    assert report["metal_fragments"]["count"]["value"] is None
+    assert report["defects"] != report["aggregate_analysis"]
     assert report["texture_features"]["is_physical_roughness"] is False
     assert report["model"]["provider"] == "injected detector"
     assert report["model"]["runtime"] is None
@@ -122,6 +138,8 @@ def test_low_resolution_blocks_detector_and_keeps_measurements_unavailable() -> 
     assert report["image_quality"]["usable"] is False
     assert by_class(report)["crack"]["count"]["value"] is None
     assert report["aggregate_analysis"]["visible_coverage_ratio"]["value"] is None
+    assert report["aggregate_analysis"]["segmentation_status"] == "unavailable"
+    assert report["annotated_image"]["status"] == "unavailable"
 
 
 def test_calibration_must_be_verified_and_bound_to_same_file() -> None:

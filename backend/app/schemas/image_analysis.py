@@ -100,6 +100,7 @@ class ImageAnalysisResponse(ImageContractModel):
     metal_fragments: DefectObservation
     texture_features: dict[str, Any]
     calibration: dict[str, Any]
+    annotated_image: ImageMeasurement
     processing_errors: list[dict[str, Any]]
     model: dict[str, Any]
     data_provenance: list[dict[str, str]]

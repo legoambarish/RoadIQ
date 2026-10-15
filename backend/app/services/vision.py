@@ -12,6 +12,7 @@ import io
 import math
 import os
 import threading
+import time
 import warnings
 from dataclasses import dataclass
 from pathlib import Path
@@ -20,6 +21,7 @@ from typing import Any, Protocol
 from PIL import Image, ImageFilter, ImageOps, ImageStat, UnidentifiedImageError
 
 from app.schemas.image_analysis import ImageAnalysisResponse
+from app.services.aggregate_baseline import analyze_aggregate_texture_regions
 from app.services.india_road_segmentation import (
     IndiaRoadSegmentationModel,
     encode_binary_mask_rle,
@@ -527,10 +529,21 @@ def analyze_road_image(
         "confidence_threshold": confidence_threshold,
         "load_status": "loaded" if actual_detector else ("failed" if detector_error else "not_configured"),
         "segmentation": segmentation_metadata,
+        "aggregate_analysis": {
+            "name": "Pillow high-frequency texture-region baseline",
+            "version": "pillow_high_frequency_texture_regions_v1",
+            "training_status": "untrained_baseline",
+            "confidence_calibrated": False,
+        },
     }
     model_observed = actual_detector is not None and detector_available
     surface_reason = "no validated asphalt/concrete classifier is configured"
     aggregate_reason = "no validated individual-aggregate segmentation model is configured"
+    aggregate_started = time.perf_counter()
+    aggregate_analysis = analyze_aggregate_texture_regions(image) if quality["usable"] else _empty_aggregate_report("image quality gate failed")
+    annotated_image_data_uri = aggregate_analysis.pop("annotated_image_data_uri", None)
+    if quality["usable"]:
+        aggregate_analysis["inference_time_ms"] = round((time.perf_counter() - aggregate_started) * 1000, 3)
     payload: dict[str, Any] = {
         "analysis_status": "unrated",
         "image": {
@@ -565,16 +578,25 @@ def analyze_road_image(
             "confidence": None,
             "reason": surface_reason,
         },
-        "aggregate_analysis": _empty_aggregate_report(aggregate_reason),
+        "aggregate_analysis": aggregate_analysis,
         "defects": defects,
         "metal_fragments": _unavailable_metal_fragments(),
         "texture_features": _texture_report(image),
         "calibration": calibration_data,
+        "annotated_image": _measurement(
+            annotated_image_data_uri,
+            "uri",
+            source="image_inference" if annotated_image_data_uri else None,
+            status="estimated" if annotated_image_data_uri else "unavailable",
+            reason=("inline data URI annotates high-frequency texture candidates only; not particle segmentation"
+                    if annotated_image_data_uri else "image quality gate failed"),
+        ),
         "processing_errors": processing_errors,
         "model": model,
         "data_provenance": [
             {"field_path": "image_quality", "source": "image_inference"},
             {"field_path": "texture_features", "source": "image_inference"},
+            *([{"field_path": "aggregate_analysis.surface_region", "source": "image_inference"}] if quality["usable"] else []),
             *([{"field_path": "defects", "source": "image_inference"}] if model_observed else []),
             *([{"field_path": "pavement_region", "source": "image_inference"}] if segmentation_output is not None else []),
         ],

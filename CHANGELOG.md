@@ -1,6 +1,10 @@
 # Changelog
 
 ## Unreleased
+- Added a documented JSONL dataset manifest and validator for label/provenance parsing, scene-group split isolation, exact-image hashes, and perceptual near-duplicate leakage; it does not fetch datasets.
+- Added an explicitly untrained Pillow texture-region candidate baseline to the Task C image service. It returns an RLE mask, bounding box, image-space candidate area/boundary statistics, an annotated JPEG data URI, and inference time while keeping individual aggregate count, confidence, coverage, gaps, and physical measurements unavailable.
+- Updated Task C tests and docs to distinguish aggregate-rich texture regions from individual particles and from road defects. No aggregate model was trained and no held-out metrics are claimed.
+- Refreshed Task C's assigned branch with the latest `main` changes and resolved documentation overlaps while preserving both branches' Task B, Task C, and Task D records.
 - Recorded the owner's free-only tool/data constraint and approval of non-commercial data for the prototype; noted Mendeley archive retrieval failure and retained the India-only partition restriction.
 - Expanded the India-only ROI/pothole lead with the free e-Yantra/IIT Bombay Indian Roads segmentation dataset facts and GPL-2.0 license; no data or weights were downloaded.
 - Audited additional owner-provided India data leads: verified Siddhesh Roboflow damage classes/license, documented mixed-country RDD2020's India-only subset constraints, and flagged Kaggle pothole/road datasets for license and split verification; confirmed TiHAN/DriveIndia access requires an EULA.

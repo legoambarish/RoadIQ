@@ -67,7 +67,7 @@ RoadIQ is primarily an image-based road-surface quality assessment prototype. It
 
 Task A implementation is on `task/a-scoring-engine` in `backend/app/services/scoring.py` with focused tests in `backend/tests/test_scoring.py`; PR #1 is merged into `main` at `7995ff4`. It provides a scorer/API boundary only and does not implement Task C feature extraction or Task D API routes/evaluation.
 
-### Task B — dashboard (implementation on branch; PR #2 open; integration pending review)
+### Task B — dashboard (merged in PRs #2 and #5)
 
 - [x] Renders an interactive schematic map from typed GeoJSON fixtures, with selectable, zoomable segments and a color-coded Road Quality overlay. No live basemap is claimed while provider choice is unresolved.
 - [x] Offers five separate travel-profile overlays (walking, cycling, two-wheeler, car, bus), ranked segment lists, quality/search/minimum-score filters, and quality/profile charts.
@@ -81,14 +81,17 @@ Task A implementation is on `task/a-scoring-engine` in `backend/app/services/sco
 
 ### Task C — computer vision (partial branch implementation; PR #4 open; not ready for integration)
 
-- [ ] Implements testable image validation/quality gating, usable pavement ROI, and surface-type output (`asphalt_bituminous`, `cement_concrete`, or `unknown`).
+- [x] Validates JPEG/PNG/WebP inputs, applies tested image-quality heuristics, and returns a named image-texture proxy; quality thresholds remain unvalidated on RoadIQ data.
+- [ ] Segments a usable pavement ROI and classifies asphalt/concrete/unknown with validated model evidence.
+- [x] Provides a transparent untrained high-frequency texture-region baseline, RLE candidate mask, bounding box, image-space area/boundary features, preview annotation, and measured runtime; labels this as a region candidate only, not particle segmentation.
 - [ ] Segments/counts individual stone aggregates only where resolution permits and reports count, pixel size distribution, visible coverage, boundary/gap statistics, and aggregate-loss proxy with explicit provenance/confidence.
 - [ ] Emits counts/m² or physical widths only with ground scale, usable physical area, and sufficient resolution; otherwise returns null physical values and retains valid pixel-space estimates.
 - [ ] Detects visible cracks, potholes, raveling, and deterioration; emits named image texture proxies and never calls 2D image texture true 3D roughness/IRI.
+- [x] Documents and validates JSONL dataset manifests, including labels, provenance, annotation state, scene-group splits, exact duplicates, and perceptual near-duplicates. No aggregate dataset is included.
 - [ ] Preserves unavailable values as null and documents model/checkpoint, preprocessing, calibration method, and limitations.
-- [ ] Tests malformed/low-quality inputs, unsupported material/resolution, unit/calibration gates, masks, and unavailable outputs without requiring production weights.
+- [x] Tests image validation, low-quality gates, manifest/label parsing, missing labels, exact and near duplicates, aggregate-versus-defect separation, RLE mask formats, and response compatibility without production weights.
 
-The latest Task C remote branch is `task/c-computer-vision` at `023da26`. Its handoff records a free 3,227-image Indian Roads semantic-segmentation dataset download/audit, a compact U-Net trainer/checkpoint loader, and CPU smoke plumbing only. There is no trained/active checkpoint or held-out model-quality result; the dataset has no stone-aggregate-instance or metal-fragment labels. The previously selected multi-country RDD2022 checkpoint remains disabled to follow the India-only data policy; this is a policy choice, not technical incompatibility with Indian roads. No image API is integrated, and C response/dependency changes still need A/D review. This branch has no PR.
+The branch's existing India-only semantic-segmentation trainer was exercised only with a one-batch CPU plumbing run; there is no trained/active checkpoint, independent held-out quality result, aggregate-instance or metal-fragment dataset, or image API. The prior multinational RDD2022 detector checkpoint remains disabled under the India-only data policy. PR #4 is open against `main`; the current implementation adds a local-only annotated data URI that needs Task D review before HTTP exposure. The new texture-region output is an untrained candidate mask, not individual aggregate analysis. No aggregate accuracy metrics are claimed.
 
 ### Task D — integration and release (integration checklist merged; runtime integration blocked on dependencies)
 
