@@ -14,6 +14,7 @@
 
 ## Task C evaluation-pipeline continuation — 2026-10-15
 
+- **Commit:** `288b6b1` (`Add held-out aggregate baseline evaluator`).
 - **Added:** `backend/app/services/aggregate_evaluation.py` and `backend/scripts/evaluate_aggregate_baseline.py`. The evaluator validates the manifest, requires reviewed aggregate-instance labels in the untouched test split, and uses the same quality-gated analysis service as normal inference. It accepts COCO polygon and uncompressed COCO RLE masks or grayscale 8-bit instance-ID PNG masks. It reports pixel IoU/precision/recall, manifest/image/label SHA-256 values, per-image runtime, and a null aggregate-instance count MAE because the heuristic does not separate particles. It excludes and lists low-quality images.
 - **Documentation:** `docs/DATASET_MANIFEST.md` now defines supported mask forms, the optional COCO `annotation_image_id`, and the evaluator command. `docs/VISION_PIPELINE.md`, `TASKS.md`, and `CHANGELOG.md` record the evaluation scope and limitations.
 - **Verification:** 20 focused vision/manifest/evaluator tests passed; full backend suite — 85 passed; `compileall` and `git diff --check` passed. Evaluator tests use generated fixtures solely to check calculations and gates. No aggregate-labeled RoadIQ test data exists, so no real dataset metrics were computed or claimed.
