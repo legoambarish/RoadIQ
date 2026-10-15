@@ -87,7 +87,7 @@ Task A implementation is on `task/a-scoring-engine` in `backend/app/services/sco
 - [ ] Displays real reviewed image-analysis outputs and annotated images after Task C/Task D finalize the compatible API response and endpoint.
 - [x] Passes frontend TypeScript checks, lint, and Vite production build.
 
-### Task C — computer vision (partial branch implementation; follow-up PR #7 open; not ready for integration)
+### Task C — computer vision (partial branch implementation; original PR #7 merged; runner follow-up pending review)
 
 - [x] Validates JPEG/PNG/WebP inputs, applies tested image-quality heuristics, and returns a named image-texture proxy; quality thresholds remain unvalidated on RoadIQ data.
 - [ ] Segments a usable pavement ROI and classifies asphalt/concrete/unknown with validated model evidence.
@@ -100,7 +100,7 @@ Task A implementation is on `task/a-scoring-engine` in `backend/app/services/sco
 - [x] Preserves unavailable values as null and documents model/checkpoint, preprocessing, calibration method, and limitations.
 - [x] Tests image validation, low-quality gates, manifest/label parsing, missing labels, exact and near duplicates, aggregate-versus-defect separation, RLE mask formats, evaluator test-split gates, and response compatibility without production weights.
 
-Recent Task C branch updates include `05118d2` (one-command local demo runner) and `e99831a` (handoff refresh); follow-up PR #7 contains the synthetic/local-image demo. PR #4's implementation is merged. Its India-only road/pothole trainer, manifest validator, untrained texture-region heuristic, and evaluation scaffolding remain experimental plumbing, not a trained active aggregate detector. No trained checkpoint or held-out model-quality result is available; aggregate-instance and metal-fragment labels remain unavailable, and no image API is integrated. The multi-country RDD2022 detector remains disabled under the India-only data policy; that is a dataset-policy choice, not a technical incompatibility with Indian roads. C response/dependency changes still need A/D review.
+Recent Task C branch updates include `05118d2` (one-command local demo runner) and `e99831a` (handoff refresh); PR #7 merged the synthetic baseline into `main`; this branch adds the one-command local-image runner for follow-up review. PR #4's implementation is merged. Its India-only road/pothole trainer, manifest validator, untrained texture-region heuristic, and evaluation scaffolding remain experimental plumbing, not a trained active aggregate detector. No trained checkpoint or held-out model-quality result is available; aggregate-instance and metal-fragment labels remain unavailable, and no image API is integrated. The multi-country RDD2022 detector remains disabled under the India-only data policy; that is a dataset-policy choice, not a technical incompatibility with Indian roads. C response/dependency changes still need A/D review.
 
 ### Task D — integration and release (integration checklist merged; runtime integration blocked on dependencies)
 
@@ -132,5 +132,5 @@ Recent Task C branch updates include `05118d2` (one-command local demo runner) a
 
 - [ ] **Task A owner/reviewer:** still not recorded; PR #1 is merged. Resolve the remaining labelled-data normalization and confidence-calibration dependency before claiming a validated score.
 - [x] **Task B owner/reviewer:** project owner confirmed; dashboard PR #2 and view follow-ups PRs #5 and #6 merged. Current fixtures and image preview are not live segment or image API integration.
-- [ ] **Task C owner:** not recorded; the demo/scaling follow-up is in PR #7 against `main`. Obtain appropriate India-only aggregate/metal labels, validate the output contract and held-out evaluation before claiming model quality.
+- [ ] **Task C owner:** not recorded; the synthetic baseline is merged in PR #7; the one-command runner follow-up is being published separately. Obtain appropriate India-only aggregate/metal labels, validate the output contract and held-out evaluation before claiming model quality.
 - [ ] **Task D owner:** not recorded; PR #3 integration checklist is merged. Keep shared-contract mappings proposed until affected owners agree, then integrate only approved outputs and add tests.
