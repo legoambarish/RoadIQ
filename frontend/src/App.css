@@ -282,6 +282,11 @@
 .result-header h3 { margin: 0; color: #839087; font: 800 21px 'Manrope', sans-serif; }
 .unrated-pill { padding: 5px 7px; border-radius: 5px; background: #f0f2f0; color: #87938b; font-size: 7px; font-weight: 800; letter-spacing: .08em; }
 .result-explanation { margin: 9px 0 12px; color: #859188; font-size: 8px; line-height: 1.55; }
+.pipeline-status-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin: 0 0 8px; }
+.pipeline-status-grid > div { display: flex; min-height: 58px; flex-direction: column; justify-content: space-between; gap: 4px; padding: 7px; border: 1px solid #eef1ee; border-radius: 6px; background: #fafbfa; }
+.pipeline-status-grid span { color: #9ba69f; font-size: 7px; }
+.pipeline-status-grid strong { color: #53675b; font-size: 8px; }
+.pipeline-status-grid small { color: #929d95; font-size: 7px; line-height: 1.4; }
 .result-index-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 10px; border: 1px solid #edf0ed; border-radius: 6px; background: #fafbfa; color: #78857d; font-size: 8px; }
 .result-index-row strong { color: #87948b; font: 800 15px 'Manrope', sans-serif; }
 .result-index-row small { color: #a4ada6; font: 600 7px 'DM Sans', sans-serif; }
@@ -361,6 +366,7 @@
   .image-report-section { padding: 13px; }
   .image-report-heading { align-items: flex-start; flex-direction: column; }
   .report-evidence-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pipeline-status-grid { grid-template-columns: 1fr; }
   .app-footer { flex-direction: column; line-height: 1.5; }
 }
 
@@ -501,7 +507,10 @@
 .engineer-view .image-input-card, .engineer-view .image-result-card { border-color: #354950; background: #223139; }
 .engineer-view .image-dropzone { border-color: #566b6c; background: #1b2a31; color: #e1e9df; }
 .engineer-view .report-evidence-grid > div, .engineer-view .rsqi-breakdown { border-color: #354950; background: #1b2a31; }
+.engineer-view .pipeline-status-grid > div { border-color: #354950; background: #1b2a31; }
 .engineer-view .report-evidence-grid span, .engineer-view .rsqi-breakdown li > span, .engineer-view .rsqi-breakdown > p { color: #a6b6b2; }
+.engineer-view .pipeline-status-grid span, .engineer-view .pipeline-status-grid small { color: #a6b6b2; }
+.engineer-view .pipeline-status-grid strong { color: #edf2e9; }
 .engineer-view .rsqi-breakdown-heading strong, .engineer-view .rsqi-breakdown li > strong { color: #edf2e9; }
 .engineer-view .rsqi-breakdown li { border-color: #354950; }
 .engineer-view .rsqi-breakdown li > small { color: #8fa39d; }

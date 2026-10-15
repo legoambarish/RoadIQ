@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-16 — Task B cross-task UI refresh
+
+- Updated the image-report workspace with the current Task A scorer evidence/reference gates, Task C local-only untrained texture-region MVP and limitations, and Task D desktop package scope. The browser image preview remains local and does not claim inference.
+- Made the production health client use the same-origin `/api/v1` by default, matching Task D's packaged-dashboard build; development still targets the local backend and explicit `VITE_API_BASE_URL` overrides remain supported.
+- TypeScript build, Vite production build, and Oxlint passed. No shared contract, inference behavior, or scoring logic changed.
+
 ## 2026-10-16 — Task B continuation audit
 
 - Audited the assigned `task/b-map-dashboard` branch and confirmed the existing frontend acceptance items are complete except for image-analysis report integration, which remains dependent on Task C/Task D API agreement and endpoint work.

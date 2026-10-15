@@ -33,7 +33,7 @@ export function ImageReportPanel() {
         <div>
           <div className="section-kicker">Road inspection</div>
           <h2 id="image-report-heading">Image analysis workspace</h2>
-          <p>Preview a road image and see the report states the future analysis API will provide.</p>
+          <p>Preview an image and review what the current local analysis and scoring services can provide.</p>
         </div>
         <span className="unavailable-tag"><i /> Analysis API unavailable</span>
       </div>
@@ -63,7 +63,7 @@ export function ImageReportPanel() {
             </div>
           )}
           <div className="image-status-row"><span>Inference status</span><strong>{file ? 'Not run' : 'Waiting for image'}</strong></div>
-          <p className="image-local-note">Files stay in this browser preview. RoadIQ has no image-analysis HTTP endpoint yet.</p>
+          <p className="image-local-note">Files stay in this browser preview. Selecting an image does not send it to the local CLI or run analysis.</p>
         </div>
 
         <div className="image-result-card">
@@ -71,15 +71,20 @@ export function ImageReportPanel() {
             <div><div className="section-kicker">Analysis report</div><h3>Unrated</h3></div>
             <span className="unrated-pill">SCORER NOT CONNECTED</span>
           </div>
-          <p className="result-explanation">The backend now contains a provisional, evidence-gated RSQI scorer. This dashboard does not call it: there is no image-analysis API, and the default scorer has no fixed normalization references. It returns Unrated until all required evidence and reviewed references are available.</p>
+          <p className="result-explanation">This file is preview-only; no analysis ran. Task C provides a local CLI MVP with image-quality observations, a named texture proxy, and an untrained texture-region candidate annotation. Task A provides an evidence-gated scorer, but the dashboard cannot call either service because there is no image-analysis HTTP endpoint. The scorer remains Unrated without all required evidence and fixed normalization references.</p>
+          <div className="pipeline-status-grid" aria-label="Current RoadIQ analysis capabilities">
+            <div><span>Task C · local vision</span><strong>CLI MVP available</strong><small>Texture-region candidates and annotation; not aggregate instances.</small></div>
+            <div><span>Task A · surface scoring</span><strong>Backend scorer available</strong><small>Default normalization references are empty; score stays Unrated.</small></div>
+            <div><span>Task D · desktop runtime</span><strong>Windows package branch</strong><small>Bundles this dashboard and health service; no image-analysis route.</small></div>
+          </div>
           <div className="result-index-row"><span>Road Surface Quality Index</span><strong>— <small>/100</small></strong></div>
           <div className="report-evidence-grid">
-            <div><span>Image quality / pavement region</span><strong>Not analyzed</strong></div>
-            <div><span>Surface type</span><strong>Not classified</strong></div>
-            <div><span>Stone aggregates</span><strong>No validated model</strong></div>
+            <div><span>Image quality / pavement region</span><strong>Local quality gate · no browser result</strong></div>
+            <div><span>Surface type</span><strong>Unknown · no active classifier</strong></div>
+            <div><span>Stone aggregates</span><strong>Instance counts unavailable</strong></div>
             <div><span>Metal fragments</span><strong>Separate target · unavailable</strong></div>
-            <div><span>Defects / texture proxies</span><strong>Not connected</strong></div>
-            <div><span>Confidence / coverage / overlay</span><strong>Unavailable</strong></div>
+            <div><span>Defects / texture proxies</span><strong>Texture proxy · CLI only</strong></div>
+            <div><span>Confidence / physical values / overlay</span><strong>Unavailable in this preview</strong></div>
           </div>
           <div className="rsqi-breakdown">
             <div className="rsqi-breakdown-heading">
@@ -97,7 +102,7 @@ export function ImageReportPanel() {
             </ul>
             <p>RSQI = 100 − weighted damage. Missing evidence stays unavailable; weights are not redistributed.</p>
           </div>
-          <p className="report-limitation">Image texture is not physical roughness or IRI. A 2D image cannot establish strength, skid resistance, or travel safety.</p>
+          <p className="report-limitation">The texture candidate mask is not verified pavement, aggregate, or defect segmentation. Image texture is not physical roughness or IRI. A 2D image cannot establish strength, skid resistance, or travel safety.</p>
         </div>
       </div>
     </section>

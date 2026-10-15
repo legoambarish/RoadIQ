@@ -1,5 +1,15 @@
 # RoadIQ handoff
 
+## Task B cross-task UI refresh — 2026-10-16
+
+- **Branch/base:** `task/b-map-dashboard` was clean at `32ac8ac` and tracking `origin/task/b-map-dashboard` before the refresh. Latest Task A code is already in `origin/main`; Task C's local baseline is also merged in `origin/main`. `origin/task/d-integration-release` is at `def9c98`; its unmerged changes add a Windows desktop bundle/runtime, not image-analysis API integration.
+- **Completed:** refreshed `frontend/src/components/ImageReportPanel.tsx` to describe Task A's evidence-gated scorer, Task C's CLI-only untrained texture-region output and unavailable aggregate/metal detections, and Task D's package scope. It continues to label the selected file preview-only and the report Unrated. Updated `frontend/src/lib/api.ts` so production defaults to same-origin `/api/v1` (matching Task D's bundle build), while dev uses `http://localhost:8000/api/v1` and explicit `VITE_API_BASE_URL` remains supported. Added matching light/dark status-card styles in `frontend/src/App.css`.
+- **Files changed:** `frontend/src/components/ImageReportPanel.tsx`, `frontend/src/lib/api.ts`, `frontend/src/App.css`, `TASKS.md`, `CHANGELOG.md`, and `HANDOFF.md`.
+- **Checks actually run:** from `frontend/`, the bundled Node executable `C:\Users\krish\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe` ran `node_modules/typescript/bin/tsc -b` (exit 0), `node_modules/vite/bin/vite.js build` (exit 0; 24 modules transformed), and `node_modules/oxlint/bin/oxlint src` (exit 0). `git diff --check` passed. No backend tests were run because this refresh changes only frontend presentation and API URL selection.
+- **Known blockers:** there is no browser image-analysis endpoint; the Task C analyzer is a local Python service/CLI and the Task A scorer is not called by any route. The UI cannot display actual inference results yet. The Task D Windows package branch has not been merged into `main`.
+- **Next task:** Task D should agree the Task C to Task A observation mapping and implement the reviewed image-analysis endpoint; then Task B can replace the preview-only report state with real API results.
+- **Commit/push:** frontend and documentation changes are prepared on `task/b-map-dashboard`; record commit and push state after publication.
+
 ## Task B continuation audit — 2026-10-16
 
 - **Assigned work and branch:** `TASKS.md` assigns frontend/reporting work to `task/b-map-dashboard`; the checkout is at `f83b4d767cde217115f291d4ed32e563911cfd73` and tracked the same remote tip after `git fetch --all --prune`. The working tree was clean before this documentation update. `origin/main` also pointed to `f83b4d7` at inspection.
