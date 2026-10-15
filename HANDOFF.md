@@ -75,7 +75,7 @@ An authenticated repository owner should push the existing `main` commits, assig
 - Base: `8b0df94` (`Record RoadIQ push limitation`), the fetched `origin/main` at task start.
 - Implementation commit: `4272539c3d678f8c7c8bdc77f57d60bef6f6d0da` (`Build fixture-backed RoadIQ map dashboard`).
 - Handoff metadata commit: recorded by the commit containing this section.
-- Push: attempted twice with `git push -u origin task/b-map-dashboard`; both attempts were blocked because the Git Credential Manager helper could not start and Git could not obtain GitHub credentials. Network permission was granted before the second attempt. No remote branch or PR was created.
+- Push: attempted three times with `git push -u origin task/b-map-dashboard`; each attempt was blocked because the Git Credential Manager helper could not start and Git could not obtain GitHub credentials. Network permission was granted before the second attempt. No remote branch or PR was created.
 
 ### Completed work
 
