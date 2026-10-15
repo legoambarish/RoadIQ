@@ -77,7 +77,7 @@ An authenticated repository owner should push the existing `main` commits, assig
 
 ## Task C India-only continuation — 2026-10-15
 
-- **Branch:** `task/c-computer-vision`; fetched `origin/task/c-computer-vision` and confirmed it still points to `8595ccca93246f0ac97c656f6e3f96eb7839aaf4` before this continuation. Local working tree includes the India-only checkpoint guard, test, dataset review, and documentation updates; commit/push status must be refreshed after verification.
+- **Branch:** `task/c-computer-vision`; fetched `origin/task/c-computer-vision` at `8595ccca93246f0ac97c656f6e3f96eb7839aaf4`. India-only policy implementation commit: `aebb91b` (`Enforce India-only vision model policy`).
 - **Owner direction:** India-only imagery for training, validation, and evaluation; literal metal fragments and stone aggregates remain separate classes. The owner chose not to use ACAD/non-Indian data.
 - **India-specific candidates reviewed:**
   - [Siddhesh Road Damage Detection India v2](https://universe.roboflow.com/siddhesh-onuvb/road-damage-detection-india/dataset/2): Roboflow lists CC BY 4.0, 7,706 images, 5,394/1,541/771 splits, object-detection exports, and stretch-resize to 720×720. No export was acquired; verify original source relation, taxonomy, provenance, duplicate/group leakage, and exact license before training/evaluation.
@@ -89,4 +89,4 @@ An authenticated repository owner should push the existing `main` commits, assig
   - User's [Siddhesh India road damage project](https://universe.roboflow.com/siddhesh-onuvb/road-damage-detection-india/dataset/2) is the same candidate listed above.
 - **Implementation change:** loader refuses the pinned six-country checkpoint and reports no India-only model configured. Detector mocks remain available for wrapper tests only. No India dataset was downloaded and no training/evaluation metrics are claimed.
 - **Verification:** `PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 /tmp/roadiq-taskc-venv/bin/pytest backend/tests -q` — 21 passed, 1 existing Starlette/AnyIO deprecation warning. `python3 -m py_compile backend/app/services/vision.py backend/app/schemas/image_analysis.py backend/scripts/analyze_road_image.py` passed. `git diff --check` passed. Frontend checks were not run because no frontend files changed.
-- **Commit/push/PR:** continuation changes are not yet committed at handoff update time. Push and PR status to be refreshed after commit attempt. Real model training remains blocked on auditable India-only data, split/license review, and model/annotation coverage for aggregate plus metal-fragment targets.
+- **Push/PR:** commit `aebb91b` is local; push and PR status to be refreshed after attempt. Real model training remains blocked on auditable India-only data, split/license review, and model/annotation coverage for aggregate plus metal-fragment targets.
