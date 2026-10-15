@@ -4,6 +4,10 @@
 
 Updated the image-report workspace to reflect the current Task A scorer, Task C local CLI baseline, and Task D Windows package branch. The panel now explains that Task C's untrained texture-region output is CLI-only and not individual aggregate/defect segmentation, that Task A's scorer remains Unrated without evidence and fixed normalization references, and that Task D's package serves the dashboard/health service without an image-analysis route. Production health checks now default to the same-origin `/api/v1`, as used by the Task D package build; `VITE_API_BASE_URL` remains configurable and development retains `http://localhost:8000/api/v1`. Image selection was preview-only at this point; the follow-up below adds manual import of Task C's local JSON report and annotated image without claiming browser-triggered inference.
 
+## Task B Surface Quality selection clarification — 2026-10-16
+
+Made dashboard overlay selection exclusive: travel-profile buttons now reflect the active map overlay instead of retaining a separate highlighted profile, and the Surface Quality overlay uses the same high-contrast selected styling. Renamed the control group for clarity. Verified cycling-to-surface and surface-to-cycling transitions in the built local site; map label/ranking and pressed state update. Frontend typecheck/build, lint, and browser verification passed; see root `HANDOFF.md`.
+
 ## Task B local Task C report import — 2026-10-16
 
 Added a browser-local import flow for the existing Task C `analysis-report.json` and optional `annotated-preview.jpg`. The UI validates the report's key structure, renders available image metadata, image quality, texture proxy, and texture-candidate area observations, and keeps absent values unavailable and RSQI Unrated. The CLI report stores its annotation as a local path, so the user must select the companion preview image; data URIs from direct analyzer output are accepted only for supported image types. No image API, backend, scoring, or shared contract was changed. Frontend build and lint passed; exact commands and commit/push state are recorded in root `HANDOFF.md`.

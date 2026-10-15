@@ -174,11 +174,11 @@ function App() {
         </section>
 
         <div className="sticky-assessment-controls" role="region" aria-label="Dashboard controls">
-          <div className="sticky-controls-label"><span>Explore by travel mode</span><span>Switch view</span></div>
+          <div className="sticky-controls-label"><span>Map overlay</span><span>Switch view</span></div>
           <div className="sticky-controls-row">
-            <div className="overlay-switch" role="group" aria-label="Travel profile">
+            <div className="overlay-switch" role="group" aria-label="Map overlay">
               {travelModes.map((mode) => (
-                <button type="button" key={mode.key} className={profileMode === mode.key ? 'active' : ''} aria-pressed={profileMode === mode.key} onClick={() => { setOverlay(mode.key); setProfileMode(mode.key) }}><span aria-hidden="true">{mode.icon}</span>{mode.label}</button>
+                <button type="button" key={mode.key} className={overlay === mode.key ? 'active' : ''} aria-pressed={overlay === mode.key} onClick={() => { setOverlay(mode.key); setProfileMode(mode.key) }}><span aria-hidden="true">{mode.icon}</span>{mode.label}</button>
               ))}
               <button type="button" className={`surface-mode-button ${overlay === 'surface_quality_score' ? 'surface-active' : ''}`} aria-pressed={overlay === 'surface_quality_score'} onClick={() => setOverlay('surface_quality_score')}>Surface quality</button>
             </div>

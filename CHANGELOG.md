@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-16 — Task B Surface Quality overlay selection
+
+- Made travel-profile and Surface Quality overlay selection mutually exclusive in both pressed state and selected styling. The previous travel profile no longer remains highlighted when the map is displaying Surface Quality.
+- Renamed the overlay control group and verified both directions of selection in the built local site. TypeScript/Vite build and Oxlint passed.
+
 ## 2026-10-16 — Task B local Task C report import
 
 - Added local JSON report import and optional annotated-image import to the image analysis workspace. Available Task C image quality, metadata, texture proxy, and texture-candidate area values are displayed from the saved report; missing evidence remains unavailable and RSQI stays Unrated.

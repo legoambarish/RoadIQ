@@ -1,5 +1,17 @@
 # RoadIQ handoff
 
+## Task B Surface Quality overlay selection — 2026-10-16
+
+- **Branch:** `task/b-map-dashboard`; started from clean branch tip `215c3f4cd85253408d324bd2b839b38a2b296b5a` after `git fetch --all --prune`.
+- **Commit:** `4ce7f9352008c7639d533ffbd260bc211c80a0b2` (`Clarify active Surface Quality overlay state`); push and final branch status are verified in the final handoff after publication.
+- **Completed:** overlay buttons now have mutually exclusive pressed/active state. Previously a travel profile could stay highlighted while Surface Quality was selected, making the actual map overlay unclear. The control group is labeled “Map overlay,” and Surface Quality now uses the same high-contrast selected style as travel profiles.
+- **Files changed:** `frontend/src/App.tsx`, `frontend/src/App.css`, `TASKS.md`, `CHANGELOG.md`, and `HANDOFF.md`.
+- **Checks actually run:** from `frontend/`, `node_modules/.bin/tsc.CMD -b` passed; `node_modules/.bin/vite.CMD build` passed (24 modules transformed); `node_modules/.bin/oxlint.CMD src` passed. Browser verification on `http://127.0.0.1:4173/#image-report`: clicked Cycling then Surface quality; AX state changed exclusively, the map label/ranking switched to Road quality, and screenshot showed Surface quality highlighted. `git diff --check` is run before commit.
+- **Known issues:** map and scores remain illustrative fixtures; this fix changes selection clarity only.
+- **PR:** update existing Task B PR #13 after pushing this commit.
+- **Next task:** Task D should finalize the Task C-to-Task A observation mapping and image-analysis HTTP route so Task B can use live analysis.
+- No `docs/HANDOFF.md` exists; root `HANDOFF.md` is the instructed handoff record.
+
 ## Task B local Task C report import — 2026-10-16
 
 - **Assignment and branch:** continued Task B on `task/b-map-dashboard`, tracking `origin/task/b-map-dashboard`. The checkout was clean at `e9d3b70d89a5393c69fa9cb704579ba72301e06e` before edits; `git fetch --all --prune` completed and the branch had no new upstream commits.

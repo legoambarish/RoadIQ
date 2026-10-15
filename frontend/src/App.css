@@ -570,7 +570,7 @@
 .sticky-assessment-controls .overlay-switch button { flex: 0 0 auto; min-height: 38px; padding: 8px 12px; border-radius: 7px; font-size: 12px; }
 .sticky-assessment-controls .overlay-switch button.active { background: #1f6558; color: #fffdf6; box-shadow: 0 2px 5px rgba(19, 64, 53, .16); }
 .sticky-assessment-controls .overlay-switch button.surface-mode-button { border-left: 1px solid #cfd9d1; border-radius: 0 7px 7px 0; color: #53675f; }
-.sticky-assessment-controls .overlay-switch button.surface-mode-button.surface-active { background: #dce9df; color: #245c4d; }
+.sticky-assessment-controls .overlay-switch button.surface-mode-button.surface-active { background: #1f6558; color: #fffdf6; box-shadow: 0 2px 5px rgba(19, 64, 53, .16); }
 .sticky-assessment-controls .view-switch { flex: 0 0 auto; border-color: #d8e1da; background: #e9eee9; }
 .sticky-assessment-controls .view-switch button { min-height: 38px; padding: 8px 12px; font-size: 12px; }
 .sticky-assessment-controls .view-switch button.selected { background: #fffefa; color: #1f6558; box-shadow: 0 2px 6px rgba(31, 55, 48, .12); }
@@ -592,7 +592,7 @@
 .engineer-view .sticky-assessment-controls .overlay-switch button { color: #c2d0c9; }
 .engineer-view .sticky-assessment-controls .overlay-switch button.active { background: #d3e879; color: #17251f; }
 .engineer-view .sticky-assessment-controls .overlay-switch button.surface-mode-button { border-color: #435754; color: #c2d0c9; }
-.engineer-view .sticky-assessment-controls .overlay-switch button.surface-mode-button.surface-active { background: #344631; color: #d3e879; }
+.engineer-view .sticky-assessment-controls .overlay-switch button.surface-mode-button.surface-active { background: #d3e879; color: #17251f; box-shadow: 0 2px 5px rgba(0, 0, 0, .2); }
 .engineer-view .sticky-assessment-controls .view-switch { border-color: #435754; background: #203337; }
 .engineer-view .sticky-assessment-controls .view-switch button { color: #c2d0c9; }
 .engineer-view .sticky-assessment-controls .view-switch button.selected { background: #d3e879; color: #17251f; }
