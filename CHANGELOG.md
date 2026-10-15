@@ -40,5 +40,5 @@
 
 - Recorded actual Task C implementation and remaining work in `TASKS.md` and `HANDOFF.md`. Branch `task/c-computer-vision` is at `023da26f3a23b63ed75b3cdce580be1ef326598d`, pushed and clean before this documentation update.
 - PR #4 targets `main`; it was subsequently updated with merge commit `b6f23a33777ecae88d1c52ebbe3499d5f2927740` to bring in newer main work. A live GitHub check then showed the PR open with 15 commits, 19 changed files, and no conflicts with the base branch. It was not merged.
-- Handoff docs were committed locally as `01cf01a5a5df56d90b3f45e5f11a2aca889c8bd2`, rebased onto `b6f23a3` to preserve the newer remote work; push status is pending verification.
+- Handoff docs were committed as `65ee031`, rebased onto `b6f23a3` to preserve newer remote work, and pushed successfully using a normal fast-forward update. A final documentation correction may advance the branch tip; confirm the exact final hash with `git log -1`.
 - Tests actually run for implementation: backend suite 26 passed; compileall and `git diff --check` passed; one-batch CPU smoke run completed with plumbing-only macro IoU 0.0148, no checkpoint. These are historical results, not rerun for this documentation-only handoff. No full model training/evaluation was completed.
