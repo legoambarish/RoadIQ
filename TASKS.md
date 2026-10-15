@@ -71,7 +71,7 @@ Task A implementation is in `backend/app/services/scoring.py` with focused tests
 
 - [x] Renders an interactive schematic map from typed GeoJSON fixtures, with selectable, zoomable segments and a color-coded Road Quality overlay. No live basemap is claimed while provider choice is unresolved.
 - [x] Offers five separate travel-profile overlays (walking, cycling, two-wheeler, car, bus), ranked segment lists, quality/search/minimum-score filters, and quality/profile charts.
-- [x] Provides Everyday and Engineer views, with contract-field evidence, units/status, provenance, unknown values, and score explanations in segment details.
+- [x] Provides materially distinct Everyday traveler briefs and Engineer evidence audits; keeps surface condition, mode suitability, and pedestrian infrastructure as separate assessments. Profile explanations identify relevant considerations without inventing formulas or treating missing values as good.
 - [x] Keeps unrated values null/Unrated and separates surface condition from mode suitability and pedestrian context.
 - [x] Clearly marks all sample values as illustrative `demo_fixture` data; retains the health-only API honestly and does not claim segment retrieval or image analysis is connected.
 - [x] Provides a local-only image preview and Unrated/unavailable report shell. It does not upload files or imply inference/annotation occurred.
@@ -101,7 +101,7 @@ Task C's latest remote branch, `task/c-computer-vision` at `2afa289`, contains i
 ## Current status
 
 - Core requirements alignment: Task B now has an interactive fixture-backed map/dashboard and local-only image-report shell; image API integration remains unimplemented.
-- Task A's provisional scorer is merged into `main`; validated normalization references and confidence calibration remain unavailable. Task B's map/dashboard is implemented with fixtures, while live image-report integration remains blocked on reviewed Task C/A result mapping and Task D's API route. Task C has partial work on its remote branch that is not integrated into `main`.
+- Task A's provisional scorer is merged into `main`; validated normalization references and confidence calibration remain unavailable. Task B's map/dashboard and distinct Everyday/Engineer assessment surfaces are implemented with fixtures, while live image-report integration remains blocked on reviewed Task C/A result mapping and Task D's API route. Task C has partial work on its remote branch that is not integrated into `main`.
 
 ## Four-owner kickoff checklist
 

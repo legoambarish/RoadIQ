@@ -1,9 +1,9 @@
 # RoadIQ
 
-RoadIQ is a hackathon prototype whose primary objective is image-based road-surface quality assessment. The planned image analysis focuses on visible pavement structure—individual stone aggregates, aggregate boundaries/gaps and coverage, surface texture, and deterioration. Mapping and transport-mode dashboards are secondary. “Metal chips” currently means stone aggregates as a working assumption; confirm with the project owner.
+RoadIQ is a hackathon prototype whose primary objective is image-based road-surface quality assessment. The planned image analysis focuses on visible pavement structure—individual stone aggregates, aggregate boundaries/gaps and coverage, surface texture, and deterioration. Literal metal fragments are a separate target from stone aggregates. Mapping and transport-mode dashboards are secondary.
 
 ## Current status
-- Frontend: React + TypeScript + Vite dashboard with an interactive schematic map, five illustrative travel-profile overlays, filters, rankings, charts, Everyday/Engineer segment details, and a local-only image preview shell
+- Frontend: React + TypeScript + Vite dashboard with an interactive schematic map, five illustrative travel-profile overlays, filters, rankings, charts, distinct Everyday/Engineer assessment views, and a local-only image preview shell
 - Backend scaffold: FastAPI + Pydantic
 - Computer vision: a partial image-analysis service is available on `task/c-computer-vision`, but it is not merged into `main`; there is no configured India-only damage model or HTTP endpoint, and ROI/material/aggregate/metal analysis remains unavailable
 - Scoring: deterministic provisional RSQI scorer exists in `backend/app/services/scoring.py`; default normalization references are intentionally empty, so results remain `unrated` until fixed surface-type/capture-specific references and adequate component evidence are supplied. Weights and label cutoffs are unvalidated hypotheses.

@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+- Reworked Everyday and Engineer into distinct assessment experiences: Everyday gets profile-specific plain-language impact briefs, Engineer gets contract-field evidence/provenance tables and a network measurement/scoring audit. Surface quality, mode suitability, and pedestrian infrastructure remain separate; lane markings are not used as a walkability proxy, and fixture values remain explicitly illustrative.
 - Updated the image-report panel against the latest shared work: show Task A's exact provisional RSQI component weights and unrated gates, separate stone aggregates from literal metal fragments, and document that Task C's partial service is not merged or API-connected. No fixture score is presented as a live scorer result.
 - Reworked the Task B dashboard presentation with a larger, earlier schematic map, higher-contrast road network styling, clearer type sizes, and a dark, data-inspection Engineer mode. Everyday and Engineer views now show different summary metrics and copy; map geometry remains fixture-only with no basemap.
 - Added the Task B fixture-backed map/dashboard: selectable schematic road segments, Road Quality and five travel-profile overlays, ranked/filterable lists, quality/profile charts, Everyday/Engineer detail views, and a local-only image preview with explicitly unavailable report outputs. No live basemap, segment API, upload, inference, or score generation is connected.
