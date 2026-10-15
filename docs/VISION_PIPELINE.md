@@ -19,6 +19,18 @@ The function returns a JSON-ready dictionary validated by `ImageAnalysisResponse
 
 The service is observation-only. It does not implement an API route or RSQI. `analysis_status` remains `unrated` while the required pavement ROI, material, and aggregate evidence is unavailable. Detected boxes include pixel and normalized coordinates; confidence values are raw model scores and are not calibrated probabilities.
 
+## Local hackathon MVP
+
+Run the local end-to-end demo from the repository root:
+
+```bash
+PYTHONPATH=backend python -m scripts.demo_road_image --output-dir /tmp/roadiq-demo --seed 42
+```
+
+The command analyzes a deterministic synthetic input and writes `annotated-preview.jpg` plus `analysis-report.json`. Pass `--image /path/to/road.jpg` to analyze a local JPEG, PNG, or WebP instead. No image is uploaded. The output contains a quality report, a named texture proxy, a high-frequency texture-candidate RLE mask and area ratio, and an annotated preview. The preview explicitly labels candidates as not particle segmentation. Results remain unrated; particle counts, physical measurements, and calibrated confidence are unavailable. Synthetic output demonstrates pipeline plumbing only.
+
+An optional India-road semantic segmentation checkpoint can gate candidate regions to its predicted road mask. This ROI is experimental and uncalibrated, and does not turn texture candidates into aggregate masks. Browser upload/report and HTTP API integration are outside Task C and are not implemented.
+
 ## India-only model policy
 
 The project owner directed that model data remain India-only. Therefore no non-Indian road imagery may be used for training, fine-tuning, validation, or evaluation. The previously wired DetectionBench RF-DETR checkpoint was fine-tuned on the six-country RDD2022 corpus, so the service now refuses to load it. No India-only damage checkpoint is currently active; without an injected test detector, damage outputs remain unavailable. The RF-DETR smoke test from the earlier implementation is historical plumbing evidence only and is not a current India-focused quality result.
@@ -106,4 +118,3 @@ The JSONL manifest fields, annotation states, source/provenance requirements, sc
 ## Calibration behavior
 
 Calibration may be passed as `ImageCalibration` or a matching dictionary with `method`, `pixels_per_mm`, `usable_area_m2`, `image_sha256`, and `verified`. It is considered bound to the image only when verified, positive, and associated with the exact uploaded-byte SHA-256. The current baseline does not segment aggregates or gaps, so physical aggregate measurements remain unavailable even when calibration is valid. Semantic road/pothole pixel masks are image-space only and are not calibrated physical measurements. Calibration alone never creates an aggregate count or pixel-to-ground measurement.
-

@@ -2,7 +2,7 @@
 
 ## Task C MVP continuation — 2026-10-16
 
-Current work is on the assigned `task/c-computer-vision` branch. It fixes annotation resizing for images larger than the 512-pixel analysis edge and adds a one-command demo runner for either a deterministic synthetic texture or a local road image, saving an annotated JPEG and structured JSON report. This stays within Task C; API and frontend integration remain owned by Task D and Task B.
+The Task C local hackathon MVP is demonstrable on the assigned `task/c-computer-vision` branch. It analyzes a deterministic synthetic texture or a local road image, applies quality checks, produces an untrained texture-candidate mask and annotated JPEG, and writes a structured JSON report. An explicitly configured experimental India-road semantic checkpoint can optionally gate candidates to a predicted road ROI. API and frontend integration remain owned by Task D and Task B.
 
 Verified demo: a 640×480 synthetic image generated with seed 42 completes analysis, reports `unrated`, identifies method `pillow_high_frequency_texture_regions_v1` as `untrained_baseline`, returns a candidate area ratio (not aggregate coverage), keeps individual particle count null, and writes an annotated preview and JSON report with one command. A local image path uses the same runner. Focused Task C suite: 28 passed, 2 skipped; backend suite excluding the unrelated health TestClient case: 87 passed, 2 skipped, 1 deselected. Supplemental ACAD synthetic-concrete sample (20 visually reviewed published test images) measured texture-region pixel IoU 0.488, precision 0.822, recall 0.545; this is not RoadIQ road performance or instance-count evidence. No India-only aggregate-instance labels or active trained checkpoint are present; RoadIQ model metrics remain pending. See `HANDOFF.md` and `README.md` for commands and caveats.
 
@@ -87,7 +87,7 @@ Task A implementation is on `task/a-scoring-engine` in `backend/app/services/sco
 - [ ] Displays real reviewed image-analysis outputs and annotated images after Task C/Task D finalize the compatible API response and endpoint.
 - [x] Passes frontend TypeScript checks, lint, and Vite production build.
 
-### Task C — computer vision (partial branch implementation; original PR #7 merged; runner follow-up pending review)
+### Task C — computer vision (local hackathon MVP demonstrated; learned inference remains data-limited)
 
 - [x] Validates JPEG/PNG/WebP inputs, applies tested image-quality heuristics, and returns a named image-texture proxy; quality thresholds remain unvalidated on RoadIQ data.
 - [ ] Segments a usable pavement ROI and classifies asphalt/concrete/unknown with validated model evidence.
@@ -100,7 +100,7 @@ Task A implementation is on `task/a-scoring-engine` in `backend/app/services/sco
 - [x] Preserves unavailable values as null and documents model/checkpoint, preprocessing, calibration method, and limitations.
 - [x] Tests image validation, low-quality gates, manifest/label parsing, missing labels, exact and near duplicates, aggregate-versus-defect separation, RLE mask formats, evaluator test-split gates, and response compatibility without production weights.
 
-Recent Task C branch updates include `05118d2` (one-command local demo runner) and `e99831a` (handoff refresh); PR #7 merged the synthetic baseline into `main`; this branch adds the one-command local-image runner for follow-up review. PR #4's implementation is merged. Its India-only road/pothole trainer, manifest validator, untrained texture-region heuristic, and evaluation scaffolding remain experimental plumbing, not a trained active aggregate detector. No trained checkpoint or held-out model-quality result is available; aggregate-instance and metal-fragment labels remain unavailable, and no image API is integrated. The multi-country RDD2022 detector remains disabled under the India-only data policy; that is a dataset-policy choice, not a technical incompatibility with Indian roads. C response/dependency changes still need A/D review.
+The local synthetic/local-image demo and optional experimental ROI-gated texture preview are implemented and tested; PRs #7, #8, and #10 have merged into `main`. The one-command demo writes an annotated JPEG and structured JSON report without network access. The texture overlay is only an untrained high-frequency candidate, not a pavement, aggregate, or defect segmentation. The 20-image ACAD result is supplemental synthetic-concrete region-overlap evidence only (IoU 0.488, precision 0.822, recall 0.545); it is not India-road performance, training evidence, or instance-count validation. No India-only aggregate-instance or metal-fragment labels, active trained checkpoint, calibrated confidence, or held-out RoadIQ road evaluation are available. Browser upload/report and the HTTP image API remain owned by Tasks B/D. The multi-country RDD2022 detector remains disabled under the India-only data policy; that is a dataset-policy choice, not a technical incompatibility with Indian roads.
 
 ### Task D — integration and release (integration checklist merged; runtime integration blocked on dependencies)
 
@@ -125,12 +125,12 @@ Recent Task C branch updates include `05118d2` (one-command local demo runner) a
 
 - Task A's provisional RSQI scorer is merged into `main` by PR #1 at `7995ff4`; its RoadIQ normalization and confidence calibration still lack labelled data.
 - The Task B dashboard and Everyday/Engineer follow-up are merged into `main` by PRs #2, #5, and #6. Road values remain illustrative fixtures; no live segment or image API is connected.
-- Task C's branch `task/c-computer-vision` contains image validation/quality heuristics, a named texture proxy, structured observations, a mockable detector, optional RLE masks, and an experimental India-only road/pothole semantic segmentation trainer. PR #4's implementation is merged into `main`; this branch adds the synthetic demo and annotation-scaling follow-up. No trained checkpoint or held-out model-quality result exists. The dataset has no aggregate-instance or metal-fragment labels. Physical measurements, material classification, aggregate/metal instance analysis, broad validated damage detection, and an image API remain unavailable from Task C.
+- Task C's branch `task/c-computer-vision` provides a tested local image-analysis demo with image validation/quality heuristics, a named texture proxy, structured observations, annotated texture-candidate mask, and optional experimental India-road ROI gating. PRs #4, #7, #8, and #10 are merged into `main`. A 20-image ACAD synthetic-concrete sample has limited pixel-region metrics; there are no India-road aggregate labels or held-out RoadIQ road metrics. Physical measurements, material classification, aggregate/metal instance analysis, broad validated damage detection, and the image HTTP endpoint remain unavailable.
 - Task D's docs-only integration checklist is merged into `main` by PR #3; runtime integration remains blocked on reviewed A/B/C mappings and dependencies.
 
 ## Four-owner kickoff checklist
 
 - [ ] **Task A owner/reviewer:** still not recorded; PR #1 is merged. Resolve the remaining labelled-data normalization and confidence-calibration dependency before claiming a validated score.
 - [x] **Task B owner/reviewer:** project owner confirmed; dashboard PR #2 and view follow-ups PRs #5 and #6 merged. Current fixtures and image preview are not live segment or image API integration.
-- [ ] **Task C owner:** not recorded; the synthetic baseline is merged in PR #7; the one-command runner follow-up is being published separately. Obtain appropriate India-only aggregate/metal labels, validate the output contract and held-out evaluation before claiming model quality.
+- [ ] **Task C owner:** not recorded; the local demo and optional ROI-gated preview are merged. Obtain appropriate India-only aggregate/metal labels and a held-out road evaluation set before implementing or claiming learned instance/model quality. Coordinate any service/API contract changes with Tasks A and D.
 - [ ] **Task D owner:** not recorded; PR #3 integration checklist is merged. Keep shared-contract mappings proposed until affected owners agree, then integrate only approved outputs and add tests.
