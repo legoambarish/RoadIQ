@@ -7,7 +7,7 @@
 - **Files changed:** `frontend/src/App.tsx`, new `frontend/src/lib/dashboardNavigation.ts`, new `frontend/src/lib/dashboardNavigation.test.ts`, `TASKS.md`, `CHANGELOG.md`, root `HANDOFF.md`, and `docs/HANDOFF.md`.
 - **Checks actually run:** from `frontend/`, `node_modules/.bin/tsc.CMD -b` passed; `node_modules/.bin/vitest.CMD run` passed (2 files, 8 tests); `node_modules/.bin/oxlint.CMD src` passed; `node_modules/.bin/vite.CMD build` passed (28 modules transformed). Manual production-preview check at `http://127.0.0.1:4174/` confirmed Insights, Image report, and back-button navigation each highlight the matching link. `git diff --check` will be run before commit. Backend tests were not run because backend code was unchanged.
 - **Known issues:** none identified for this fix. No API or contract changes. The older preview at port 4173 was stale and was not used for verification.
-- **Current Git state:** implementation commit `e18dc4d891802a55af3fdf713f79af1154518f71` is on `task/b-map-dashboard`; implementation and tests are committed. The branch is one commit ahead of origin pending the handoff metadata update and push.
+- **Current Git state:** implementation commit `e18dc4d891802a55af3fdf713f79af1154518f71` and handoff commit `6b6d92bea4d48b3cf888dc95cb39180a0e26a5ed` are pushed on `task/b-map-dashboard`; the branch was clean and synced at that commit. PR #14 is open: https://github.com/Sine-Ads/RoadIQ/pull/14. The GitHub API create call returned 403, so the PR was opened through the signed-in repository page.
 - **Single most useful next task:** review and integrate this navigation fix on `main` through the Task B pull request.
 
 ## Task B Leaflet/OpenStreetMap map and dashboard tests — 2026-10-16
