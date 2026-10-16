@@ -20,6 +20,8 @@ Trained 90/90 epochs on the RTX 4050 Laptop GPU with the approved COCO initializ
 
 Against the prior scratch-v1 detector AP50 of .137644, this run's AP50 is higher by .165598; it nevertheless misses the requested >.45 AP50 gate. Both crack recalls and pothole recall also miss their respective >.30 / >.50 gates. This improvement is real on the stated benchmark, but is not sufficient evidence of dependable detection.
 
+The optional `faster-coco-eval` package was unavailable, so these values are from Ultralytics' internal evaluator only; no independent second AP implementation is claimed.
+
 Detector checkpoint SHA-256: `173d10ec44da536c2848343cb4275f634e6f2494101c317f11f7863316fa9167`. India manifest SHA-256: `8aef52c077c9f9003d89bfdc67b1cd5ee2550b7cb694a9c4f6bf2cb36c2f562d`. COCO initialization SHA-256: `0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1`. Full machine-generated metrics remain local at `models/india-yolo11n-coco-v2/heldout-metrics.json`; the pinned manifest/counts and reproducible code are reviewable, while private/local weights, raw images and logs are not committed.
 
 ### Remediated U-Net v5 — source-resolution holdout
