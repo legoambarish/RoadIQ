@@ -14,7 +14,7 @@
 
 ## P0 model remediation follow-up — 2026-10-17
 
-- **Branch/PR:** local branch `pr-18` and PR #18 source branch `feat/india-p0-implementation` now include remediation and measured-results commits through `518ddc7`. The push succeeded; PR #18 remains open and draft, with no merge.
+- **Branch/PR:** local branch `pr-18` and PR #18 source branch `feat/india-p0-implementation` now include remediation, measured-results, and additive image-indicator commit `8da627e4`. The push succeeded; PR #18 remains open and draft, with no merge.
 - **Training completed:** YOLO11n transfer learning completed 90/90 epochs on the RTX 4050 Laptop GPU. U-Net v5 completed 80 epochs and selected epoch 68 using validation mean road/pothole IoU. Both final script holdout evaluations completed.
 - **Detector holdout:** 993 images, mAP50 **.303242**, mAP50–95 .123735. Per-class confidence-sweep/max-F1 recall: longitudinal .259804, transverse .133333, alligator .562264, pothole .387850. Detector misses the requested AP50, both crack-recall and pothole-recall gates. Checkpoint SHA-256 `173d10ec44da536c2848343cb4275f634e6f2494101c317f11f7863316fa9167`; manifest SHA-256 `8aef52c077c9f9003d89bfdc67b1cd5ee2550b7cb694a9c4f6bf2cb36c2f562d`.
 - **ROI holdout:** 350 images, source road IoU **.547518**, road-or-pothole union IoU .547526, pothole IoU **.000000**. Road IoU remains below the .739147 static diagnostic. Checkpoint SHA-256 `677ccbc74afc29e1c1e3a28b94c5a602d7ac613618632d48f1fae76a2ac18b83`; manifest SHA-256 `1a2f0068c22457e3c458c498df19df6a9249b8`.
@@ -27,7 +27,7 @@
 - Added image-analysis contract v1.2 field `experimental_image_indicator`. It reports actual detector candidate count, union coverage of the detection boxes over the oriented full image, and predicted pothole pixels divided by the semantic model's predicted pavement pixels when available.
 - This is deliberately not an RSQI/condition score and does not alter the existing scorer, VDA abstention, or percentile behavior. The UI retains RSQI as Unrated when its evidence gates fail and explains that the RSQI reference percentile is unavailable because there is no eligible compatible scored cohort.
 - Checks: backend unit + real-model integration suite **151 passed** with two dependency deprecation warnings; frontend **15 passed**, lint, TypeScript and Vite build passed. A real local request against the attached low-resolution sample produced a limited model indicator; it remains explicitly not an RSQI/condition score. Windows packaging with the updated UI/backend has not been run.
-- Work is on local branch `pr-18`, whose prior head was `518ddc7`; this follow-up is committed separately and pushed to the PR source branch. No image, model weights, or dataset assets are included in this change.
+- Work is on local branch `pr-18`; implementation commit `8da627e4` is pushed and verified as the PR source branch head. No image, model weights, or dataset assets are included in this change.
 
 Older task handoffs below preserve their historical branch state and are superseded by this current entry.
 
