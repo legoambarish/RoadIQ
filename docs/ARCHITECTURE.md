@@ -4,11 +4,11 @@
 
 RoadIQ remains an initial prototype scaffold; it is not production-ready.
 
-- **Frontend:** React + TypeScript + Vite under `frontend/`, with Leaflet/OpenStreetMap tiles under selectable, color-coded typed GeoJSON fixture polylines; Road Quality and five travel-profile overlays; filters, rankings, charts, Everyday/Engineer segment details; a health-only API badge; local image preview; and manual Task C CLI JSON/annotation import. RoadIQ routes and values are illustrative fixtures, not OSM-derived survey observations. Segment retrieval, browser-triggered image upload/inference, and scoring connection are unavailable.
+- **Frontend:** React + TypeScript + Vite under `frontend/`, with Leaflet/OpenStreetMap tiles, an OSM India-boundary mask, and selectable, color-coded GeoJSON lines that follow nine mapped central Bengaluru streets; Road Quality and five travel-profile overlays; filters, rankings, charts, Everyday/Engineer segment details; a health-only API badge; local image preview; and manual Task C CLI JSON/annotation import. Street geometry/name and RoadIQ scores have distinct sources: the geometry references OSM ways; all scores and profile values are illustrative fixtures, not street condition surveys. Segment retrieval, browser-triggered image upload/inference, and scoring connection are unavailable.
 - **Backend:** FastAPI + Pydantic under `backend/`. The implemented HTTP API exposes `GET /api/v1/health` and `/`. `backend/app/schemas/road_segment.py` validates the shared road-segment shape. A deterministic demo fixture is isolated in `backend/app/fixtures/`.
 - **Computer vision:** `backend/app/services/vision.py` validates JPEG/PNG/WebP input and reports heuristic image-quality observations, a named texture proxy, and an untrained texture-region candidate annotation. An optional experimental India-road semantic checkpoint can gate those candidates when explicitly configured; this does not provide validated pavement ROI, material classification, aggregate/metal segmentation, or physical measurements. No image HTTP route is implemented.
 - **Scoring:** the provisional evidence-gated RSQI scorer exists in `backend/app/services/scoring.py`; no fixed default normalization profiles are configured, so its default result stays `unrated`. [SCORING_SPEC.md](./SCORING_SPEC.md) describes provisional rules and evidence limits.
-- **Persistence and mapping:** no segment database or segment retrieval API exists. The prototype map uses an OSM basemap and plots illustrative fixture geometry over it; OSM tiles require network access and do not validate the fixture road names or scores. Production basemap provider, licensing, caching, and availability remain open.
+- **Persistence and mapping:** no segment database or segment retrieval API exists. The map uses OSM street geometry for a central Bengaluru sample and masks tiles to the simplified OSM India relation; the boundary is a display aid, not a legal border reference or full road inventory. OSM tiles require network access. The RoadIQ scores/profile values are separate illustrative fixtures and have not been surveyed on the named streets. Data is attributed in the UI and source. Production basemap provider, licensing, caching, and availability remain open.
 
 ## Product objective and planned image-analysis pipeline
 
@@ -53,7 +53,7 @@ The shared schema is a cross-task interface. Changes to it require compatibility
 4. Task D exposes validated analysis reports through planned routes and evaluates predictions on grouped held-out images; actual metrics and data splits are recorded.
 5. Task B renders the annotated image/report, score contributions, evidence, confidence, and unavailable fields without implying a score or mask is ground truth.
 
-No database, inference execution, scoring execution, segment API, or production map data is implied by this proposed flow. The existing dashboard remains a demo fixture interface.
+No database, inference execution, scoring execution, segment API, or production map feed is implied by this proposed flow. The existing dashboard remains a fixed Bengaluru street sample with illustrative RoadIQ scores.
 
 ## Unresolved architecture decisions
 

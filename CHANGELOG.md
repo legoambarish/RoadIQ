@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-16 — Task B India-bounded map and aligned OSM streets
+
+- Replaced unrelated sample line geometry with mapped OSM streets in central Bengaluru, aligning the colored road-quality overlays to the underlying streets. Kept scores and profile values explicitly illustrative.
+- Constrained the map viewport and masked basemap outside the simplified OSM India boundary. Added visible OSM source/attribution notes and updated frontend architecture/status documentation.
+- Frontend checks and rendered-map verification are recorded in `docs/HANDOFF.md`.
+
 ## 2026-10-16 — Task B primary navigation active state
 
 - Fixed the hard-coded Network active style: the active navigation link now follows `#network`, `#insights`, and `#image-report`, including browser hash-history changes. Added `aria-current="location"` to the current section link and tests for supported and fallback hashes.

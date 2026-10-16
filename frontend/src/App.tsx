@@ -75,7 +75,7 @@ function SegmentDetail({ record, view, profileMode }: { record: DemoRoadRecord; 
         })}
       </div>
 
-      <div className="detail-footer"><span>Geometry: GeoJSON LineString</span><span>Source tag: demo_fixture</span></div>
+      <div className="detail-footer"><span>OSM way {record.osmWayId} · {record.area}</span><span>Scores: demo_fixture</span></div>
     </section>
   )
 }
