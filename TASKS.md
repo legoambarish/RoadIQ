@@ -1,8 +1,16 @@
 # RoadIQ task tracker
 
+## Task B India-only map and aligned street geometry — 2026-10-16
+
+Replaced the mismatched sample lines with OpenStreetMap way geometry for nine named streets in central Bengaluru and made this the map's default view. An OSM India-boundary mask and map bounds restrict the map display to India. RoadIQ score/profile fixtures remain unchanged and are explicitly described as illustrative, not condition surveys of the mapped streets. Added a frontend test for the route way references and India coordinate ranges. No shared API, scoring, or backend behavior changed. OSM attribution and boundary limitations are recorded in the frontend docs and Task B handoff.
+
+## Task B navigation active-state fix — 2026-10-16
+
+Fixed the primary navigation so Network, Insights, or Image report is highlighted according to the current URL hash instead of hard-coding Network as active. Hash changes (including browser back/forward) update the active link, and the current section is exposed with `aria-current="location"`. Added unit tests for valid hashes and fallback behavior. Verified navigation interactions on a fresh production preview. Exact checks and branch status are recorded in `docs/HANDOFF.md` and root `HANDOFF.md`.
+
 ## Task B Leaflet/OpenStreetMap map implementation — 2026-10-16
 
-Replaced the hand-drawn SVG schematic with a Leaflet map using OpenStreetMap tiles and the existing typed GeoJSON fixture lines. Routes remain selectable, keyboard accessible, zoomable, and recolored by Road Quality or any of the five travel-profile overlays; existing filters, rankings, legend, details, and fixture warnings remain in place. The Engineer panel now surfaces survey source and timestamp, explicitly labeled fixture metadata. Added frontend tests for overlay lookup, status bands, unrated/null handling, filtering/ranking, and visible-segment selection. The map’s route names/scores are still fixture data, distinct from the OSM basemap; map tiles require an internet connection. Implementation commit: `8a06f0c6bf5d2f14637e5a4d52db52d6272f4066` on `task/b-map-dashboard`; pushed branch status and checks are recorded in `docs/HANDOFF.md` and root `HANDOFF.md`.
+Replaced the hand-drawn SVG schematic with a Leaflet map using OpenStreetMap tiles and typed GeoJSON lines; the initial lines and names were placeholders. The India-only follow-up above replaces those with OSM street names and geometry, while RoadIQ scores and profile values remain illustrative fixtures. Routes remain selectable, keyboard accessible, zoomable, and recolored by Road Quality or any of the five travel-profile overlays; existing filters, rankings, legend, details, and fixture warnings remain in place. The Engineer panel surfaces survey source and timestamp as fixture metadata. Map tiles require an internet connection. The initial implementation commit is `8a06f0c6bf5d2f14637e5a4d52db52d6272f4066` on `task/b-map-dashboard`; current branch status and checks are recorded in `docs/HANDOFF.md` and root `HANDOFF.md`.
 
 ## Task B Everyday brief layout and explainer clarity — 2026-10-16
 
@@ -104,7 +112,7 @@ Task A implementation is on `task/a-scoring-engine` in `backend/app/services/sco
 
 ### Task B — dashboard (core and view follow-ups merged in PRs #2, #5, and #6; current remote branch adds handoff documentation only)
 
-- [x] Renders an interactive Leaflet map with OpenStreetMap tiles and selectable, zoomable polylines from the typed GeoJSON schema; color-codes the selected Road Quality or travel-profile overlay. Clearly separates illustrative RoadIQ fixture routes and scores from OSM basemap data.
+- [x] Renders an interactive Leaflet map with OpenStreetMap tiles and selectable, zoomable typed GeoJSON polylines following mapped streets in central Bengaluru; restricts the map display to the OSM India boundary and color-codes the selected Road Quality or travel-profile overlay. Clearly separates OSM street geometry from illustrative RoadIQ fixture scores.
 - [x] Offers five separate travel-profile overlays (walking, cycling, two-wheeler, car, bus), ranked segment lists, quality/search/minimum-score filters, and quality/profile charts.
 - [x] Provides materially distinct Everyday traveler briefs and Engineer evidence/provenance audits, including source, survey timestamp, underlying fields, confidence, limitations, unknown-value gates, and score explanations in segment details.
 - [x] Keeps all five full travel-profile choices and the Everyday/Engineer switch visible in a sticky control dock while scrolling; controls adapt to narrow screens.
@@ -158,11 +166,11 @@ The local synthetic/local-image demo and optional experimental ROI-gated texture
 ## Current status
 
 - Task A's scorer is merged by PR #1 and the visible-defect caps by PR #15. RoadIQ normalization and confidence calibration still lack labelled data.
-- The Task B dashboard is merged in PRs #2, #5, #6, and #13. Its map/fixture UI and local CLI report import remain distinct from the current Task D branch's local image upload integration.
+- The Task B dashboard and navigation/India-map follow-ups are merged in PRs #2, #5, #6, #13, and #14. Map scores remain illustrative; Task D separately adds browser image upload to its API.
 - Task C's local image-analysis demo, evaluation scaffold, and optional experimental India-road ROI gating are merged into `main` by PRs #4, #7, #8, #10, and #11. No India-road aggregate labels or held-out RoadIQ road metrics exist. Physical measurements, material classification, aggregate/metal instance analysis, and broad validated damage detection remain unavailable.
-- Task D's checklist and Windows package are merged by PRs #3 and #12. Its current branch adds a local image API and dashboard upload integration; the integration returns Unrated with current evidence and has not been reviewed/merged or packaged as a new `.exe`.
-- Branch alignment (2026-10-16): Task D was fast-forwarded to latest `origin/main` at `4107965` before the integration update; latest remote Task D launcher synchronization commit `716bff9` was subsequently fetched and merged. Integration implementation is committed and pushed on `task/d-integration-release`; PR #16 is open against `main`.
-- Current Task D verification (2026-10-16): focused image-route/scorer tests passed (59 passed); from `frontend/`, `npm run build`, `npm run lint`, and `npm run test` (6 tests) passed; `git diff --check` passed. Full backend tests, browser validation, and Windows build/runtime checks were not run for this change.
+- Task D's checklist and Windows package are merged by PRs #3 and #12. PR #16 adds a local image API and dashboard upload integration; real uploads return Unrated with current evidence. The integration is not yet merged or packaged as a new `.exe`.
+- Branch alignment (2026-10-16): Task D includes Task A PR #15 at `4107965`, Task B PR #14 at `a0a2cd9`, and remote launcher update `716bff9`. Integration implementation is committed and pushed on `task/d-integration-release`; PR #16 is open against `main`.
+- Current combined Task B/Task D verification (2026-10-16): `PYTHONPATH=backend PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 /tmp/roadiq-latest-main-venv/bin/python -m pytest -q backend/tests` passed (101 passed, 2 skipped); from `frontend/`, `npm run test` passed (9 tests), `npm run lint` passed, and `npm run build` passed. `git diff --cached --check` passed. Browser end-to-end and Windows build/runtime checks remain unrun.
 
 ## Four-owner kickoff checklist
 

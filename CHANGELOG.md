@@ -6,6 +6,17 @@
 - Kept unsupported surface/features unavailable and mode suitability null; current uploads remain Unrated without validated component evidence and fixed normalization references.
 - Added an HTTP integration test proving Task A's visible-defect cap is preserved when valid normalized test evidence is injected. No Windows executable was rebuilt.
 
+## 2026-10-16 — Task B India-bounded map and aligned OSM streets
+
+- Replaced unrelated sample line geometry with mapped OSM streets in central Bengaluru, aligning the colored road-quality overlays to the underlying streets. Kept scores and profile values explicitly illustrative.
+- Constrained the map viewport and masked basemap outside the simplified OSM India boundary. Added visible OSM source/attribution notes and updated frontend architecture/status documentation.
+- Frontend checks and rendered-map verification are recorded in `docs/HANDOFF.md`.
+
+## 2026-10-16 — Task B primary navigation active state
+
+- Fixed the hard-coded Network active style: the active navigation link now follows `#network`, `#insights`, and `#image-report`, including browser hash-history changes. Added `aria-current="location"` to the current section link and tests for supported and fallback hashes.
+- Verified the frontend type check, eight unit tests, lint, production build, and manual Insights/Image report/back-button navigation. See `docs/HANDOFF.md` for exact commands and branch status.
+
 ## 2026-10-16 — Task B Leaflet/OpenStreetMap map and dashboard tests
 
 - Replaced the drawn SVG street schematic with an interactive Leaflet map using OpenStreetMap tiles, attribution, accessible selectable fixture polylines, and map zoom controls. Tile failures show a notice while fixture routes remain available.

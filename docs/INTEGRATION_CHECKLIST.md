@@ -1,19 +1,19 @@
 # Task D integration preparation and contract audit
 
-**Status recorded 2026-10-16:** Task D has packaged and exercised a Windows desktop build on the available host. Live image-analysis integration is still unimplemented. This file records current merged dependencies and proposed field mappings; it does not approve a new shared API contract.
+**Status recorded 2026-10-16:** The Windows desktop package has previously been built and exercised on a Windows host. Task D's image-analysis route and dashboard upload integration are implemented on `task/d-integration-release` and under review in PR #16; this integration has not yet been rebuilt or tested on Windows. The API does not produce numeric RSQI for current images. This file records current dependencies and field mapping; it does not approve incompatible changes to the shared contract.
 
 ## Dependency readiness
 
 - **Task A:** PR #1 is merged into main at commit 7995ff4. The provisional scorer and its tests are present. Its default normalization profiles are empty, so it returns an unrated result unless a caller supplies a complete fixed profile and all required evidence. No RoadIQ-labelled calibration set exists.
-- **Task B:** PRs #2, #5, and #6 are merged into main. PR #13 is open from task/b-map-dashboard (ten commits ahead of main at 58ac332). It adds browser-local import of Task C CLI JSON reports, optional selection of the companion annotation file, the production health URL default, and clearer mutually exclusive map-overlay selection. A source review confirms that the displayed report paths exist in Task C output; its CLI rewrites the annotation value to a local path, so the browser does not load that file automatically. The panel does not verify that the imported report matches the separately previewed image. The latest Task B handoff reports TypeScript, Vite build, Oxlint, and browser verification of the overlay selection passing; the report importer itself has no browser interaction check, and no backend tests were run. GitHub has no PR reviews or CI check runs. No backend/API contract changed, and the browser does not run analysis or call an image endpoint.
+- **Task B:** PRs #2, #5, #6, #13, and #14 are merged into main. The dashboard contains the Bengaluru OSM street sample and India display mask, with illustrative RoadIQ scores/profile values, plus CLI report import and navigation hash handling. Map features are separate from Task D's image-analysis endpoint; no live road-segment API exists.
 - **Task C:** PRs #4, #7, #8, #10, and #11 are merged into main. The local observation/demo service and tests exist, but there is no image HTTP route or active trained checkpoint. Usable-pavement/material classification, individual aggregate/metal analysis, calibrated physical measurements, and held-out RoadIQ evaluation remain unavailable; Task C is not ready as a complete production analysis dependency.
-- **Task D:** checklist PR #3 is merged. This package branch is task/d-integration-release, based on current origin/main at f83b4d7. Windows packaging and desktop-runtime tests are published for review in [PR #12](https://github.com/Sine-Ads/RoadIQ/pull/12) against main. The PR is open and unmerged.
+- **Task D:** checklist PR #3 and Windows package PR #12 are merged. The image API/scorer integration is on `task/d-integration-release` in open PR #16. Real image uploads currently return Unrated because complete supported components and fixed normalization references are not available.
 
 ## Field crosswalk
 
-### Shared proposed image API
+### Task D image API on the integration branch
 
-The only live backend endpoint on main is GET /api/v1/health. The image-analysis request/response in docs/API_CONTRACT.md is proposed, not implemented. It proposes POST /api/v1/image-analyses with an image part and optional calibration part.
+`main` currently exposes `GET /api/v1/health`; Task D's PR #16 adds `POST /api/v1/image-analyses` with an image part. Calibration input is not accepted. The route integrates Task C observations and Task A scoring but preserves Unrated when evidence or fixed normalization references are missing.
 
 The proposed response names analysis_id, analysis_status, image_quality, pavement_region, surface_type, aggregate_analysis, defects, texture_features, rsqi, data_provenance, annotated_image, and model. analysis_status is completed, low_confidence, unrated, or failed. Each measurement object has value, unit, status, and source; status is observed, estimated, or unavailable. Available values require a source; unavailable requires value=null and source=null. Proposed source values are sensor, image_inference, user_input, and demo_fixture. Ratios use unit ratio, score uses index_0_100, and the example component values use damage_index_0_100. Unavailable values must not be converted to zero.
 
@@ -72,15 +72,15 @@ These mappings cannot be implemented by copying raw values. Task A requires a un
 | Scenario | Required behavior before release | Current status |
 | --- | --- | --- |
 | Valid supported image with successful analysis | Return a real analysis result; only rate when all required measurements, gates, and fixed scorer references are present. | No image route or active model. |
-| Malformed, unsupported, or invalid image | Return a safe request/processing error; do not return a successful empty report. Agree exact HTTP mapping before implementation. | C service raises validation errors; no route mapping. |
-| Image-quality gate fails | Preserve failure reason and return unrated with null score; do not render green/good. | C has heuristic quality checks; route and frontend flow absent. |
-| Pavement ROI or resolution gate fails | Mark analysis unrated and required observations unavailable; never infer zero defects. | No validated ROI model; integration behavior unimplemented. |
-| Unknown surface type | Preserve unknown; no material-specific profile means unrated. | C currently emits unknown/unavailable. |
+| Malformed, unsupported, or invalid image | Return a safe request/processing error; do not return a successful empty report. | Task D maps empty/read failures to HTTP 400 and image validation errors to HTTP 422. |
+| Image-quality gate fails | Preserve failure reason and return unrated with null score; do not render green/good. | Task C emits heuristic quality checks; Task D passes the explicit usable gate to the scorer. |
+| Pavement ROI or resolution gate fails | Mark analysis unrated and required observations unavailable; never infer zero defects. | No validated ROI model; Task D leaves adequacy unavailable and does not synthesize evidence. |
+| Unknown surface type | Preserve unknown; no material-specific profile means unrated. | Task C emits unknown; Task D preserves it for scoring. |
 | Missing, null, unavailable, or invalid measurement | Preserve unavailable as null with reason; reject invalid non-finite, boolean, out-of-range, or mismatched-unit evidence; never impute zero. | A validates scorer observations; API boundary absent. |
 | Unit, provenance, or status mismatch | Do not coerce or silently map; agree the conversion/status policy and test it at the route boundary. | C and API source sets differ; mapping is unresolved. |
-| Incomplete scorer input | Return unrated with null RSQI and explicit explanation; weights are not renormalized. | A implements this; no route invokes it. |
-| Model, backend, or API unavailable | Expose an unavailable/error state, keep health separate from analysis readiness, and do not substitute fixture predictions. | Health endpoint only; B displays health-only/offline demo labels. |
-| Frontend report and suitability | Display backend explanations and unavailable values; show mode values separately from surface quality; map colors, mode changes, rankings, and details must reflect backend values. | B has fixture dashboard and local image preview only; not connected to segment or image APIs. |
+| Incomplete scorer input | Return unrated with null RSQI and explicit explanation; weights are not renormalized. | Task D invokes Task A; current vision output lacks required components, so real uploads remain Unrated. |
+| Model, backend, or API unavailable | Expose an unavailable/error state, keep health separate from analysis readiness, and do not substitute fixture predictions. | Frontend distinguishes health from image upload and displays API failures; map values remain fixture values. |
+| Frontend report and suitability | Display backend explanations and unavailable values; show mode values separately from surface quality; map colors, mode changes, rankings, and details must reflect backend values. | PR #16 adds image upload/report display; map/segment values remain illustrative and mode suitability remains unscored. |
 
 ## Commands, configuration, and demo limits
 

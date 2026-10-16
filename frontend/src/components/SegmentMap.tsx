@@ -3,6 +3,7 @@ import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import type { DemoRoadRecord, OverlayKey } from '../data/demoRoadSegments'
 import { demoRoadRecords, getOverlayValue, overlayLabel, scoreTone } from '../data/demoRoadSegments'
+import { indiaBoundaryCoordinates } from '../data/indiaBoundary'
 
 type SegmentMapProps = {
   records: DemoRoadRecord[]
@@ -11,10 +12,15 @@ type SegmentMapProps = {
   onSelect: (segmentId: string) => void
 }
 
-const MAP_CENTER: L.LatLngExpression = [40.7128, -74.005]
-const INITIAL_ZOOM = 15
+const MAP_CENTER: L.LatLngExpression = [12.976, 77.607]
+const INITIAL_ZOOM = 13
 const OSM_TILE_URL = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
 const OSM_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+const WORLD_MASK_RING: L.LatLngTuple[] = [[-85, -180], [-85, 180], [85, 180], [85, -180]]
+const INDIA_RINGS: L.LatLngTuple[][] = indiaBoundaryCoordinates.flatMap((polygon) =>
+  polygon.map((ring) => ring.map(([longitude, latitude]) => [latitude, longitude] as L.LatLngTuple)),
+)
+const INDIA_BOUNDS = L.latLngBounds(INDIA_RINGS.flat())
 
 function toneColor(tone: ReturnType<typeof scoreTone>) {
   return {
@@ -34,6 +40,7 @@ function recordBounds(records: DemoRoadRecord[]) {
 export function SegmentMap({ records, selectedId, overlay, onSelect }: SegmentMapProps) {
   const mapElement = useRef<HTMLDivElement>(null)
   const map = useRef<L.Map | null>(null)
+  const routesLayer = useRef<L.LayerGroup | null>(null)
   const selectedLabel = useRef<L.Tooltip | null>(null)
   const [zoom, setZoom] = useState(INITIAL_ZOOM)
   const [tileError, setTileError] = useState(false)
@@ -46,6 +53,9 @@ export function SegmentMap({ records, selectedId, overlay, onSelect }: SegmentMa
       zoomControl: false,
       scrollWheelZoom: true,
       keyboard: true,
+      maxBounds: INDIA_BOUNDS.pad(0.05),
+      maxBoundsViscosity: 1,
+      minZoom: 4,
     }).setView(MAP_CENTER, INITIAL_ZOOM)
 
     const tiles = L.tileLayer(import.meta.env.VITE_MAP_TILE_URL || OSM_TILE_URL, {
@@ -53,17 +63,27 @@ export function SegmentMap({ records, selectedId, overlay, onSelect }: SegmentMa
       attribution: import.meta.env.VITE_MAP_TILE_ATTRIBUTION || OSM_ATTRIBUTION,
     }).addTo(instance)
     tiles.on('tileerror', () => setTileError(true))
+    L.polygon([WORLD_MASK_RING, ...INDIA_RINGS], {
+      stroke: false,
+      fillColor: '#f4f6f2',
+      fillOpacity: 1,
+      fillRule: 'evenodd',
+      interactive: false,
+    }).addTo(instance)
+    const roads = L.layerGroup().addTo(instance)
+    routesLayer.current = roads
     instance.on('zoomend', () => setZoom(instance.getZoom()))
     map.current = instance
 
     const allBounds = recordBounds(demoRoadRecords)
-    if (allBounds.isValid()) instance.fitBounds(allBounds.pad(0.2), { animate: false })
+    if (allBounds.isValid()) instance.fitBounds(allBounds.pad(0.2), { animate: false, maxZoom: 15 })
     const resize = window.setTimeout(() => instance.invalidateSize(), 0)
 
     return () => {
       window.clearTimeout(resize)
       instance.remove()
       map.current = null
+      routesLayer.current = null
     }
   }, [])
 
@@ -75,9 +95,9 @@ export function SegmentMap({ records, selectedId, overlay, onSelect }: SegmentMa
       instance.removeLayer(selectedLabel.current)
       selectedLabel.current = null
     }
-    instance.eachLayer((layer) => {
-      if (layer instanceof L.Polyline) instance.removeLayer(layer)
-    })
+    const roads = routesLayer.current
+    if (!roads) return
+    roads.clearLayers()
 
     for (const record of records) {
       const value = getOverlayValue(record, overlay)
@@ -92,7 +112,7 @@ export function SegmentMap({ records, selectedId, overlay, onSelect }: SegmentMa
         lineCap: 'round',
         lineJoin: 'round',
         bubblingMouseEvents: false,
-      }).addTo(instance)
+      }).addTo(roads)
 
       route.on('click', () => onSelect(record.segment.segment_id))
       const path = route.getElement()
@@ -122,7 +142,7 @@ export function SegmentMap({ records, selectedId, overlay, onSelect }: SegmentMa
     }
 
     const bounds = recordBounds(records)
-    if (records.length > 0 && bounds.isValid()) instance.fitBounds(bounds.pad(0.2), { animate: false, maxZoom: 17 })
+    if (records.length > 0 && bounds.isValid()) instance.fitBounds(bounds.pad(0.2), { animate: false, maxZoom: 15 })
   }, [records, selectedId, overlay, onSelect])
 
   return (
@@ -131,10 +151,10 @@ export function SegmentMap({ records, selectedId, overlay, onSelect }: SegmentMa
         <div>
           <div className="section-kicker">Interactive network map</div>
           <h2 id="map-heading">Road segments</h2>
-          <p className="map-description">Select a colored route to inspect its demo record. Fixture routes and scores are illustrative; the OSM basemap is geographic context only.</p>
+          <p className="map-description">These colored lines follow mapped streets in central Bengaluru. RoadIQ scores and profile values are illustrative fixtures, not surveys of these roads.</p>
         </div>
         <div className="map-tools" aria-label="Map controls">
-          <span className="map-tool-label">Map tiles</span>
+          <span className="map-tool-label">India · OSM</span>
           <button type="button" aria-label="Zoom out" onClick={() => map.current?.zoomOut()}>−</button>
           <span className="zoom-value" aria-live="polite">{zoomLabel}</span>
           <button type="button" aria-label="Zoom in" onClick={() => map.current?.zoomIn()}>+</button>
@@ -142,7 +162,7 @@ export function SegmentMap({ records, selectedId, overlay, onSelect }: SegmentMa
       </div>
 
       <div className="map-canvas leaflet-map-canvas">
-        <div ref={mapElement} className="leaflet-map" role="application" aria-label={`Interactive geographic map with illustrative road segments colored by ${overlayLabel(overlay)}. Select a route for details.`} />
+        <div ref={mapElement} className="leaflet-map" role="application" aria-label={`Interactive map of central Bengaluru streets colored by illustrative ${overlayLabel(overlay)} fixtures. Select a route for details.`} />
         {tileError && <p className="map-tile-error" role="status">Basemap tiles are unavailable; fixture routes remain interactive. Check your connection.</p>}
         {records.length === 0 && <div className="map-empty-state"><strong>No roads match these filters</strong><span>Clear a filter to show the demo network again.</span></div>}
         <div className="map-legend" aria-label="Overlay score legend">
@@ -155,7 +175,7 @@ export function SegmentMap({ records, selectedId, overlay, onSelect }: SegmentMa
       </div>
       <div className="map-footer">
         <span><strong>{records.length}</strong> segments in view</span>
-        <span>Fixture geometry and scores only</span>
+        <span>OSM street geometry · illustrative RoadIQ scores</span>
       </div>
     </section>
   )

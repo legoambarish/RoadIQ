@@ -17,7 +17,7 @@ import time
 import webbrowser
 from http import HTTPStatus
 from logging.handlers import RotatingFileHandler
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 from typing import Any
 
 
@@ -176,7 +176,7 @@ def is_owned_roadiq_process(metadata: dict[str, Any], image_path: str | None) ->
         return False
     if not isinstance(recorded_executable, str):
         return False
-    if Path(image_path).name.casefold() != 'roadiq.exe':
+    if PureWindowsPath(image_path).name.casefold() != 'roadiq.exe':
         return False
     return _normalized_path(image_path) == _normalized_path(recorded_executable)
 
