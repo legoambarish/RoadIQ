@@ -2,7 +2,7 @@
 
 ## Status and conventions
 
-Base URL for local development is `http://localhost:8000`; the versioned prefix is `/api/v1`. The currently implemented API is only `GET /api/v1/health` (plus the unversioned `/` informational route). Segment endpoints below are **planned and not implemented**. They specify the boundary for Task D; they are not a claim of working persistence or retrieval.
+Base URL for local development is `http://localhost:8000`; the versioned prefix is `/api/v1`. The implemented API includes `GET /api/v1/health` and `POST /api/v1/image-analyses` (plus the unversioned `/` informational route). Segment endpoints below are **planned and not implemented**. Image analysis is synchronous and local to the backend process; there is no image persistence.
 
 JSON field names follow the shared snake_case types in [SCORING_SPEC.md](./SCORING_SPEC.md), validated in `backend/app/schemas/road_segment.py` and mirrored in `frontend/src/types/road-segment.ts`. Dates are timezone-aware ISO-8601 strings. GeoJSON coordinates are `[longitude, latitude]` in WGS 84 decimal degrees.
 
@@ -18,19 +18,23 @@ Returns HTTP 200 and:
 
 The route is implemented without external-service dependencies.
 
-## Planned image-analysis endpoint (not implemented)
+## Implemented image-analysis endpoint
 
-Image analysis is the primary product workflow. The endpoint below is a proposed integration contract for Task C (inference), Task A (RSQI), Task B (report display), and Task D (API/evaluation). It is **not present in the current FastAPI app**. Exact upload limits, supported formats, storage/retention, and calibration request shape remain unresolved.
+Image analysis is the primary product workflow. The endpoint integrates Task C observations with the Task A scorer and is displayed in the local dashboard. Upload limits and supported formats follow the Task C image service. The route currently accepts only an image file; calibration input, storage, and retention are not implemented.
 
-Task C exposes `app.services.vision.analyze_road_image(image_bytes, *, source_name="unknown", calibration=None, detector=None, segmentation_model=None, confidence_threshold=0.25)`. It returns a JSON-ready observation payload and performs no scoring. A configured, trained India-only semantic segmentation checkpoint can populate a road ROI mask and pothole pixel mask; both use optional `mask_rle` fields encoded as `row_major_binary_rle_v1` (row-major, alternating background/foreground run lengths, `size_px: [height, width]`). The service also returns image metadata, unavailable-value reasons, detector boxes, and a separate `metal_fragments` observation. These Task C outputs require Task D review before the proposed HTTP response is frozen; no endpoint exists yet. Material type, aggregate analysis, metal fragments, raveling, calibrated physical measures, and damage detector outputs remain unavailable without suitable model/data/checkpoint.
+Task C exposes `app.services.vision.analyze_road_image(image_bytes, *, source_name="unknown", calibration=None, detector=None, segmentation_model=None, confidence_threshold=0.25)`. It returns observations and does not score. A configured India-road semantic segmentation checkpoint can populate a road ROI mask and pothole pixel mask; these use optional `mask_rle` fields encoded as `row_major_binary_rle_v1`. The service also returns image metadata, unavailable-value reasons, detector boxes, and a separate `metal_fragments` observation. The HTTP route passes explicit image-quality and resolution gates to Task A, retains unknown surface type, and does not invent missing component values or normalization references.
 
 ### `POST /api/v1/image-analyses`
 
 The optional `pavement_region.mask_rle` and `defects[].mask_rle` fields use `row_major_binary_rle_v1`. `size_px` is `[height, width]`; `counts` begins with the background run (which may be zero), then alternates foreground/background. The counts must sum to `height * width`. A semantic pothole mask does not imply an instance count: keep `count.value` null unless instances are separately detected.
 
-Proposed request: `multipart/form-data` with required `image` file and optional `calibration` JSON part. Calibration must identify its method and scale/unit and associate it with the submitted image; unverified or absent calibration does not enable physical measurements. Do not accept remote image URLs unless a separately reviewed SSRF-safe design is adopted.
+Request: `multipart/form-data` with a required `image` file. The current route does not accept a calibration part. Do not accept remote image URLs unless a separately reviewed SSRF-safe design is adopted.
 
-Proposed response (HTTP 200 after synchronous analysis; asynchronous/job behavior is unresolved):
+The response includes Task C observations, an `rsqi` object from Task A, adjacent `quality_label` and `scoring_version` metadata, and nullable mode-suitability fields. Processing/validation errors use HTTP error responses rather than a success-shaped scored result. The Task C inline annotation is not returned over HTTP; `annotated_image` remains unavailable until safe storage/serving is reviewed.
+
+**Current scoring behavior:** the integrated scorer uses its default configuration, which has no fixed normalization profiles. Task C currently reports unknown surface type, no adequate pavement-region decision, and no supported RSQI component observations. Consequently, a valid image currently returns `analysis_status: "unrated"` and a null RSQI value; all mode-suitability values remain null. The API is wired, but this is not a numeric image-quality scorer. A score and visible-defect cap are only produced when all required, properly normalized component evidence and gates are supplied under a reviewed scoring configuration.
+
+Example response shape for a valid upload:
 
 ```json
 {
@@ -44,8 +48,8 @@ Proposed response (HTTP 200 after synchronous analysis; asynchronous/job behavio
   },
   "pavement_region": {
     "usable_area_ratio": {
-      "value": 0.78, "unit": "ratio", "status": "estimated",
-      "source": "image_inference"
+      "value": null, "unit": "ratio", "status": "unavailable",
+      "source": null
     },
     "annotation": { "value": null, "unit": "uri", "status": "unavailable", "source": null },
     "mask_rle": null
@@ -146,6 +150,15 @@ Proposed response (HTTP 200 after synchronous analysis; asynchronous/job behavio
     "explanation": "Surface type and required image evidence are unavailable; no index is assigned.",
     "limitations": ["No reliable image-derived feature values are available."]
   },
+  "quality_label": null,
+  "scoring_version": "image-rsqi-candidate-v1",
+  "mode_suitability": {
+    "walking": null,
+    "cycling": null,
+    "two_wheeler": null,
+    "car": null,
+    "bus": null
+  },
   "data_provenance": [
     { "field_path": "image_quality", "source": "image_inference" }
   ],
@@ -156,13 +169,14 @@ Proposed response (HTTP 200 after synchronous analysis; asynchronous/job behavio
     "name": null,
     "version": null,
     "training_status": "not_reported"
-  }
+  },
+  "processing_errors": []
 }
 ```
 
 This is a shape example, not a result from a running model. All values shown unavailable/null must remain null unless a valid measurement method produced a value. A result's provenance should include image/model/version references without exposing secrets or unsafe storage locations. `training_status` must distinguish `pretrained_baseline`, `roadIQ_trained`, `roadIQ_fine_tuned`, and `not_reported`; do not claim RoadIQ training unless it occurred and its split/data version are recorded.
 
-The current Task C Python service has an additional local-only observation under `aggregate_analysis.surface_region`: an untrained Pillow high-frequency texture candidate mask in the existing `row_major_binary_rle_v1` format, a bounding box and pixel-area statistics, uncalibrated confidence (`null`), and a measured heuristic runtime. It explicitly sets `individual_particles_segmented` false and keeps aggregate count, coverage, size/gap statistics, and physical values unavailable. Its annotated JPEG data URI is returned through the proposed top-level `annotated_image` measurement. The URI is suitable for a local CLI result only; do not expose inline data URIs through an HTTP endpoint without Task D review of payload size, content handling, retention, and response mapping. This local output does not freeze or replace the proposed HTTP contract. Dataset-manifest fields and split/dedup validation are documented in [`DATASET_MANIFEST.md`](DATASET_MANIFEST.md).
+The current Task C Python service has an additional local-only observation under `aggregate_analysis.surface_region`: an untrained Pillow high-frequency texture candidate mask in the existing `row_major_binary_rle_v1` format, a bounding box and pixel-area statistics, uncalibrated confidence (`null`), and a measured heuristic runtime. It explicitly sets `individual_particles_segmented` false and keeps aggregate count, coverage, size/gap statistics, and physical values unavailable. The local CLI may return an annotated JPEG data URI; the HTTP endpoint deliberately returns `annotated_image` as unavailable until payload size, content handling, retention, and response mapping are reviewed. Dataset-manifest fields and split/dedup validation are documented in [`DATASET_MANIFEST.md`](DATASET_MANIFEST.md).
 
 ### Proposed measurement conventions and validation
 
@@ -279,14 +293,14 @@ Typical FastAPI validation response (actual input varies):
 
 | Status | Meaning |
 | --- | --- |
-| 200 | Health or retrieval succeeded. |
+| 200 | Health or image analysis succeeded; image analysis may legitimately be `unrated`. |
 | 404 | Planned detail route: segment ID does not exist. |
-| 422 | FastAPI/Pydantic request or query validation failed. |
+| 422 | FastAPI/Pydantic request or query validation failed, including an unsupported or corrupt image. |
 | 500 | Unexpected server error; do not expose stack traces, credentials, or internal details. |
 
-Currently, requesting either planned segment route returns FastAPI's route-not-found 404 because those routes do not exist; it does **not** indicate a missing segment. No create, upload, persistence, or scoring endpoint is part of this contract.
+Currently, requesting either planned segment route returns FastAPI's route-not-found 404 because those routes do not exist; it does **not** indicate a missing segment. The image endpoint is synchronous and does not persist uploads.
 
-The planned image-analysis endpoint also does not exist. File size/type/image decoding failures, unsupported image quality, calibration errors, model unavailability, and async job semantics need explicit implementation-specific responses before that route ships; do not disguise failure as a successful zero-valued report.
+The image endpoint returns 400 for an empty upload, 422 for invalid image data, and propagates unexpected processing failures as server errors. Quality/model limitations are represented as unavailable observations and an Unrated result, not as a successful zero-valued score.
 
 ## Shared schema validation
 
@@ -299,6 +313,6 @@ The segment model rejects extra fields, invalid IDs, invalid coordinates/units/r
 - Antimeridian bounding-box semantics and timestamp/freshness query behavior.
 - Custom error envelope and operational handling.
 - Contract versioning and generated cross-language types.
-- Image upload constraints, calibration format, annotated-image storage/access/retention, and synchronous versus asynchronous processing.
-- Exact image-analysis schemas and compatibility/mapping into road-segment records; current Pydantic/TypeScript segment types do not yet implement the proposed image-specific fields.
+- Calibration format, annotated-image storage/access/retention, and any future asynchronous processing.
+- Compatibility/mapping of image-analysis outputs into road-segment records; current Pydantic/TypeScript segment types do not yet implement the proposed image-specific fields.
 - Dataset/label version references and safe exposure of model provenance.

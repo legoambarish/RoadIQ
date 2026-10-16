@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-16 — Task D image-analysis scorer integration (unreleased)
+
+- Connected local image uploads from the dashboard to `POST /api/v1/image-analyses`, which invokes Task C observations and Task A scoring while preserving saved CLI report/annotation import.
+- Kept unsupported surface/features unavailable and mode suitability null; current uploads remain Unrated without validated component evidence and fixed normalization references.
+- Added an HTTP integration test proving Task A's visible-defect cap is preserved when valid normalized test evidence is injected. No Windows executable was rebuilt.
+
 ## 2026-10-16 — Task B India-bounded map and aligned OSM streets
 
 - Replaced unrelated sample line geometry with mapped OSM streets in central Bengaluru, aligning the colored road-quality overlays to the underlying streets. Kept scores and profile values explicitly illustrative.
