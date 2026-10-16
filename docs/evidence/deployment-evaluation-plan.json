@@ -1,0 +1,17 @@
+{
+  "declared_utc": "2026-10-16T11:16:27Z",
+  "detector_checkpoint_selection": "Existing experiment best validation fitness only; frozen test not yet evaluated when this plan was written.",
+  "roi_checkpoint_selection": "See roi-v3-selection-plan.json; best validation macro IoU between bounded v2 and v3 runs only.",
+  "deployment_policy": {
+    "detector_confidence_threshold": 0.25,
+    "nms_iou": 0.5,
+    "tiling": false,
+    "device": "cpu",
+    "torch_threads": 4
+  },
+  "evaluation": "Run the real upload API on all 993 frozen labelled RDD India holdout images, class-specific greedy unique-box IoU >= 0.5 matching. Count abstained source boxes as misses. No test tuning.",
+  "uncertainty": "1000 source numeric-block cluster bootstrap replicates, seed 20261016, 2.5/97.5 percentile precision/recall intervals, undefined denominator reported null. Numeric blocks are only route proxies; unknown dependence and deployment shift remain limitations.",
+  "latency": "Record actual full API TestClient CPU load, first and warm latency distributions, separate from GPU framework confidence-sweep AP and independent Windows/browser checks.",
+  "source_empty_labels": "Unmatched-box stress cases only; no certified healthy road false-positive rate.",
+  "forbidden_inference": "No severity accuracy, physical MAE, calibrated confidence, road-condition grade, population rank or field generalization claim from these datasets."
+}

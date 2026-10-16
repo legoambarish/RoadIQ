@@ -1,0 +1,20 @@
+{
+  "train": {
+    "images": 2475,
+    "pothole_images": 182,
+    "pothole_pixels": 3534186,
+    "road_pixels": 1374659798
+  },
+  "validation": {
+    "images": 375,
+    "pothole_images": 28,
+    "pothole_pixels": 705428,
+    "road_pixels": 187312316
+  },
+  "test": {
+    "images": 350,
+    "pothole_images": 14,
+    "pothole_pixels": 38729,
+    "road_pixels": 238380536
+  }
+}

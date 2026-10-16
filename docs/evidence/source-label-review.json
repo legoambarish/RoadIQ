@@ -1,0 +1,43 @@
+{
+  "review_date": "2026-10-16",
+  "reviewer": "Codex visual inspection",
+  "purpose": "Confirm source taxonomy/coordinate alignment and annotation limitations before training; not independent full relabelling or a grade-validation study.",
+  "rdd_example_cells": 12,
+  "rdd_unique_images": [
+    "India_000011",
+    "India_003587",
+    "India_006674",
+    "India_000115",
+    "India_002279",
+    "India_006490",
+    "India_000014",
+    "India_006995",
+    "India_000005",
+    "India_003239",
+    "India_006647"
+  ],
+  "rdd_notes": [
+    "Four official source codes align to the intended defect categories in the reviewed boxes.",
+    "Some D40 rectangles cover broad repaired/distressed regions and tiny distant marks; a source pothole label does not measure depth.",
+    "Some cracks/joints have ambiguous material/context; do not infer severity, surface type or healthy-road negatives."
+  ],
+  "roi_reviewed_masks": [
+    "Masks/train/1_005/1_005_frame0007_gtFine_labelTrainIds.png",
+    "Masks/train/1_012/1_012_frame0000001505_gtFine_labelTrainIds.png",
+    "Masks/train/1_016/1_016_frame2303_gtFine_labelTrainIds.png",
+    "Masks/train/1_018/1_018_frame1155_gtFine_labelTrainIds.png",
+    "Masks/train/1_018/1_018_frame4067_gtFine_labelTrainIds.png",
+    "Masks/train/1_018/1_018_frame6986_gtFine_labelTrainIds.png",
+    "Masks/val/1_017/1_017_frame0490_gtFine_labelTrainIds.png",
+    "Masks/val/2_006/2_006_frame2968_gtFine_labelTrainIds.png"
+  ],
+  "roi_notes": [
+    "Class 0 fills the annotated road region, class 2 source footpath, class 3 shallow areas.",
+    "Outside annotated regions are encoded 255; no source ID=1 pixels occur in the full corpus.",
+    "Masks are coarse semantic polygons; individual defects, obscured pavement and physical geometry are not independently verified."
+  ],
+  "local_contact_sheets": [
+    "artifacts/rdd-source-audit.jpg",
+    "artifacts/segmentation-source-audit.jpg"
+  ]
+}

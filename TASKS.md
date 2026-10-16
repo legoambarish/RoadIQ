@@ -1,5 +1,17 @@
 # RoadIQ task tracker
 
+## Owner-authorized implementation handoff — 2026-10-16
+
+The owner's current assignment authorizes coordinated A/B/C/D implementation, local commits, remote branches and review PRs. The handoff archive's older local-only/no-push restriction is superseded by that direct request. No merge, deployment, or history rewrite is authorized. The existing scaffold-only mission is reconciled in AGENTS.md.
+
+- Assigned implementation owner: Codex for this handoff, with project-owner review through PR. Existing human attribution is retained below.
+- Actual coordinated feature branch: `feat/india-p0-implementation`, based on fetched `main` at `c6993d70b328a17733b64554245a0423a6f00966`. This dedicated branch covers C data/inference, A additive VDA, D API/evaluation, and B additive reporting. Existing task branches are preserved.
+- Contract policy: additive image fields and matching frontend types/tests/docs; leave the frozen road-segment contract and legacy RSQI algorithm intact. No incompatible owner-contract redesign.
+- Acceptance: real India-only training and frozen holdout metrics, source-image boxes and honest mask/physical unknowns, evidence-aware VDA, actual API/upload/report verification; P1 only after P0 is defensible.
+- No subagents are assigned. If subsequently authorized, the owner's model restriction applies.
+- Review remote: authenticated GitHub account has read access but no push permission to Sine-Ads/RoadIQ. Authorized review delivery uses fork `legoambarish/RoadIQ` (`review-fork` remote), same feature branch, PR targeting upstream main. No upstream history or permissions are changed.
+- In progress: datasets acquired/verified; RDD frozen 5,235/1,296/993 with 182 exclusions; ROI frozen 2,475/375/350 with 27 exclusions. Detector and ROI training are running. Current worktree passes 130 backend and 12 frontend tests, lint/typecheck/build under Node 24.22.0. Fresh base EXE passes actual standalone HTTP upload/relaunch/shutdown checks; model-enabled EXE and real-model acceptance remain pending. One validation-driven ROI v3 experiment is predeclared; no heldout metrics are used to design/select it.
+
 ## Task B India-only map and aligned street geometry — 2026-10-16
 
 Replaced the mismatched sample lines with OpenStreetMap way geometry for nine named streets in central Bengaluru and made this the map's default view. An OSM India-boundary mask and map bounds restrict the map display to India. RoadIQ score/profile fixtures remain unchanged and are explicitly described as illustrative, not condition surveys of the mapped streets. Added a frontend test for the route way references and India coordinate ranges. No shared API, scoring, or backend behavior changed. OSM attribution and boundary limitations are recorded in the frontend docs and Task B handoff.

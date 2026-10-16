@@ -1,5 +1,14 @@
 # RoadIQ handoff
 
+## Owner-authorized India implementation progress — 2026-10-16
+
+- Current branch `feat/india-p0-implementation`, base/latest committed source before this progress commit `c6993d70b328a17733b64554245a0423a6f00966`. User authorized combined A/B/C/D implementation and review PR delivery; existing owners/history and frozen segment/scorer contracts are preserved. Remote `origin` is Sine-Ads/RoadIQ; authenticated account has read-only upstream permission, so `review-fork` points to the created legoambarish/RoadIQ fork for a PR against upstream main. No merge/deployment/history rewrite.
+- Both India datasets acquired and CRC/hash checked. Frozen RDD split 5,235/1,296/993 with 182 duplicate exclusions; ROI 2,475/375/350 with 27 exclusions. Full manifests are retained in compressed evidence. The first coarse/duplicate union split collapsed and was rejected before training. Independent source-file/rights/complete duplicate validation passed.
+- Real scratch detector and ROI experiments are running. V2 validation pothole segmentation was very weak; one additional training-only oversampling/Dice experiment is predeclared without test-guided selection. No final detector/ROI metric or P0 completion is claimed by this progress entry.
+- Implemented additive VDA, guarded model loaders/readiness, EXIF/source boxes, semantic mask geometry, upload budgets/concurrency, actual findings/overlays/mask inspection and JSON export. Legacy RSQI remains Unrated. Physical measurements, genuine percentile cohorts, independent field collection, metal/stone instances and real survey mapping remain unavailable.
+- Checks actually completed in the current worktree: project training venv backend suite 127 passed; clean CPU venv extended suite 130 passed (two dependency deprecation warnings). Frontend 12 passed, lint/typecheck/build passed under supported Node 24.22.0. Fresh 24,119,554-byte base Windows EXE passed standalone startup, HTTP image upload, owned relaunch and shutdown outside the source tree with no Python/Node on child PATH. Browser unavailable-model upload and Engineer evidence state were inspected. Real-model E2E/browser and model-enabled Windows checks remain pending.
+- Read docs/TRAINING_AND_DEMO.md, DATASET_AND_RIGHTS_REGISTER.md and MEASUREMENT_AND_SCORING_SPEC.md. Next: finish frozen experiments, record actual benchmarks/error cases, run genuine HTTP/browser/CPU-package checks, reconcile any failures, then commit final evidence and open upstream review PR.
+
 ## Task D image-analysis and scorer integration — 2026-10-16
 
 - **Branch/base:** Task D integration is merged into `main` by PR #16 at `32d417f`; Task B PR #14 is merged at `a0a2cd9`. This documentation follow-up records merged status.

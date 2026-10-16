@@ -1,0 +1,18 @@
+{
+  "source": "https://api.figshare.com/v2/articles/21431547",
+  "outer_file_id": 38030910,
+  "outer_published_md5_not_locally_verified": "b62bd51d2ffcfaa76c60f234f0cc2bb3",
+  "member": "RDD2022/India.zip",
+  "member_crc32": 4052154104,
+  "member_crc32_verified": true,
+  "all_inner_member_crcs_verified": true,
+  "size": 526709145,
+  "sha256": "28eab0aa85638855e1907e63b175be2305a0accd018c54603037d3fb8cab963a",
+  "license": {
+    "value": 1,
+    "name": "CC BY 4.0",
+    "url": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "geography": "India",
+  "retrieval_utc": "2026-10-16T10:40:01Z"
+}

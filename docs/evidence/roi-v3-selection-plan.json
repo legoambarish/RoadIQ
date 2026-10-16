@@ -1,0 +1,16 @@
+{
+  "declared_utc": "2026-10-16T11:01:31Z",
+  "reason": "V2 validation pothole IoU near zero through epoch 12; do not deploy weak mask geometry as reliable evidence.",
+  "heldout_metrics_used_for_this_design": false,
+  "model": "indian-roads-unet-v3",
+  "initialization": "random",
+  "seed": 20261016,
+  "epochs": 15,
+  "positive_training_image_sampling_weight": 8,
+  "pothole_cross_entropy_weight_minimum": 32,
+  "additional_soft_dice_loss_weight": 0.5,
+  "augmentation": "horizontal flip and brightness .85-1.15; training only",
+  "split": "same frozen source sequences, duplicate exclusions and source labels as v2",
+  "selection": "best validation macro IoU within run; compare completed runs by validation macro IoU only",
+  "limit": "One additional bounded experiment; keep v2 results and never use test outcomes to select or tune."
+}

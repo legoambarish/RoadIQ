@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "executable_sha256": "9d73f1d74090245dffc83c55105633e23314e35e731993d75d7d632d0592a061",
+  "executable_bytes": 24119554,
+  "models_required": false,
+  "python_and_node_on_child_path": false,
+  "dashboard_http": 200,
+  "standalone_no_source_checkout": true,
+  "vision_readiness": {
+    "ready": false,
+    "detector": {
+      "status": "not_configured"
+    },
+    "roi": {
+      "status": "not_configured"
+    }
+  },
+  "upload_http": 200,
+  "upload_ms": 135.79,
+  "source_image_sha256": "b21ee53d7adb24fcc1f3a44a11ace425bc738107fd1543ca377b8f2f8363e676",
+  "graceful_owned_relaunch": true,
+  "graceful_test_shutdown": true,
+  "total_seconds": 4.31
+}

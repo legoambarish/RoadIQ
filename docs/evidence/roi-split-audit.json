@@ -1,0 +1,284 @@
+{
+  "counts": {
+    "train": 2475,
+    "validation": 375,
+    "test": 350
+  },
+  "manifest_sha256": "bad0de0072954e4ac5b1d8bd81db544e2c0e7fc2196de93245fe682d5fa975b8",
+  "test_sequence": "2_006",
+  "train_sequences": [
+    "1_005",
+    "1_012",
+    "1_016",
+    "1_018"
+  ],
+  "validation_sequences": [
+    "1_007",
+    "1_017"
+  ],
+  "test_sequences": [
+    "2_006"
+  ],
+  "cross_split_exclusions": [
+    {
+      "image_id": "1_007_frame1120_leftImg8bit",
+      "split": "validation",
+      "reason": "cross_split_dhash_le4",
+      "matches": [
+        "1_018_frame4151_leftImg8bit",
+        "1_018_frame4158_leftImg8bit"
+      ]
+    },
+    {
+      "image_id": "1_007_frame1127_leftImg8bit",
+      "split": "validation",
+      "reason": "cross_split_dhash_le4",
+      "matches": [
+        "1_018_frame4158_leftImg8bit"
+      ]
+    },
+    {
+      "image_id": "1_007_frame1155_leftImg8bit",
+      "split": "validation",
+      "reason": "cross_split_dhash_le4",
+      "matches": [
+        "1_018_frame1337_leftImg8bit",
+        "1_018_frame4123_leftImg8bit",
+        "1_018_frame4088_leftImg8bit",
+        "1_018_frame4102_leftImg8bit"
+      ]
+    },
+    {
+      "image_id": "1_007_frame1162_leftImg8bit",
+      "split": "validation",
+      "reason": "cross_split_dhash_le4",
+      "matches": [
+        "1_018_frame1337_leftImg8bit",
+        "1_018_frame4123_leftImg8bit",
+        "1_018_frame4088_leftImg8bit",
+        "1_018_frame4102_leftImg8bit"
+      ]
+    },
+    {
+      "image_id": "1_007_frame1169_leftImg8bit",
+      "split": "validation",
+      "reason": "cross_split_dhash_le4",
+      "matches": [
+        "1_018_frame1337_leftImg8bit",
+        "1_018_frame4088_leftImg8bit",
+        "1_018_frame4102_leftImg8bit"
+      ]
+    },
+    {
+      "image_id": "1_007_frame1197_leftImg8bit",
+      "split": "validation",
+      "reason": "cross_split_dhash_le4",
+      "matches": [
+        "1_018_frame4123_leftImg8bit",
+        "1_018_frame4088_leftImg8bit",
+        "1_018_frame4102_leftImg8bit"
+      ]
+    },
+    {
+      "image_id": "1_017_frame0161_leftImg8bit",
+      "split": "validation",
+      "reason": "cross_split_dhash_le4",
+      "matches": [
+        "1_018_frame1120_leftImg8bit"
+      ]
+    },
+    {
+      "image_id": "1_017_frame0308_leftImg8bit",
+      "split": "validation",
+      "reason": "cross_split_dhash_le4",
+      "matches": [
+        "1_018_frame1120_leftImg8bit"
+      ]
+    },
+    {
+      "image_id": "2_006_frame0007_leftImg8bit",
+      "split": "test",
+      "reason": "cross_split_dhash_le4",
+      "matches": [
+        "1_018_frame4102_leftImg8bit"
+      ]
+    },
+    {
+      "image_id": "2_006_frame0014_leftImg8bit",
+      "split": "test",
+      "reason": "cross_split_dhash_le4",
+      "matches": [
+        "1_018_frame4088_leftImg8bit",
+        "1_018_frame4102_leftImg8bit"
+      ]
+    },
+    {
+      "image_id": "2_006_frame0238_leftImg8bit",
+      "split": "test",
+      "reason": "cross_split_dhash_le4",
+      "matches": [
+        "1_018_frame1078_leftImg8bit"
+      ]
+    },
+    {
+      "image_id": "2_006_frame0294_leftImg8bit",
+      "split": "test",
+      "reason": "cross_split_dhash_le4",
+      "matches": [
+        "1_018_frame4102_leftImg8bit"
+      ]
+    },
+    {
+      "image_id": "2_006_frame0301_leftImg8bit",
+      "split": "test",
+      "reason": "cross_split_dhash_le4",
+      "matches": [
+        "1_018_frame4102_leftImg8bit"
+      ]
+    },
+    {
+      "image_id": "2_006_frame0350_leftImg8bit",
+      "split": "test",
+      "reason": "cross_split_dhash_le4",
+      "matches": [
+        "1_017_frame0182_leftImg8bit",
+        "1_018_frame4088_leftImg8bit",
+        "1_018_frame4102_leftImg8bit",
+        "1_018_frame4109_leftImg8bit"
+      ]
+    },
+    {
+      "image_id": "2_006_frame0357_leftImg8bit",
+      "split": "test",
+      "reason": "cross_split_dhash_le4",
+      "matches": [
+        "1_018_frame4151_leftImg8bit",
+        "1_018_frame4081_leftImg8bit",
+        "1_018_frame1120_leftImg8bit",
+        "1_018_frame4088_leftImg8bit",
+        "1_018_frame1204_leftImg8bit",
+        "1_018_frame1127_leftImg8bit",
+        "1_018_frame4102_leftImg8bit",
+        "1_018_frame4109_leftImg8bit"
+      ]
+    },
+    {
+      "image_id": "2_006_frame0364_leftImg8bit",
+      "split": "test",
+      "reason": "cross_split_dhash_le4",
+      "matches": [
+        "1_017_frame0182_leftImg8bit",
+        "1_018_frame4088_leftImg8bit",
+        "1_018_frame4102_leftImg8bit",
+        "1_018_frame4109_leftImg8bit"
+      ]
+    },
+    {
+      "image_id": "2_006_frame0371_leftImg8bit",
+      "split": "test",
+      "reason": "cross_split_dhash_le4",
+      "matches": [
+        "1_018_frame4088_leftImg8bit",
+        "1_018_frame1127_leftImg8bit",
+        "1_018_frame4102_leftImg8bit",
+        "1_018_frame4109_leftImg8bit"
+      ]
+    },
+    {
+      "image_id": "2_006_frame0378_leftImg8bit",
+      "split": "test",
+      "reason": "cross_split_dhash_le4",
+      "matches": [
+        "1_016_frame2590_leftImg8bit",
+        "1_018_frame1092_leftImg8bit",
+        "1_018_frame4081_leftImg8bit",
+        "1_018_frame1120_leftImg8bit",
+        "1_018_frame4088_leftImg8bit",
+        "1_018_frame1127_leftImg8bit",
+        "1_018_frame4102_leftImg8bit",
+        "1_018_frame4109_leftImg8bit"
+      ]
+    },
+    {
+      "image_id": "2_006_frame0483_leftImg8bit",
+      "split": "test",
+      "reason": "cross_split_dhash_le4",
+      "matches": [
+        "1_005_frame0126_leftImg8bit"
+      ]
+    },
+    {
+      "image_id": "2_006_frame0630_leftImg8bit",
+      "split": "test",
+      "reason": "cross_split_dhash_le4",
+      "matches": [
+        "1_016_frame2639_leftImg8bit"
+      ]
+    },
+    {
+      "image_id": "2_006_frame0672_leftImg8bit",
+      "split": "test",
+      "reason": "cross_split_dhash_le4",
+      "matches": [
+        "1_018_frame1092_leftImg8bit"
+      ]
+    },
+    {
+      "image_id": "2_006_frame0679_leftImg8bit",
+      "split": "test",
+      "reason": "cross_split_dhash_le4",
+      "matches": [
+        "1_018_frame1092_leftImg8bit"
+      ]
+    },
+    {
+      "image_id": "2_006_frame0686_leftImg8bit",
+      "split": "test",
+      "reason": "cross_split_dhash_le4",
+      "matches": [
+        "1_016_frame2632_leftImg8bit"
+      ]
+    },
+    {
+      "image_id": "2_006_frame0714_leftImg8bit",
+      "split": "test",
+      "reason": "cross_split_dhash_le4",
+      "matches": [
+        "1_018_frame1169_leftImg8bit"
+      ]
+    },
+    {
+      "image_id": "2_006_frame0728_leftImg8bit",
+      "split": "test",
+      "reason": "cross_split_dhash_le4",
+      "matches": [
+        "1_018_frame1092_leftImg8bit",
+        "1_018_frame1120_leftImg8bit",
+        "1_018_frame1127_leftImg8bit"
+      ]
+    },
+    {
+      "image_id": "2_006_frame0749_leftImg8bit",
+      "split": "test",
+      "reason": "cross_split_dhash_le4",
+      "matches": [
+        "1_018_frame1652_leftImg8bit",
+        "1_016_frame2590_leftImg8bit",
+        "1_018_frame1015_leftImg8bit",
+        "1_018_frame4102_leftImg8bit",
+        "1_018_frame4109_leftImg8bit"
+      ]
+    },
+    {
+      "image_id": "2_006_frame1722_leftImg8bit",
+      "split": "test",
+      "reason": "cross_split_dhash_le4",
+      "matches": [
+        "1_018_frame1652_leftImg8bit"
+      ]
+    }
+  ],
+  "duplicate_audit_complete": true,
+  "grouping": "published sequences; final validation sequence reserved for test",
+  "limitation": "Only seven source sequences; no independent field collection or physical measurements."
+}

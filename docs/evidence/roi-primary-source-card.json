@@ -1,0 +1,9 @@
+{
+  "title": "Semantic Segmentation datasets of Indian roads",
+  "ownerName": "e-Yantra IIT Bombay",
+  "ownerRef": "eyantraiit",
+  "currentVersionNumber": 2,
+  "licenseName": "GPL 2",
+  "description": "### Context\nThis dataset is created for delivery robots with knee heightened delivery robots. Sidewalk delivery robots can also use this dataset as it consists of side road data as well.\n\n### Content\nThis dataset consists of a semantic segmentation dataset of Indian roads for roads, potholes, footpaths, shallow paths, and backgrounds. This dataset is tested using **MobileNetv3** and **ESPNetv2**.\n\n\n### Acknowledgements\nWe wouldn't be here without the help of Simranjeet Singh, Soofiyan Atar, Aditya Panwar, Amit Kumar, Srijan Agrawal, Sravya G, Ravikumar Chaurasia, Shreyas Sule and Prof. Kavi Arya.\n",
+  "lastUpdated": "2021-11-19T07:46:16.057Z"
+}

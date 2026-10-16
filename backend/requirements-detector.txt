@@ -1,0 +1,13 @@
+# Optional local research detector. Ultralytics code/weights: AGPL-3.0.
+# Install the hardware-compatible Torch wheel separately (see MODEL_CARD.md).
+-r requirements.txt
+ultralytics==8.4.178
+ultralytics-thop==2.2.2
+ultralytics-platform==0.1.89
+polars==2.0.0
+nvidia-ml-py==13.615.71
+torch==2.9.1
+torchvision==0.24.1
+numpy>=1.26,<3
+opencv-python>=4.6,<5
+PyYAML>=6,<7

@@ -9,12 +9,12 @@ from pathlib import Path
 from typing import Any
 
 from PIL import Image, UnidentifiedImageError
+from app.services.image_fingerprints import HashTree
 
 SPLITS = {"train", "validation", "test"}
 LABEL_TYPES = {"none", "aggregate_instance", "road_defect", "road_semantic_segmentation"}
 ANNOTATION_STATES = {"not_started", "in_progress", "reviewed", "rejected"}
 NEAR_DUPLICATE_MAX_HAMMING = 4
-_NEAR_PAIR_LIMIT = 250_000
 
 
 def _dhash(path: Path) -> int:
@@ -60,7 +60,7 @@ def _read_rows(manifest_path: Path) -> tuple[list[dict[str, Any]], list[str]]:
     return rows, errors
 
 
-def validate_dataset_manifest(manifest: str | Path) -> dict[str, Any]:
+def validate_dataset_manifest(manifest: str | Path, *, require_rights: bool = False) -> dict[str, Any]:
     """Validate rows, files, scene-group split hygiene, and duplicate image content."""
     manifest_path = Path(manifest).expanduser().resolve()
     rows, errors = _read_rows(manifest_path)
@@ -95,6 +95,8 @@ def validate_dataset_manifest(manifest: str | Path) -> dict[str, Any]:
         for field in ("source", "provenance", "scene_group"):
             if not isinstance(row.get(field), str) or not row[field].strip():
                 errors.append(f"{prefix}: {field} must be a non-empty string")
+        if require_rights and not (isinstance(row.get("rights"), dict) and row["rights"].get("license") and row["rights"].get("source")):
+            errors.append(f"{prefix}: explicit license/source rights record is required")
         if split not in SPLITS:
             errors.append(f"{prefix}: split must be one of {sorted(SPLITS)}")
         else:
@@ -125,6 +127,8 @@ def validate_dataset_manifest(manifest: str | Path) -> dict[str, Any]:
                 errors.append(f"{prefix}: label_path must remain inside the manifest directory")
             elif not label_path.is_file():
                 errors.append(f"{prefix}: label file does not exist: {label_rel}")
+            elif row.get("label_sha256") and _sha256(label_path) != row["label_sha256"]:
+                errors.append(f"{prefix}: label SHA256 differs from manifest")
 
         if not isinstance(image_rel, str) or not image_rel.strip():
             errors.append(f"{prefix}: image_path must be a non-empty path")
@@ -143,6 +147,8 @@ def validate_dataset_manifest(manifest: str | Path) -> dict[str, Any]:
                     image.verify()
             digest = _sha256(image_path)
             perceptual = _dhash(image_path)
+            if row.get("image_sha256") and digest != row["image_sha256"]:
+                errors.append(f"{prefix}: image SHA256 differs from manifest")
         except (OSError, UnidentifiedImageError, ValueError, Image.DecompressionBombError, Image.DecompressionBombWarning) as exc:
             errors.append(f"{prefix}: image cannot be decoded: {image_rel} ({type(exc).__name__})")
             continue
@@ -158,38 +164,21 @@ def validate_dataset_manifest(manifest: str | Path) -> dict[str, Any]:
             exact[digest] = (image_id, split, line)
         hashes.append((perceptual, image_id, split, line))
 
-    # dHash candidates are bucketed by 4-bit chunks; hashes within distance <=4 share
-    # at least one of these sixteen chunks. The cap bounds work for unusually large sets.
-    buckets: dict[tuple[int, int], set[int]] = {}
-    candidate_pairs: set[tuple[int, int]] = set()
-    comparison_capped = False
+    # BK-tree enumerates all neighbors, instead of silently accepting a capped
+    # candidate comparison. Bound diagnostic strings, not the actual audit.
+    tree = HashTree()
+    near_pairs = 0
     for index, (value, _image_id, _split, _line) in enumerate(hashes):
-        for chunk in range(16):
-            key = (chunk, (value >> (chunk * 4)) & 0xF)
-            for other in buckets.get(key, ()):
-                candidate_pairs.add((other, index))
-                if len(candidate_pairs) > _NEAR_PAIR_LIMIT:
-                    comparison_capped = True
-                    break
-            if comparison_capped:
-                break
-        if comparison_capped:
-            break
-        for chunk in range(16):
-            key = (chunk, (value >> (chunk * 4)) & 0xF)
-            buckets.setdefault(key, set()).add(index)
-    if comparison_capped:
-        warnings.append("near-duplicate comparison cap reached; review a smaller manifest or use scene_group grouping")
-    else:
-        for first, second in sorted(candidate_pairs):
-            left, right = hashes[first], hashes[second]
+        for other in tree.neighbors(value, NEAR_DUPLICATE_MAX_HAMMING):
+            near_pairs += 1
+            left, right = hashes[other], hashes[index]
             distance = (left[0] ^ right[0]).bit_count()
-            if distance <= NEAR_DUPLICATE_MAX_HAMMING:
-                message = f"near-duplicate images {left[1]!r} and {right[1]!r} (dHash distance {distance})"
-                if left[2] != right[2]:
-                    errors.append(f"{message} crosses {left[2]} (line {left[3]}) and {right[2]} (line {right[3]})")
-                else:
-                    warnings.append(f"{message} within split {left[2]}; confirm same-scene grouping")
+            message = f"near-duplicate images {left[1]!r} and {right[1]!r} (dHash distance {distance})"
+            if left[2] != right[2]:
+                errors.append(f"{message} crosses {left[2]} (line {left[3]}) and {right[2]} (line {right[3]})")
+            elif len(warnings) < 100:
+                warnings.append(f"{message} within split {left[2]}; confirm same-scene grouping")
+        tree.add(value, index)
 
     return {
         "manifest": str(manifest_path),
@@ -198,6 +187,8 @@ def validate_dataset_manifest(manifest: str | Path) -> dict[str, Any]:
         "label_records_by_type": labels_by_type,
         "exact_duplicate_records": exact_duplicate_records,
         "near_duplicate_hamming_threshold": NEAR_DUPLICATE_MAX_HAMMING,
+        "near_duplicate_pairs": near_pairs,
+        "duplicate_audit_complete": True,
         "errors": errors,
         "warnings": warnings,
         "valid": not errors,

@@ -1,7 +1,7 @@
 # RoadIQ agent instructions
 
 ## Mission
-The repository is in its initial scaffold phase. Build only the minimum viable structure for a full-stack RoadIQ prototype, leaving the production road-quality algorithm, dashboard UI, and computer-vision pipeline intentionally unimplemented.
+The owner authorized the 2026-10-16 implementation handoff: extend the existing prototype with genuine India-only model training, evaluation, and integrated image assessment. The former scaffold-only restriction is superseded for this assignment. Preserve useful implementations and explicit unknowns. Do not claim production readiness or engineering certification.
 
 ## Required boundaries
 - Frontend application lives under `frontend/`.
@@ -29,7 +29,7 @@ The repository is in its initial scaffold phase. Build only the minimum viable s
 ## Repository workflow
 - Preserve useful existing work and avoid destructive resets.
 - Record in `HANDOFF.md` the current branch, latest commit, tests run, and known issues before finishing.
-- Keep the project ready for review and avoid full feature implementation outside the approved scaffold.
+- Keep the project ready for review and avoid implementation outside the owner-authorized scope recorded in TASKS.md.
 
 ## Mandatory collaboration workflow
 

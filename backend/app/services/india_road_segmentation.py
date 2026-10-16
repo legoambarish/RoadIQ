@@ -7,6 +7,7 @@ keeps its published train/validation sequence split intact.
 from __future__ import annotations
 
 from pathlib import Path
+import hashlib
 from typing import Any
 
 from PIL import Image
@@ -14,6 +15,7 @@ from PIL import Image
 MODEL_NAME = "RoadIQ India road/pothole segmentation baseline"
 MODEL_VERSION = "indian-roads-unet-v1"
 CLASS_NAMES = ("road", "footpath", "shallow", "pothole")
+EXTENDED_CLASS_NAMES = CLASS_NAMES + ("background_unobserved",)
 SOURCE_LABEL_TO_MODEL_ID = {0: 0, 2: 1, 3: 2, 4: 3}
 IGNORE_LABEL = 255
 DEFAULT_INPUT_SIZE = (512, 288)  # width, height
@@ -58,12 +60,13 @@ def encode_binary_mask_rle(mask: Image.Image, foreground_label: str) -> dict[str
 class IndianRoadMaskDataset:
     """PIL/PyTorch dataset for an extracted directory containing Raw_images and Masks."""
 
-    def __init__(self, root: str | Path, split: str, size: tuple[int, int] = DEFAULT_INPUT_SIZE) -> None:
+    def __init__(self, root: str | Path, split: str, size: tuple[int, int] = DEFAULT_INPUT_SIZE, *, include_background: bool = False) -> None:
         if split not in {"train", "val"}:
             raise ValueError("split must be 'train' or 'val'; the source has no independent test split")
         self.root = Path(root).expanduser().resolve()
         self.split = split
         self.size = size
+        self.include_background = include_background
         masks_root = self.root / "Masks" / split
         mask_paths = sorted(masks_root.rglob("*_gtFine_labelTrainIds.png"))
         if not mask_paths:
@@ -104,6 +107,12 @@ class IndianRoadMaskDataset:
         target = torch.full_like(source_tensor, IGNORE_LABEL)
         for source_id, model_id in SOURCE_LABEL_TO_MODEL_ID.items():
             target[source_tensor == source_id] = model_id
+        if self.include_background:
+            target[source_tensor == 1] = 4
+            # The acquired v2 labelTrainIds masks encode outside/background as
+            # 255 (there are no ID=1 pixels). Preserve the legacy ignore policy
+            # unless the explicit v2 source-background training mode is used.
+            target[source_tensor == 255] = 4
         return image_tensor, target.long()
 
 
@@ -182,17 +191,34 @@ class IndiaRoadSegmentationModel:
 
     def __init__(self, checkpoint_path: str | Path, device: str | None = None) -> None:
         torch = _torch()
+        import os
+        torch.set_num_threads(int(os.getenv("ROADIQ_TORCH_THREADS", "4")))
         self.torch = torch
         self.path = Path(checkpoint_path).expanduser().resolve()
         if not self.path.is_file():
             raise FileNotFoundError(f"India segmentation checkpoint does not exist: {self.path}")
         self.device = torch.device(device or ("cuda" if torch.cuda.is_available() else "cpu"))
         checkpoint = torch.load(self.path, map_location=self.device, weights_only=True)
-        if checkpoint.get("format_version") != 1 or checkpoint.get("class_names") != list(CLASS_NAMES):
+        if checkpoint.get("format_version") not in (1, 2) or checkpoint.get("class_names") not in (list(CLASS_NAMES), list(EXTENDED_CLASS_NAMES)):
             raise ValueError("Checkpoint format or India-road class map is unsupported.")
         self.checkpoint_metadata = checkpoint.get("metadata", {})
+        with self.path.open("rb") as source:
+            self.checkpoint_metadata = {**self.checkpoint_metadata, "sha256": hashlib.file_digest(source, "sha256").hexdigest()}
+        if checkpoint.get("format_version") == 2:
+            import json
+            if checkpoint.get("class_names") != list(EXTENDED_CLASS_NAMES) or self.checkpoint_metadata.get("training_country") != "India" or self.checkpoint_metadata.get("pretrained_weights_used") is not False:
+                raise ValueError("v2 segmentation provenance/class map is unsupported")
+            evaluation = json.loads((self.path.parent / "roi-evaluation.json").read_text(encoding="utf-8"))
+            if evaluation.get("checkpoint_sha256") != self.checkpoint_metadata["sha256"] or evaluation.get("manifest_sha256") != self.checkpoint_metadata.get("split_audit", {}).get("manifest_sha256"):
+                raise ValueError("v2 segmentation checkpoint/evaluation identity mismatch")
+            self.checkpoint_metadata["heldout_evaluation"] = {key: evaluation[key] for key in ("images", "evaluation_split", "metrics_at_model_input_resolution")}
+        self.class_names = tuple(checkpoint["class_names"])
+        self.model_version = self.checkpoint_metadata.get("model_version", "indian-roads-unet-v2") if len(self.class_names) == 5 else MODEL_VERSION
+        self.input_size_px = self.checkpoint_metadata.get("input_size_px", self.input_size_px)
+        if any(not isinstance(self.input_size_px.get(key), int) or not 16 <= self.input_size_px[key] <= 2048 for key in ("width", "height")):
+            raise ValueError("unsupported segmentation input dimensions")
         self.network = create_unet(
-            num_classes=len(CLASS_NAMES),
+            num_classes=len(self.class_names),
             base_channels=int(checkpoint.get("base_channels", 16)),
         ).to(self.device)
         self.network.load_state_dict(checkpoint["state_dict"], strict=True)
@@ -201,7 +227,7 @@ class IndiaRoadSegmentationModel:
     def predict(self, image: Image.Image) -> dict[str, Any]:
         torch = self.torch
         width, height = image.size
-        input_width, input_height = DEFAULT_INPUT_SIZE
+        input_width, input_height = self.input_size_px["width"], self.input_size_px["height"]
         resized = image.convert("RGB").resize((input_width, input_height), Image.Resampling.BILINEAR)
         tensor = torch.frombuffer(bytearray(resized.tobytes()), dtype=torch.uint8)
         tensor = tensor.view(input_height, input_width, 3).permute(2, 0, 1).float().div_(255.0).unsqueeze(0)
@@ -211,14 +237,15 @@ class IndiaRoadSegmentationModel:
                 logits, size=(height, width), mode="bilinear", align_corners=False
             )
             probabilities = torch.softmax(logits, dim=1)[0]
-            labels = probabilities.argmax(dim=0).to(torch.uint8).cpu().contiguous()
+            labels_device = probabilities.argmax(dim=0)
             confidence = probabilities.max(dim=0).values.mean().item()
             class_confidence = {
-                name: float(probabilities[index][labels == index].mean().item())
-                for index, name in enumerate(CLASS_NAMES)
-                if bool((labels == index).any())
+                name: float(probabilities[index][labels_device == index].mean().item())
+                for index, name in enumerate(self.class_names)
+                if bool((labels_device == index).any())
             }
-        label_image = Image.frombytes("L", (width, height), bytes(labels.reshape(-1).tolist()))
+            labels = labels_device.to(torch.uint8).cpu().contiguous()
+        label_image = Image.frombytes("L", (width, height), labels.numpy().tobytes())
         return {
             "mask": label_image,
             "confidence_raw_mean": float(confidence),

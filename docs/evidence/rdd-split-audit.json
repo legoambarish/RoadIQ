@@ -1,0 +1,1710 @@
+{
+  "version": "rdd2022-india-grouped-v1",
+  "seed": 20261016,
+  "archive_sha256": "28eab0aa85638855e1907e63b175be2305a0accd018c54603037d3fb8cab963a",
+  "manifest_sha256": "1db2111619e93e059ec0ce20db5965ab895d40c9316c99124f624293c1cc9bcf",
+  "source_labelled_images": 7706,
+  "images": 7524,
+  "split_counts": {
+    "train": 5235,
+    "validation": 1296,
+    "test": 993
+  },
+  "class_counts": {
+    "pothole": 3094,
+    "longitudinal_crack": 1506,
+    "alligator_crack": 1965,
+    "transverse_crack": 68
+  },
+  "class_counts_by_split": {
+    "train": {
+      "pothole": 2124,
+      "longitudinal_crack": 1074,
+      "alligator_crack": 1378,
+      "transverse_crack": 44
+    },
+    "validation": {
+      "alligator_crack": 322,
+      "pothole": 542,
+      "longitudinal_crack": 228,
+      "transverse_crack": 9
+    },
+    "test": {
+      "longitudinal_crack": 204,
+      "alligator_crack": 265,
+      "pothole": 428,
+      "transverse_crack": 15
+    }
+  },
+  "ignored_classes": {
+    "D44": 1062,
+    "D01": 179,
+    "D11": 45,
+    "D50": 28,
+    "D43": 57,
+    "D0w0": 1
+  },
+  "class_map": {
+    "D00": "longitudinal_crack",
+    "D10": "transverse_crack",
+    "D20": "alligator_crack",
+    "D40": "pothole"
+  },
+  "exact_duplicate_pairs": 0,
+  "near_duplicate_pairs_hamming_le4": 833,
+  "duplicate_audit_complete": true,
+  "groups": 99,
+  "largest_group_images": 87,
+  "grouping": "numeric ID blocks of 100; fixed seeded assignment; exclude later-split exact/dHash<=4 neighbors",
+  "cross_split_exclusions": [
+    {
+      "image_id": "India_000769",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_007933"
+      ]
+    },
+    {
+      "image_id": "India_001304",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_001732",
+        "India_006038",
+        "India_006046"
+      ]
+    },
+    {
+      "image_id": "India_001308",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_001054",
+        "India_003987",
+        "India_005003",
+        "India_006696",
+        "India_007027"
+      ]
+    },
+    {
+      "image_id": "India_001321",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_008800"
+      ]
+    },
+    {
+      "image_id": "India_001338",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_001247"
+      ]
+    },
+    {
+      "image_id": "India_001372",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_005670"
+      ]
+    },
+    {
+      "image_id": "India_001381",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_003103"
+      ]
+    },
+    {
+      "image_id": "India_001611",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_003265",
+        "India_005699",
+        "India_005905"
+      ]
+    },
+    {
+      "image_id": "India_001630",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_005974",
+        "India_006692",
+        "India_007844"
+      ]
+    },
+    {
+      "image_id": "India_001653",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000306",
+        "India_004184",
+        "India_006696"
+      ]
+    },
+    {
+      "image_id": "India_001665",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_002538"
+      ]
+    },
+    {
+      "image_id": "India_001689",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_009544"
+      ]
+    },
+    {
+      "image_id": "India_002421",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_002538"
+      ]
+    },
+    {
+      "image_id": "India_002443",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_009626"
+      ]
+    },
+    {
+      "image_id": "India_002461",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_002566"
+      ]
+    },
+    {
+      "image_id": "India_002487",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_007801"
+      ]
+    },
+    {
+      "image_id": "India_002488",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_006013"
+      ]
+    },
+    {
+      "image_id": "India_002499",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_004321"
+      ]
+    },
+    {
+      "image_id": "India_002710",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_005975"
+      ]
+    },
+    {
+      "image_id": "India_002735",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_007987"
+      ]
+    },
+    {
+      "image_id": "India_002736",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000934",
+        "India_001281",
+        "India_001879",
+        "India_004825",
+        "India_007027",
+        "India_007384"
+      ]
+    },
+    {
+      "image_id": "India_002753",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_007231"
+      ]
+    },
+    {
+      "image_id": "India_002765",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_007202",
+        "India_007295"
+      ]
+    },
+    {
+      "image_id": "India_002787",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_006692"
+      ]
+    },
+    {
+      "image_id": "India_002903",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_001054",
+        "India_003234",
+        "India_004825",
+        "India_007384"
+      ]
+    },
+    {
+      "image_id": "India_002907",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000482",
+        "India_001878",
+        "India_004184",
+        "India_004825",
+        "India_005670",
+        "India_007054"
+      ]
+    },
+    {
+      "image_id": "India_002917",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_005114"
+      ]
+    },
+    {
+      "image_id": "India_003410",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_007027"
+      ]
+    },
+    {
+      "image_id": "India_003414",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_003842"
+      ]
+    },
+    {
+      "image_id": "India_003424",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_002200"
+      ]
+    },
+    {
+      "image_id": "India_003444",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_003842",
+        "India_008333"
+      ]
+    },
+    {
+      "image_id": "India_003452",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_006441"
+      ]
+    },
+    {
+      "image_id": "India_003482",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_006692"
+      ]
+    },
+    {
+      "image_id": "India_003495",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000482",
+        "India_001739",
+        "India_005040",
+        "India_007054",
+        "India_008656",
+        "India_009415"
+      ]
+    },
+    {
+      "image_id": "India_003496",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_003842"
+      ]
+    },
+    {
+      "image_id": "India_003498",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_002297"
+      ]
+    },
+    {
+      "image_id": "India_004508",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_007849"
+      ]
+    },
+    {
+      "image_id": "India_004540",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000129",
+        "India_004638",
+        "India_005833",
+        "India_005834",
+        "India_006081",
+        "India_007158",
+        "India_008053",
+        "India_009257"
+      ]
+    },
+    {
+      "image_id": "India_004548",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000891"
+      ]
+    },
+    {
+      "image_id": "India_004562",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_006645",
+        "India_006692"
+      ]
+    },
+    {
+      "image_id": "India_004568",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_003178",
+        "India_007525"
+      ]
+    },
+    {
+      "image_id": "India_004586",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_003262"
+      ]
+    },
+    {
+      "image_id": "India_005444",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_003124",
+        "India_008513"
+      ]
+    },
+    {
+      "image_id": "India_005449",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000572",
+        "India_009210"
+      ]
+    },
+    {
+      "image_id": "India_005483",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_005160"
+      ]
+    },
+    {
+      "image_id": "India_006306",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_009626"
+      ]
+    },
+    {
+      "image_id": "India_006314",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_007218"
+      ]
+    },
+    {
+      "image_id": "India_006317",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_009279"
+      ]
+    },
+    {
+      "image_id": "India_006325",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_003810"
+      ]
+    },
+    {
+      "image_id": "India_006349",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000670",
+        "India_004613",
+        "India_007833"
+      ]
+    },
+    {
+      "image_id": "India_006362",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000382"
+      ]
+    },
+    {
+      "image_id": "India_006381",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_001187",
+        "India_001881",
+        "India_004427",
+        "India_007224",
+        "India_007463",
+        "India_008918"
+      ]
+    },
+    {
+      "image_id": "India_006510",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_001270"
+      ]
+    },
+    {
+      "image_id": "India_006531",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_004105"
+      ]
+    },
+    {
+      "image_id": "India_006537",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_006663"
+      ]
+    },
+    {
+      "image_id": "India_006545",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000099",
+        "India_007224"
+      ]
+    },
+    {
+      "image_id": "India_006551",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_009530"
+      ]
+    },
+    {
+      "image_id": "India_006705",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_009669"
+      ]
+    },
+    {
+      "image_id": "India_006708",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_006696"
+      ]
+    },
+    {
+      "image_id": "India_006718",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_008845"
+      ]
+    },
+    {
+      "image_id": "India_006724",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_007434"
+      ]
+    },
+    {
+      "image_id": "India_006730",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_007224"
+      ]
+    },
+    {
+      "image_id": "India_006756",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_004338"
+      ]
+    },
+    {
+      "image_id": "India_006766",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_009392"
+      ]
+    },
+    {
+      "image_id": "India_006770",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_008053"
+      ]
+    },
+    {
+      "image_id": "India_006797",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_007158"
+      ]
+    },
+    {
+      "image_id": "India_006808",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_006465"
+      ]
+    },
+    {
+      "image_id": "India_006813",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_003841"
+      ]
+    },
+    {
+      "image_id": "India_006817",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_005298"
+      ]
+    },
+    {
+      "image_id": "India_006820",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_007463",
+        "India_007906",
+        "India_009284"
+      ]
+    },
+    {
+      "image_id": "India_006834",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_008922"
+      ]
+    },
+    {
+      "image_id": "India_006835",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_004695"
+      ]
+    },
+    {
+      "image_id": "India_006869",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_004872"
+      ]
+    },
+    {
+      "image_id": "India_006872",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000637",
+        "India_001054",
+        "India_001281",
+        "India_003178",
+        "India_003234",
+        "India_003346",
+        "India_004684",
+        "India_004825",
+        "India_005040",
+        "India_005670",
+        "India_007384",
+        "India_007525",
+        "India_008124",
+        "India_008656"
+      ]
+    },
+    {
+      "image_id": "India_006892",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_001179",
+        "India_001281",
+        "India_007525"
+      ]
+    },
+    {
+      "image_id": "India_007614",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_005768",
+        "India_008364"
+      ]
+    },
+    {
+      "image_id": "India_007639",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_005343"
+      ]
+    },
+    {
+      "image_id": "India_007651",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_003201"
+      ]
+    },
+    {
+      "image_id": "India_007655",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_006692",
+        "India_008565"
+      ]
+    },
+    {
+      "image_id": "India_007670",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_003236"
+      ]
+    },
+    {
+      "image_id": "India_007679",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_001808",
+        "India_008383"
+      ]
+    },
+    {
+      "image_id": "India_007688",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_008592",
+        "India_008809"
+      ]
+    },
+    {
+      "image_id": "India_008435",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_003288"
+      ]
+    },
+    {
+      "image_id": "India_008440",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000483",
+        "India_000991",
+        "India_007224"
+      ]
+    },
+    {
+      "image_id": "India_008467",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_008533",
+        "India_009210"
+      ]
+    },
+    {
+      "image_id": "India_008702",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_005171"
+      ]
+    },
+    {
+      "image_id": "India_008718",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_007202"
+      ]
+    },
+    {
+      "image_id": "India_008733",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_001005"
+      ]
+    },
+    {
+      "image_id": "India_009027",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_001739",
+        "India_001878",
+        "India_002881",
+        "India_004184",
+        "India_008124"
+      ]
+    },
+    {
+      "image_id": "India_009040",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_005768",
+        "India_008364",
+        "India_008922"
+      ]
+    },
+    {
+      "image_id": "India_009045",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_008502"
+      ]
+    },
+    {
+      "image_id": "India_009097",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_007785"
+      ]
+    },
+    {
+      "image_id": "India_009719",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000099",
+        "India_003236"
+      ]
+    },
+    {
+      "image_id": "India_009736",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000482",
+        "India_000662",
+        "India_000670",
+        "India_001054",
+        "India_001739",
+        "India_001878",
+        "India_004184",
+        "India_004613",
+        "India_004825",
+        "India_005021",
+        "India_006661",
+        "India_007378",
+        "India_007933",
+        "India_008124",
+        "India_009415",
+        "India_009546"
+      ]
+    },
+    {
+      "image_id": "India_009751",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000099",
+        "India_007224",
+        "India_007844"
+      ]
+    },
+    {
+      "image_id": "India_009757",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_007295"
+      ]
+    },
+    {
+      "image_id": "India_009758",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000934",
+        "India_003142",
+        "India_005969"
+      ]
+    },
+    {
+      "image_id": "India_009761",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_004878",
+        "India_008961"
+      ]
+    },
+    {
+      "image_id": "India_009793",
+      "split": "validation",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_003757"
+      ]
+    },
+    {
+      "image_id": "India_000200",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_001143"
+      ]
+    },
+    {
+      "image_id": "India_000219",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_007378"
+      ]
+    },
+    {
+      "image_id": "India_000233",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_004936"
+      ]
+    },
+    {
+      "image_id": "India_000258",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000135",
+        "India_001732",
+        "India_003673",
+        "India_006038",
+        "India_006046",
+        "India_007434",
+        "India_009762"
+      ]
+    },
+    {
+      "image_id": "India_000276",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_001097",
+        "India_008533",
+        "India_009210",
+        "India_009488"
+      ]
+    },
+    {
+      "image_id": "India_000283",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_007844"
+      ]
+    },
+    {
+      "image_id": "India_000286",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_009094"
+      ]
+    },
+    {
+      "image_id": "India_000293",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_002556"
+      ]
+    },
+    {
+      "image_id": "India_000295",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_001179",
+        "India_004638",
+        "India_005012",
+        "India_006081",
+        "India_007158"
+      ]
+    },
+    {
+      "image_id": "India_001903",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_003709"
+      ]
+    },
+    {
+      "image_id": "India_001914",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_003400"
+      ]
+    },
+    {
+      "image_id": "India_001964",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_001054",
+        "India_001889",
+        "India_003114",
+        "India_003987",
+        "India_005003",
+        "India_005039",
+        "India_006696",
+        "India_007027",
+        "India_007074",
+        "India_008101"
+      ]
+    },
+    {
+      "image_id": "India_001966",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000630"
+      ]
+    },
+    {
+      "image_id": "India_001978",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000700"
+      ]
+    },
+    {
+      "image_id": "India_002003",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_001281",
+        "India_007384",
+        "India_007525"
+      ]
+    },
+    {
+      "image_id": "India_002006",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_005893",
+        "India_009771"
+      ]
+    },
+    {
+      "image_id": "India_002048",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_003366"
+      ]
+    },
+    {
+      "image_id": "India_002096",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_001764",
+        "India_005015"
+      ]
+    },
+    {
+      "image_id": "India_002097",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_006695"
+      ]
+    },
+    {
+      "image_id": "India_002109",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000095"
+      ]
+    },
+    {
+      "image_id": "India_002133",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_005021"
+      ]
+    },
+    {
+      "image_id": "India_002197",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_009692"
+      ]
+    },
+    {
+      "image_id": "India_002600",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_007384"
+      ]
+    },
+    {
+      "image_id": "India_002622",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_007047"
+      ]
+    },
+    {
+      "image_id": "India_002664",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_003143"
+      ]
+    },
+    {
+      "image_id": "India_002666",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_003236"
+      ]
+    },
+    {
+      "image_id": "India_002668",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000483",
+        "India_003831",
+        "India_004887",
+        "India_006692",
+        "India_007224",
+        "India_007463",
+        "India_007844",
+        "India_008574",
+        "India_008918"
+      ]
+    },
+    {
+      "image_id": "India_002696",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_002549",
+        "India_005870",
+        "India_008301"
+      ]
+    },
+    {
+      "image_id": "India_003018",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_001349"
+      ]
+    },
+    {
+      "image_id": "India_003020",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_001748",
+        "India_002850",
+        "India_008901"
+      ]
+    },
+    {
+      "image_id": "India_003021",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_006661"
+      ]
+    },
+    {
+      "image_id": "India_003027",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_004518"
+      ]
+    },
+    {
+      "image_id": "India_003035",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_004319"
+      ]
+    },
+    {
+      "image_id": "India_003083",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_001247",
+        "India_002549"
+      ]
+    },
+    {
+      "image_id": "India_003088",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_005952"
+      ]
+    },
+    {
+      "image_id": "India_004003",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_009226"
+      ]
+    },
+    {
+      "image_id": "India_004025",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000934",
+        "India_001879",
+        "India_007027",
+        "India_007878"
+      ]
+    },
+    {
+      "image_id": "India_004044",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_007925",
+        "India_004510"
+      ]
+    },
+    {
+      "image_id": "India_004052",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_003557"
+      ]
+    },
+    {
+      "image_id": "India_004069",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_006931"
+      ]
+    },
+    {
+      "image_id": "India_004079",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_004934",
+        "India_009217"
+      ]
+    },
+    {
+      "image_id": "India_004713",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_004638",
+        "India_006961"
+      ]
+    },
+    {
+      "image_id": "India_004721",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_005726"
+      ]
+    },
+    {
+      "image_id": "India_004722",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_005879"
+      ]
+    },
+    {
+      "image_id": "India_004726",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_004638",
+        "India_005039"
+      ]
+    },
+    {
+      "image_id": "India_004731",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000482",
+        "India_001739",
+        "India_001878",
+        "India_004184",
+        "India_005021",
+        "India_007378",
+        "India_007933",
+        "India_008124",
+        "India_008656",
+        "India_009415"
+      ]
+    },
+    {
+      "image_id": "India_004750",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_001394"
+      ]
+    },
+    {
+      "image_id": "India_004773",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_004341",
+        "India_005644"
+      ]
+    },
+    {
+      "image_id": "India_004779",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_003987"
+      ]
+    },
+    {
+      "image_id": "India_005505",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_009348"
+      ]
+    },
+    {
+      "image_id": "India_005506",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_008783"
+      ]
+    },
+    {
+      "image_id": "India_005541",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_001419"
+      ]
+    },
+    {
+      "image_id": "India_005547",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_006004"
+      ]
+    },
+    {
+      "image_id": "India_005560",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000117"
+      ]
+    },
+    {
+      "image_id": "India_005565",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_004223",
+        "India_009577"
+      ]
+    },
+    {
+      "image_id": "India_006129",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_007141",
+        "India_008800"
+      ]
+    },
+    {
+      "image_id": "India_006146",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000474"
+      ]
+    },
+    {
+      "image_id": "India_006161",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_005979",
+        "India_009585"
+      ]
+    },
+    {
+      "image_id": "India_006171",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_005876",
+        "India_008592",
+        "India_008809"
+      ]
+    },
+    {
+      "image_id": "India_006182",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000637",
+        "India_003346"
+      ]
+    },
+    {
+      "image_id": "India_006213",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_003810"
+      ]
+    },
+    {
+      "image_id": "India_006229",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_006062"
+      ]
+    },
+    {
+      "image_id": "India_006256",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_001270"
+      ]
+    },
+    {
+      "image_id": "India_008209",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000382"
+      ]
+    },
+    {
+      "image_id": "India_008239",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_008960"
+      ]
+    },
+    {
+      "image_id": "India_008244",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_003702"
+      ]
+    },
+    {
+      "image_id": "India_008249",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_005857",
+        "India_007052"
+      ]
+    },
+    {
+      "image_id": "India_008271",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_009095"
+      ]
+    },
+    {
+      "image_id": "India_008285",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_003168"
+      ]
+    },
+    {
+      "image_id": "India_009124",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000083",
+        "India_000934",
+        "India_001179",
+        "India_001281",
+        "India_001879",
+        "India_003987",
+        "India_005003",
+        "India_005833",
+        "India_007027",
+        "India_007158",
+        "India_007878",
+        "India_008053"
+      ]
+    },
+    {
+      "image_id": "India_009130",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_007295"
+      ]
+    },
+    {
+      "image_id": "India_009138",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_005426"
+      ]
+    },
+    {
+      "image_id": "India_009161",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_004256"
+      ]
+    },
+    {
+      "image_id": "India_009163",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_000934",
+        "India_005320",
+        "India_007027",
+        "India_008101"
+      ]
+    },
+    {
+      "image_id": "India_009167",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_004601"
+      ]
+    },
+    {
+      "image_id": "India_009811",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_008015"
+      ]
+    },
+    {
+      "image_id": "India_009817",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_007628"
+      ]
+    },
+    {
+      "image_id": "India_009822",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_007457",
+        "India_009255"
+      ]
+    },
+    {
+      "image_id": "India_009829",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_001394"
+      ]
+    },
+    {
+      "image_id": "India_009850",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_004613",
+        "India_006661"
+      ]
+    },
+    {
+      "image_id": "India_009873",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_004251",
+        "India_008592",
+        "India_008809"
+      ]
+    },
+    {
+      "image_id": "India_009881",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_003228"
+      ]
+    },
+    {
+      "image_id": "India_009882",
+      "split": "test",
+      "reason": "cross_split_exact_or_dhash_le4",
+      "matches": [
+        "India_002963",
+        "India_006577"
+      ]
+    }
+  ],
+  "cross_split_excluded_images": 182,
+  "initial_union_attempt": "REJECTED: joining numeric blocks and near-neighbor components collapsed all 7706 images into one split; no training used that attempt.",
+  "limitations": [
+    "No verified route/session metadata; scene separation heuristic, residual leakage possible.",
+    "Excluding later-split near neighbors can alter the evaluation distribution; dHash is not semantic/route identity.",
+    "Published boxes structurally checked; labels not exhaustively independently reannotated.",
+    "Official unlabelled test images excluded; empty supported boxes are not healthy labels."
+  ],
+  "created_utc": "2026-10-16T10:49:01Z"
+}
