@@ -39,7 +39,7 @@ Preparation refuses to overwrite a frozen manifest. A changed split or experimen
 
 ```powershell
 $env:PYTHONPATH='backend'
-.\.venv\Scripts\python.exe -u -m backend.scripts.train_india_detector --pretrained-model yolo11n.pt --output models/india-yolo11n-coco-v2 --name india-yolo11n-coco-transfer-v2 --batch 4 --epochs 90 --patience 20 --class-weight-cap 4
+.\.venv\Scripts\python.exe -u -m backend.scripts.train_india_detector --pretrained-model https://github.com/ultralytics/assets/releases/download/v8.4.0/yolo11n.pt --output models/india-yolo11n-coco-v2 --name india-yolo11n-coco-transfer-v2 --batch 4 --epochs 90 --patience 20 --class-weight-cap 4
 .\.venv\Scripts\python.exe -u -m backend.scripts.train_india_roi --output models/india-roi-v5 --name indian-roads-unet-v5 --positive-repeat 8 --pothole-weight-min 48 --dice-weight 1.0 --batch 4 --epochs 80 --patience 15 --preserve-aspect
 ```
 

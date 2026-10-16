@@ -27,6 +27,7 @@ frontend/.vite/
 # Local research assets (never commit raw imagery, weights or private surveys)
 /data/
 /models/
+/yolo11n.pt
 /runs/
 /artifacts/
 /.venv-package/

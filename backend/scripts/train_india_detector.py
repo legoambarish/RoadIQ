@@ -135,7 +135,7 @@ if __name__ == "__main__":
     parser.add_argument("--data", type=Path, default=Path("data/rdd2022-india-v1"))
     parser.add_argument("--output", type=Path, default=Path("models/india-yolo11n-coco-v2"))
     parser.add_argument("--name", default="india-yolo11n-coco-transfer-v2")
-    parser.add_argument("--pretrained-model", default="yolo11n.pt")
+    parser.add_argument("--pretrained-model", default=APPROVED_PRETRAINING_SOURCE)
     parser.add_argument("--epochs", type=int, default=90)
     parser.add_argument("--batch", type=int, default=4)
     parser.add_argument("--patience", type=int, default=20)
