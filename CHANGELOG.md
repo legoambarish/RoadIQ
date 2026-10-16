@@ -1,6 +1,6 @@
 # Changelog
 
-## 2026-10-16 — Task D image-analysis scorer integration (unreleased)
+## 2026-10-16 — Task D image-analysis scorer integration (merged in PR #16)
 
 - Connected local image uploads from the dashboard to `POST /api/v1/image-analyses`, which invokes Task C observations and Task A scoring while preserving saved CLI report/annotation import.
 - Kept unsupported surface/features unavailable and mode suitability null; current uploads remain Unrated without validated component evidence and fixed normalization references.

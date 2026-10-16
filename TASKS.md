@@ -119,7 +119,7 @@ Task A implementation is on `task/a-scoring-engine` in `backend/app/services/sco
 - [x] Uses a calmer sage/forest Everyday palette, a distinct high-contrast Engineer palette, clearer spacing, and larger rounded panels.
 - [x] Keeps pedestrian infrastructure and comfort separate; lane markings are not treated as a walkability proxy, and unknown observations remain distinct from observed absence.
 - [x] Keeps unrated values null/Unrated and separates surface condition from mode suitability and pedestrian context.
-- [x] Clearly marks all sample values as illustrative `demo_fixture` data; main retains health-only API status without claiming segment retrieval. The Task D integration branch adds image analysis but no segment endpoint.
+- [x] Clearly marks illustrative RoadIQ scores as demo data; main provides health and image-analysis endpoints but no segment retrieval API.
 - [x] Provides local image preview and an Unrated/unavailable report state; Task D's branch adds image upload through its API without implying unavailable model evidence.
 - [x] Imports and displays available fields from a Task C local CLI JSON report and optional annotated image; the Task D branch additionally connects browser upload to the HTTP image-analysis endpoint.
 - [x] Passes frontend TypeScript checks, lint, and Vite production build.
@@ -168,9 +168,9 @@ The local synthetic/local-image demo and optional experimental ROI-gated texture
 - Task A's scorer is merged by PR #1 and the visible-defect caps by PR #15. RoadIQ normalization and confidence calibration still lack labelled data.
 - The Task B dashboard and navigation/India-map follow-ups are merged in PRs #2, #5, #6, #13, and #14. Map scores remain illustrative; Task D separately adds browser image upload to its API.
 - Task C's local image-analysis demo, evaluation scaffold, and optional experimental India-road ROI gating are merged into `main` by PRs #4, #7, #8, #10, and #11. No India-road aggregate labels or held-out RoadIQ road metrics exist. Physical measurements, material classification, aggregate/metal instance analysis, and broad validated damage detection remain unavailable.
-- Task D's checklist and Windows package are merged by PRs #3 and #12. PR #16 adds a local image API and dashboard upload integration; real uploads return Unrated with current evidence. The integration is not yet merged or packaged as a new `.exe`.
-- Branch alignment (2026-10-16): Task D includes Task A PR #15 at `4107965`, Task B PR #14 at `a0a2cd9`, and remote launcher update `716bff9`. Integration implementation is committed and pushed on `task/d-integration-release`; PR #16 is open against `main`.
-- Current combined Task B/Task D verification (2026-10-16): `PYTHONPATH=backend PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 /tmp/roadiq-latest-main-venv/bin/python -m pytest -q backend/tests` passed (101 passed, 2 skipped); from `frontend/`, `npm run test` passed (9 tests), `npm run lint` passed, and `npm run build` passed. `git diff --cached --check` passed. Browser end-to-end and Windows build/runtime checks remain unrun.
+- Task D's checklist, Windows package, and image-analysis/scorer integration are merged by PRs #3, #12, and #16. Real image uploads currently return Unrated with current evidence. The Windows package has not yet been rebuilt with the image integration.
+- Branch alignment (2026-10-16): `main` includes Task A PR #15, Task B PR #14, Task D PR #16, and the Task D launcher synchronization commit `716bff9`. The integration code is part of `main`.
+- Combined Task B/Task D verification (2026-10-16): `PYTHONPATH=backend PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 /tmp/roadiq-latest-main-venv/bin/python -m pytest -q backend/tests` passed (101 passed, 2 skipped); from `frontend/`, `npm run test` passed (9 tests), `npm run lint` passed, and `npm run build` passed. `git diff --cached --check` passed. Browser end-to-end and Windows build/runtime checks remain unrun.
 
 ## Four-owner kickoff checklist
 

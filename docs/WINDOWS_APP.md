@@ -24,7 +24,7 @@ Double-click `dist\RoadIQ.exe`, or run it from PowerShell:
 
 The launcher binds the service to an available loopback port (`127.0.0.1`), waits for both the health endpoint and dashboard to pass, and opens the default browser. If the browser does not open, the error dialog and log show the local URL.
 
-The bundled app does not require Python, Node, model downloads, API credentials, or a map-provider key at runtime. The dashboard uses illustrative fixture records. The Task D integration branch adds a local image upload endpoint and report UI; current uploads return Unrated because the required RSQI evidence and fixed normalization profiles are unavailable. No Windows package build or runtime test has been performed for that integration yet.
+The bundled app does not require Python, Node, model downloads, API credentials, or a map-provider key at runtime. The dashboard uses illustrative fixture records. The integrated app includes local image upload and report UI; current uploads return Unrated because the required RSQI evidence and fixed normalization profiles are unavailable. The Windows package has not yet been rebuilt or runtime-tested with this integration.
 
 Launching the same executable again safely requests a graceful restart only after verifying the recorded process is the same `RoadIQ.exe`; it then opens the newly started dashboard. Closing the browser does not stop the background service. To stop it, end `RoadIQ.exe` from Task Manager or shut down Windows.
 

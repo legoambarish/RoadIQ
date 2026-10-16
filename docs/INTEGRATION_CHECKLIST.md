@@ -1,6 +1,6 @@
 # Task D integration preparation and contract audit
 
-**Status recorded 2026-10-16:** The Windows desktop package has previously been built and exercised on a Windows host. Task D's image-analysis route and dashboard upload integration are implemented on `task/d-integration-release` and under review in PR #16; this integration has not yet been rebuilt or tested on Windows. The API does not produce numeric RSQI for current images. This file records current dependencies and field mapping; it does not approve incompatible changes to the shared contract.
+**Status recorded 2026-10-16:** The Windows desktop package has previously been built and exercised on a Windows host. Task D's image-analysis route and dashboard upload integration are merged into `main` by PR #16 but have not yet been rebuilt or tested on Windows. The API does not produce numeric RSQI for current images. This file records current dependencies and field mapping; it does not approve incompatible changes to the shared contract.
 
 ## Dependency readiness
 
@@ -11,9 +11,9 @@
 
 ## Field crosswalk
 
-### Task D image API on the integration branch
+### Task D image API merged into main
 
-`main` currently exposes `GET /api/v1/health`; Task D's PR #16 adds `POST /api/v1/image-analyses` with an image part. Calibration input is not accepted. The route integrates Task C observations and Task A scoring but preserves Unrated when evidence or fixed normalization references are missing.
+`main` exposes `GET /api/v1/health` and `POST /api/v1/image-analyses` with an image part. Calibration input is not accepted. The route integrates Task C observations and Task A scoring but preserves Unrated when evidence or fixed normalization references are missing.
 
 The proposed response names analysis_id, analysis_status, image_quality, pavement_region, surface_type, aggregate_analysis, defects, texture_features, rsqi, data_provenance, annotated_image, and model. analysis_status is completed, low_confidence, unrated, or failed. Each measurement object has value, unit, status, and source; status is observed, estimated, or unavailable. Available values require a source; unavailable requires value=null and source=null. Proposed source values are sensor, image_inference, user_input, and demo_fixture. Ratios use unit ratio, score uses index_0_100, and the example component values use damage_index_0_100. Unavailable values must not be converted to zero.
 
