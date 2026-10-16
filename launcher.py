@@ -3,11 +3,14 @@ from __future__ import annotations
 import ctypes
 import errno
 import http.client
+import importlib.abc
+import importlib.util
 import json
 import logging
 import os
 import secrets
 import socket
+import subprocess
 import sys
 import threading
 import time
@@ -273,7 +276,173 @@ def acquire_or_restart(lock: InstanceLock, logger: logging.Logger) -> InstanceLo
     )
 
 
-def create_desktop_app(token: str, restart_requested: threading.Event):
+class LocalSourcePriorityFinder(importlib.abc.MetaPathFinder):
+    """MetaPathFinder that intercepts and prioritizes local repository source code."""
+
+    def __init__(self, backend_dir: Path) -> None:
+        self.backend_dir = backend_dir
+
+    def find_spec(self, fullname: str, path: Any = None, target: Any = None) -> Any:
+        if fullname == 'app' or fullname.startswith('app.'):
+            parts = fullname.split('.')
+            rel_path = Path(*parts)
+            target_py = self.backend_dir / f'{rel_path}.py'
+            target_pkg = self.backend_dir / rel_path / '__init__.py'
+            if target_pkg.is_file():
+                return importlib.util.spec_from_file_location(
+                    fullname,
+                    target_pkg,
+                    submodule_search_locations=[str(self.backend_dir / rel_path)],
+                )
+            elif target_py.is_file():
+                return importlib.util.spec_from_file_location(fullname, target_py)
+        return None
+
+
+def discover_repo_root() -> Path | None:
+    """Discover the RoadIQ repository root if running alongside one."""
+    candidates: list[Path] = []
+    if getattr(sys, 'frozen', False):
+        exe_path = Path(sys.executable).resolve()
+        if exe_path.parent.name.lower() == 'dist':
+            candidates.append(exe_path.parent.parent)
+        candidates.append(exe_path.parent)
+    else:
+        candidates.append(Path(__file__).resolve().parent)
+
+    try:
+        cwd = Path.cwd().resolve()
+        candidates.extend([cwd, *cwd.parents])
+    except Exception:
+        pass
+
+    for candidate in candidates:
+        if (candidate / 'backend' / 'app').is_dir() and (candidate / 'frontend').is_dir():
+            return candidate
+    return None
+
+
+def _get_newest_mtime(directory: Path, pattern: str) -> float:
+    """Return the newest modification timestamp for files matching pattern."""
+    newest = 0.0
+    try:
+        for file in directory.rglob(pattern):
+            if file.is_file():
+                try:
+                    mtime = file.stat().st_mtime
+                    if mtime > newest:
+                        newest = mtime
+                except OSError:
+                    pass
+    except OSError:
+        pass
+    return newest
+
+
+def check_and_apply_code_updates(logger: logging.Logger) -> tuple[bool, Path | None]:
+    """Check for code updates in the repository and apply them to the runtime.
+
+    1. Detects if running alongside the RoadIQ source repository.
+    2. Checks if backend code has been updated; if so, injects LocalSourcePriorityFinder
+       so live repository modules are imported instead of stale frozen ones.
+    3. Checks if frontend source code is newer than the built dashboard; if so,
+       runs `npm run build` to update build/windows-frontend.
+    4. Returns (updates_applied, frontend_directory_to_serve).
+    """
+    repo_root = discover_repo_root()
+    if repo_root is None:
+        logger.info('Running in standalone mode; no local repository detected.')
+        return False, None
+
+    logger.info('Checking for code updates in repository at %s...', repo_root)
+    updates_detected = False
+
+    bundle_mtime = 0.0
+    if getattr(sys, 'frozen', False):
+        try:
+            bundle_mtime = Path(sys.executable).stat().st_mtime
+        except OSError:
+            pass
+
+    backend_dir = repo_root / 'backend'
+    frontend_dir = repo_root / 'frontend'
+    frontend_build_dir = repo_root / 'build' / 'windows-frontend'
+    frontend_dist_dir = frontend_dir / 'dist'
+
+    # 1. Check backend code updates
+    backend_mtime = _get_newest_mtime(backend_dir / 'app', '*.py')
+    launcher_file = repo_root / 'launcher.py'
+    if launcher_file.is_file():
+        try:
+            backend_mtime = max(backend_mtime, launcher_file.stat().st_mtime)
+        except OSError:
+            pass
+
+    if backend_mtime > bundle_mtime or not getattr(sys, 'frozen', False):
+        if getattr(sys, 'frozen', False):
+            logger.info('Backend code modifications detected in repository (newer than executable).')
+            updates_detected = True
+        if str(backend_dir) not in sys.path:
+            sys.path.insert(0, str(backend_dir))
+        finder_installed = any(isinstance(f, LocalSourcePriorityFinder) for f in sys.meta_path)
+        if not finder_installed:
+            sys.meta_path.insert(0, LocalSourcePriorityFinder(backend_dir))
+            logger.info('Installed live source loader for backend modules.')
+
+    # 2. Check frontend code updates
+    frontend_src_mtime = _get_newest_mtime(frontend_dir / 'src', '*')
+    built_index = frontend_build_dir / 'index.html'
+    dist_index = frontend_dist_dir / 'index.html'
+
+    built_mtime = 0.0
+    if built_index.is_file():
+        built_mtime = built_index.stat().st_mtime
+    elif dist_index.is_file():
+        built_mtime = dist_index.stat().st_mtime
+
+    if frontend_src_mtime > built_mtime:
+        logger.info('Frontend source modifications detected (src newer than built dashboard).')
+        updates_detected = True
+        try:
+            npm_cmd = 'npm.cmd' if os.name == 'nt' else 'npm'
+            env = os.environ.copy()
+            env['VITE_API_BASE_URL'] = '/api/v1'
+            logger.info('Rebuilding frontend into build/windows-frontend...')
+            res = subprocess.run(
+                [npm_cmd, 'run', 'build', '--', '--outDir', '../build/windows-frontend', '--emptyOutDir'],
+                cwd=str(frontend_dir),
+                capture_output=True,
+                text=True,
+                env=env,
+                timeout=60,
+                shell=(os.name == 'nt'),
+            )
+            if res.returncode == 0:
+                logger.info('Frontend build completed successfully.')
+            else:
+                logger.warning('Frontend build exited with code %s: %s', res.returncode, res.stderr)
+        except Exception as exc:
+            logger.warning('Could not automatically rebuild frontend: %s', exc)
+
+    frontend_to_serve: Path | None = None
+    if built_index.is_file():
+        frontend_to_serve = frontend_build_dir
+    elif dist_index.is_file():
+        frontend_to_serve = frontend_dist_dir
+
+    if updates_detected:
+        logger.info('Code updates implemented into runtime successfully.')
+    else:
+        logger.info('Code is up to date; using current build.')
+
+    return updates_detected, frontend_to_serve
+
+
+def create_desktop_app(
+    token: str,
+    restart_requested: threading.Event,
+    frontend_directory: Path | None = None,
+):
     os.environ['API_PREFIX'] = '/api/v1'
     os.environ['FASTAPI_ENV'] = 'production'
     os.environ.setdefault('CORS_ORIGINS', 'http://127.0.0.1')
@@ -285,8 +454,9 @@ def create_desktop_app(token: str, restart_requested: threading.Event):
     if str(backend_directory) not in sys.path:
         sys.path.insert(0, str(backend_directory))
 
-    from app.main import app
+    from app.main import create_app
 
+    app = create_app(frontend_directory=frontend_directory)
     app.state.launcher_token = token
     app.state.restart_requested = restart_requested
     return app
@@ -380,11 +550,14 @@ def run() -> int:
         logger = configure_logging()
         logger.info('Starting RoadIQ desktop application.')
 
+        # Check and implement any code updates before starting
+        _, frontend_override = check_and_apply_code_updates(logger)
+
         lock = InstanceLock(app_data_directory() / 'instance.lock')
         acquire_or_restart(lock, logger)
 
         token = secrets.token_hex(32)
-        app = create_desktop_app(token, restart_requested)
+        app = create_desktop_app(token, restart_requested, frontend_directory=frontend_override)
         listener, port = bind_loopback_socket()
         lock.write_metadata({
             'pid': os.getpid(),
