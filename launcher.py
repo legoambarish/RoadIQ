@@ -451,7 +451,7 @@ def create_desktop_app(
         bundle_root = Path(getattr(sys, '_MEIPASS'))
         backend_directory = bundle_root / 'backend'
         for variable, relative in (('ROADIQ_DETECTOR_MODEL_PATH', 'models/india-yolo11n-v1/detector.pt'),
-                                   ('ROADIQ_SEGMENTATION_MODEL_PATH', 'models/india-roi-v4/roi.pt')):
+                                   ('ROADIQ_SEGMENTATION_MODEL_PATH', 'models/india-roi-v3-letterbox-v1/roi.pt')):
             if (bundle_root / relative).is_file():
                 os.environ.setdefault(variable, str(bundle_root / relative))
         os.environ.setdefault('ROADIQ_DETECTOR_DEVICE', 'cpu')

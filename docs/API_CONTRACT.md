@@ -1,5 +1,7 @@
 # RoadIQ API contract
 
+The current additive image contract is **image-analysis-v1.1**, documented in the implementation section at the end of this file and [MEASUREMENT_AND_SCORING_SPEC.md](MEASUREMENT_AND_SCORING_SPEC.md). It includes genuine local model readiness, VDA observations, semantic mask geometry and timing. The legacy road-segment/RSQI contract is preserved. The documented single-origin launcher uses port 8123; the default development API still supports port 8000. Historical implementation descriptions below should be read with this update.
+
 ## Status and conventions
 
 Base URL for local development is `http://localhost:8000`; the versioned prefix is `/api/v1`. The implemented API includes `GET /api/v1/health` and `POST /api/v1/image-analyses` (plus the unversioned `/` informational route). Segment endpoints below are **planned and not implemented**. Image analysis is synchronous and local to the backend process; there is no image persistence.

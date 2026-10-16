@@ -2,9 +2,11 @@
 
 RoadIQ can be built as a single-file Windows desktop package. It bundles the FastAPI service, its Python runtime and dependencies, and the compiled dashboard in `dist\RoadIQ.exe`.
 
+The current optional **model-enabled** build and clean CPU environment are documented in [TRAINING_AND_DEMO.md](TRAINING_AND_DEMO.md). Use `-PythonPath .venv-package/Scripts/python.exe -IncludeModels` only after the two genuine assets pass readiness. It embeds the evaluated detector/ROI and notices. The default smaller package explicitly reports learned inference unavailable. Actual fresh standalone outcomes and hashes are in [VALIDATION_REPORT.md](VALIDATION_REPORT.md); earlier package outcomes are historical.
+
 ## Build
 
-Build on Windows with Python 3.12, Node.js 20+ and npm. From the repository root, create a Python 3.12 virtual environment and install the build requirements:
+Build on Windows with Python 3.12, supported Node.js 24 LTS and npm. From the repository root, create a Python 3.12 virtual environment and install the build requirements:
 
 ~~~powershell
 py -3.12 -m venv .venv

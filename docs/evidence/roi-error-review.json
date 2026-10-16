@@ -1,0 +1,12 @@
+{
+  "review_type": "qualitative inspection of six largest heldout pothole-mask symmetric-difference examples",
+  "contact_sheet": "artifacts/roi-source-evaluation/worst-pothole-mask-errors.jpg",
+  "observed": "Amber pothole predictions appear on the steps/footpath edge; corresponding source labels do not mark potholes there. Examples are neighboring frames from the same test sequence, not independent scenarios.",
+  "not_claimed": [
+    "Independent annotation certification",
+    "Healthy-road labels",
+    "Physical dimensions",
+    "Wide-domain generalization"
+  ],
+  "action": "Retain all metrics and error IDs; disclose the zero pothole IoU beside experimental area outputs. Do not tune after test or certify these predictions."
+}

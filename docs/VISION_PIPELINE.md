@@ -1,5 +1,7 @@
 # Task C image-analysis service
 
+Current India implementation: [MEASUREMENT_AND_SCORING_SPEC.md](MEASUREMENT_AND_SCORING_SPEC.md), [MODEL_CARD.md](MODEL_CARD.md) and [TRAINING_AND_DEMO.md](TRAINING_AND_DEMO.md) supersede the earlier model-availability status below. The existing service remains the integration boundary; genuine detector/semantic adapters add observations while retaining the older experimental texture path. No individual aggregate, metal, material, physical dimension or condition-grade validation is implied.
+
 ## Status and interface
 
 Task C provides a synchronous backend service. Task D owns the HTTP upload route and should pass the uploaded image bytes to:

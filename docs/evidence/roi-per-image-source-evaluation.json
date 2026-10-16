@@ -1,0 +1,5602 @@
+[
+  {
+    "image_id": "2_006_frame0000_leftImg8bit",
+    "image_sha256": "d6cc8e908da51d1c03b60f07d32d03914935d7ad559dc3f50741ad2684afd36e",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.9516354613128807,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0021_leftImg8bit",
+    "image_sha256": "8770297747a2ba61f5b71f669ce0a354145853478b3e5ab9c8f5ced63ed60e8e",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.9344401570128784,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0028_leftImg8bit",
+    "image_sha256": "ffbf3e3044565673f73c2d8deb8441e86ce76695ca6af75c8f8c4265c5281367",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.9123204316815201,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0035_leftImg8bit",
+    "image_sha256": "ce40ff257e74aa0b3c13af8da30043d9f8c88468dd5eb0f690eb48cb4fc160bd",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.9202942432973201,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0042_leftImg8bit",
+    "image_sha256": "2b99016a3751e797701f0e06de7bc78677df074a53ec365071f405b88429c1f5",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.9128170794133723,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0049_leftImg8bit",
+    "image_sha256": "f29d49eeed261ab0ce3de984c54497dabdcf870c98d9e1ba019306349bbfac7c",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 1949,
+    "pothole_area_absolute_error_px": 1949,
+    "pothole_image_fraction_absolute_error": 0.0021148003472222223,
+    "pothole_symmetric_difference_px": 1949,
+    "road_or_pothole_roi_iou": 0.7953539149597607,
+    "predicted_pothole_pixels_on_source_negative": 1949
+  },
+  {
+    "image_id": "2_006_frame0056_leftImg8bit",
+    "image_sha256": "1f77731f4e7225964f6c06309fc2bdbe6eee21e026c898f06bc5a020ddf8f552",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 30669,
+    "pothole_area_absolute_error_px": 30669,
+    "pothole_image_fraction_absolute_error": 0.03327799479166667,
+    "pothole_symmetric_difference_px": 30669,
+    "road_or_pothole_roi_iou": 0.7246268316063359,
+    "predicted_pothole_pixels_on_source_negative": 30669
+  },
+  {
+    "image_id": "2_006_frame0063_leftImg8bit",
+    "image_sha256": "40a7e29afe238ad0b7ce9cb121cb39b6472bea0c029d0f52f5cab012d77520a5",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 27320,
+    "pothole_area_absolute_error_px": 27320,
+    "pothole_image_fraction_absolute_error": 0.02964409722222222,
+    "pothole_symmetric_difference_px": 27320,
+    "road_or_pothole_roi_iou": 0.7218477416997763,
+    "predicted_pothole_pixels_on_source_negative": 27320
+  },
+  {
+    "image_id": "2_006_frame0070_leftImg8bit",
+    "image_sha256": "a2a5e6ed17243812f9aea088e0438e922485db1395709bc341d2c55194ba139a",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 32093,
+    "pothole_area_absolute_error_px": 32093,
+    "pothole_image_fraction_absolute_error": 0.034823133680555556,
+    "pothole_symmetric_difference_px": 32093,
+    "road_or_pothole_roi_iou": 0.707073790392644,
+    "predicted_pothole_pixels_on_source_negative": 32093
+  },
+  {
+    "image_id": "2_006_frame0077_leftImg8bit",
+    "image_sha256": "be7d0129844f1e408ad5771a4e6fe211f52bfa5e9e51d4a66e43f393e4391fcd",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 34826,
+    "pothole_area_absolute_error_px": 34826,
+    "pothole_image_fraction_absolute_error": 0.037788628472222224,
+    "pothole_symmetric_difference_px": 34826,
+    "road_or_pothole_roi_iou": 0.6836338283785016,
+    "predicted_pothole_pixels_on_source_negative": 34826
+  },
+  {
+    "image_id": "2_006_frame0084_leftImg8bit",
+    "image_sha256": "dc695d18a0bc949a33e497e109708e57d09f05a7613c26c1c3d4c5ee8541ed1d",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 30915,
+    "pothole_area_absolute_error_px": 30915,
+    "pothole_image_fraction_absolute_error": 0.033544921875,
+    "pothole_symmetric_difference_px": 30915,
+    "road_or_pothole_roi_iou": 0.6970823138010829,
+    "predicted_pothole_pixels_on_source_negative": 30915
+  },
+  {
+    "image_id": "2_006_frame0091_leftImg8bit",
+    "image_sha256": "2d74eb09aaedc7a7a8d3ac3221b54b916b7c05234b4f9616717c673c19b6013a",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 25204,
+    "pothole_area_absolute_error_px": 25204,
+    "pothole_image_fraction_absolute_error": 0.02734809027777778,
+    "pothole_symmetric_difference_px": 25204,
+    "road_or_pothole_roi_iou": 0.7100169263166594,
+    "predicted_pothole_pixels_on_source_negative": 25204
+  },
+  {
+    "image_id": "2_006_frame0098_leftImg8bit",
+    "image_sha256": "c069275bd79dfb3b7e700e7cf7d19535e2de14bfc78b3295473f5abe573387e7",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 10309,
+    "pothole_area_absolute_error_px": 10309,
+    "pothole_image_fraction_absolute_error": 0.011185980902777778,
+    "pothole_symmetric_difference_px": 10309,
+    "road_or_pothole_roi_iou": 0.7221243497738478,
+    "predicted_pothole_pixels_on_source_negative": 10309
+  },
+  {
+    "image_id": "2_006_frame0105_leftImg8bit",
+    "image_sha256": "ce10973b8662b878e295f4a79031102f458f7bca2a6762bd222dc754322cc1f6",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 1980,
+    "pothole_area_absolute_error_px": 1980,
+    "pothole_image_fraction_absolute_error": 0.0021484375,
+    "pothole_symmetric_difference_px": 1980,
+    "road_or_pothole_roi_iou": 0.7704375876663935,
+    "predicted_pothole_pixels_on_source_negative": 1980
+  },
+  {
+    "image_id": "2_006_frame0112_leftImg8bit",
+    "image_sha256": "8c6bcce6d69dc405ac1afbbd27ec2c9e9799c0812164be00380fa144ff6ac684",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.7629930749218328,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0119_leftImg8bit",
+    "image_sha256": "9ba86dd40aded798e94d7bc6bd7b13f57412f764510e545701c2d02096c926f0",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.8136101719129483,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0126_leftImg8bit",
+    "image_sha256": "dfdb3043c94a0771bc9f2fadd4abcad2c6b9ba1fee109dc9c4114104059add88",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.8386690851222671,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0133_leftImg8bit",
+    "image_sha256": "a8d5de7d7407b4efe0818141101b4078c5ded80bd2907eb56ca91c225b9a1027",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.8543892521380176,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0140_leftImg8bit",
+    "image_sha256": "738247301808b6992e3db23c6fcd5368b69933975d7d47824214d04c4d55a241",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.8692571422630141,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0147_leftImg8bit",
+    "image_sha256": "7c1f64fe2eef365c19789c4bd5f25742f81c1e1f12c3cb8675a66271bb571f50",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.8626603691857024,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0154_leftImg8bit",
+    "image_sha256": "649b1b02cc2b438ab33b5234a9e4142bdfd12aa89d9f0d8b5cb21a6262295da9",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.8031089806750797,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0161_leftImg8bit",
+    "image_sha256": "b9f2ae4d20de73583924f171370777ada70184903aa04f5be9d8473a4a144906",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 66,
+    "pothole_area_absolute_error_px": 66,
+    "pothole_image_fraction_absolute_error": 7.161458333333333e-05,
+    "pothole_symmetric_difference_px": 66,
+    "road_or_pothole_roi_iou": 0.7225677465553978,
+    "predicted_pothole_pixels_on_source_negative": 66
+  },
+  {
+    "image_id": "2_006_frame0168_leftImg8bit",
+    "image_sha256": "44d7777be68a0344126ffdec9b5780c5064a602d4985ab467dc93ddcc1d21bf1",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 61,
+    "pothole_area_absolute_error_px": 61,
+    "pothole_image_fraction_absolute_error": 6.618923611111112e-05,
+    "pothole_symmetric_difference_px": 61,
+    "road_or_pothole_roi_iou": 0.7607966967463254,
+    "predicted_pothole_pixels_on_source_negative": 61
+  },
+  {
+    "image_id": "2_006_frame0175_leftImg8bit",
+    "image_sha256": "8ec308adf92d1cb9f284c99382eca0ee6c67e4b74823438dd396461d39e8132b",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 6110,
+    "pothole_area_absolute_error_px": 6110,
+    "pothole_image_fraction_absolute_error": 0.006629774305555555,
+    "pothole_symmetric_difference_px": 6110,
+    "road_or_pothole_roi_iou": 0.7090580133787086,
+    "predicted_pothole_pixels_on_source_negative": 6110
+  },
+  {
+    "image_id": "2_006_frame0182_leftImg8bit",
+    "image_sha256": "5d0c29d58005fcdbfe9eed482c8d5a2d5c593e09593221f96dbd9f3907ad779f",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 3217,
+    "pothole_area_absolute_error_px": 3217,
+    "pothole_image_fraction_absolute_error": 0.003490668402777778,
+    "pothole_symmetric_difference_px": 3217,
+    "road_or_pothole_roi_iou": 0.6940730086623756,
+    "predicted_pothole_pixels_on_source_negative": 3217
+  },
+  {
+    "image_id": "2_006_frame0189_leftImg8bit",
+    "image_sha256": "b15fdeb170728f7fbc82ec1c905dbf99c59f6fdd5cac394f8edab323d5eee32a",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 697,
+    "pothole_area_absolute_error_px": 697,
+    "pothole_image_fraction_absolute_error": 0.0007562934027777778,
+    "pothole_symmetric_difference_px": 697,
+    "road_or_pothole_roi_iou": 0.6761750936141018,
+    "predicted_pothole_pixels_on_source_negative": 697
+  },
+  {
+    "image_id": "2_006_frame0196_leftImg8bit",
+    "image_sha256": "1e2a0a432c05ff695d8ad4d43a7789a825462261bde1afa4e25221c0b0c6b022",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 2040,
+    "pothole_area_absolute_error_px": 2040,
+    "pothole_image_fraction_absolute_error": 0.0022135416666666666,
+    "pothole_symmetric_difference_px": 2040,
+    "road_or_pothole_roi_iou": 0.6854145293410616,
+    "predicted_pothole_pixels_on_source_negative": 2040
+  },
+  {
+    "image_id": "2_006_frame0203_leftImg8bit",
+    "image_sha256": "13dcff3e9f591c0064ce06ac162d69007089485aa11aaceb91bdfcd769fe3e81",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 701,
+    "pothole_area_absolute_error_px": 701,
+    "pothole_image_fraction_absolute_error": 0.0007606336805555555,
+    "pothole_symmetric_difference_px": 701,
+    "road_or_pothole_roi_iou": 0.679627967838846,
+    "predicted_pothole_pixels_on_source_negative": 701
+  },
+  {
+    "image_id": "2_006_frame0210_leftImg8bit",
+    "image_sha256": "a920b699f7cc0e106842ff6a8335191f7cb38d9baae2807b26b2e880e5275f6a",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 764,
+    "pothole_area_absolute_error_px": 764,
+    "pothole_image_fraction_absolute_error": 0.0008289930555555556,
+    "pothole_symmetric_difference_px": 764,
+    "road_or_pothole_roi_iou": 0.687185507028319,
+    "predicted_pothole_pixels_on_source_negative": 764
+  },
+  {
+    "image_id": "2_006_frame0217_leftImg8bit",
+    "image_sha256": "515b5bb8206cb8414ceedb6592452ac1d6cf4ac1fa4c111ed7223cf23ed9d2d2",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.7048318153788706,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0224_leftImg8bit",
+    "image_sha256": "bcd27d849dc2193d989ac4ff481fa1bef87d2561bbfef875ed1404eb93bb355f",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.7596344298147026,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0231_leftImg8bit",
+    "image_sha256": "4f2ac98930c75f569f314acd9cbedcd00b7e080ab0face51e8c52f1534858106",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.7777887921435284,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0245_leftImg8bit",
+    "image_sha256": "ac513634c6e18f4b0d1f24ba3387358b40d80108623620bfae0ee098f29a1149",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.8018988164522255,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0252_leftImg8bit",
+    "image_sha256": "94288bdbd1c7853f61bf5263062425e215167d2bebfb3bff535ce9883986fa01",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.8015861787336936,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0259_leftImg8bit",
+    "image_sha256": "8844ea06ead2602af614f54f4ebd42a09df6163a7cb8c6b53969652fe3686113",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 104,
+    "pothole_area_absolute_error_px": 104,
+    "pothole_image_fraction_absolute_error": 0.00011284722222222222,
+    "pothole_symmetric_difference_px": 104,
+    "road_or_pothole_roi_iou": 0.7911082822818044,
+    "predicted_pothole_pixels_on_source_negative": 104
+  },
+  {
+    "image_id": "2_006_frame0266_leftImg8bit",
+    "image_sha256": "e4a25bbd0ae89b46ab01adfa5a99fab38dee268fad1fbc1dd13c4b7e1b6987a1",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 3312,
+    "pothole_area_absolute_error_px": 3312,
+    "pothole_image_fraction_absolute_error": 0.00359375,
+    "pothole_symmetric_difference_px": 3312,
+    "road_or_pothole_roi_iou": 0.7751109467455621,
+    "predicted_pothole_pixels_on_source_negative": 3312
+  },
+  {
+    "image_id": "2_006_frame0273_leftImg8bit",
+    "image_sha256": "94fb118210f59d28f330d0349b44450df3ebf07acbc870de4dfbe4ecce2b198d",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.797938207021042,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0280_leftImg8bit",
+    "image_sha256": "1478d65c6bf519ad9cfe2285e4214e22e1c41dcf2781e02485d2824f2c9853d0",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 10717,
+    "pothole_area_absolute_error_px": 10717,
+    "pothole_image_fraction_absolute_error": 0.011628689236111111,
+    "pothole_symmetric_difference_px": 10717,
+    "road_or_pothole_roi_iou": 0.745537907546081,
+    "predicted_pothole_pixels_on_source_negative": 10717
+  },
+  {
+    "image_id": "2_006_frame0287_leftImg8bit",
+    "image_sha256": "25c9cb61a598b7e19ae53b0952ee6e0f423a99d7ea0e013571a4bbb634e63283",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 8112,
+    "pothole_area_absolute_error_px": 8112,
+    "pothole_image_fraction_absolute_error": 0.008802083333333334,
+    "pothole_symmetric_difference_px": 8112,
+    "road_or_pothole_roi_iou": 0.7484945009666889,
+    "predicted_pothole_pixels_on_source_negative": 8112
+  },
+  {
+    "image_id": "2_006_frame0308_leftImg8bit",
+    "image_sha256": "fb66adabf47399eb7540d590d91ea65aa29caa7711de3cd861af63cd794cfb62",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 469,
+    "pothole_area_absolute_error_px": 469,
+    "pothole_image_fraction_absolute_error": 0.0005088975694444444,
+    "pothole_symmetric_difference_px": 469,
+    "road_or_pothole_roi_iou": 0.7687788590419958,
+    "predicted_pothole_pixels_on_source_negative": 469
+  },
+  {
+    "image_id": "2_006_frame0315_leftImg8bit",
+    "image_sha256": "bae2d432dda6e414246258ca9575b1f0927cfc1f09fc74d76eb114aa0f9a37e7",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.7413693500936079,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0322_leftImg8bit",
+    "image_sha256": "00676545e32f2cff526eaae85f582afce773b287109c7d50b4cbe84eeddcfec5",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.7850276647276498,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0329_leftImg8bit",
+    "image_sha256": "249046e947555faf0944beae9f7e1eee0efe5d20a2ae94a82d133e5b9889b34f",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.7800752697213339,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0343_leftImg8bit",
+    "image_sha256": "bdcbd94fe2c031510ccf0a777e7a0782186aaeeb988b712124c48424e7f1ff72",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.8374710777147099,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0385_leftImg8bit",
+    "image_sha256": "6843a938420bdcfd312443ee281888ea0ab096f29d80914b2203337ee6de26b3",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.8193145364255824,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0392_leftImg8bit",
+    "image_sha256": "953043b8458f58a54094df6bc150966841cc6bd385e5399bc3404c2128fd9c4a",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.8297803314130965,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0399_leftImg8bit",
+    "image_sha256": "601e3f40e88ea338abbf4701014e7b6e7c6a16840dcfd7306381b3dc7d589a8d",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.766218544303091,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0406_leftImg8bit",
+    "image_sha256": "7e925dee33ebcb78c8fa39ea223cf80972c2178b16f02b1f04117d81b8412bf8",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 2123,
+    "predicted_pothole_pixels": 346,
+    "pothole_area_absolute_error_px": 1777,
+    "pothole_image_fraction_absolute_error": 0.0019281684027777778,
+    "pothole_symmetric_difference_px": 2469,
+    "road_or_pothole_roi_iou": 0.7855704624963359,
+    "predicted_pothole_pixels_on_source_negative": null
+  },
+  {
+    "image_id": "2_006_frame0413_leftImg8bit",
+    "image_sha256": "1b98696caf1f982c4cd48b4b254ccc52e56919be3cb2c54acad0bfdd7f379890",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 2528,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 2528,
+    "pothole_image_fraction_absolute_error": 0.0027430555555555554,
+    "pothole_symmetric_difference_px": 2528,
+    "road_or_pothole_roi_iou": 0.7519061008872191,
+    "predicted_pothole_pixels_on_source_negative": null
+  },
+  {
+    "image_id": "2_006_frame0420_leftImg8bit",
+    "image_sha256": "8b5a3889f5595275b84fb72e7b1f7eca9d41b3ddee2e6543ce3358b165268c3a",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 3161,
+    "predicted_pothole_pixels": 4786,
+    "pothole_area_absolute_error_px": 1625,
+    "pothole_image_fraction_absolute_error": 0.0017632378472222222,
+    "pothole_symmetric_difference_px": 7947,
+    "road_or_pothole_roi_iou": 0.8263970009314198,
+    "predicted_pothole_pixels_on_source_negative": null
+  },
+  {
+    "image_id": "2_006_frame0427_leftImg8bit",
+    "image_sha256": "57a97e92d2b98dce66fc44a21176ca258bfa4e18b13ca6b77f5ce37ab2554ead",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 3574,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 3574,
+    "pothole_image_fraction_absolute_error": 0.0038780381944444444,
+    "pothole_symmetric_difference_px": 3574,
+    "road_or_pothole_roi_iou": 0.8840783505706372,
+    "predicted_pothole_pixels_on_source_negative": null
+  },
+  {
+    "image_id": "2_006_frame0434_leftImg8bit",
+    "image_sha256": "77931237ebf4ba83d5128812b6c7ccb0ff0e3cb32eeff72452885c3f2830440b",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 4175,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 4175,
+    "pothole_image_fraction_absolute_error": 0.004530164930555556,
+    "pothole_symmetric_difference_px": 4175,
+    "road_or_pothole_roi_iou": 0.8525481635615508,
+    "predicted_pothole_pixels_on_source_negative": null
+  },
+  {
+    "image_id": "2_006_frame0441_leftImg8bit",
+    "image_sha256": "d4ed5d43cebd583ecfee60c78d5e6fb2eb6d4ea21c568620fd106b1f7d712415",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 5969,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 5969,
+    "pothole_image_fraction_absolute_error": 0.006476779513888889,
+    "pothole_symmetric_difference_px": 5969,
+    "road_or_pothole_roi_iou": 0.8464574570439113,
+    "predicted_pothole_pixels_on_source_negative": null
+  },
+  {
+    "image_id": "2_006_frame0448_leftImg8bit",
+    "image_sha256": "93d092d6e8f5cf42680b4ce51edcc155a9adfe4bf21f7c64e61cb9f081e968c5",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.8824006603061703,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0455_leftImg8bit",
+    "image_sha256": "899245d7effbcc3762a179b77f2f2182045120d707f00f1d1e39fcc807c26d9f",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 270,
+    "pothole_area_absolute_error_px": 270,
+    "pothole_image_fraction_absolute_error": 0.00029296875,
+    "pothole_symmetric_difference_px": 270,
+    "road_or_pothole_roi_iou": 0.868645071028842,
+    "predicted_pothole_pixels_on_source_negative": 270
+  },
+  {
+    "image_id": "2_006_frame0462_leftImg8bit",
+    "image_sha256": "6dbbadd026a267fc3767d391a0cc48191d71d371378722e4426a4d0b60067a60",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.859510129307781,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0469_leftImg8bit",
+    "image_sha256": "ea13f29378196d79845734ba5fba23267582f1b89ef9d415e56f9b98bcce27c9",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 789,
+    "pothole_area_absolute_error_px": 789,
+    "pothole_image_fraction_absolute_error": 0.0008561197916666667,
+    "pothole_symmetric_difference_px": 789,
+    "road_or_pothole_roi_iou": 0.8349335322553045,
+    "predicted_pothole_pixels_on_source_negative": 789
+  },
+  {
+    "image_id": "2_006_frame0476_leftImg8bit",
+    "image_sha256": "f3ace79871e48ff138d4010ae338a722447d43e1de466c429aed97c35c530170",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 74,
+    "predicted_pothole_pixels": 1199,
+    "pothole_area_absolute_error_px": 1125,
+    "pothole_image_fraction_absolute_error": 0.001220703125,
+    "pothole_symmetric_difference_px": 1273,
+    "road_or_pothole_roi_iou": 0.8412531668260788,
+    "predicted_pothole_pixels_on_source_negative": null
+  },
+  {
+    "image_id": "2_006_frame0490_leftImg8bit",
+    "image_sha256": "66c041be8058d1a119b31207569dc17adcea520b52e36ff541823eecd0e8fa2e",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.8349701026424098,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0497_leftImg8bit",
+    "image_sha256": "a5a34b6f18c9d6a75563fccb591f6cc9794d46611af6a3d35c5ea79cce1a4802",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.8127469182598646,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0504_leftImg8bit",
+    "image_sha256": "ba8720e107fe3230e0b569eca8e75fafacbc8f6e5a107181f47eb29a0c6afd7d",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.848129894881034,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0511_leftImg8bit",
+    "image_sha256": "030de5b8c763ee1b17a4b5a8863c84adc1974abc675e5712d4e46552aee09e5b",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 4281,
+    "pothole_area_absolute_error_px": 4281,
+    "pothole_image_fraction_absolute_error": 0.004645182291666667,
+    "pothole_symmetric_difference_px": 4281,
+    "road_or_pothole_roi_iou": 0.8154964537488635,
+    "predicted_pothole_pixels_on_source_negative": 4281
+  },
+  {
+    "image_id": "2_006_frame0518_leftImg8bit",
+    "image_sha256": "41784d2c6b62bb1ede77e853e1284feda6e39c811ff2fd03c2023abd8a5b6429",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.8472642030681228,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0525_leftImg8bit",
+    "image_sha256": "23dd44e21c4ba2d29e3b58a6db37e8f4f7eab42cee4a49c4584e76d0145e7f13",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 2694,
+    "pothole_area_absolute_error_px": 2694,
+    "pothole_image_fraction_absolute_error": 0.002923177083333333,
+    "pothole_symmetric_difference_px": 2694,
+    "road_or_pothole_roi_iou": 0.899299619914079,
+    "predicted_pothole_pixels_on_source_negative": 2694
+  },
+  {
+    "image_id": "2_006_frame0532_leftImg8bit",
+    "image_sha256": "9d5753ba8e63f2ef6562323ba7eeccc9bb56fabb9e2a77c9dceac28e6340c2e8",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.9151780814583808,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0539_leftImg8bit",
+    "image_sha256": "ee63f9b5002874f9d8f8f1fa3da8088518145f764ccc6b504bd5a277e995af6f",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.9137932409265486,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0546_leftImg8bit",
+    "image_sha256": "56e7b6396f8200b4146a34e624835807c9b2109d903436f5a894252ab1df7e4a",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.9155342479065774,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0553_leftImg8bit",
+    "image_sha256": "b82cf2a5ea892be6657fde9a0beff8c0db9cf5886c03795396055b7ed9b83182",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.9017885043336787,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0560_leftImg8bit",
+    "image_sha256": "4e3b7d2ac64d874ab1802034893535c02fc5883508d06605da0630440032a417",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 184,
+    "pothole_area_absolute_error_px": 184,
+    "pothole_image_fraction_absolute_error": 0.0001996527777777778,
+    "pothole_symmetric_difference_px": 184,
+    "road_or_pothole_roi_iou": 0.8972085507766986,
+    "predicted_pothole_pixels_on_source_negative": 184
+  },
+  {
+    "image_id": "2_006_frame0567_leftImg8bit",
+    "image_sha256": "97e735bf3a10d1fe7c45b1e3b6159d228453c530406a1dcf7660376cfe42b5ec",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 9,
+    "pothole_area_absolute_error_px": 9,
+    "pothole_image_fraction_absolute_error": 9.765625e-06,
+    "pothole_symmetric_difference_px": 9,
+    "road_or_pothole_roi_iou": 0.9302064936344336,
+    "predicted_pothole_pixels_on_source_negative": 9
+  },
+  {
+    "image_id": "2_006_frame0574_leftImg8bit",
+    "image_sha256": "e465d186259ab481dd40fcaf1476b32edc89c5fc968025a7eea73e47fce0c5d2",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 130,
+    "pothole_area_absolute_error_px": 130,
+    "pothole_image_fraction_absolute_error": 0.00014105902777777776,
+    "pothole_symmetric_difference_px": 130,
+    "road_or_pothole_roi_iou": 0.9243444036500381,
+    "predicted_pothole_pixels_on_source_negative": 130
+  },
+  {
+    "image_id": "2_006_frame0581_leftImg8bit",
+    "image_sha256": "8463ea8daa236bfdbe39caf0a67859d71047b021855c57351b83258b2b36e295",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 199,
+    "pothole_area_absolute_error_px": 199,
+    "pothole_image_fraction_absolute_error": 0.00021592881944444445,
+    "pothole_symmetric_difference_px": 199,
+    "road_or_pothole_roi_iou": 0.8916810479542335,
+    "predicted_pothole_pixels_on_source_negative": 199
+  },
+  {
+    "image_id": "2_006_frame0588_leftImg8bit",
+    "image_sha256": "01a6c7c6b1ac81c8a38116972f6fff6931f40537d710316212c6d74446a148a4",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.8953917984868202,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0595_leftImg8bit",
+    "image_sha256": "4caff501f6652e66989943ef150d0befebfbeb600ebc80ae46502664428045a9",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.872310554780867,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0602_leftImg8bit",
+    "image_sha256": "cee8ea5d8a5b92b0d7b5a519dcd798216f480e505ca6fb8ad05c7c6b94824de3",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.8724090260889031,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0609_leftImg8bit",
+    "image_sha256": "dc2d33f6b5b92f7e5d7f7d73a89cf0a798bbe7b308f4ab03b13dac7ededf8c86",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.8511831840449855,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0616_leftImg8bit",
+    "image_sha256": "9a4b33e1cc5e59778c6e068c5fc3af7b06fb513c297a423a5ca9c8e133f6124c",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.83207373532868,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0623_leftImg8bit",
+    "image_sha256": "956eea6bcc11c7cab0dd54e47915687e7045fb1f5dce8ea515061884372f44af",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 181,
+    "pothole_area_absolute_error_px": 181,
+    "pothole_image_fraction_absolute_error": 0.00019639756944444444,
+    "pothole_symmetric_difference_px": 181,
+    "road_or_pothole_roi_iou": 0.8779073949487385,
+    "predicted_pothole_pixels_on_source_negative": 181
+  },
+  {
+    "image_id": "2_006_frame0637_leftImg8bit",
+    "image_sha256": "3c801c43264a35ca4b07a40d4e63d869efb7e2c4f11fdd776b66a78ef0ae0943",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 1771,
+    "pothole_area_absolute_error_px": 1771,
+    "pothole_image_fraction_absolute_error": 0.0019216579861111112,
+    "pothole_symmetric_difference_px": 1771,
+    "road_or_pothole_roi_iou": 0.9472605367105705,
+    "predicted_pothole_pixels_on_source_negative": 1771
+  },
+  {
+    "image_id": "2_006_frame0644_leftImg8bit",
+    "image_sha256": "ca6eb33c920fe41c74cc48fc6d2b24912dcae71e70ab441d6b6cd633d75730b6",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.9493183602952725,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0651_leftImg8bit",
+    "image_sha256": "97572df38754e217d909897d8c517f578f824a5413e93d4d95407318b5c9679f",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 385,
+    "pothole_area_absolute_error_px": 385,
+    "pothole_image_fraction_absolute_error": 0.0004177517361111111,
+    "pothole_symmetric_difference_px": 385,
+    "road_or_pothole_roi_iou": 0.9475940461329179,
+    "predicted_pothole_pixels_on_source_negative": 385
+  },
+  {
+    "image_id": "2_006_frame0658_leftImg8bit",
+    "image_sha256": "243e8f64324c0a2539b26ae63f121eb165469d32fe7536b6ff75107055d715b9",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 205,
+    "pothole_area_absolute_error_px": 205,
+    "pothole_image_fraction_absolute_error": 0.0002224392361111111,
+    "pothole_symmetric_difference_px": 205,
+    "road_or_pothole_roi_iou": 0.9613874250716077,
+    "predicted_pothole_pixels_on_source_negative": 205
+  },
+  {
+    "image_id": "2_006_frame0665_leftImg8bit",
+    "image_sha256": "577151dab92f0d578e4a884c97e5b9c40ae003f9ad8762f82ef5a035d098bc30",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.9376726151694768,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0693_leftImg8bit",
+    "image_sha256": "37d37f269b8863cc50f280111365e197697d5834583efe4ad3e8b5eddbf2b184",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.9535968480128885,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0707_leftImg8bit",
+    "image_sha256": "454a999ceb589dcebf6d291bc00e2c41b0c3e33e9228462b65e687444baf3af8",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.9585257409902749,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0721_leftImg8bit",
+    "image_sha256": "18aa8b2846bd3a15f13a106ad65ccbabd2d5adcdc5265e06ca0afc4555d40a2a",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.959340967769903,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0735_leftImg8bit",
+    "image_sha256": "18725c2ac0d42fd32845f174e1e53b89b338effa20588bc0df74b60b70f5b752",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 1011,
+    "pothole_area_absolute_error_px": 1011,
+    "pothole_image_fraction_absolute_error": 0.0010970052083333333,
+    "pothole_symmetric_difference_px": 1011,
+    "road_or_pothole_roi_iou": 0.9585367486775833,
+    "predicted_pothole_pixels_on_source_negative": 1011
+  },
+  {
+    "image_id": "2_006_frame0742_leftImg8bit",
+    "image_sha256": "04a61557b6bfeda4691b8032c16fc909f1db4c9c4a3c2c89f4a7ad1349e23e1c",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 2029,
+    "pothole_area_absolute_error_px": 2029,
+    "pothole_image_fraction_absolute_error": 0.0022016059027777776,
+    "pothole_symmetric_difference_px": 2029,
+    "road_or_pothole_roi_iou": 0.9608650174986636,
+    "predicted_pothole_pixels_on_source_negative": 2029
+  },
+  {
+    "image_id": "2_006_frame0756_leftImg8bit",
+    "image_sha256": "e321be9af5c30978a34653375744341f4b5686880e9113430606cec6f5e5c428",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.9634732924818942,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0763_leftImg8bit",
+    "image_sha256": "1ea94baeaeb23a92a2da56bf745890386d472fb1a82db77278b4a5b5db401110",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.9526027932815796,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0770_leftImg8bit",
+    "image_sha256": "02095efe2f2d408260aaaa34a17ce43a734384e69b668abed032197e4fbeeea9",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 6,
+    "pothole_area_absolute_error_px": 6,
+    "pothole_image_fraction_absolute_error": 6.510416666666667e-06,
+    "pothole_symmetric_difference_px": 6,
+    "road_or_pothole_roi_iou": 0.9556214676849535,
+    "predicted_pothole_pixels_on_source_negative": 6
+  },
+  {
+    "image_id": "2_006_frame0777_leftImg8bit",
+    "image_sha256": "a5bca09f9a95f5abb8ffb5aa45b51b38389d18c8c31c018a55a229c6c9fb964c",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.9548260287721646,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0784_leftImg8bit",
+    "image_sha256": "b40d28c5565875044268048a79ea070de2d9acae0e60006aa093af5e5eb48609",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.9440062429601054,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0791_leftImg8bit",
+    "image_sha256": "5403d3077ffd3532adc5854bf16110dc9f498452ae23446b46fe3cdd2fa2c1c0",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 491,
+    "pothole_area_absolute_error_px": 491,
+    "pothole_image_fraction_absolute_error": 0.0005327690972222222,
+    "pothole_symmetric_difference_px": 491,
+    "road_or_pothole_roi_iou": 0.9653305226913412,
+    "predicted_pothole_pixels_on_source_negative": 491
+  },
+  {
+    "image_id": "2_006_frame0798_leftImg8bit",
+    "image_sha256": "1f6dc501a1dbbd199343e024d49234e9ac29b7088d3047a6492cc13868fcd18e",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.9660096521504083,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0805_leftImg8bit",
+    "image_sha256": "aefe1afc397b5d94b9cb90cae74d926bf1237ac68986a9dcf8f35de02991dc77",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.9564301933117525,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0812_leftImg8bit",
+    "image_sha256": "bc0eb8c6a3b99f38afe4f575409ecda007a8071c7a66dd957100acda701488b9",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 15,
+    "pothole_area_absolute_error_px": 15,
+    "pothole_image_fraction_absolute_error": 1.6276041666666666e-05,
+    "pothole_symmetric_difference_px": 15,
+    "road_or_pothole_roi_iou": 0.9679862821681795,
+    "predicted_pothole_pixels_on_source_negative": 15
+  },
+  {
+    "image_id": "2_006_frame0819_leftImg8bit",
+    "image_sha256": "7c710f8ea8da82b07541ecd8abc1a25e6ba36b7d71929e5aef2e8e230f42a6f0",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.9573667856374849,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0826_leftImg8bit",
+    "image_sha256": "9eebd148351287d18d485690761bcec6a2de0fcc19a3a57e96daeb5506fa6489",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 2571,
+    "pothole_area_absolute_error_px": 2571,
+    "pothole_image_fraction_absolute_error": 0.0027897135416666665,
+    "pothole_symmetric_difference_px": 2571,
+    "road_or_pothole_roi_iou": 0.9618034704417163,
+    "predicted_pothole_pixels_on_source_negative": 2571
+  },
+  {
+    "image_id": "2_006_frame0833_leftImg8bit",
+    "image_sha256": "65114e480b338bb1dfb815d9ef476bcf4ae3db1894beb3b157cb5cb0c1224096",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.9610277332917166,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0840_leftImg8bit",
+    "image_sha256": "abfc0ef63994a11661e488c65745ebf783c66d0c0bcf6803a44cce7b2a1f408c",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 3010,
+    "pothole_area_absolute_error_px": 3010,
+    "pothole_image_fraction_absolute_error": 0.003266059027777778,
+    "pothole_symmetric_difference_px": 3010,
+    "road_or_pothole_roi_iou": 0.9586903884061961,
+    "predicted_pothole_pixels_on_source_negative": 3010
+  },
+  {
+    "image_id": "2_006_frame0847_leftImg8bit",
+    "image_sha256": "d31fde3fa6e640934aef6e473f15c112d796b9f2e31174e954b0425c05a5bee2",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.9621842158642452,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0854_leftImg8bit",
+    "image_sha256": "ad35fffe300dbafbddbb6a9d5af47ceb6eb4e8cbf29377b89da4e37c3756c777",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.954206774007173,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0861_leftImg8bit",
+    "image_sha256": "4e984c58204ef3b24ba18af0673a977c58a3a52c36aa9716cb3f691725f10fd1",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 2148,
+    "pothole_area_absolute_error_px": 2148,
+    "pothole_image_fraction_absolute_error": 0.0023307291666666667,
+    "pothole_symmetric_difference_px": 2148,
+    "road_or_pothole_roi_iou": 0.9583149305685519,
+    "predicted_pothole_pixels_on_source_negative": 2148
+  },
+  {
+    "image_id": "2_006_frame0868_leftImg8bit",
+    "image_sha256": "be4d98da13af75fac912aa20da9c042d14bf8a9660944cfedaed7ff1ffbe7e49",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 603,
+    "pothole_area_absolute_error_px": 603,
+    "pothole_image_fraction_absolute_error": 0.000654296875,
+    "pothole_symmetric_difference_px": 603,
+    "road_or_pothole_roi_iou": 0.9533597595233965,
+    "predicted_pothole_pixels_on_source_negative": 603
+  },
+  {
+    "image_id": "2_006_frame0875_leftImg8bit",
+    "image_sha256": "ac759ad4ff5a9c435cf7a42b0cfb659621be37306b9f1b73278b445d8e28438e",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 8833,
+    "pothole_area_absolute_error_px": 8833,
+    "pothole_image_fraction_absolute_error": 0.009584418402777777,
+    "pothole_symmetric_difference_px": 8833,
+    "road_or_pothole_roi_iou": 0.9393860275209136,
+    "predicted_pothole_pixels_on_source_negative": 8833
+  },
+  {
+    "image_id": "2_006_frame0882_leftImg8bit",
+    "image_sha256": "848602a521d3496aa7926d9e56c643cdc5e784f323e672fc40eaed2e550f1074",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 4166,
+    "pothole_area_absolute_error_px": 4166,
+    "pothole_image_fraction_absolute_error": 0.004520399305555555,
+    "pothole_symmetric_difference_px": 4166,
+    "road_or_pothole_roi_iou": 0.9487381230205034,
+    "predicted_pothole_pixels_on_source_negative": 4166
+  },
+  {
+    "image_id": "2_006_frame0889_leftImg8bit",
+    "image_sha256": "9078559dc7e001dfd5638eef8b6b2bf0bce519cd7859be43d69821c05ca4964a",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 1950,
+    "pothole_area_absolute_error_px": 1950,
+    "pothole_image_fraction_absolute_error": 0.0021158854166666665,
+    "pothole_symmetric_difference_px": 1950,
+    "road_or_pothole_roi_iou": 0.9627905203253583,
+    "predicted_pothole_pixels_on_source_negative": 1950
+  },
+  {
+    "image_id": "2_006_frame0896_leftImg8bit",
+    "image_sha256": "ea048059c3c245e5f988211003a3385466b4d3292889190929686b91cf3c1499",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.9586653724317525,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0903_leftImg8bit",
+    "image_sha256": "6b85f94577fda3033b0725f9c58c831bfff94090acf8e981af5907e3d6dd363e",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.9604169623343078,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0910_leftImg8bit",
+    "image_sha256": "2257725ce4d8ebcb16b418d68417cdeb189f6af17481e49c5aa5e29ea0f8d47f",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 3179,
+    "pothole_area_absolute_error_px": 3179,
+    "pothole_image_fraction_absolute_error": 0.003449435763888889,
+    "pothole_symmetric_difference_px": 3179,
+    "road_or_pothole_roi_iou": 0.9472406574948234,
+    "predicted_pothole_pixels_on_source_negative": 3179
+  },
+  {
+    "image_id": "2_006_frame0924_leftImg8bit",
+    "image_sha256": "cd3017e427388f7d0823fc153dd5d54113e67cf61f766262b207e3295cac2477",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.9506769118185144,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0931_leftImg8bit",
+    "image_sha256": "875237aabc6daf950af3747948abe96944707701cad5a8277f19c41d631a279c",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.9491487289099793,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0938_leftImg8bit",
+    "image_sha256": "8a629a7540251dcb59d42ca2919c5abf26192143586cc997c1954faec5c47728",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.9446965816147396,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame0952_leftImg8bit",
+    "image_sha256": "5d8769a3301299a01a73cd922ef44ce594820ad584f28458aadaecb7d613a2ad",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 462,
+    "pothole_area_absolute_error_px": 462,
+    "pothole_image_fraction_absolute_error": 0.0005013020833333333,
+    "pothole_symmetric_difference_px": 462,
+    "road_or_pothole_roi_iou": 0.8846560032563946,
+    "predicted_pothole_pixels_on_source_negative": 462
+  },
+  {
+    "image_id": "2_006_frame0966_leftImg8bit",
+    "image_sha256": "59529300c72367f1d9245e20c1a4ecbe971091b2ae284087fd2647e2f563cbc8",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 10364,
+    "pothole_area_absolute_error_px": 10364,
+    "pothole_image_fraction_absolute_error": 0.011245659722222223,
+    "pothole_symmetric_difference_px": 10364,
+    "road_or_pothole_roi_iou": 0.8823059963542739,
+    "predicted_pothole_pixels_on_source_negative": 10364
+  },
+  {
+    "image_id": "2_006_frame0980_leftImg8bit",
+    "image_sha256": "09b3aa31d657a844a9cb71aac2107e01ee2b0119f607c0a9c089a0806aa401dd",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 2145,
+    "pothole_area_absolute_error_px": 2145,
+    "pothole_image_fraction_absolute_error": 0.0023274739583333333,
+    "pothole_symmetric_difference_px": 2145,
+    "road_or_pothole_roi_iou": 0.7835928618332557,
+    "predicted_pothole_pixels_on_source_negative": 2145
+  },
+  {
+    "image_id": "2_006_frame0994_leftImg8bit",
+    "image_sha256": "9bbe2d7e4359b3a24ea710502d7cdb6df8ce98c3bebc4ef86f2ed5573b71e102",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 3551,
+    "pothole_area_absolute_error_px": 3551,
+    "pothole_image_fraction_absolute_error": 0.003853081597222222,
+    "pothole_symmetric_difference_px": 3551,
+    "road_or_pothole_roi_iou": 0.7114553436716543,
+    "predicted_pothole_pixels_on_source_negative": 3551
+  },
+  {
+    "image_id": "2_006_frame1008_leftImg8bit",
+    "image_sha256": "d8f00c4d421809ef98725318c7580af9ecb611b2d4e74937eca20569cba15002",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 18,
+    "pothole_area_absolute_error_px": 18,
+    "pothole_image_fraction_absolute_error": 1.953125e-05,
+    "pothole_symmetric_difference_px": 18,
+    "road_or_pothole_roi_iou": 0.671991820794474,
+    "predicted_pothole_pixels_on_source_negative": 18
+  },
+  {
+    "image_id": "2_006_frame1022_leftImg8bit",
+    "image_sha256": "cb6d58173543a0724fb6c519a8853dbcb17ecfc8c5ac8fedb6b0c5dbefcbf8d1",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 1203,
+    "pothole_area_absolute_error_px": 1203,
+    "pothole_image_fraction_absolute_error": 0.0013053385416666667,
+    "pothole_symmetric_difference_px": 1203,
+    "road_or_pothole_roi_iou": 0.6019321637884899,
+    "predicted_pothole_pixels_on_source_negative": 1203
+  },
+  {
+    "image_id": "2_006_frame1036_leftImg8bit",
+    "image_sha256": "ee651bd59d64336bd644c79e2d960ab9fa1b45565df165c7ef85569d8841ca92",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.7637718635126323,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1043_leftImg8bit",
+    "image_sha256": "056daf02113a6ec14e92435edf7f987234b51390751d2aba2804f2c4a7d0bc0f",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 30,
+    "predicted_pothole_pixels": 1541,
+    "pothole_area_absolute_error_px": 1511,
+    "pothole_image_fraction_absolute_error": 0.0016395399305555555,
+    "pothole_symmetric_difference_px": 1571,
+    "road_or_pothole_roi_iou": 0.7740883717375411,
+    "predicted_pothole_pixels_on_source_negative": null
+  },
+  {
+    "image_id": "2_006_frame1050_leftImg8bit",
+    "image_sha256": "93581be62d8ff676e8eb56b7246bb367e7510e2e5e6861170d5a3902182ee76e",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 5660,
+    "predicted_pothole_pixels": 114,
+    "pothole_area_absolute_error_px": 5546,
+    "pothole_image_fraction_absolute_error": 0.0060177951388888885,
+    "pothole_symmetric_difference_px": 5774,
+    "road_or_pothole_roi_iou": 0.9260579563436656,
+    "predicted_pothole_pixels_on_source_negative": null
+  },
+  {
+    "image_id": "2_006_frame1064_leftImg8bit",
+    "image_sha256": "baa7375e4c84a31939465fc415ce8b11d0e4586054b1c9951e4ea7226ea36685",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 3716,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 3716,
+    "pothole_image_fraction_absolute_error": 0.004032118055555555,
+    "pothole_symmetric_difference_px": 3716,
+    "road_or_pothole_roi_iou": 0.9170375286664968,
+    "predicted_pothole_pixels_on_source_negative": null
+  },
+  {
+    "image_id": "2_006_frame1078_leftImg8bit",
+    "image_sha256": "90cba06090159cc7bb2842105bcc19b0c8d1aa1b78c5fc7754a16de085644e68",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 1981,
+    "predicted_pothole_pixels": 557,
+    "pothole_area_absolute_error_px": 1424,
+    "pothole_image_fraction_absolute_error": 0.0015451388888888889,
+    "pothole_symmetric_difference_px": 2538,
+    "road_or_pothole_roi_iou": 0.9179807292524145,
+    "predicted_pothole_pixels_on_source_negative": null
+  },
+  {
+    "image_id": "2_006_frame1092_leftImg8bit",
+    "image_sha256": "580965f1c8db71a2eda7145443f1eed3d3953a4fed6f8925731bef884103245f",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 2499,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 2499,
+    "pothole_image_fraction_absolute_error": 0.002711588541666667,
+    "pothole_symmetric_difference_px": 2499,
+    "road_or_pothole_roi_iou": 0.9170894550420587,
+    "predicted_pothole_pixels_on_source_negative": null
+  },
+  {
+    "image_id": "2_006_frame1148_leftImg8bit",
+    "image_sha256": "577d43dad62b817e54d1f920d9cb60d2c623c19f50aa4f8668f70cdbcde60306",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 1588,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 1588,
+    "pothole_image_fraction_absolute_error": 0.0017230902777777778,
+    "pothole_symmetric_difference_px": 1588,
+    "road_or_pothole_roi_iou": 0.8369458619939736,
+    "predicted_pothole_pixels_on_source_negative": null
+  },
+  {
+    "image_id": "2_006_frame1169_leftImg8bit",
+    "image_sha256": "e4dfdeccd8fcfc54f76d00f57ef4029591f0a181d207382a4ac5fe87726bad49",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 1651,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 1651,
+    "pothole_image_fraction_absolute_error": 0.0017914496527777779,
+    "pothole_symmetric_difference_px": 1651,
+    "road_or_pothole_roi_iou": 0.894654829950809,
+    "predicted_pothole_pixels_on_source_negative": null
+  },
+  {
+    "image_id": "2_006_frame1183_leftImg8bit",
+    "image_sha256": "3419f0091086016405c01fac21be0303ef8c44af8260346c2ecf657fb39ddae4",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 7033,
+    "pothole_area_absolute_error_px": 7033,
+    "pothole_image_fraction_absolute_error": 0.007631293402777778,
+    "pothole_symmetric_difference_px": 7033,
+    "road_or_pothole_roi_iou": 0.8589210515205014,
+    "predicted_pothole_pixels_on_source_negative": 7033
+  },
+  {
+    "image_id": "2_006_frame1218_leftImg8bit",
+    "image_sha256": "0e86e8744dd5fd6ff022328ed20ad23611b7915cb27769220a2e1c8d1f5182a0",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 12806,
+    "pothole_area_absolute_error_px": 12806,
+    "pothole_image_fraction_absolute_error": 0.013895399305555556,
+    "pothole_symmetric_difference_px": 12806,
+    "road_or_pothole_roi_iou": 0.8458180994189382,
+    "predicted_pothole_pixels_on_source_negative": 12806
+  },
+  {
+    "image_id": "2_006_frame1232_leftImg8bit",
+    "image_sha256": "61188180fa426aefd467b030f22f570dca58920ef6f4a815c5dad40db7ddcc6a",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 87,
+    "pothole_area_absolute_error_px": 87,
+    "pothole_image_fraction_absolute_error": 9.440104166666666e-05,
+    "pothole_symmetric_difference_px": 87,
+    "road_or_pothole_roi_iou": 0.7950170862998941,
+    "predicted_pothole_pixels_on_source_negative": 87
+  },
+  {
+    "image_id": "2_006_frame1253_leftImg8bit",
+    "image_sha256": "2e4af5a7e568c5c26f69037d8fe96a2c37a54e2f32dcc8cac5f5721cbb46897c",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 6913,
+    "pothole_area_absolute_error_px": 6913,
+    "pothole_image_fraction_absolute_error": 0.007501085069444444,
+    "pothole_symmetric_difference_px": 6913,
+    "road_or_pothole_roi_iou": 0.801413364343859,
+    "predicted_pothole_pixels_on_source_negative": 6913
+  },
+  {
+    "image_id": "2_006_frame1281_leftImg8bit",
+    "image_sha256": "ab4af35dc2461d67c0e1d3dfb3c87d84559ccc2d3f641c1ba5a2af656a3c8194",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.7606972667848916,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1288_leftImg8bit",
+    "image_sha256": "9af24deb53ddb8de3455d63f4b6b91c10e1fa1eb11ef4bda94ae3ff61c56e01e",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.8382534104352863,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1295_leftImg8bit",
+    "image_sha256": "4db3de5c4c4495536061def01bf866f93ed1e92bbf81f8566d11a91f52e7f616",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.7292080960621532,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1309_leftImg8bit",
+    "image_sha256": "f68df3b1f1162c6a7b5bb4bd1b87e6c28372c2bb3302f5b2f84a737b9cb9499a",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.7401064892168009,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1344_leftImg8bit",
+    "image_sha256": "96046b18ab320d24574ecc127c6545bc6b144169cb2a304b2bac5d65a658a4fe",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 167,
+    "pothole_area_absolute_error_px": 167,
+    "pothole_image_fraction_absolute_error": 0.00018120659722222222,
+    "pothole_symmetric_difference_px": 167,
+    "road_or_pothole_roi_iou": 0.6859348039572727,
+    "predicted_pothole_pixels_on_source_negative": 167
+  },
+  {
+    "image_id": "2_006_frame1414_leftImg8bit",
+    "image_sha256": "9123a2869418a73f84748f9b7e9c27eb0269f9a3975c34d401709d249fcb7a7a",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.6985029434081682,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1421_leftImg8bit",
+    "image_sha256": "6645a2f932bf0dd5ccfb6e1879f8b7b6acd9a4d9204deb75031ba8434000f0cf",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 1442,
+    "pothole_area_absolute_error_px": 1442,
+    "pothole_image_fraction_absolute_error": 0.0015646701388888889,
+    "pothole_symmetric_difference_px": 1442,
+    "road_or_pothole_roi_iou": 0.6471461129277447,
+    "predicted_pothole_pixels_on_source_negative": 1442
+  },
+  {
+    "image_id": "2_006_frame1428_leftImg8bit",
+    "image_sha256": "d022e72346c4914bcd698faa003a0f23fb3385ca15826791ec541a938c6acd7d",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 230,
+    "pothole_area_absolute_error_px": 230,
+    "pothole_image_fraction_absolute_error": 0.0002495659722222222,
+    "pothole_symmetric_difference_px": 230,
+    "road_or_pothole_roi_iou": 0.6606560688851765,
+    "predicted_pothole_pixels_on_source_negative": 230
+  },
+  {
+    "image_id": "2_006_frame1435_leftImg8bit",
+    "image_sha256": "878aeee540612be710fa3c95601c26132de0b52284cd663f340d08dde312ad19",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 16382,
+    "pothole_area_absolute_error_px": 16382,
+    "pothole_image_fraction_absolute_error": 0.01777560763888889,
+    "pothole_symmetric_difference_px": 16382,
+    "road_or_pothole_roi_iou": 0.706699577398184,
+    "predicted_pothole_pixels_on_source_negative": 16382
+  },
+  {
+    "image_id": "2_006_frame1442_leftImg8bit",
+    "image_sha256": "ed38876d85f1e7f2414487be0a3e9ba3c5daaaf7d3583024990c7e8a204b375b",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 13166,
+    "pothole_area_absolute_error_px": 13166,
+    "pothole_image_fraction_absolute_error": 0.014286024305555556,
+    "pothole_symmetric_difference_px": 13166,
+    "road_or_pothole_roi_iou": 0.6681428640716932,
+    "predicted_pothole_pixels_on_source_negative": 13166
+  },
+  {
+    "image_id": "2_006_frame1449_leftImg8bit",
+    "image_sha256": "fba2a0a7ab8f9d3a171c7766d5f0fe5287a1c7c553551fb969346dd376ee7fe5",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.7085386659484916,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1456_leftImg8bit",
+    "image_sha256": "d5ffbd0cb81046a2da94a48104454b4c3f5c37dfd5c354ea6bfade34fdcd8d94",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 3797,
+    "pothole_area_absolute_error_px": 3797,
+    "pothole_image_fraction_absolute_error": 0.004120008680555555,
+    "pothole_symmetric_difference_px": 3797,
+    "road_or_pothole_roi_iou": 0.5662122687439143,
+    "predicted_pothole_pixels_on_source_negative": 3797
+  },
+  {
+    "image_id": "2_006_frame1463_leftImg8bit",
+    "image_sha256": "ebeecd84c0e8694ebfb5848a2c108e70192ef63b5efacaed208c1ffdc16b8840",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 815,
+    "pothole_area_absolute_error_px": 815,
+    "pothole_image_fraction_absolute_error": 0.0008843315972222222,
+    "pothole_symmetric_difference_px": 815,
+    "road_or_pothole_roi_iou": 0.5841180778074729,
+    "predicted_pothole_pixels_on_source_negative": 815
+  },
+  {
+    "image_id": "2_006_frame1470_leftImg8bit",
+    "image_sha256": "b75849b66be69f7736bcd9295227a1f4f011df894576264644e16e154c1fb9c6",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.6050044462009683,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1477_leftImg8bit",
+    "image_sha256": "b044a25be51cc5ecf6644f620b1ed93878486f5f3d8f7cf5bc3aced73d8326a1",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 529,
+    "pothole_area_absolute_error_px": 529,
+    "pothole_image_fraction_absolute_error": 0.0005740017361111111,
+    "pothole_symmetric_difference_px": 529,
+    "road_or_pothole_roi_iou": 0.42494077842163874,
+    "predicted_pothole_pixels_on_source_negative": 529
+  },
+  {
+    "image_id": "2_006_frame1484_leftImg8bit",
+    "image_sha256": "6bc71d5a0c58b68acbaee467ff7f067996478d3026423d5fe1cdc139a34a669f",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 3855,
+    "pothole_area_absolute_error_px": 3855,
+    "pothole_image_fraction_absolute_error": 0.004182942708333333,
+    "pothole_symmetric_difference_px": 3855,
+    "road_or_pothole_roi_iou": 0.4367795989464245,
+    "predicted_pothole_pixels_on_source_negative": 3855
+  },
+  {
+    "image_id": "2_006_frame1491_leftImg8bit",
+    "image_sha256": "78a740e29ffaf3f89ca3d67b8316cf33135003cf8e7c06c6416ff482673f1d17",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 95,
+    "pothole_area_absolute_error_px": 95,
+    "pothole_image_fraction_absolute_error": 0.00010308159722222222,
+    "pothole_symmetric_difference_px": 95,
+    "road_or_pothole_roi_iou": 0.4540567451090466,
+    "predicted_pothole_pixels_on_source_negative": 95
+  },
+  {
+    "image_id": "2_006_frame1498_leftImg8bit",
+    "image_sha256": "4130cde5399994717356f490eac16d46fa7ecbcc80e657028af28d3a9f770cbf",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 15,
+    "pothole_area_absolute_error_px": 15,
+    "pothole_image_fraction_absolute_error": 1.6276041666666666e-05,
+    "pothole_symmetric_difference_px": 15,
+    "road_or_pothole_roi_iou": 0.44133493052118017,
+    "predicted_pothole_pixels_on_source_negative": 15
+  },
+  {
+    "image_id": "2_006_frame1505_leftImg8bit",
+    "image_sha256": "702a7a52766b7aff9dd66cb0715fe58666908d22b5a9813f890c10dff0ff2b45",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.43369652243533957,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1512_leftImg8bit",
+    "image_sha256": "ee325199dbee92c2fed391ccddb5022cd893e0cb23f5828a3422329c92e0f472",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.4053334011118762,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1519_leftImg8bit",
+    "image_sha256": "78b14b6c6cc12fd27847c83e8204dbd57897f3a25a45218aca98bceafef8d2ad",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.31482737100921565,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1526_leftImg8bit",
+    "image_sha256": "3eff290e7cc1b150c4586acac259ccfc3c24cbef7d315f766c6beb593229e336",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.707153652948726,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1533_leftImg8bit",
+    "image_sha256": "eb7e99b35db132385b3dfcafb715f1e0401048e7a52185088da7d3727147c46b",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.6226106424300022,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1540_leftImg8bit",
+    "image_sha256": "8dbb977338b5f9b795e3eb0be3b60b846981447081d610f5dccba30b092bbf4b",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.7857150015408166,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1547_leftImg8bit",
+    "image_sha256": "412952a3d0fa10bf1e67eeb9361b9d5a488f4e1ddbb1ab1d3ef25fa7ddea0055",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.7995446206843667,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1554_leftImg8bit",
+    "image_sha256": "d0a290de1093b62aa30bc3f813ee5d3b4597a56b54f479d911b7ebaeb188a637",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.80482373950043,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1561_leftImg8bit",
+    "image_sha256": "abf54979357d4f371730a50a1f2ef5936911eca017837bd4ceaac9a5e16acf40",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.6858935988606383,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1568_leftImg8bit",
+    "image_sha256": "bc1419790994ff73d346f8ee61e25581cfba88139cc3653679108d33855cc9b0",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.7421480871010924,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1582_leftImg8bit",
+    "image_sha256": "3b87eead1a602b5a634922693ef2dd435a2ba3a2e366b26a64fd6bf1728bd09f",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.15374999273876397,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1589_leftImg8bit",
+    "image_sha256": "09e8a78763b3abc76beaf869fa3fae45a84c27077afbc604178499c0c24191b1",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.18444897912391522,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1596_leftImg8bit",
+    "image_sha256": "1adc96af8daee29f9986e7fa55ad23146b81ecfb2fdaa546b44de321801551f4",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.3106501109933404,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1603_leftImg8bit",
+    "image_sha256": "11a2f334a2977a18a4528f71aadbf7ff4bd6d454148e9f02859faa0dc1d15222",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.29209102870230497,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1610_leftImg8bit",
+    "image_sha256": "8f3546f17c6f9d279c070203fce041efdb1b727fff46289ab63a51ee37734911",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.29896588899685655,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1617_leftImg8bit",
+    "image_sha256": "7a163220d9e3873a4f16a1eb8b8c1a2bcbce8ed050a86316d396689040ff8317",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.2925681116581323,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1631_leftImg8bit",
+    "image_sha256": "d3a2d26c964ec1990854e4520c3bc69ebf912f99781752d85a6aa9e8a9869d39",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.37383601641414144,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1638_leftImg8bit",
+    "image_sha256": "e08f5678566546b0c02b196554cc181def5a8e2f5ca2820b803071cb847c3b60",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.34013785638194294,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1645_leftImg8bit",
+    "image_sha256": "8fa42a8937ac3aabe03b113b651e647d707a6266aa528019aa48ca4200bb8107",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 206,
+    "pothole_area_absolute_error_px": 206,
+    "pothole_image_fraction_absolute_error": 0.00022352430555555556,
+    "pothole_symmetric_difference_px": 206,
+    "road_or_pothole_roi_iou": 0.31898702073282553,
+    "predicted_pothole_pixels_on_source_negative": 206
+  },
+  {
+    "image_id": "2_006_frame1652_leftImg8bit",
+    "image_sha256": "7376e77fda5309676fff15f1bfbdf8ac9cd6a8667fe6d93dd1d7334a968dda4f",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 2153,
+    "pothole_area_absolute_error_px": 2153,
+    "pothole_image_fraction_absolute_error": 0.002336154513888889,
+    "pothole_symmetric_difference_px": 2153,
+    "road_or_pothole_roi_iou": 0.12490844339448928,
+    "predicted_pothole_pixels_on_source_negative": 2153
+  },
+  {
+    "image_id": "2_006_frame1659_leftImg8bit",
+    "image_sha256": "a362c18ba703f7a5734fbe3c7543e9972e208ff3608bcd565aad0f662e4fcb2b",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.35956544165802146,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1666_leftImg8bit",
+    "image_sha256": "a59a394239ff61308d1d424be584280ef26ad0a5301bf67703205bcbdb3706a8",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 273,
+    "pothole_area_absolute_error_px": 273,
+    "pothole_image_fraction_absolute_error": 0.00029622395833333334,
+    "pothole_symmetric_difference_px": 273,
+    "road_or_pothole_roi_iou": 0.2789063738703028,
+    "predicted_pothole_pixels_on_source_negative": 273
+  },
+  {
+    "image_id": "2_006_frame1673_leftImg8bit",
+    "image_sha256": "8ba189a0b693a28830d0c665ad46636238a0d22eeb58c6ff1342debb0812f040",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.2250187892145686,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1680_leftImg8bit",
+    "image_sha256": "9dc9290c9237c8f7307104c3e6ff9b841ebb7c7eaa6008306ffbbd5e6bc28759",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 2529,
+    "pothole_area_absolute_error_px": 2529,
+    "pothole_image_fraction_absolute_error": 0.002744140625,
+    "pothole_symmetric_difference_px": 2529,
+    "road_or_pothole_roi_iou": 0.08578056423024984,
+    "predicted_pothole_pixels_on_source_negative": 2529
+  },
+  {
+    "image_id": "2_006_frame1687_leftImg8bit",
+    "image_sha256": "6ec00ea5e8bb8e8a5871d7be8a8dcba31cd8cce3a59e58400879803350c10a7e",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.11428603227911234,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1694_leftImg8bit",
+    "image_sha256": "c47bfeceb9db5875e8539349353e9c0aca1afc6d2c2312c3627581bd77472678",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 13170,
+    "pothole_area_absolute_error_px": 13170,
+    "pothole_image_fraction_absolute_error": 0.014290364583333333,
+    "pothole_symmetric_difference_px": 13170,
+    "road_or_pothole_roi_iou": 0.03972612108119416,
+    "predicted_pothole_pixels_on_source_negative": 13170
+  },
+  {
+    "image_id": "2_006_frame1701_leftImg8bit",
+    "image_sha256": "bd554d89a4217c124a0ef20412ee7c9b5d39aeaac3a368072d297b5b3b367fa6",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.039194155611330224,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1708_leftImg8bit",
+    "image_sha256": "ee1f486e4ab7b1e41f972c79a794b1c2a8c65a202187a8a38045d975f62bc04c",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.08940136733318586,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1715_leftImg8bit",
+    "image_sha256": "6451d61917a85c55d6f3cf3eb4dc33db967a0eb1f86c0657a7a116e1004a5a57",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.11295891038656312,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1729_leftImg8bit",
+    "image_sha256": "c59981d63e0a6cdc18267b7525afdaa96f809300ae69492c870095cd8fc07ca7",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.10314075876912458,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1736_leftImg8bit",
+    "image_sha256": "77d6d6ea5d6e33d8f0168d2b09e50a2a31680c0b9960c46b0ea0f6b4210ea951",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.16396127658070997,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1743_leftImg8bit",
+    "image_sha256": "00afbdaaf84654843d3ba5c7fee31a3a4e0397ab439790737f98e85e8a72fcf3",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.17706770078246623,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1750_leftImg8bit",
+    "image_sha256": "0763abb9a20f984f1710fd5b2206a667911eefe5647ce62bf85c3289176ea204",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.1360026407079471,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1757_leftImg8bit",
+    "image_sha256": "949e98c45d1147a46437992aea1a5b92e57f61d5ff480104ec15cd96dc73d4e6",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.019114646786950552,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1764_leftImg8bit",
+    "image_sha256": "561b1273a271d0986eaa72e32c41efc44682d1fa6be12b34902b6d14de36d2e3",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 16,
+    "pothole_area_absolute_error_px": 16,
+    "pothole_image_fraction_absolute_error": 1.736111111111111e-05,
+    "pothole_symmetric_difference_px": 16,
+    "road_or_pothole_roi_iou": 0.20696316582505295,
+    "predicted_pothole_pixels_on_source_negative": 16
+  },
+  {
+    "image_id": "2_006_frame1771_leftImg8bit",
+    "image_sha256": "8e70fb98684b295471b67f45ce38f981f22047058303c7a15fc3baab8c8d43e1",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 234,
+    "pothole_area_absolute_error_px": 234,
+    "pothole_image_fraction_absolute_error": 0.00025390625,
+    "pothole_symmetric_difference_px": 234,
+    "road_or_pothole_roi_iou": 0.21842874802196305,
+    "predicted_pothole_pixels_on_source_negative": 234
+  },
+  {
+    "image_id": "2_006_frame1778_leftImg8bit",
+    "image_sha256": "90a04ef2bf236028f2290864cda215b55cbc73365f729db35229fb5c15e2e243",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.29606270943034946,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1785_leftImg8bit",
+    "image_sha256": "ebe8c05ec5d6457a33241d253c0931a3b8ccfbe4a272b4141a843548ceb281dd",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.2605933651260567,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1792_leftImg8bit",
+    "image_sha256": "779e146b6eb2a41962ad149b7bae95a24396596e218d6acc8e6f05d74609eb37",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 36,
+    "pothole_area_absolute_error_px": 36,
+    "pothole_image_fraction_absolute_error": 3.90625e-05,
+    "pothole_symmetric_difference_px": 36,
+    "road_or_pothole_roi_iou": 0.14513987625931551,
+    "predicted_pothole_pixels_on_source_negative": 36
+  },
+  {
+    "image_id": "2_006_frame1799_leftImg8bit",
+    "image_sha256": "a37e298102fef550d63f04b411151ece48260d99547d5de730f90d3601ddf056",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.30111506924390297,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1806_leftImg8bit",
+    "image_sha256": "500388c0bf11db60bb08685633203b161d30982a1e5821d38a0c36626b203f80",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.2501987465355484,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1813_leftImg8bit",
+    "image_sha256": "20a21dcf6dfde796d1a8a135d77b3600089afb279f6d83fa7a6457c00e0cb8af",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 2330,
+    "pothole_area_absolute_error_px": 2330,
+    "pothole_image_fraction_absolute_error": 0.0025282118055555557,
+    "pothole_symmetric_difference_px": 2330,
+    "road_or_pothole_roi_iou": 0.265571946438628,
+    "predicted_pothole_pixels_on_source_negative": 2330
+  },
+  {
+    "image_id": "2_006_frame1820_leftImg8bit",
+    "image_sha256": "58c3fd4c676c2bb93ba56c7231732f5cae74920975295aaf84278a6bd0af04be",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 304,
+    "pothole_area_absolute_error_px": 304,
+    "pothole_image_fraction_absolute_error": 0.0003298611111111111,
+    "pothole_symmetric_difference_px": 304,
+    "road_or_pothole_roi_iou": 0.1165092843733232,
+    "predicted_pothole_pixels_on_source_negative": 304
+  },
+  {
+    "image_id": "2_006_frame1827_leftImg8bit",
+    "image_sha256": "1ee5af8c8f8470caf0e86402b21cb0ac2f719a1809c725e75e5c9179541f91b1",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.3722305455789294,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1834_leftImg8bit",
+    "image_sha256": "1ddf0659c2f313d4e944bb5814afcb73de69ed5c428ad3f3bd6f7e88715ee8ed",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.23914776464023277,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1841_leftImg8bit",
+    "image_sha256": "67351cf3c5013f25efbdd198d65bc756467153071f1573cc4398ea885df46b2a",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 87,
+    "pothole_area_absolute_error_px": 87,
+    "pothole_image_fraction_absolute_error": 9.440104166666666e-05,
+    "pothole_symmetric_difference_px": 87,
+    "road_or_pothole_roi_iou": 0.2342574178203204,
+    "predicted_pothole_pixels_on_source_negative": 87
+  },
+  {
+    "image_id": "2_006_frame1848_leftImg8bit",
+    "image_sha256": "204c710f872be825cc9236fa5a63d24190d2f473b817e550f65afe89f170d58b",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.32913406370782294,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1855_leftImg8bit",
+    "image_sha256": "9e0b0c138103a59d94eb46da67e07604695f2436f3df04f673a48cc6f053709a",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.47219663428309244,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1862_leftImg8bit",
+    "image_sha256": "8a3b447187300450f0c551cd52ac8f20e810f72fced1125f1954902c56ee6a73",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.42443151873359053,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1869_leftImg8bit",
+    "image_sha256": "a503e29ac2d9b0d752ffe4549fb56dd358c5814c915c766d49646cef2d10bd6d",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.32997923253285255,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1876_leftImg8bit",
+    "image_sha256": "98cbcb96f8402f4a88dd27f366e71ebf573bea779fdd1b031e585a7f112a2079",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.1775767281968227,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1883_leftImg8bit",
+    "image_sha256": "af54c63a9ddedc6b94643b09499e121a5e39ec8e95308e6c9c39b570c5f17f06",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.2755059994618617,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1890_leftImg8bit",
+    "image_sha256": "8ae7823031a1480c20332efe34e3eaa0d9b8abea8a32bf7ccda1711b6e774ba6",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.22357331069729605,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1897_leftImg8bit",
+    "image_sha256": "edf6163a7582152ad63c9d961c5e51c87e37f8a93c231fc37ec2bec12164396b",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.11708388510782827,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1904_leftImg8bit",
+    "image_sha256": "2eacef0b2d56ad0c80ae3de2ecfd993866aeadc41e7a0cb88a654791ae95b1f5",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.08490687683399312,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1911_leftImg8bit",
+    "image_sha256": "0716cbcc3906e4361efac15428b97c83377d1761d1384a382347a480e970084e",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.10279617676715835,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1918_leftImg8bit",
+    "image_sha256": "624043f189f2037624d91f7292d991a697e7e661d13dc6e59a4e01ee23d51ecf",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.0661657790451884,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1925_leftImg8bit",
+    "image_sha256": "4308e05a7b52ea15a1738461758b06970298b287fdda38fcf3068a756d9f2c73",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.03378522431097064,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1932_leftImg8bit",
+    "image_sha256": "a6104cb3827a5bbc3434c55e43ef40fcf3370501d0ab211b72030ced339058ea",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.012994697153495372,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1939_leftImg8bit",
+    "image_sha256": "4713cbe4604452850877e6992cdafcc781489debe3520b8599cef35eb5829ab9",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.006931142475310492,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1946_leftImg8bit",
+    "image_sha256": "c3a078f885de6b577c75cf0db862b6b61624de0b6073613a348f4225dea2438d",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.009661615199793385,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1960_leftImg8bit",
+    "image_sha256": "1f0cae758a75167c8923d9fa16ec5baba5facbf643d0741b2fba2635d1713211",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.016554730990410438,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1967_leftImg8bit",
+    "image_sha256": "e11ed23f25a4f10aa3279527bc3c33b31237f0bfe45842fbee31d1921fc900d9",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.011004904317722858,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1974_leftImg8bit",
+    "image_sha256": "976963d5ed23bfafca03d354d85caf50f5e5c52e6f0dcab79951d8b04295b1c6",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.003597028928270793,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1981_leftImg8bit",
+    "image_sha256": "a50632e9197a7c6105e70976e4bb6e79844de251792e39f4eebe427930e872f3",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.004333502535519894,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1988_leftImg8bit",
+    "image_sha256": "27cb871365bd8f98f9645d10dc2e68a7fc52503567a4f7ed4b9f97cc13d7be89",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.010555065512615543,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame1995_leftImg8bit",
+    "image_sha256": "8deb9d40ed0c0c61747dea647d87961c2f1ea8be58d5e19caa295b30f87502e8",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.004528065209693508,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2002_leftImg8bit",
+    "image_sha256": "d405a7e2c04c4c94f28eabc1629ccaba716098d0b4aea8eac754f07102ab0169",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.01017152499607907,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2009_leftImg8bit",
+    "image_sha256": "19e46addf5eade9a766e48277a70c9bbb6ed541ab7fa61d872e4e174f0f266a1",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.008216759860739851,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2016_leftImg8bit",
+    "image_sha256": "6acdc5f9059256004b33481cb118874ffb239f343091fcd3ecaea05c9c60146a",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.01787186446329986,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2023_leftImg8bit",
+    "image_sha256": "a4410b5e831f7e922ecf23e36da381528a8552b9a16c05cd2982642cc7de3dd8",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.022533815228033702,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2030_leftImg8bit",
+    "image_sha256": "17c0df232bf8ec0d9102b472d15733171df0a7a2d55b0c392175c0ea01c7dd5a",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.018378292249249476,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2044_leftImg8bit",
+    "image_sha256": "c915ec18bd28b49536839e04b6e2d0cb5c276cdc5a02a453f723bafd5ac3c690",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.01852396427916142,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2051_leftImg8bit",
+    "image_sha256": "e56052186762137b873529bf834c17bfc936334977328b5fa8cc7e86b8d4b8d2",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.032877981569895416,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2058_leftImg8bit",
+    "image_sha256": "10cc6b1e4f9d80a51e96f691647dff85f9827ed59548f67805ce9dd6dc872d91",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.041343686762240255,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2065_leftImg8bit",
+    "image_sha256": "1211889800b0ac1b49070ed6a6de90bc25bc692e78be84d23008317bbed12fff",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 82,
+    "pothole_area_absolute_error_px": 82,
+    "pothole_image_fraction_absolute_error": 8.897569444444445e-05,
+    "pothole_symmetric_difference_px": 82,
+    "road_or_pothole_roi_iou": 0.04683294760762794,
+    "predicted_pothole_pixels_on_source_negative": 82
+  },
+  {
+    "image_id": "2_006_frame2072_leftImg8bit",
+    "image_sha256": "a642e42063e53013c1b1a4c3db60d85838cb271ac07a91b72aee489e0a075f07",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.052178140379396186,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2079_leftImg8bit",
+    "image_sha256": "853b30e876aaed278f287a9085a6d2c74ef03a37c0746f181d9543e9c7fdc331",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.04145054182635126,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2086_leftImg8bit",
+    "image_sha256": "1aa2fc14f632e7597a623b5e20a302a273e99f100e677bc8b6e70afc21d800cb",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.0469095639099371,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2093_leftImg8bit",
+    "image_sha256": "ccc7e3d87df682af8a932a422491b6d9c001001e5c36a3d0262002064b6a3a8c",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.0788635642200023,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2100_leftImg8bit",
+    "image_sha256": "f6e4f549c284e0b3ef77026fb6244420fb59818c7c7680203ba6d5e496b626b5",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.08532242892303199,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2107_leftImg8bit",
+    "image_sha256": "91f5ce8b6458082a94598e1b99c2f9382d8c94cb88f912c982b25659727cc419",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.12327814480969321,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2114_leftImg8bit",
+    "image_sha256": "dbd76fad412a47e1a6f2a1628ea3ec62c3b0ed857f077f5a174c1a77bf466e3c",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 60,
+    "pothole_area_absolute_error_px": 60,
+    "pothole_image_fraction_absolute_error": 6.510416666666667e-05,
+    "pothole_symmetric_difference_px": 60,
+    "road_or_pothole_roi_iou": 0.16473286236643117,
+    "predicted_pothole_pixels_on_source_negative": 60
+  },
+  {
+    "image_id": "2_006_frame2121_leftImg8bit",
+    "image_sha256": "a439f6dadfcaac1396a64a41d67b644f54fcf4ea90b2d334d1eee7056394c4a0",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.17330302522706853,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2128_leftImg8bit",
+    "image_sha256": "b048bb82cc24ea37d957ceffd558758b7cc6c2a843db74f9fefe0c81757db464",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 243,
+    "pothole_area_absolute_error_px": 243,
+    "pothole_image_fraction_absolute_error": 0.000263671875,
+    "pothole_symmetric_difference_px": 243,
+    "road_or_pothole_roi_iou": 0.16862578119219856,
+    "predicted_pothole_pixels_on_source_negative": 243
+  },
+  {
+    "image_id": "2_006_frame2135_leftImg8bit",
+    "image_sha256": "7e3605c653904b95ea7842e4a62414d3df5af8e741fbccbd1806233f887def52",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.1853989061019953,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2142_leftImg8bit",
+    "image_sha256": "7ee81f85f0603b2257f2e662d750625ad131c2d1796dbd218468118f980fc8e0",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.11629247698393458,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2149_leftImg8bit",
+    "image_sha256": "94f82ea118989b5002bf8390d735f4482792d15f412a527e460351e3905d4f12",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.1283831889990522,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2156_leftImg8bit",
+    "image_sha256": "f2b9e1ca5a86cb03daf6d91e9df7336c39b249e30885c930c76ee49fbeb39b37",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.08430910233194132,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2163_leftImg8bit",
+    "image_sha256": "0a82a24079acae9739ecc3f0e9990d2ab0e40a771e801629531e923bcda9c8ec",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.13577182025364903,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2170_leftImg8bit",
+    "image_sha256": "09be47c4f6d8088204777b661c069a6089444aaafeea2e1c7c37de1b93e292e1",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.05210205653726745,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2177_leftImg8bit",
+    "image_sha256": "119af568f08b91087e28c06e014845b19078430921e02d3002072bc019fa8b42",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.051944291105218865,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2184_leftImg8bit",
+    "image_sha256": "61cc9c21362b6cf4625095a488f70ebf0fc37e0a945847c53b5f4098075c3f67",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.006181703457968049,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2191_leftImg8bit",
+    "image_sha256": "16783190c6d4ad49b566a2276b269e6b8d6c09ae6cca67429357cc7917740a1f",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.009548565919931352,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2198_leftImg8bit",
+    "image_sha256": "951b721232cb9a9c17b3434dd41b2f0721abbe5462c57a45e1048a396ee79ad1",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.016548238714150468,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2205_leftImg8bit",
+    "image_sha256": "b1cdf036c84dd396e993dd843ae2446d31a86c419e9e3c78350bcdceb70a1c18",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.142760742589565,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2212_leftImg8bit",
+    "image_sha256": "2f3d643b6a6d843b0ca8f4a9aba1f3d41ce4f57e358063e4a24ab47882d5e1ed",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.22251404283662826,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2219_leftImg8bit",
+    "image_sha256": "e4df70ed146ab025190194599531981433abb7470f65435c33b284003022adcc",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.18219537985883505,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2226_leftImg8bit",
+    "image_sha256": "ede92e21a5d5f61840f8f5eaed228d5817fa4aba370dac9d998c039a3c0a05bb",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.2900613116215258,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2233_leftImg8bit",
+    "image_sha256": "6d9887e8f817d1e9a5477d1e876e74d1fc733bc3636a9b20f44cf3dc7e9c711f",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.3681806129356712,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2240_leftImg8bit",
+    "image_sha256": "20b0d913900d74bd8c406b900c3d9811f095fbe290348445f3c54b2628022f92",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.2783974372603633,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2254_leftImg8bit",
+    "image_sha256": "606a11998e5839fb411299bb7b057b8a2f845bde211a0451e5e1db1ee3f8b548",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.5398854711608015,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2261_leftImg8bit",
+    "image_sha256": "4e001bd112319ec1dc4ad37fcff03e98b69dcf6c14d85c0cdb6195c87ab802ff",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 6373,
+    "pothole_area_absolute_error_px": 6373,
+    "pothole_image_fraction_absolute_error": 0.006915147569444445,
+    "pothole_symmetric_difference_px": 6373,
+    "road_or_pothole_roi_iou": 0.24233636803008335,
+    "predicted_pothole_pixels_on_source_negative": 6373
+  },
+  {
+    "image_id": "2_006_frame2268_leftImg8bit",
+    "image_sha256": "71238bd08ca2ff181fa82a2affb9d2110bdc1d318a041ca793e8dbfdfcb06cff",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 20519,
+    "pothole_area_absolute_error_px": 20519,
+    "pothole_image_fraction_absolute_error": 0.022264539930555556,
+    "pothole_symmetric_difference_px": 20519,
+    "road_or_pothole_roi_iou": 0.5239949051570242,
+    "predicted_pothole_pixels_on_source_negative": 20519
+  },
+  {
+    "image_id": "2_006_frame2275_leftImg8bit",
+    "image_sha256": "167ea717a5c976c02e82b98b2a8f73367a28157e771ca4cd8aec20ddcab76881",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 16268,
+    "pothole_area_absolute_error_px": 16268,
+    "pothole_image_fraction_absolute_error": 0.017651909722222223,
+    "pothole_symmetric_difference_px": 16268,
+    "road_or_pothole_roi_iou": 0.5200640446795111,
+    "predicted_pothole_pixels_on_source_negative": 16268
+  },
+  {
+    "image_id": "2_006_frame2282_leftImg8bit",
+    "image_sha256": "81e6efae18c2d79e63011bb7c6932b5c1219b12cb3af57b9eea8a5ad853bc724",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.4568616789552469,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2289_leftImg8bit",
+    "image_sha256": "377ffdfca1c0292774bbd11ca7fbb96e952174979941ce22190b105036164d66",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.49193884470312343,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2296_leftImg8bit",
+    "image_sha256": "ed364822790dbcdd042587ad45e542323cc616d121c881e42f3f54c78a4ed20c",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 777,
+    "pothole_area_absolute_error_px": 777,
+    "pothole_image_fraction_absolute_error": 0.0008430989583333333,
+    "pothole_symmetric_difference_px": 777,
+    "road_or_pothole_roi_iou": 0.4968616280518974,
+    "predicted_pothole_pixels_on_source_negative": 777
+  },
+  {
+    "image_id": "2_006_frame2303_leftImg8bit",
+    "image_sha256": "002cbe5d0328d86a691495d54152d2b1ce2a0bce00f05c31d4be8c139072b244",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.7619694502919125,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2310_leftImg8bit",
+    "image_sha256": "6ad46c526f17c38bf167359611747e672f0a64f5d2a20e92e700dd3f85615a01",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.732100862540815,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2317_leftImg8bit",
+    "image_sha256": "815c5a2ddbb7a5787576a0ec77a9ea09ce338305317db8e6998130f9809f3d2d",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.6966365661330718,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2324_leftImg8bit",
+    "image_sha256": "f0d1ba51419a4f0bd51c34fc2ef6e84066c42833ea793b08dac9ccd678027415",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 628,
+    "pothole_area_absolute_error_px": 628,
+    "pothole_image_fraction_absolute_error": 0.0006814236111111112,
+    "pothole_symmetric_difference_px": 628,
+    "road_or_pothole_roi_iou": 0.6822479786350828,
+    "predicted_pothole_pixels_on_source_negative": 628
+  },
+  {
+    "image_id": "2_006_frame2331_leftImg8bit",
+    "image_sha256": "7aa7e054e546dc1ffbd586be14e34f894d3f4879399c46b4f6b35df452b1021a",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 1295,
+    "pothole_area_absolute_error_px": 1295,
+    "pothole_image_fraction_absolute_error": 0.0014051649305555556,
+    "pothole_symmetric_difference_px": 1295,
+    "road_or_pothole_roi_iou": 0.636398013750955,
+    "predicted_pothole_pixels_on_source_negative": 1295
+  },
+  {
+    "image_id": "2_006_frame2338_leftImg8bit",
+    "image_sha256": "2de5edb70c4c886530394b252368442098a33ec78b31e019202da3af7e233f11",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 4820,
+    "pothole_area_absolute_error_px": 4820,
+    "pothole_image_fraction_absolute_error": 0.005230034722222222,
+    "pothole_symmetric_difference_px": 4820,
+    "road_or_pothole_roi_iou": 0.6107405058777498,
+    "predicted_pothole_pixels_on_source_negative": 4820
+  },
+  {
+    "image_id": "2_006_frame2345_leftImg8bit",
+    "image_sha256": "4e39e7256b3c223161d3150dbaae180be9292a53874acbd8e9fd643f1f090fb9",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 1696,
+    "pothole_area_absolute_error_px": 1696,
+    "pothole_image_fraction_absolute_error": 0.0018402777777777777,
+    "pothole_symmetric_difference_px": 1696,
+    "road_or_pothole_roi_iou": 0.6280695033520317,
+    "predicted_pothole_pixels_on_source_negative": 1696
+  },
+  {
+    "image_id": "2_006_frame2352_leftImg8bit",
+    "image_sha256": "d5a090b1205de92ce142270d30439e7c3d364faf4977d06413ee201850d80709",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 2181,
+    "pothole_area_absolute_error_px": 2181,
+    "pothole_image_fraction_absolute_error": 0.0023665364583333333,
+    "pothole_symmetric_difference_px": 2181,
+    "road_or_pothole_roi_iou": 0.6650485436893204,
+    "predicted_pothole_pixels_on_source_negative": 2181
+  },
+  {
+    "image_id": "2_006_frame2359_leftImg8bit",
+    "image_sha256": "9c0dbb78743d44a1c9ba7947d73d5089dbf9d771dca9d53cbd42418c72e42a37",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 2805,
+    "pothole_area_absolute_error_px": 2805,
+    "pothole_image_fraction_absolute_error": 0.0030436197916666667,
+    "pothole_symmetric_difference_px": 2805,
+    "road_or_pothole_roi_iou": 0.6210557431297614,
+    "predicted_pothole_pixels_on_source_negative": 2805
+  },
+  {
+    "image_id": "2_006_frame2366_leftImg8bit",
+    "image_sha256": "20274f063341764c1fec8d7cede895b67ca77f97c3ae5c20832542896b52f699",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 698,
+    "pothole_area_absolute_error_px": 698,
+    "pothole_image_fraction_absolute_error": 0.0007573784722222222,
+    "pothole_symmetric_difference_px": 698,
+    "road_or_pothole_roi_iou": 0.5934247792339652,
+    "predicted_pothole_pixels_on_source_negative": 698
+  },
+  {
+    "image_id": "2_006_frame2373_leftImg8bit",
+    "image_sha256": "eb21db5290b48fb8c34b96c00715048d13cbcf4ab4681c594d6dcd67e03e5686",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 2916,
+    "pothole_area_absolute_error_px": 2916,
+    "pothole_image_fraction_absolute_error": 0.0031640625,
+    "pothole_symmetric_difference_px": 2916,
+    "road_or_pothole_roi_iou": 0.49473368091762254,
+    "predicted_pothole_pixels_on_source_negative": 2916
+  },
+  {
+    "image_id": "2_006_frame2380_leftImg8bit",
+    "image_sha256": "24e94490e6b09b85de064fd2dfd4053b7b3836121efae9625933b3a029780fac",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 59,
+    "pothole_area_absolute_error_px": 59,
+    "pothole_image_fraction_absolute_error": 6.401909722222223e-05,
+    "pothole_symmetric_difference_px": 59,
+    "road_or_pothole_roi_iou": 0.5601976039909209,
+    "predicted_pothole_pixels_on_source_negative": 59
+  },
+  {
+    "image_id": "2_006_frame2387_leftImg8bit",
+    "image_sha256": "9f02c627916250ae7f61ff7b77bfc07829fe35a68baf9e77110cc5d18dbddc4d",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.5652623906932075,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2394_leftImg8bit",
+    "image_sha256": "4238a14cdcc261cd41f09a990c645b04828ce1a9623d533293f464103311af16",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.6294757506653071,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2401_leftImg8bit",
+    "image_sha256": "19f66b8e8d9e19e671f07b052b955d5af0ce13d67e02dbf6e80ea5f7d5c4b089",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.754866989455322,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2408_leftImg8bit",
+    "image_sha256": "f00c975d7a5807461f7d5088a0eb7c5928d79c4b55a62b453531545672b3410e",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.6981440229078641,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2415_leftImg8bit",
+    "image_sha256": "d81ac8506e4e313e146d718df2311dafca74ad930eb98509e05f906790a664d3",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.7153341715048714,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2422_leftImg8bit",
+    "image_sha256": "a0b09a16ff9d23eba8bb71c059308d1f5b62948d1b647766dbfc64ff2d3dfa70",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.7857890893791645,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2429_leftImg8bit",
+    "image_sha256": "f4c62b4279c76357d3bdac2bd588bf891b9194b4ffac4e3b74f9b6edbe2ce7f0",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.8092023329858274,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2436_leftImg8bit",
+    "image_sha256": "67ea451cb5a57779c30ba7f9ccdf0f84d19233509b72a914b8101689cbf323dc",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 2149,
+    "pothole_area_absolute_error_px": 2149,
+    "pothole_image_fraction_absolute_error": 0.0023318142361111113,
+    "pothole_symmetric_difference_px": 2149,
+    "road_or_pothole_roi_iou": 0.8077507619630252,
+    "predicted_pothole_pixels_on_source_negative": 2149
+  },
+  {
+    "image_id": "2_006_frame2443_leftImg8bit",
+    "image_sha256": "314c70c1cc44158c15e8e42e0b3e648f52dcf36117bef1850050e1afe1e97e99",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.8037541517332728,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2450_leftImg8bit",
+    "image_sha256": "448203fdfbe373e99418588384080728b5797c2e01342a49ac100f9f1c96deb4",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.6415031151917675,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2457_leftImg8bit",
+    "image_sha256": "3c498f43deee382e5ede8f1cbb7c63d8be779e475f66b7129cb42b6e99f4e1a7",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 544,
+    "pothole_area_absolute_error_px": 544,
+    "pothole_image_fraction_absolute_error": 0.0005902777777777778,
+    "pothole_symmetric_difference_px": 544,
+    "road_or_pothole_roi_iou": 0.5412509331865665,
+    "predicted_pothole_pixels_on_source_negative": 544
+  },
+  {
+    "image_id": "2_006_frame2464_leftImg8bit",
+    "image_sha256": "5bd639a4244b958f0da4d81f8b3f728b25fe8847f8558a28809a171b6c993878",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.4656082676075102,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2471_leftImg8bit",
+    "image_sha256": "bfdd26bc0cf0b1d4edab20fa4843193c456325e06e6ffb607b8b8964be028777",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.3695576920159485,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2478_leftImg8bit",
+    "image_sha256": "8801e1e660992e6ba9cf0b2360307f36048e00a86f7c9a2af3dff7b08048d96e",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.30586117664233176,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2485_leftImg8bit",
+    "image_sha256": "759ecac80db0d0bd39a53f3be4103224666748e1f090957454a655be5c4927dc",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.33751012577275635,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2492_leftImg8bit",
+    "image_sha256": "b5e4e6ddbe4bd155aa726012f13036614053f8feb89717a4652f0c22f92cc066",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.21261102594408623,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2499_leftImg8bit",
+    "image_sha256": "39d61663d30888001a59f3feb0a22966f009e8e8ffb2013191530e7653395a25",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.15402641118591404,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2506_leftImg8bit",
+    "image_sha256": "4d49eb132d3ec8142b268f25b5e5869260e559c3f06c8b6c0ed62339e34f13b2",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.11540741291065519,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2513_leftImg8bit",
+    "image_sha256": "48a9e053abb5c2f05b25a352494d87b0d9bf61aa37aaf93f4a6eb05190e12bd1",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.168056335517226,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2520_leftImg8bit",
+    "image_sha256": "25ea3aa189ced2dc547fca8df7dd2deca9f7de10f5e3129f1efdf92243f183a4",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 4223,
+    "pothole_area_absolute_error_px": 4223,
+    "pothole_image_fraction_absolute_error": 0.004582248263888889,
+    "pothole_symmetric_difference_px": 4223,
+    "road_or_pothole_roi_iou": 0.3453195826603449,
+    "predicted_pothole_pixels_on_source_negative": 4223
+  },
+  {
+    "image_id": "2_006_frame2527_leftImg8bit",
+    "image_sha256": "67c4d682252023b88c85964dc1392e05324396b70c774a483afd684b310c22c4",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.5676124079897954,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2534_leftImg8bit",
+    "image_sha256": "745175082c10d8cd098d9e94d0f3e14389488914265a1b35cf9ea303e911f166",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.7336820116185292,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2541_leftImg8bit",
+    "image_sha256": "405f29709c928022a16cff59863d3bd79b033f63f50bf07903165f2fc5723193",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.7150853090144005,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2548_leftImg8bit",
+    "image_sha256": "3f79b3dbe003fa39ee284c5569dd6233bd28ab3267eab652d0f03a882eabee2a",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 6998,
+    "pothole_area_absolute_error_px": 6998,
+    "pothole_image_fraction_absolute_error": 0.007593315972222223,
+    "pothole_symmetric_difference_px": 6998,
+    "road_or_pothole_roi_iou": 0.5935375939384185,
+    "predicted_pothole_pixels_on_source_negative": 6998
+  },
+  {
+    "image_id": "2_006_frame2555_leftImg8bit",
+    "image_sha256": "23bf8b7f6aa71ffbbe2c8c614c26beffc170cd2717e150550bc9aca19c745c83",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.7723981317660776,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2562_leftImg8bit",
+    "image_sha256": "4520642ee9d373c4c69dd58bf32911d3d16cebaf30da6788d83b09f653580bbc",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.7429475900954451,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2569_leftImg8bit",
+    "image_sha256": "8e5878947122c8b898dff79b7a1cc7fc6e72c89cf748710c98738c6ae53a74e0",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.748894368868896,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2576_leftImg8bit",
+    "image_sha256": "4d67fb0520cb617a50bd407f3331e98df2f983bc8ed77d5f3a95564ae159dfc5",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.7304967004288908,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2590_leftImg8bit",
+    "image_sha256": "a83b7e59e2bd4d43585cfc557e04c927b96e95f3c4c75764465beca272801325",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.5663374301280899,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2597_leftImg8bit",
+    "image_sha256": "09ae9c918d85b21db9e5cd660aedd6cb7015c6de28b14f0d0a05b3578620ab4e",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.5037910247454774,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2604_leftImg8bit",
+    "image_sha256": "35e4a5d87557e957fe8b2df68261f8d778f62b1553dd07e054a2ccf1c82237a7",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.3846645870576111,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2611_leftImg8bit",
+    "image_sha256": "a82266be00703a3d8dfca58edfb3b009e65d26c2df64b907570972be7d644969",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.5824663939216832,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2625_leftImg8bit",
+    "image_sha256": "089330fa2b1e54f40ca623c438c9af3eceb23431086860cbd8f779c1784df258",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.7086836674875584,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2632_leftImg8bit",
+    "image_sha256": "176c306add48b5e8b55338ab92def1ee5637fddb43a88c464a9b9cdb87267384",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.6707319544795858,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2639_leftImg8bit",
+    "image_sha256": "4776051d0e02e065f77c27d2294447272d24afc2aefd295eca13d776373cb0ff",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.533513240951705,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2646_leftImg8bit",
+    "image_sha256": "3979f5aa467b5efb9af358745b646be9dd67722caa97f95bf9337f5a57bf001f",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.36644923789739814,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2660_leftImg8bit",
+    "image_sha256": "8ad7c949934bd346ad46be0cc8c5149c138b30012e72d98106dc4b39c3bf2d81",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 41,
+    "pothole_area_absolute_error_px": 41,
+    "pothole_image_fraction_absolute_error": 4.4487847222222224e-05,
+    "pothole_symmetric_difference_px": 41,
+    "road_or_pothole_roi_iou": 0.1816555936065498,
+    "predicted_pothole_pixels_on_source_negative": 41
+  },
+  {
+    "image_id": "2_006_frame2674_leftImg8bit",
+    "image_sha256": "f8d9b6d55348211ecb744b15c1cfd649d3ce45c29258f9c256e8869e7f76b3a5",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.12127000279985355,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2681_leftImg8bit",
+    "image_sha256": "4ed9663073ac224ded6dd3f88fc2598f20f033c229e334d8beb659ad9f68734b",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 4,
+    "pothole_area_absolute_error_px": 4,
+    "pothole_image_fraction_absolute_error": 4.340277777777778e-06,
+    "pothole_symmetric_difference_px": 4,
+    "road_or_pothole_roi_iou": 0.14175381374297924,
+    "predicted_pothole_pixels_on_source_negative": 4
+  },
+  {
+    "image_id": "2_006_frame2688_leftImg8bit",
+    "image_sha256": "4f06f1c96d6942e6beaf429eaac42bde80c6de44b0bccbd94373bd2bfdb308ef",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.25500061028034,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2695_leftImg8bit",
+    "image_sha256": "8f735bcb713e3f1643183371f800022327d57cdd861f6642228d46f6f99186d2",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.05554764860455493,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2702_leftImg8bit",
+    "image_sha256": "ad06ce5545e3e8b6a2f5c4e6856160b489eb9005bce9b8a8422e4f5b8297eb39",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.1421498888016745,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2709_leftImg8bit",
+    "image_sha256": "3bd56659382b6032b050384824714dc8dc23ad0251790de3d62ab06d7e3a537e",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 1987,
+    "pothole_area_absolute_error_px": 1987,
+    "pothole_image_fraction_absolute_error": 0.002156032986111111,
+    "pothole_symmetric_difference_px": 1987,
+    "road_or_pothole_roi_iou": 0.16454324442883517,
+    "predicted_pothole_pixels_on_source_negative": 1987
+  },
+  {
+    "image_id": "2_006_frame2716_leftImg8bit",
+    "image_sha256": "79580424d059e990a808eb99d5ce0b6f5c02b889d374fc6d73322a28d2f8f5ca",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 242,
+    "pothole_area_absolute_error_px": 242,
+    "pothole_image_fraction_absolute_error": 0.00026258680555555557,
+    "pothole_symmetric_difference_px": 242,
+    "road_or_pothole_roi_iou": 0.10187966721727348,
+    "predicted_pothole_pixels_on_source_negative": 242
+  },
+  {
+    "image_id": "2_006_frame2723_leftImg8bit",
+    "image_sha256": "738570eec138cc77e69c3b7878781650bc54d920b39576415804e3c4c5aa1272",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 1822,
+    "pothole_area_absolute_error_px": 1822,
+    "pothole_image_fraction_absolute_error": 0.0019769965277777776,
+    "pothole_symmetric_difference_px": 1822,
+    "road_or_pothole_roi_iou": 0.1467324852542995,
+    "predicted_pothole_pixels_on_source_negative": 1822
+  },
+  {
+    "image_id": "2_006_frame2730_leftImg8bit",
+    "image_sha256": "c3a36b62fef73d484e61e1b23ac2a4d32bb1018618a71b2f88b5203173c0192a",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.1433573447615574,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2737_leftImg8bit",
+    "image_sha256": "5164d5cb7a1d9e79ac95f4623e2f82ea1ca22c72bb3d2cfd7dd91f92d0bacf9e",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.33841078128316615,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2744_leftImg8bit",
+    "image_sha256": "6d485f61ac791a2bbc03e7b04bb8d8c934057c07d0bef27d0993355a70f33a0f",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.38992408109277493,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2751_leftImg8bit",
+    "image_sha256": "8d58ee493625e5da9b23766dcf5e94b1a02144b66f8c907dcce79cd6a3fffbb6",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.6261687804917636,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2758_leftImg8bit",
+    "image_sha256": "e529e1f8e922626fc70214178f251644480a968537fd68ff279ee665431ec06a",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.5987753489254733,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2765_leftImg8bit",
+    "image_sha256": "88c348b26886470c1a24eabd59225dbb16a11e1f75fbb75c588cb2c84ff327c3",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.5734269636794865,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2772_leftImg8bit",
+    "image_sha256": "c61216f94134b39083c4335391e5ed8e0961af4efb718f828740f1883b5666c6",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.4399573320303789,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2779_leftImg8bit",
+    "image_sha256": "15e25db5c7e7028f1f387b07ab9dedd6b126a7ab040e033c848ccb93714f0b43",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.4410366642632083,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2786_leftImg8bit",
+    "image_sha256": "d6b901278a6bdbb2bc1fde692be6b6c41f0ab7ac25bed5501fe129b52e2a3911",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.3576297057332322,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2793_leftImg8bit",
+    "image_sha256": "d4206808f977e4c290e7585716b39a2f0866fb626ea949c816566eca6c1e4b56",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.29053832166920734,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2800_leftImg8bit",
+    "image_sha256": "ed47df3fe9a872cd4af9b098dc204adda4536a171b02bfa224e88cecaf710907",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.17938495029964024,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2807_leftImg8bit",
+    "image_sha256": "0ce2e17f718fa985072934886c96c9aa250ece7de57886edab38cd0d34c06687",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.09718868326472832,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2814_leftImg8bit",
+    "image_sha256": "7d3ba331191fffa543c7cdd80256dffd025d525ea5203532dc6ebea5b1b08852",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.055168362379716535,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2821_leftImg8bit",
+    "image_sha256": "f401bcaffb1f2ff91e4d8069211653c6ae956c7a35550b96a36e4bcbeafcccf8",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.04539759155129527,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2828_leftImg8bit",
+    "image_sha256": "9f9eafeb13e7a43ecf2c932e3e6299ad4336276a8322100f76a81ab374b7447e",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.06279688516824784,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2835_leftImg8bit",
+    "image_sha256": "7aa83fdc8c1785248392aa6960610d4287c88041d428ce955cf9265bc3a75b0e",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.056162395751941444,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2842_leftImg8bit",
+    "image_sha256": "814a5d44bb8dbc7e1927f10849c8bb0fbcfcd0f25ae38242f953bc9ec0795aa3",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.04240083512923786,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2849_leftImg8bit",
+    "image_sha256": "0f3b32950f03b2389401c86460c8edd6f7c43b65427cc600c063e7632c651f8b",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.0681094852665451,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2856_leftImg8bit",
+    "image_sha256": "3a6d181a586bda3e72a45a749ff6d180693805f5a94beec9b929161ec6c75e16",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.08926733030091437,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2863_leftImg8bit",
+    "image_sha256": "331e4c7d84bcef7d24eddef107b3370f0c9f07478ffc14bd58007047a0939ef6",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.07189584765293333,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2870_leftImg8bit",
+    "image_sha256": "75fe26da3a38dcb89d28221bbde9021efe6da9c714aa4ca805638947154b4d31",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.006519703744284043,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2877_leftImg8bit",
+    "image_sha256": "5a99ef6710004615f4f5f274eabf3504674828ff7cfa60739042b9a06898a990",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 2.7175550511668356e-05,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2884_leftImg8bit",
+    "image_sha256": "9b4507a4efe4778b7f44cfb3632675622d7eb157e82701c4db6907478a4d61b4",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.0018496603520411492,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2891_leftImg8bit",
+    "image_sha256": "4827b374938a789889c40da097f1be827cba17b1d29b57038bc73294cb54f97f",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.01579840424120712,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2898_leftImg8bit",
+    "image_sha256": "48c059d13a56ab3e4d89da623250ed249a1feeac470cb0a9843b6d8bd87c1b62",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.025487930000254764,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2905_leftImg8bit",
+    "image_sha256": "798604b834c6c0416de574d891ae5b6a852d2c798faf6a15294733d3f572debe",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.025361580531450188,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2912_leftImg8bit",
+    "image_sha256": "dce53267bc56b3994b087c3d35d87a1eae723ef66fa66f21990de1a9a02b37bf",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.021025776474392306,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2919_leftImg8bit",
+    "image_sha256": "aa3c09442b140eccde523abe211ed4a8dd93ead2343a9c4498147c71c7ea4b0a",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.015941076049778916,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2926_leftImg8bit",
+    "image_sha256": "a78c3ebd7d1e88521b43c7f184020f30d5fccb66ca97e0a5bf475112e31bc05d",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.018565632696408967,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2933_leftImg8bit",
+    "image_sha256": "cd4b6606e0701dd8571d032e38c1cb2e726f38f5c05133b5f2b1cb010264de45",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.012366113912004697,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2940_leftImg8bit",
+    "image_sha256": "11450dc6827388593491c7567b69c81b37b1839647ac6b3b1ea00ee8e161a286",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.009678658018439631,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2947_leftImg8bit",
+    "image_sha256": "375c3778b086d4304e9dcc466fef3d20b87529e2abc948ebb8099ad5002625c4",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.006527958020208424,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2954_leftImg8bit",
+    "image_sha256": "f1b16ef37e95e4a577e9f2fce79d23ebfaebca1312e11ae475771d39eefb9b14",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 0,
+    "pothole_area_absolute_error_px": 0,
+    "pothole_image_fraction_absolute_error": 0.0,
+    "pothole_symmetric_difference_px": 0,
+    "road_or_pothole_roi_iou": 0.0032737400444099395,
+    "predicted_pothole_pixels_on_source_negative": 0
+  },
+  {
+    "image_id": "2_006_frame2961_leftImg8bit",
+    "image_sha256": "345254d4c1cd9df879d82f50728753746bbde3c81466f4449c2cf4116c1b9ac9",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 5102,
+    "pothole_area_absolute_error_px": 5102,
+    "pothole_image_fraction_absolute_error": 0.005536024305555555,
+    "pothole_symmetric_difference_px": 5102,
+    "road_or_pothole_roi_iou": 0.01883708159329783,
+    "predicted_pothole_pixels_on_source_negative": 5102
+  },
+  {
+    "image_id": "2_006_frame2968_leftImg8bit",
+    "image_sha256": "c8119358a9ea5c77d14e23dc8e84e77faf63346d58152203dd700a20763e4dcc",
+    "scene_group": "2_006",
+    "source_size_px": [
+      1280,
+      720
+    ],
+    "true_pothole_pixels": 0,
+    "predicted_pothole_pixels": 135,
+    "pothole_area_absolute_error_px": 135,
+    "pothole_image_fraction_absolute_error": 0.000146484375,
+    "pothole_symmetric_difference_px": 135,
+    "road_or_pothole_roi_iou": 0.0005660610385333187,
+    "predicted_pothole_pixels_on_source_negative": 135
+  }
+]

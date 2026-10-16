@@ -49,4 +49,11 @@ describe('backend prediction presentation', () => {
     expect(output).toContain('Model, timing, calibration and provenance')
     expect(output).toContain('Box extent is not defect width')
   })
+
+  it('exposes failed mask evaluation beside experimental area outputs', () => {
+    const failedMask = { ...result, defects: [{ class: 'pothole', mask_geometry: { heldout_pothole_iou_model_input_resolution: 0 } }] }
+    const output = renderToStaticMarkup(<DefectFindings result={failedMask} view="everyday" />)
+    expect(output).toContain('source held-out IoU 0.000')
+    expect(output).toContain('Predicted areas are not validated measurements')
+  })
 })

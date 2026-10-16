@@ -54,6 +54,11 @@ def assess_visual_distress(report: dict[str, Any]) -> VisualDistressAssessment:
         reasons.append("Usable pavement ROI is unavailable; no affected-road-area denominator.")
     if roi_warning:
         reasons.append("Predicted road-class coverage is below 10%; this unvalidated visibility heuristic limits interpretation and does not prove absence of pavement.")
+    for observation in report.get("defects", []):
+        geometry = observation.get("mask_geometry") or {}
+        mask_iou = geometry.get("heldout_pothole_iou_model_input_resolution")
+        if isinstance(mask_iou, (int, float)):
+            reasons.append(f"Experimental pothole mask model source-heldout IoU is {mask_iou:.3f} at model-input resolution; predicted areas are not validated defect measurements.")
     errors = {error.get("code") for error in report.get("processing_errors", [])}
     ready = model.get("load_status") == "loaded" and "inference_failed" not in errors
     count = len(detections) if ready and quality.get("usable") is True else None

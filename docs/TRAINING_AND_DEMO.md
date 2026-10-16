@@ -31,7 +31,7 @@ Manifests and ledgers are local:
 - `data/sources/rdd2022-official-record.json`, `rdd2022-india-acquisition.json`, nested-member directory metadata.
 - `data/rdd2022-india-v1/manifest.jsonl`, `split-audit.json`, `manifest-validation.json`, dataset.yaml and explicit image lists.
 - `data/indian-roads-v2/acquisition.json`: each selected member CRC/SHA-256.
-- `models/india-roi-v4/roi-manifest.jsonl`, `roi-split-audit.json`: sequence split frozen before training; v2/v3 preserve the same source identities as earlier stretch baselines.
+- `models/india-roi-v3/roi-manifest.jsonl`, `roi-split-audit.json`: sequence split frozen before training; all experiments preserve the same source identities.
 
 Preparation refuses to overwrite a frozen manifest. A changed split or experiment uses a fresh output/version. Failed/unfrozen preparation files and incomplete runs remain separate evidence; never erase a failed result to improve the report. The full manifest records source-relative paths, labels, IDs, groups and hashes; small committed ledgers permit checking identity without publishing raw datasets.
 
@@ -40,7 +40,8 @@ Preparation refuses to overwrite a frozen manifest. A changed split or experimen
 ```powershell
 $env:PYTHONPATH='backend'
 .\.venv\Scripts\python.exe -u -m backend.scripts.train_india_detector --batch 8 --epochs 30
-.\.venv\Scripts\python.exe -u -m backend.scripts.train_india_roi --output models/india-roi-v4 --name indian-roads-unet-v4-letterbox --positive-repeat 8 --pothole-weight-min 32 --dice-weight 0.5 --preserve-aspect --batch 8 --epochs 15
+.\.venv\Scripts\python.exe -u -m backend.scripts.train_india_roi --output models/india-roi-v3 --name indian-roads-unet-v3 --positive-repeat 8 --pothole-weight-min 32 --dice-weight 0.5 --batch 8 --epochs 15
+.\.venv\Scripts\python.exe -u -m backend.scripts.export_roi_letterbox
 ```
 
 Execute GPU jobs sequentially on smaller devices. The actual run used separate jobs on the same 8 GiB device, recording requested/completed epochs and hardware. Both start randomly. Detector AMP is off to prevent the upstream AMP check from downloading a pretrained model. Validation selects checkpoints; the frozen labelled test is evaluated after selection. Test data is not a percentile cohort. Training JSON epoch records show actual losses and validation metrics. To retain logs in PowerShell, append `*> artifacts/detector-training.log` (create artifacts/ first); follow with `Get-Content ... -Tail 2 -Wait` in a separate terminal.
@@ -48,7 +49,10 @@ Execute GPU jobs sequentially on smaller devices. The actual run used separate j
 Expected actual assets after successful evaluation:
 
 - `models/india-yolo11n-v1/detector.pt` + `detector.json`, `experiment.json`, `heldout-metrics.json`, fit/results.csv and heldout plots/predictions.
-- `models/india-roi-v4/roi.pt` + `roi-evaluation.json` containing actual history, heldout confusion, IoU/Dice and hashes. Prior v2/v3 stretch experiments remain local and in compact benchmark evidence; the corrected application uses v4's explicitly recorded letterbox and inverse mask transform.
+- `models/india-roi-v3/roi.pt` + `roi-evaluation.json` containing actual training history, heldout confusion, IoU/Dice and hashes.
+- `models/india-roi-v3-letterbox-v1/roi.pt` + matching evaluation and `export-provenance.json`: a deployment export of the identical learned v3 parameters, with explicitly recorded letterbox and inverse mask transform. This is **not a separately trained experiment**. The exporter verifies all 3,200 original image/mask hashes and byte equality of old/new model inputs before reusing the model-input evaluation. CPU source-resolution projection is evaluated afresh below.
+
+The original v2 and improved v3 experiments completed 15 epochs each. A v4 retraining attempt was stopped after three epochs when the dimension audit established that every retained image is already 1280x720: repeating 15 epochs would train on identical inputs. Its incomplete checkpoint/log and the predeclared correction plan remain retained as negative/history evidence. A new versioned runtime export fixes square-upload distortion without changing or relabelling the frozen v3 experiment. No test-based accuracy selection or new-training claim is made.
 
 The detector adapter verifies weights hash, India provenance, class order, absence of pretrained weights and heldout evaluation. The v2 ROI adapter also requires a matching completed evaluation file. Unfinished checkpoints cannot pass these readiness checks. Sidecars are provenance checks for **trusted local assets**, not an authentication mechanism for arbitrary untrusted checkpoints. Never upload/load foreign pickle weights through the image API.
 

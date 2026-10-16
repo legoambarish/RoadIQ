@@ -73,6 +73,15 @@ def test_inference_failure_overrides_loaded_model_for_no_detection_state():
     assert result.status == "unavailable" and result.detection_count is None
 
 
+def test_failed_mask_benchmark_is_visible_even_with_no_detector_candidates():
+    report = observation()
+    report["defects"][0]["mask_geometry"] = {"heldout_pothole_iou_model_input_resolution": 0.0}
+    result = assess_visual_distress(report)
+    assert result.grade is None and result.score is None
+    assert result.reliability == "limited"
+    assert any("IoU is 0.000" in reason and "not validated" in reason for reason in result.reliability_reasons)
+
+
 def test_box_extent_does_not_populate_segmentation_or_metric_measurements():
     boxes = _detection_objects([("pothole", .6, [-1, 10, 50, 30])], 400, 300)
     box = boxes["pothole"][0]

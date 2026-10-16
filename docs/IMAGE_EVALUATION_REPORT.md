@@ -1,5 +1,7 @@
 # Image-analysis integration status
 
+This file preserves earlier integration/texture evidence. Current genuine India-trained model benchmarks and failures are in [MODEL_CARD.md](MODEL_CARD.md) and [VALIDATION_REPORT.md](VALIDATION_REPORT.md). The historical synthetic texture result is not validation of road detection, masks, dimensions or condition scores.
+
 ## Implemented integration
 
 The integrated API provides `POST /api/v1/image-analyses`, which sends uploaded bytes to the Task C image-analysis service and passes explicit image-quality/surface observations to the Task A RSQI scorer. The dashboard can upload an image to the local backend and can still import a saved Task C CLI JSON report and annotation.

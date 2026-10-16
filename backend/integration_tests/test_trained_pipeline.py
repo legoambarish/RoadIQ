@@ -27,7 +27,7 @@ def live_client():
     assert checkpoint.with_suffix(".json").is_file(), "Trained checkpoint/evaluation provenance required."
     os.environ["ROADIQ_DETECTOR_MODEL_PATH"] = str(checkpoint)
     os.environ["ROADIQ_DETECTOR_DEVICE"] = "cpu"
-    roi_checkpoint = ROOT / "models/india-roi-v4/roi.pt"
+    roi_checkpoint = ROOT / "models/india-roi-v3-letterbox-v1/roi.pt"
     assert roi_checkpoint.is_file(), "Real corrected-aspect ROI checkpoint required."
     os.environ["ROADIQ_SEGMENTATION_MODEL_PATH"] = str(roi_checkpoint)
     os.environ["ROADIQ_SEGMENTATION_DEVICE"] = "cpu"

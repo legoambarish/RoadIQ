@@ -1,0 +1,21 @@
+{
+  "created_utc": "2026-10-16T11:49:03.955775+00:00",
+  "operation": "runtime_preprocessing_export_without_training",
+  "source_model_version": "indian-roads-unet-v3",
+  "source_preprocessing": "legacy_stretch_v1 (original loader default when metadata field is absent)",
+  "source_checkpoint_sha256": "4324bcd279b93730fd583d6562598fe295c539b890101f5394bedb7b21a5d8b0",
+  "source_evaluation_sha256": "7dcbcfcea1744301149bd2c6b8238280f6ba98b2dc71e71a1e8126d7f5fa8495",
+  "source_manifest_sha256": "bad0de0072954e4ac5b1d8bd81db544e2c0e7fc2196de93245fe682d5fa975b8",
+  "all_source_image_and_label_hashes_verified": true,
+  "all_retained_rgb_and_mask_model_input_bytes_equal": true,
+  "verified_images": 3200,
+  "split_counts": {
+    "train": 2475,
+    "validation": 375,
+    "test": 350
+  },
+  "new_training_epochs": 0,
+  "metric_policy": "Original GPU model-input evaluation is reused because all retained model inputs are byte-identical. CPU source-resolution projection is a separate evaluation; this is not a new trained experiment.",
+  "runtime_change": "Preserve aspect ratio for other camera formats; crop padding then project argmax labels by nearest neighbor instead of interpolating logits at source resolution.",
+  "learned_parameter_tensors_verified_equal": true
+}

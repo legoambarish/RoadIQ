@@ -1,5 +1,7 @@
 # Task D integration preparation and contract audit
 
+**Historical coordination baseline.** The owner-authorized India implementation integrates trained local adapters, VDA, mask geometry, readiness and report export. Use [MEASUREMENT_AND_SCORING_SPEC.md](MEASUREMENT_AND_SCORING_SPEC.md), [MODEL_CARD.md](MODEL_CARD.md) and [VALIDATION_REPORT.md](VALIDATION_REPORT.md) for current contracts and actual checks. Older dependency statements below remain historical evidence, not current availability claims. RSQI remains Unrated without its required evidence.
+
 **Status recorded 2026-10-16:** The Windows desktop package has previously been built and exercised on a Windows host. Task D's image-analysis route and dashboard upload integration are merged into `main` by PR #16 but have not yet been rebuilt or tested on Windows. The API does not produce numeric RSQI for current images. This file records current dependencies and field mapping; it does not approve incompatible changes to the shared contract.
 
 ## Dependency readiness

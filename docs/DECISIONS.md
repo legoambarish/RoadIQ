@@ -2,6 +2,22 @@
 
 This log records scaffold decisions and provisional contract choices. A provisional choice is not evidence of a validated road-engineering standard or production approval.
 
+## India implementation decisions — 2026-10-16
+
+| Decision | Reason and evidence boundary |
+| --- | --- |
+| Extend the existing modules and additive `image-analysis-v1.1` | Preserve the functioning upload/import/map/scorer and all original task branches; combined owner authorization is recorded in TASKS.md. No new application framework or frozen segment schema rewrite. |
+| Two India-only road corpora, random model initialization | RDD2022 India supplies four box classes; e-Yantra v2 supplies semantic masks. Each has a distinct domain, rights record and frozen split. No multinational/COCO weights or fabricated field labels. |
+| Fixed source grouping plus complete exact/dHash audit | Verified route/session metadata is absent in RDD. Numeric blocks are only capture-order proxies. Exclude later-split neighbors and disclose residual dependence/selection bias instead of calling them independent routes. |
+| Report observations and localized cautions without a numeric VDA | Available labels are detection classes, not condition/severity grades. No defensible Good/Medium/Bad calibration or complete RSQI component/reference set exists. |
+| Separate boxes, semantic pixels and physical measurements | Only supervised masks generate experimental pixel geometry. Boxes supply extents/counts; physical depth/area/width stay null. Unknown material and capture support remain visible. |
+| Reuse v3 weights in a versioned letterbox deployment export | All 3,200 retained source images are 1280x720. Every source hash, model-input RGB/mask byte pair and exported parameter tensor is checked. A redundant v4 attempt is retained as incomplete. Source-projection accuracy is evaluated afresh; frozen v3 training identity and negative metrics remain intact. |
+| Disclose failed mask quality beside its outputs | Heldout pothole IoU is zero. Pixel areas are experimental predictions and cannot support trustworthy damage measurement. Never hide a failure behind an aggregate overlap or a small average area error. |
+| CPU runtime and separate clean CPU package environment | CUDA trains on the local GPU; CPU inference and the standalone Windows package use pinned CPU Torch/torchvision to avoid bundling CUDA DLLs. Package tests must exercise the fresh executable outside the checkout. |
+| Hold P1 physical dimensions, percentile and survey map at their evidence gates | No measured scale references, eligible RSQI scores/cohort or legitimate survey GPS/time exists. JSON observation export is available; future features must not silently manufacture these inputs. |
+
+Current scientific contract and benchmark identities: [MEASUREMENT_AND_SCORING_SPEC.md](MEASUREMENT_AND_SCORING_SPEC.md), [DATASET_AND_RIGHTS_REGISTER.md](DATASET_AND_RIGHTS_REGISTER.md), [MODEL_CARD.md](MODEL_CARD.md). The remaining earlier rows preserve coordination history; their initial endpoint/formula proposals do not supersede current code/specifications.
+
 ## Recorded decisions
 
 | Decision | Current choice | Rationale / limit |

@@ -1,5 +1,7 @@
 # Task B — Leaflet/OpenStreetMap dashboard handoff (2026-10-16)
 
+Historical Task B handoff follows. The current combined India implementation handoff is the root [HANDOFF.md](../HANDOFF.md), with actual benchmarks and checks in [MODEL_CARD.md](MODEL_CARD.md) and [VALIDATION_REPORT.md](VALIDATION_REPORT.md).
+
 ## Follow-up: India-bounded map and aligned OSM streets (2026-10-16)
 
 - **Assignment/branch:** Task B frontend/dashboard on `task/b-map-dashboard`. `git fetch origin` completed before editing; the branch was clean and matched `origin/task/b-map-dashboard` at `232d72e1b484901a49aae121fb679dbebb0a311f` before this change. No upstream Task B commits arrived. The fetched Task D branch advance was not merged or edited.

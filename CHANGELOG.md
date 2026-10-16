@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-16 — India model integration and audited runtime projection (in progress)
+
+- Acquired and froze two India-only corpora with rights/hash/duplicate evidence; actual detector training is ongoing and two genuine ROI experiments completed.
+- Integrated separate VDA, source boxes/semantic masks, guarded readiness/intake, live Everyday/Engineer findings and actual JSON export. Preserved legacy RSQI and map/import workflows.
+- Exported unchanged v3 parameters into a separately versioned letterbox runtime after proving all 3,200 training/evaluation inputs identical. Retained redundant v4 as incomplete; do not claim new training.
+- Actual 350-image CPU source-resolution evaluation found road IoU 0.51267 and pothole IoU zero. Kept negative evidence and expose failed mask quality beside experimental geometry. Backend 134 tests and frontend 13 tests/lint/build passed; final detector/E2E/package results remain pending.
+
 ## 2026-10-16 — Task D image-analysis scorer integration (merged in PR #16)
 
 - Connected local image uploads from the dashboard to `POST /api/v1/image-analyses`, which invokes Task C observations and Task A scoring while preserving saved CLI report/annotation import.

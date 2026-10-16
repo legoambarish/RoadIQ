@@ -1,0 +1,12 @@
+{
+  "images": 3200,
+  "size_counts": [
+    {
+      "width": 1280,
+      "height": 720,
+      "images": 3200
+    }
+  ],
+  "all_exact_input_aspect": true,
+  "purpose": "Determine whether the new letterbox correction changes training inputs, or only other runtime camera formats. No test labels or scores used."
+}

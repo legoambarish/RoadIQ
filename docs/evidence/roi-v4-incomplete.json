@@ -1,0 +1,184 @@
+{
+  "status": "INCOMPLETE_STOPPED_REDUNDANT_TRAINING",
+  "stopped_utc": "2026-10-16T11:47:00.318708+00:00",
+  "reason": "All 3200 retained source images are 1280x720. The new letterbox preprocessing is byte-equivalent at the 512x288 model input. Reuse the genuine v3 learned parameters in a separately versioned runtime export rather than retraining identical inputs. Original v3 and incomplete v4 files retained unchanged.",
+  "aspect_audit": "roi-source-aspect-audit.json",
+  "completed_epochs": [
+    {
+      "event": "roi_epoch_completed",
+      "epoch": 1,
+      "train_loss": 1.2436154575117173,
+      "iou_by_class": {
+        "road": 0.7435803108763519,
+        "footpath": 0.08922094578462175,
+        "shallow": 0.061283240520307806,
+        "pothole": 0.0023495528918923312,
+        "background_unobserved": 0.8041542059338055
+      },
+      "dice_by_class": {
+        "road": 0.8529349709192533,
+        "footpath": 0.163825247999342,
+        "shallow": 0.11548894429024038,
+        "pothole": 0.0046880908663322176,
+        "background_unobserved": 0.8914473089816469
+      },
+      "macro_iou": 0.3401176512013959,
+      "confusion_matrix_rows_true_columns_predicted": [
+        [
+          23234622,
+          392725,
+          4261777,
+          526595,
+          1566500
+        ],
+        [
+          97361,
+          211132,
+          184652,
+          266033,
+          763309
+        ],
+        [
+          873206,
+          169648,
+          483022,
+          113169,
+          401081
+        ],
+        [
+          67492,
+          4924,
+          20623,
+          2746,
+          17098
+        ],
+        [
+          226679,
+          276611,
+          1374618,
+          150053,
+          19610324
+        ]
+      ],
+      "elapsed_seconds": 137.86
+    },
+    {
+      "event": "roi_epoch_completed",
+      "epoch": 2,
+      "train_loss": 0.9814642358210779,
+      "iou_by_class": {
+        "road": 0.7921826010659869,
+        "footpath": 0.11818468536316029,
+        "shallow": 0.0495094802923428,
+        "pothole": 0.008546086153129386,
+        "background_unobserved": 0.8040233843353686
+      },
+      "dice_by_class": {
+        "road": 0.8840422851943749,
+        "footpath": 0.21138670008662597,
+        "shallow": 0.09434784767937844,
+        "pothole": 0.016947338888055174,
+        "background_unobserved": 0.8913669205364362
+      },
+      "macro_iou": 0.3544892474419976,
+      "confusion_matrix_rows_true_columns_predicted": [
+        [
+          25484218,
+          527327,
+          2752420,
+          522155,
+          696099
+        ],
+        [
+          335817,
+          284042,
+          180274,
+          372633,
+          349721
+        ],
+        [
+          1322409,
+          89185,
+          350509,
+          86036,
+          191987
+        ],
+        [
+          74436,
+          7308,
+          7641,
+          12987,
+          10511
+        ],
+        [
+          454745,
+          257067,
+          2099173,
+          425936,
+          18401364
+        ]
+      ],
+      "elapsed_seconds": 270.38
+    },
+    {
+      "event": "roi_epoch_completed",
+      "epoch": 3,
+      "train_loss": 0.8565848348602172,
+      "iou_by_class": {
+        "road": 0.6482768424034995,
+        "footpath": 0.1273730201683865,
+        "shallow": 0.0707696765101655,
+        "pothole": 0.00414115016057521,
+        "background_unobserved": 0.7494154210776846
+      },
+      "dice_by_class": {
+        "road": 0.7866116003403764,
+        "footpath": 0.22596428669077398,
+        "shallow": 0.13218468558208865,
+        "pothole": 0.008248143520286936,
+        "background_unobserved": 0.8567609637464217
+      },
+      "macro_iou": 0.3199952220640623,
+      "confusion_matrix_rows_true_columns_predicted": [
+        [
+          19998057,
+          647457,
+          8294046,
+          459029,
+          583630
+        ],
+        [
+          40789,
+          355372,
+          430306,
+          556527,
+          139493
+        ],
+        [
+          620243,
+          176209,
+          1023447,
+          64187,
+          156040
+        ],
+        [
+          59645,
+          6462,
+          26042,
+          7007,
+          13727
+        ],
+        [
+          145124,
+          437395,
+          3671140,
+          499416,
+          16885210
+        ]
+      ],
+      "elapsed_seconds": 395.12
+    }
+  ],
+  "heldout_evaluated": false,
+  "replacement": "indian-roads-unet-v3-letterbox-v1, export with zero additional epochs; independently measure its source-resolution CPU projection."
+}

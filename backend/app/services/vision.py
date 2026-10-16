@@ -529,6 +529,13 @@ def analyze_road_image(
                 "pothole_geometry": semantic_mask_geometry(pothole_mask, usable_pavement_mask),
                 "pavement_including_potholes_mask_rle": encode_binary_mask_rle(usable_pavement_mask, "road_or_pothole"),
             }
+            evaluation = getattr(actual_segmentation_model, "checkpoint_metadata", {}).get("heldout_evaluation", {})
+            mask_iou = evaluation.get("metrics_at_model_input_resolution", {}).get("iou_by_class", {}).get("pothole")
+            if isinstance(mask_iou, (int, float)) and math.isfinite(mask_iou):
+                segmentation_output["pothole_geometry"]["heldout_pothole_iou_model_input_resolution"] = mask_iou
+                segmentation_output["pothole_geometry"]["heldout_images"] = evaluation.get("images")
+                segmentation_output["pothole_geometry"]["limitations"].append(
+                    "Source-heldout model-input pothole IoU is reported with this prediction; area outputs are experimental and are not validated measurements.")
         except Exception as exc:
             road_roi_mask = None
             segmentation_error = f"{type(exc).__name__}: {exc}"
@@ -569,7 +576,7 @@ def analyze_road_image(
         "training_status": getattr(actual_segmentation_model, "training_status", "not_reported") if actual_segmentation_model else "not_reported",
         "provider": getattr(actual_segmentation_model, "provider", "pytorch") if actual_segmentation_model else None,
         "checkpoint": ({key: value for key, value in getattr(actual_segmentation_model, "checkpoint_metadata", {}).items()
-                       if key in {"sha256", "model_version", "training_country", "pretrained_weights_used", "selected_epoch", "validation_metrics"}}
+                       if key in {"sha256", "model_version", "training_country", "pretrained_weights_used", "selected_epoch", "validation_metrics", "heldout_evaluation"}}
                        if actual_segmentation_model else None),
         "runtime": {"device": str(getattr(actual_segmentation_model, "device", "unknown"))} if actual_segmentation_model else None,
         "preprocessing_geometry": segmentation_output.get("preprocessing_geometry") if segmentation_output else None,

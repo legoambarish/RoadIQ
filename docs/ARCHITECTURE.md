@@ -2,7 +2,9 @@
 
 ## Current implementation
 
-RoadIQ remains an initial prototype scaffold; it is not production-ready.
+The owner-authorized India implementation extends the existing prototype with local trained detector/ROI adapters, actual readiness checks, source-coordinate observations, separate VDA, guarded image intake and live frontend reports. See the implementation section below, [TRAINING_AND_DEMO.md](TRAINING_AND_DEMO.md), [MODEL_CARD.md](MODEL_CARD.md) and [VALIDATION_REPORT.md](VALIDATION_REPORT.md) for current behavior and measured limits. The original scoring and fixture map remain preserved. Model accuracy and missing field calibration prevent a production or engineering-certification claim.
+
+### Preserved integration baseline
 
 - **Frontend:** React + TypeScript + Vite under `frontend/`, with Leaflet/OpenStreetMap tiles, an OSM India-boundary mask, and selectable, color-coded GeoJSON lines that follow nine mapped central Bengaluru streets; Road Quality and five travel-profile overlays; filters, rankings, charts, Everyday/Engineer segment details; local image preview, manual Task C CLI report/annotation import, and image upload to the Task D API. Street geometry/name and RoadIQ scores have distinct sources: geometry references OSM ways; scores and profile values are illustrative fixtures, not street condition surveys. Segment retrieval remains unavailable.
 - **Backend:** FastAPI + Pydantic under `backend/`. The API exposes `GET /api/v1/health` and `POST /api/v1/image-analyses`. The image route connects Task C observations to the Task A scorer but returns Unrated because supported component evidence and fixed normalization references are unavailable. `backend/app/schemas/road_segment.py` validates the shared road-segment shape. A deterministic demo fixture is isolated in `backend/app/fixtures/`.

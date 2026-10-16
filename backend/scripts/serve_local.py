@@ -20,7 +20,7 @@ def main():
     if not (frontend / "index.html").is_file():
         parser.error("Build frontend first: cd frontend; npm ci; npm run build")
     for variable, relative in (("ROADIQ_DETECTOR_MODEL_PATH", "models/india-yolo11n-v1/detector.pt"),
-                               ("ROADIQ_SEGMENTATION_MODEL_PATH", "models/india-roi-v4/roi.pt")):
+                               ("ROADIQ_SEGMENTATION_MODEL_PATH", "models/india-roi-v3-letterbox-v1/roi.pt")):
         path = Path(os.getenv(variable, str(root / relative))).expanduser().resolve()
         if not path.is_file() and not args.allow_unavailable_models:
             parser.error(f"Missing model: {relative}. Follow docs/TRAINING_AND_DEMO.md, or explicitly use --allow-unavailable-models.")

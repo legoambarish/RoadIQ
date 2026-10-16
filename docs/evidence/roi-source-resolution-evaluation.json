@@ -1,0 +1,175 @@
+{
+  "status": "completed",
+  "images": 350,
+  "source_positive_pothole_images": 14,
+  "source_negative_pothole_images": 336,
+  "manifest_sha256": "bad0de0072954e4ac5b1d8bd81db544e2c0e7fc2196de93245fe682d5fa975b8",
+  "checkpoint_sha256": "a511f40ad30325f5165008f94af8bced0b39d3ccd08a0b9891973bceb1a542e5",
+  "model_version": "indian-roads-unet-v3-letterbox-v1",
+  "device": "cpu",
+  "preprocessing": "letterbox_bilinear_rgb_nearest_mask_v1",
+  "source_resolution_metrics": {
+    "iou_by_class": {
+      "road": 0.5126706309390456,
+      "footpath": 0.2182980207566093,
+      "shallow": 0.006164280832650304,
+      "pothole": 0.0,
+      "background_unobserved": 0.3916117800743392
+    },
+    "dice_by_class": {
+      "road": 0.6778351089169842,
+      "footpath": 0.3583655510185233,
+      "shallow": 0.012253030543976496,
+      "pothole": 0.0,
+      "background_unobserved": 0.5628175697871995
+    },
+    "macro_iou": 0.22574894252052888,
+    "confusion_matrix_rows_true_columns_predicted": [
+      [
+        129386728,
+        7550337,
+        47819280,
+        149006,
+        53475185
+      ],
+      [
+        8707105,
+        7434367,
+        816291,
+        166287,
+        3912333
+      ],
+      [
+        966414,
+        505974,
+        344496,
+        18864,
+        5486
+      ],
+      [
+        12228,
+        25789,
+        503,
+        0,
+        209
+      ],
+      [
+        4311599,
+        4937561,
+        5408530,
+        138211,
+        46467217
+      ]
+    ]
+  },
+  "road_or_pothole_roi_iou": 0.5125988917441573,
+  "pothole_area_mae_source_px_all_images": 1435.8085714285714,
+  "pothole_area_mae_source_px_positive_images": 2764.8571428571427,
+  "pothole_image_fraction_mae_all_images": 0.0015579520089285715,
+  "source_negative_images_with_any_predicted_pothole_pixel": 106,
+  "worst_pothole_mask_examples": [
+    {
+      "image_id": "2_006_frame0077_leftImg8bit",
+      "image_sha256": "be7d0129844f1e408ad5771a4e6fe211f52bfa5e9e51d4a66e43f393e4391fcd",
+      "scene_group": "2_006",
+      "source_size_px": [
+        1280,
+        720
+      ],
+      "true_pothole_pixels": 0,
+      "predicted_pothole_pixels": 34826,
+      "pothole_area_absolute_error_px": 34826,
+      "pothole_image_fraction_absolute_error": 0.037788628472222224,
+      "pothole_symmetric_difference_px": 34826,
+      "road_or_pothole_roi_iou": 0.6836338283785016,
+      "predicted_pothole_pixels_on_source_negative": 34826
+    },
+    {
+      "image_id": "2_006_frame0070_leftImg8bit",
+      "image_sha256": "a2a5e6ed17243812f9aea088e0438e922485db1395709bc341d2c55194ba139a",
+      "scene_group": "2_006",
+      "source_size_px": [
+        1280,
+        720
+      ],
+      "true_pothole_pixels": 0,
+      "predicted_pothole_pixels": 32093,
+      "pothole_area_absolute_error_px": 32093,
+      "pothole_image_fraction_absolute_error": 0.034823133680555556,
+      "pothole_symmetric_difference_px": 32093,
+      "road_or_pothole_roi_iou": 0.707073790392644,
+      "predicted_pothole_pixels_on_source_negative": 32093
+    },
+    {
+      "image_id": "2_006_frame0084_leftImg8bit",
+      "image_sha256": "dc695d18a0bc949a33e497e109708e57d09f05a7613c26c1c3d4c5ee8541ed1d",
+      "scene_group": "2_006",
+      "source_size_px": [
+        1280,
+        720
+      ],
+      "true_pothole_pixels": 0,
+      "predicted_pothole_pixels": 30915,
+      "pothole_area_absolute_error_px": 30915,
+      "pothole_image_fraction_absolute_error": 0.033544921875,
+      "pothole_symmetric_difference_px": 30915,
+      "road_or_pothole_roi_iou": 0.6970823138010829,
+      "predicted_pothole_pixels_on_source_negative": 30915
+    },
+    {
+      "image_id": "2_006_frame0056_leftImg8bit",
+      "image_sha256": "1f77731f4e7225964f6c06309fc2bdbe6eee21e026c898f06bc5a020ddf8f552",
+      "scene_group": "2_006",
+      "source_size_px": [
+        1280,
+        720
+      ],
+      "true_pothole_pixels": 0,
+      "predicted_pothole_pixels": 30669,
+      "pothole_area_absolute_error_px": 30669,
+      "pothole_image_fraction_absolute_error": 0.03327799479166667,
+      "pothole_symmetric_difference_px": 30669,
+      "road_or_pothole_roi_iou": 0.7246268316063359,
+      "predicted_pothole_pixels_on_source_negative": 30669
+    },
+    {
+      "image_id": "2_006_frame0063_leftImg8bit",
+      "image_sha256": "40a7e29afe238ad0b7ce9cb121cb39b6472bea0c029d0f52f5cab012d77520a5",
+      "scene_group": "2_006",
+      "source_size_px": [
+        1280,
+        720
+      ],
+      "true_pothole_pixels": 0,
+      "predicted_pothole_pixels": 27320,
+      "pothole_area_absolute_error_px": 27320,
+      "pothole_image_fraction_absolute_error": 0.02964409722222222,
+      "pothole_symmetric_difference_px": 27320,
+      "road_or_pothole_roi_iou": 0.7218477416997763,
+      "predicted_pothole_pixels_on_source_negative": 27320
+    },
+    {
+      "image_id": "2_006_frame0091_leftImg8bit",
+      "image_sha256": "2d74eb09aaedc7a7a8d3ac3221b54b916b7c05234b4f9616717c673c19b6013a",
+      "scene_group": "2_006",
+      "source_size_px": [
+        1280,
+        720
+      ],
+      "true_pothole_pixels": 0,
+      "predicted_pothole_pixels": 25204,
+      "pothole_area_absolute_error_px": 25204,
+      "pothole_image_fraction_absolute_error": 0.02734809027777778,
+      "pothole_symmetric_difference_px": 25204,
+      "road_or_pothole_roi_iou": 0.7100169263166594,
+      "predicted_pothole_pixels_on_source_negative": 25204
+    }
+  ],
+  "elapsed_seconds": 85.41,
+  "limitations": [
+    "One source-heldout sequence, only 14 source-pothole-positive images; annotation completeness is not independently established.",
+    "Pixel metrics and area errors quantify image-space model disagreement with labels, not physical error or engineering validity.",
+    "Source negative means no pothole-labelled pixels, not certified healthy pavement.",
+    "No model selection or tuning uses this evaluation. Latency here includes hashing/metrics/previews and is not the API latency benchmark."
+  ]
+}
