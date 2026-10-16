@@ -1,4 +1,6 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import L from 'leaflet'
+import 'leaflet/dist/leaflet.css'
 import type { DemoRoadRecord, OverlayKey } from '../data/demoRoadSegments'
 import { demoRoadRecords, getOverlayValue, overlayLabel, scoreTone } from '../data/demoRoadSegments'
 
@@ -9,34 +11,10 @@ type SegmentMapProps = {
   onSelect: (segmentId: string) => void
 }
 
-const MAP_WIDTH = 800
-const MAP_HEIGHT = 510
-const MAP_PADDING = 68
-
-function projectRecords(records: DemoRoadRecord[]) {
-  const coordinates = records.flatMap(({ segment }) => segment.geometry.coordinates)
-  const longitudes = coordinates.map(([longitude]) => longitude)
-  const latitudes = coordinates.map(([, latitude]) => latitude)
-  const minLongitude = Math.min(...longitudes)
-  const maxLongitude = Math.max(...longitudes)
-  const minLatitude = Math.min(...latitudes)
-  const maxLatitude = Math.max(...latitudes)
-  const longitudeSpan = Math.max(maxLongitude - minLongitude, 0.0001)
-  const latitudeSpan = Math.max(maxLatitude - minLatitude, 0.0001)
-  const scale = Math.min(
-    (MAP_WIDTH - MAP_PADDING * 2) / longitudeSpan,
-    (MAP_HEIGHT - MAP_PADDING * 2) / latitudeSpan,
-  )
-  const drawnWidth = longitudeSpan * scale
-  const drawnHeight = latitudeSpan * scale
-  const offsetX = (MAP_WIDTH - drawnWidth) / 2
-  const offsetY = (MAP_HEIGHT - drawnHeight) / 2
-
-  return (longitude: number, latitude: number) => ({
-    x: offsetX + (longitude - minLongitude) * scale,
-    y: MAP_HEIGHT - offsetY - (latitude - minLatitude) * scale,
-  })
-}
+const MAP_CENTER: L.LatLngExpression = [40.7128, -74.005]
+const INITIAL_ZOOM = 15
+const OSM_TILE_URL = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+const OSM_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'
 
 function toneColor(tone: ReturnType<typeof scoreTone>) {
   return {
@@ -48,11 +26,104 @@ function toneColor(tone: ReturnType<typeof scoreTone>) {
   }[tone]
 }
 
+function recordBounds(records: DemoRoadRecord[]) {
+  const coordinates = records.flatMap(({ segment }) => segment.geometry.coordinates)
+  return L.latLngBounds(coordinates.map(([longitude, latitude]) => [latitude, longitude] as L.LatLngTuple))
+}
+
 export function SegmentMap({ records, selectedId, overlay, onSelect }: SegmentMapProps) {
-  const [zoom, setZoom] = useState(1)
-  const frameRecords = records.length > 0 ? records : demoRoadRecords
-  const project = useMemo(() => projectRecords(frameRecords), [frameRecords])
-  const zoomLabel = `${Math.round(zoom * 100)}%`
+  const mapElement = useRef<HTMLDivElement>(null)
+  const map = useRef<L.Map | null>(null)
+  const selectedLabel = useRef<L.Tooltip | null>(null)
+  const [zoom, setZoom] = useState(INITIAL_ZOOM)
+  const [tileError, setTileError] = useState(false)
+  const zoomLabel = `${zoom}×`
+
+  useEffect(() => {
+    if (!mapElement.current || map.current) return
+
+    const instance = L.map(mapElement.current, {
+      zoomControl: false,
+      scrollWheelZoom: true,
+      keyboard: true,
+    }).setView(MAP_CENTER, INITIAL_ZOOM)
+
+    const tiles = L.tileLayer(import.meta.env.VITE_MAP_TILE_URL || OSM_TILE_URL, {
+      maxZoom: 19,
+      attribution: import.meta.env.VITE_MAP_TILE_ATTRIBUTION || OSM_ATTRIBUTION,
+    }).addTo(instance)
+    tiles.on('tileerror', () => setTileError(true))
+    instance.on('zoomend', () => setZoom(instance.getZoom()))
+    map.current = instance
+
+    const allBounds = recordBounds(demoRoadRecords)
+    if (allBounds.isValid()) instance.fitBounds(allBounds.pad(0.2), { animate: false })
+    const resize = window.setTimeout(() => instance.invalidateSize(), 0)
+
+    return () => {
+      window.clearTimeout(resize)
+      instance.remove()
+      map.current = null
+    }
+  }, [])
+
+  useEffect(() => {
+    const instance = map.current
+    if (!instance) return
+
+    if (selectedLabel.current) {
+      instance.removeLayer(selectedLabel.current)
+      selectedLabel.current = null
+    }
+    instance.eachLayer((layer) => {
+      if (layer instanceof L.Polyline) instance.removeLayer(layer)
+    })
+
+    for (const record of records) {
+      const value = getOverlayValue(record, overlay)
+      const tone = scoreTone(value)
+      const selected = record.segment.segment_id === selectedId
+      const title = `${record.roadName}: ${value === null ? 'unrated' : `${Math.round(value)} out of 100`}`
+      const positions = record.segment.geometry.coordinates.map(([longitude, latitude]) => [latitude, longitude] as L.LatLngTuple)
+      const route = L.polyline(positions, {
+        color: toneColor(tone),
+        weight: selected ? 9 : 7,
+        opacity: selected ? 1 : 0.82,
+        lineCap: 'round',
+        lineJoin: 'round',
+        bubblingMouseEvents: false,
+      }).addTo(instance)
+
+      route.on('click', () => onSelect(record.segment.segment_id))
+      const path = route.getElement()
+      if (path) {
+        path.setAttribute('role', 'button')
+        path.setAttribute('tabindex', '0')
+        path.setAttribute('aria-label', `${title}. Select to open segment details.`)
+        path.setAttribute('aria-pressed', String(selected))
+        path.addEventListener('keydown', (event) => {
+          const keyEvent = event as KeyboardEvent
+          if (keyEvent.key === 'Enter' || keyEvent.key === ' ') {
+            keyEvent.preventDefault()
+            onSelect(record.segment.segment_id)
+          }
+        })
+      }
+
+      if (selected) {
+        const middle = positions[Math.floor(positions.length / 2)]
+        if (middle) {
+          selectedLabel.current = L.tooltip({ direction: 'top', offset: [0, -7], permanent: true, className: 'road-label' })
+            .setLatLng(middle)
+            .setContent(record.roadName)
+            .addTo(instance)
+        }
+      }
+    }
+
+    const bounds = recordBounds(records)
+    if (records.length > 0 && bounds.isValid()) instance.fitBounds(bounds.pad(0.2), { animate: false, maxZoom: 17 })
+  }, [records, selectedId, overlay, onSelect])
 
   return (
     <section className="map-card" aria-labelledby="map-heading">
@@ -60,84 +131,20 @@ export function SegmentMap({ records, selectedId, overlay, onSelect }: SegmentMa
         <div>
           <div className="section-kicker">Interactive network map</div>
           <h2 id="map-heading">Road segments</h2>
-          <p className="map-description">Select a colored route to inspect its demo record. Geometry is schematic; no basemap is connected.</p>
+          <p className="map-description">Select a colored route to inspect its demo record. Fixture routes and scores are illustrative; the OSM basemap is geographic context only.</p>
         </div>
         <div className="map-tools" aria-label="Map controls">
-          <span className="map-tool-label">Illustrative geometry</span>
-          <button type="button" aria-label="Zoom out" onClick={() => setZoom((value) => Math.max(0.8, value - 0.1))}>−</button>
+          <span className="map-tool-label">Map tiles</span>
+          <button type="button" aria-label="Zoom out" onClick={() => map.current?.zoomOut()}>−</button>
           <span className="zoom-value" aria-live="polite">{zoomLabel}</span>
-          <button type="button" aria-label="Zoom in" onClick={() => setZoom((value) => Math.min(1.6, value + 0.1))}>+</button>
+          <button type="button" aria-label="Zoom in" onClick={() => map.current?.zoomIn()}>+</button>
         </div>
       </div>
 
-      <div className="map-canvas">
-        <svg className="network-map" viewBox={`0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`} role="group" aria-label={`Interactive road segment map colored by ${overlayLabel(overlay)}. Select a segment for details.`}>
-          <defs>
-            <pattern id="map-grid" width="42" height="42" patternUnits="userSpaceOnUse">
-              <path d="M 42 0 L 0 0 0 42" fill="none" stroke="#e7ece8" strokeWidth="1" />
-            </pattern>
-            <filter id="road-shadow" x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="2" stdDeviation="2" floodColor="#73837d" floodOpacity="0.2" />
-            </filter>
-          </defs>
-          <rect width={MAP_WIDTH} height={MAP_HEIGHT} rx="18" fill="#f7f9f5" />
-          <rect width={MAP_WIDTH} height={MAP_HEIGHT} rx="18" fill="url(#map-grid)" />
-          <g className="map-blocks" aria-hidden="true">
-            <path d="M90 94h126v68H90zM283 75h105v68H283zM495 88h135v78H495zM658 235h83v82h-83zM77 329h145v76H77zM301 355h113v73H301zM520 334h119v88H520z" />
-            <path d="M238 223h110v61H238zM438 220h92v66h-92z" />
-          </g>
-          <g transform={`translate(${MAP_WIDTH / 2} ${MAP_HEIGHT / 2}) scale(${zoom}) translate(${-MAP_WIDTH / 2} ${-MAP_HEIGHT / 2})`}>
-            {records.map((record) => {
-              const points = record.segment.geometry.coordinates.map(([longitude, latitude]) => project(longitude, latitude))
-              const path = points.map(({ x, y }, index) => `${index === 0 ? 'M' : 'L'} ${x} ${y}`).join(' ')
-              const value = getOverlayValue(record, overlay)
-              const tone = scoreTone(value)
-              const selected = record.segment.segment_id === selectedId
-              const midPoint = points[Math.floor(points.length / 2)]
-              const title = `${record.roadName}: ${value === null ? 'unrated' : `${Math.round(value)} out of 100`}`
-
-              return (
-                <g
-                  key={record.segment.segment_id}
-                  className={`map-segment ${selected ? 'selected' : ''}`}
-                  role="button"
-                  tabIndex={0}
-                  aria-label={`${title}. Select to open segment details.`}
-                  aria-pressed={selected}
-                  onClick={() => onSelect(record.segment.segment_id)}
-                  onKeyDown={(event) => {
-                    if (event.key === 'Enter' || event.key === ' ') {
-                      event.preventDefault()
-                      onSelect(record.segment.segment_id)
-                    }
-                  }}
-                >
-                  <title>{title}</title>
-                  <path className="segment-shadow" d={path} />
-                  <path className="segment-halo" d={path} stroke={toneColor(tone)} />
-                  <path className="segment-line" d={path} stroke={toneColor(tone)} />
-                  {midPoint && <circle className="segment-point" cx={midPoint.x} cy={midPoint.y} r={selected ? 8 : 6} fill={toneColor(tone)} />}
-                  {selected && midPoint && (
-                    <g className="map-label" transform={`translate(${midPoint.x + 12} ${midPoint.y - 20})`}>
-                      <rect width={Math.min(174, record.roadName.length * 7 + 24)} height="28" rx="8" />
-                      <text x="12" y="18">{record.roadName}</text>
-                    </g>
-                  )}
-                </g>
-              )
-            })}
-          </g>
-          <text className="map-caption" x="22" y="482">DEMO NETWORK · NO LIVE BASEMAP</text>
-          <g className="north-indicator" transform="translate(752 50)" aria-hidden="true">
-            <text x="0" y="0">N</text>
-            <path d="M0 8v24" />
-            <path d="m0 8-5 9h10z" />
-          </g>
-        </svg>
-        <div className="map-empty-state" hidden={records.length > 0}>
-          <strong>No roads match these filters</strong>
-          <span>Clear a filter to show the demo network again.</span>
-        </div>
+      <div className="map-canvas leaflet-map-canvas">
+        <div ref={mapElement} className="leaflet-map" role="application" aria-label={`Interactive geographic map with illustrative road segments colored by ${overlayLabel(overlay)}. Select a route for details.`} />
+        {tileError && <p className="map-tile-error" role="status">Basemap tiles are unavailable; fixture routes remain interactive. Check your connection.</p>}
+        {records.length === 0 && <div className="map-empty-state"><strong>No roads match these filters</strong><span>Clear a filter to show the demo network again.</span></div>}
         <div className="map-legend" aria-label="Overlay score legend">
           <span><i className="legend-dot good" />80–100</span>
           <span><i className="legend-dot fair" />60–79</span>
@@ -148,7 +155,7 @@ export function SegmentMap({ records, selectedId, overlay, onSelect }: SegmentMa
       </div>
       <div className="map-footer">
         <span><strong>{records.length}</strong> segments in view</span>
-        <span>Values are illustrative fixtures, not live road measurements.</span>
+        <span>Fixture geometry and scores only</span>
       </div>
     </section>
   )

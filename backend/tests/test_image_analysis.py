@@ -6,6 +6,14 @@ from fastapi.testclient import TestClient
 from PIL import Image
 
 from app.main import create_app
+from app.services.scoring import (
+    COMPONENTS,
+    FeatureObservation,
+    NormalizationProfile,
+    NormalizationReference,
+    ScoringConfig,
+    ScoringEvidence,
+)
 
 
 @pytest.fixture
@@ -32,6 +40,13 @@ def test_image_analysis_successful_post(client):
     assert "analysis_status" in data
     assert "rsqi" in data
     assert data["rsqi"]["status"] in ("rated", "low_confidence", "unrated")
+    assert data["analysis_status"] == "unrated"
+    assert data["rsqi"]["value"] is None
+    assert data["quality_label"] is None
+    assert all(
+        component["status"] == "unavailable"
+        for component in data["rsqi"]["components"].values()
+    )
     assert "image_quality" in data
     assert "texture_features" in data
     assert "mode_suitability" in data
@@ -41,6 +56,69 @@ def test_image_analysis_successful_post(client):
     assert "two_wheeler" in modes
     assert "car" in modes
     assert "bus" in modes
+    assert all(value is None for value in modes.values())
+
+
+def test_image_analysis_endpoint_preserves_scorer_visible_defect_cap(
+    client: TestClient,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    values = {name: 0.0 for name in COMPONENTS}
+    values["visible_defect_burden"] = 0.25
+    evidence = ScoringEvidence(
+        surface_type="asphalt_bituminous",
+        capture_profile="close-daylight-v1",
+        image_quality_usable=True,
+        usable_region_adequate=True,
+        resolution_adequate=True,
+        components={
+            name: FeatureObservation(
+                value=value,
+                unit="ratio",
+                status="observed",
+                source="image_inference",
+            )
+            for name, value in values.items()
+        },
+    )
+    config = ScoringConfig(
+        normalization_profiles=(
+            NormalizationProfile(
+                profile_id="integration-test",
+                reference_set_id="test-only",
+                surface_type="asphalt_bituminous",
+                capture_profile="close-daylight-v1",
+                components={
+                    name: NormalizationReference(
+                        unit="ratio",
+                        reference_min=0,
+                        reference_max=1,
+                    )
+                    for name in COMPONENTS
+                },
+            ),
+        ),
+    )
+    monkeypatch.setattr(
+        "app.api.routes.image_analysis._map_vision_to_scoring_evidence",
+        lambda _vision_result: evidence,
+    )
+    monkeypatch.setattr(
+        "app.api.routes.image_analysis.DEFAULT_SCORING_CONFIG",
+        config,
+    )
+
+    response = client.post(
+        "/api/v1/image-analyses",
+        files={"image": ("road.jpg", _make_dummy_image(), "image/jpeg")},
+    )
+
+    assert response.status_code == 200
+    data = response.json()
+    assert data["rsqi"]["value"] == pytest.approx(30.0)
+    assert data["rsqi"]["status"] == "rated"
+    assert data["quality_label"] == "Very Poor"
+    assert "score was capped at 30.00" in data["rsqi"]["explanation"]
 
 
 def test_empty_file_rejected(client):

@@ -31,9 +31,9 @@ def test_known_inputs_follow_documented_weighted_damage_formula() -> None:
 
     result = score_surface_quality(evidence(inputs), scoring_config())
 
-    assert result.rsqi.value == pytest.approx(68.5)
+    assert result.rsqi.value == pytest.approx(55.0)
     assert result.rsqi.status == 'rated'
-    assert result.quality_label == 'Fair'
+    assert result.quality_label == 'Poor'
     assert result.rsqi.components['visible_defect_burden'].value == pytest.approx(20)
     assert result.rsqi.components['visible_defect_burden'].weighted_contribution == pytest.approx(7)
     assert result.rsqi.components['aggregate_distribution_anomaly'].weighted_contribution == pytest.approx(9)
@@ -57,6 +57,32 @@ def test_overall_score_extreme_boundaries(
 
     assert result.rsqi.value == pytest.approx(expected_score)
     assert result.quality_label == expected_label
+
+
+@pytest.mark.parametrize(
+    ('visible_defect_burden', 'expected_score', 'expected_label', 'expected_cap'),
+    [
+        (14.999, 94.75035, 'Good', None),
+        (15.0, 55.0, 'Poor', '55.00'),
+        (24.999, 55.0, 'Poor', '55.00'),
+        (25.0, 30.0, 'Very Poor', '30.00'),
+    ],
+)
+def test_visible_defect_burden_caps_rsqi_at_thresholds(
+    visible_defect_burden: float,
+    expected_score: float,
+    expected_label: str,
+    expected_cap: str | None,
+) -> None:
+    values = {name: 0.0 for name in COMPONENTS}
+    values['visible_defect_burden'] = visible_defect_burden / 100
+
+    result = score_surface_quality(evidence(values), scoring_config())
+
+    assert result.rsqi.value == pytest.approx(expected_score)
+    assert result.quality_label == expected_label
+    if expected_cap is not None:
+        assert f'The score was capped at {expected_cap}' in result.rsqi.explanation
 
 
 @pytest.mark.parametrize(

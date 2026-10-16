@@ -76,7 +76,6 @@ export type ImageAnalysisResult = {
     value: number | null
     unit: string
     status: string
-    quality_label?: string | null
     components?: Record<
       string,
       {
@@ -91,6 +90,8 @@ export type ImageAnalysisResult = {
     explanation?: string
     limitations?: string[]
   }
+  quality_label?: string | null
+  scoring_version?: string
   mode_suitability?: ModeSuitabilityScores | null
   annotated_image?: {
     value: string | null
@@ -99,10 +100,10 @@ export type ImageAnalysisResult = {
   }
   data_provenance?: Array<{ field_path: string; source: string }>
   model?: Record<string, unknown>
-  processing_errors?: string[] | null
+  processing_errors?: Array<Record<string, unknown>> | null
 }
 
-const defaultBaseUrl = 'http://localhost:8000/api/v1'
+const defaultBaseUrl = import.meta.env.DEV ? 'http://localhost:8000/api/v1' : '/api/v1'
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? defaultBaseUrl
 
 export async function fetchHealth(signal?: AbortSignal): Promise<HealthResponse> {
@@ -131,15 +132,14 @@ export async function analyzeImage(file: File, signal?: AbortSignal): Promise<Im
     const errorBody = await response.text()
     try {
       const parsed = JSON.parse(errorBody)
-      if (parsed.detail) {
-        throw new Error(parsed.detail)
-      }
+      const detail = parsed && typeof parsed.detail === 'string' ? parsed.detail : errorBody
+      throw new Error(`Analysis failed (${response.status}): ${detail}`)
     } catch (parseError) {
-      if (parseError instanceof Error && parseError.message !== errorBody) {
-        // use errorBody below
+      if (parseError instanceof SyntaxError) {
+        throw new Error(`Analysis failed (${response.status}): ${errorBody}`)
       }
+      throw parseError
     }
-    throw new Error(`Analysis failed (${response.status}): ${errorBody}`)
   }
 
   return (await response.json()) as ImageAnalysisResult

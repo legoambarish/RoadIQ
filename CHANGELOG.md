@@ -1,5 +1,60 @@
 # Changelog
 
+## 2026-10-16 — Task D image-analysis scorer integration (unreleased)
+
+- Connected local image uploads from the dashboard to `POST /api/v1/image-analyses`, which invokes Task C observations and Task A scoring while preserving saved CLI report/annotation import.
+- Kept unsupported surface/features unavailable and mode suitability null; current uploads remain Unrated without validated component evidence and fixed normalization references.
+- Added an HTTP integration test proving Task A's visible-defect cap is preserved when valid normalized test evidence is injected. No Windows executable was rebuilt.
+
+## 2026-10-16 — Task B Leaflet/OpenStreetMap map and dashboard tests
+
+- Replaced the drawn SVG street schematic with an interactive Leaflet map using OpenStreetMap tiles, attribution, accessible selectable fixture polylines, and map zoom controls. Tile failures show a notice while fixture routes remain available.
+- Kept the fixture routes, scores, overlays, ranking, and score legend explicitly identified as illustrative RoadIQ data; the basemap is not evidence that those segments were surveyed.
+- Added survey source and timestamp to the Engineer record audit, labeled the values as fixture metadata, and clarified that the demo timestamps are not actual surveys.
+- Extracted dashboard filter/ranking/selection helpers and added tests for all five profile overlays, surface overlay, quality tone boundaries, null/unrated behavior, active-overlay minimum filters, ranking order, and visible segment selection.
+- Added pinned Leaflet/TypeScript definitions and Vitest dependencies. TypeScript build, Vite production build, Oxlint, and six frontend unit tests passed. Implementation commit: `8a06f0c6bf5d2f14637e5a4d52db52d6272f4066` on `task/b-map-dashboard`; see `docs/HANDOFF.md` for exact commands, browser verification, and final branch status.
+
+## 2026-10-16 — Task B traveler brief and report-import clarity
+
+- Reflowed Everyday traveler profile checklists into a responsive layout with the label above the items; verified all five profiles in the browser.
+- Labeled Insights as summaries of currently filtered demo records, distinct from the selected map segment and uploaded image.
+- Explained the Task C JSON and annotated-image imports and made an imported annotation preview visible even when no original road image is selected.
+- Frontend TypeScript/Vite build and Oxlint passed; see `HANDOFF.md` for browser verification and limitations.
+
+## 2026-10-16 — Task B alignment with latest Task C report output
+
+- Audited the latest merged Task C, Task A, and Task D state. B can continue importing saved C reports; there is still no browser image endpoint and A's default scorer references remain empty.
+- Added report-backed candidate method, analysis path, optional road-ROI-gate status, confidence calibration state, and inference runtime to the Task B report view.
+- Corrected frontend/root README and architecture text to distinguish local report import from browser-triggered image upload/inference, and to describe the optional experimental ROI gate accurately.
+- Frontend TypeScript/Vite build, Oxlint, and diff checks are recorded in `HANDOFF.md`.
+
+## 2026-10-16 — Task B Surface Quality overlay selection
+
+- Made travel-profile and Surface Quality overlay selection mutually exclusive in both pressed state and selected styling. The previous travel profile no longer remains highlighted when the map is displaying Surface Quality.
+- Renamed the overlay control group and verified both directions of selection in the built local site. TypeScript/Vite build and Oxlint passed.
+
+## 2026-10-16 — Task B local Task C report import
+
+- Added local JSON report import and optional annotated-image import to the image analysis workspace. Available Task C image quality, metadata, texture proxy, and texture-candidate area values are displayed from the saved report; missing evidence remains unavailable and RSQI stays Unrated.
+- Kept CLI execution local and manual. The browser does not upload images, run analysis, or call a new API. The CLI report's annotation path requires selecting the accompanying preview file.
+- Frontend TypeScript/Vite production build and Oxlint passed; see `HANDOFF.md` for exact commands and current branch state.
+
+## 2026-10-16 — Task B cross-task UI refresh
+
+- Updated the image-report workspace with the current Task A scorer evidence/reference gates, Task C local-only untrained texture-region MVP and limitations, and Task D desktop package scope. The browser image preview remains local and does not claim inference.
+- Made the production health client use the same-origin `/api/v1` by default, matching Task D's packaged-dashboard build; development still targets the local backend and explicit `VITE_API_BASE_URL` overrides remain supported.
+- TypeScript build, Vite production build, and Oxlint passed. No shared contract, inference behavior, or scoring logic changed.
+
+## 2026-10-16 — Task B continuation audit
+
+- Audited the assigned `task/b-map-dashboard` branch and confirmed the existing frontend acceptance items are complete except for image-analysis report integration, which remains dependent on Task C/Task D API agreement and endpoint work.
+- Verified frontend TypeScript, Vite production build, and Oxlint using the bundled Node runtime. No product code or shared API contract changed.
+- Recorded the repository documentation-path mismatch: the requested `docs/HANDOFF.md` is absent; the repository instructions designate root `HANDOFF.md` as the handoff record.
+## 2026-10-16 — Task A visible-defect RSQI caps
+
+- Capped the calculated RSQI at 55 when normalized visible-defect burden is at least 15, and at 30 when it is at least 25; quality labels are assigned from the capped score.
+- Added scoring boundary coverage for both thresholds and documented the guardrail in the scoring specification.
+
 ## 2026-10-16 — Task C MVP status and evaluation clarification
 
 - Clarified that the local Task C image-analysis demo is runnable today while browser upload and HTTP API integration remain pending Tasks B/D.

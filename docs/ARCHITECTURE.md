@@ -4,11 +4,11 @@
 
 RoadIQ remains an initial prototype scaffold; it is not production-ready.
 
-- **Frontend:** React + TypeScript + Vite under `frontend/`, with a fixture-backed interactive schematic map, Road Quality and five travel-profile overlays, filters, rankings, charts, Everyday/Engineer segment details, a health-only API badge, and a local-only image preview/report shell. It uses illustrative typed fixtures; there is no live basemap, segment API, scoring connection, image upload, or inference display.
-- **Backend:** FastAPI + Pydantic under `backend/`. The implemented HTTP API exposes `GET /api/v1/health` and `/`. `backend/app/schemas/road_segment.py` validates the shared road-segment shape. A deterministic demo fixture is isolated in `backend/app/fixtures/`.
-- **Computer vision:** `backend/app/services/vision.py` validates JPEG/PNG/WebP uploads and reports heuristic image-quality observations plus one image-texture proxy. The only previously wired checkpoint was trained on multinational data and is now blocked under the India-only policy; no India-only detector is configured. Pavement ROI, material classification, aggregate/metal segmentation, physical measurement, and HTTP route integration are not implemented.
-- **Scoring:** no scoring engine is implemented. [SCORING_SPEC.md](./SCORING_SPEC.md) describes provisional rules and explicit evidence limits.
-- **Persistence and mapping:** no segment database, segment retrieval API, or live basemap exists. The current schematic map plots illustrative fixture geometry; mapping provider choice remains open.
+- **Frontend:** React + TypeScript + Vite under `frontend/`, with Leaflet/OpenStreetMap tiles under selectable, color-coded typed GeoJSON fixture polylines; Road Quality and five travel-profile overlays; filters, rankings, charts, Everyday/Engineer segment details; local image preview; manual Task C CLI report/annotation import; and local image upload in the Task D integration branch. RoadIQ routes and values are illustrative fixtures, not OSM-derived survey observations. Segment retrieval remains unavailable.
+- **Backend:** FastAPI + Pydantic under `backend/`. The HTTP API exposes `GET /api/v1/health` and `POST /api/v1/image-analyses` in the Task D integration branch. The image route connects Task C observations to the Task A scorer but currently returns Unrated because supported component evidence and fixed normalization references are unavailable. `backend/app/schemas/road_segment.py` validates the shared road-segment shape. A deterministic demo fixture is isolated in `backend/app/fixtures/`.
+- **Computer vision:** `backend/app/services/vision.py` validates JPEG/PNG/WebP input and reports heuristic image-quality observations, a named texture proxy, and an untrained texture-region candidate annotation. An optional experimental India-road semantic checkpoint can gate those candidates when explicitly configured; this does not provide validated pavement ROI, material classification, aggregate/metal segmentation, or physical measurements. The Task D integration branch exposes this service through the image-analysis HTTP route described above.
+- **Scoring:** the provisional evidence-gated RSQI scorer exists in `backend/app/services/scoring.py`; no fixed default normalization profiles are configured, so its default result stays `unrated`. [SCORING_SPEC.md](./SCORING_SPEC.md) describes provisional rules and evidence limits.
+- **Persistence and mapping:** no segment database or segment retrieval API exists. The prototype map uses an OSM basemap and plots illustrative fixture geometry over it; OSM tiles require network access and do not validate the fixture road names or scores. Production basemap provider, licensing, caching, and availability remain open.
 
 ## Product objective and planned image-analysis pipeline
 
@@ -17,14 +17,14 @@ The primary product objective is image-based road-surface quality assessment. Ag
 The following end-to-end pipeline is **partially implemented**:
 
 1. **Image intake and quality gate (Task C):** the service validates JPEG, PNG, and WebP bytes, dimension/size bounds, decodability, and heuristic exposure/edge-detail indicators. Occlusion, perspective, and capture-specific gates are not yet implemented; heuristic thresholds are not labelled-data validated.
-2. **Pavement ROI and surface type (Task C):** not implemented; the service returns null ROI coverage and `unknown` surface type with unavailable status.
+2. **Pavement ROI and surface type (Task C):** no validated pavement ROI or surface classifier is available by default. An explicitly configured experimental semantic road checkpoint can gate texture candidates and reports an uncalibrated predicted road-pixel fraction; surface type remains `unknown` and unavailable.
 3. **Aggregate analysis (Task C):** not implemented; aggregate and physical measurements remain null. Literal metal-fragment count is represented separately and unavailable. Physical widths/counts require calibration and valid masks even after a model is added.
 4. **Defect and texture analysis (Task C):** damage inference is unavailable without a reviewed India-only checkpoint; test-injected detectors exercise the adapter only. Raveling and mask-based area are unavailable. A named tile grayscale contrast proxy is emitted and is not physical roughness/IRI.
 5. **Surface-quality index (Task A):** normalize supported feature components under a versioned, surface-type-aware configuration; calculate the provisional RSQI only with adequate evidence, else return Low Confidence or Unrated with contributions and explanation.
 6. **Evaluation and integration (Task D):** validate payloads/routes, organize grouped data splits, run held-out evaluations against expert labels and field measures where available, and report actual metrics. Never substitute proposed metrics for evaluation results.
 7. **Report UI (Task B):** display image, annotated overlay, score/status, component contributions, confidence, unavailable values, and limitations. An overlay is model output, not verified ground truth.
 
-Image validation/quality observations and a named pixel-texture proxy are implemented in Task C. No production damage inference is active under the India-only data policy. The pavement ROI/surface-type/aggregate/metal stages, HTTP image endpoint, annotated output, trained RoadIQ model, scoring, and RoadIQ evaluation are not implemented. India-specific damage/segmentation datasets are under source, license, and split review; see [VISION_PIPELINE.md](./VISION_PIPELINE.md). See [SCORING_SPEC.md](./SCORING_SPEC.md) for feature definitions and the minimum dataset/evaluation plan.
+Image validation/quality observations, a named pixel-texture proxy, an untrained candidate-region annotation, and optional experimental ROI gating are implemented in Task C. The Task D integration branch provides browser upload and an HTTP image endpoint; it preserves unavailable features and returns Unrated until reviewed component extraction, usable-region evidence, and fixed scoring references are available. Validated pavement ROI/material classification, aggregate/metal instance segmentation, physical measurement, active trained RoadIQ model, configured default scoring references, and RoadIQ held-out evaluation remain unavailable. India-specific damage/segmentation datasets are under source, license, and split review; see [VISION_PIPELINE.md](./VISION_PIPELINE.md). See [SCORING_SPEC.md](./SCORING_SPEC.md) for feature definitions and the minimum dataset/evaluation plan.
 
 ## Shared contract
 
@@ -45,15 +45,15 @@ Scores are nullable. Surface quality is distinct from mode-specific travel suita
 
 The shared schema is a cross-task interface. Changes to it require compatibility agreement among the affected owners and updates to backend tests, frontend types, examples, and API documentation. The `docs/` specifications establish shared assumptions; no task may silently convert missing evidence to zero or claim unsupported safety conclusions.
 
-## Planned data flow (not implemented end-to-end)
+## Data flow (partially implemented)
 
-1. A future image intake validates format/quality and returns explicit quality failures.
-2. Task C emits ROI, surface type, aggregate/defect/texture observations with units, source=`image_inference`, availability, and calibration/evidence metadata.
-3. Task A consumes supported observations, computes a versioned RSQI only when evidence is adequate, and otherwise emits Low Confidence or Unrated; vehicle-mode suitability remains separate.
-4. Task D exposes validated analysis reports through planned routes and evaluates predictions on grouped held-out images; actual metrics and data splits are recorded.
-5. Task B renders the annotated image/report, score contributions, evidence, confidence, and unavailable fields without implying a score or mask is ground truth.
+1. The Task D image endpoint validates an uploaded image through the Task C service and returns explicit input/quality failures.
+2. Task C currently emits quality observations, a named texture proxy, and an untrained texture-region candidate; validated surface type, aggregate/defect measurements, and adequate usable-region evidence remain unavailable.
+3. Task A consumes only supported observations and emits Unrated when required evidence or fixed normalization references are missing; vehicle-mode suitability remains separate and unscored.
+4. Task D exposes the current report through the image-analysis route. Grouped held-out evaluation and actual RoadIQ metrics remain pending.
+5. The Task D dashboard branch uploads images and displays the API response while retaining CLI report import. The HTTP response does not forward the annotated data URI; unavailable fields remain unavailable rather than implying a score or mask is ground truth.
 
-No database, inference execution, scoring execution, segment API, or production map data is implied by this proposed flow. The existing dashboard remains a demo fixture interface.
+The local image upload and scorer/API boundary are implemented on the Task D integration branch, but do not currently produce a numeric score from a road image. No database, production model, segment API, or production map data is implied. The map dashboard remains fixture-backed.
 
 ## Unresolved architecture decisions
 

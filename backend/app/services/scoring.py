@@ -386,11 +386,22 @@ def score_surface_quality(
     is_rated = not reasons and has_all_components
     score: float | None = None
     label: QualityLabel | None = None
+    uncapped_score: float | None = None
+    score_cap: float | None = None
+    cap_threshold: float | None = None
     if is_rated:
         damage = math.fsum(
             output_components[name].weighted_contribution or 0.0 for name in COMPONENTS
         )
-        score = min(100.0, max(0.0, 100.0 - damage))
+        uncapped_score = min(100.0, max(0.0, 100.0 - damage))
+        visible_defect_burden = output_components['visible_defect_burden'].value
+        if visible_defect_burden is not None and visible_defect_burden >= 25.0:
+            score_cap = 30.0
+            cap_threshold = 25.0
+        elif visible_defect_burden is not None and visible_defect_burden >= 15.0:
+            score_cap = 55.0
+            cap_threshold = 15.0
+        score = min(uncapped_score, score_cap) if score_cap is not None else uncapped_score
         label = quality_label_for_score(score, parsed_config)
 
     limitations = list(BASE_LIMITATIONS)
@@ -413,6 +424,18 @@ def score_surface_quality(
             f'{parsed_config.version}. Weighted damage contributions: {contributions}. '
             'Confidence and spatial evidence coverage are not calibrated.'
         )
+        if (
+            score_cap is not None
+            and cap_threshold is not None
+            and uncapped_score is not None
+            and uncapped_score > score_cap
+        ):
+            visible_defect_burden = output_components['visible_defect_burden'].value
+            assert visible_defect_burden is not None
+            explanation += (
+                f' The score was capped at {score_cap:.2f} because visible_defect_burden '
+                f'{visible_defect_burden:.2f} is at least {cap_threshold:.2f}.'
+            )
 
     rsqi = RSQIResponse(
         value=score,

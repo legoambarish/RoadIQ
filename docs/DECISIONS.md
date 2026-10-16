@@ -17,6 +17,7 @@ This log records scaffold decisions and provisional contract choices. A provisio
 | Mode suitability | Separate nullable scores from surface quality | Surface condition alone cannot establish suitability or safety for any travel mode. |
 | Grade fields | Longitudinal grade along the road; crossfall across the road | Distinct measurements. No real-world grade from pixels without calibration. |
 | Current API scope | Health endpoint only | Segment endpoints are specified as planned and do not exist yet. |
+| Task B prototype map | Leaflet 1.9.4 with OpenStreetMap standard tiles and visible attribution | No API key or paid provider; tiles need network access. Fixture geometries/scores are independent of OSM and are not surveyed observations. Use the exact tile URL, honor browser caching, avoid prefetch, and follow the [OSM tile usage policy](https://operations.osmfoundation.org/policies/tiles/). A provider override must also configure its attribution. Production provider, licensing, caching, and availability remain open. |
 | Demo records | Isolated fixture; unrated absent evidence | Prevents fixture values from being mistaken for sensor/model results. |
 
 ## Unresolved decisions (must not be silently assumed)
@@ -43,7 +44,7 @@ This log records scaffold decisions and provisional contract choices. A provisio
 
 - Persistence, pagination semantics and stable ordering, query filters, contract generation/versioning.
 - Authentication/authorization, privacy, data deletion, monitoring, and operational error envelope.
-- Map provider, basemap licensing, and geocoding.
+- Production map provider, basemap licensing/caching, and geocoding (the Task B prototype uses OSM tiles).
 - Image upload, storage, and supported image/model execution environments.
 
 ## Review rule
