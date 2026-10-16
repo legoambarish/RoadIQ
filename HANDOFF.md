@@ -2,14 +2,14 @@
 
 ## Task D image-analysis and scorer integration — 2026-10-16
 
-- **Branch/base:** `task/d-integration-release`; updated with Task B PR #14 (`a0a2cd9`), in addition to Task A PR #15 and remote Task D launcher synchronization commit `716bff9`. The image-analysis integration is in PR #16 against `main`.
+- **Branch/base:** Task D integration is merged into `main` by PR #16 at `32d417f`; Task B PR #14 is merged at `a0a2cd9`. This documentation follow-up records merged status.
 - **Implemented on this branch:** `POST /api/v1/image-analyses` invokes the Task C service and Task A scorer; the dashboard uploads images to the local API while retaining Task C report/annotation import. Unknown surface type and unsupported components remain unavailable; mode suitability stays null; the Task C inline annotation is not exposed over HTTP.
 - **Important limitation:** the current image-analysis outputs do not provide all normalized RSQI components or fixed reference profiles, so real image uploads return Unrated. The score caps apply when complete, valid normalized inputs are present; a route-level test injects test-only evidence and verifies a 25.0 visible-defect burden yields 30.0 / Very Poor. This does not demonstrate numeric scoring from an actual image.
 - **Verification on the combined Task B + Task D branch:** `PYTHONPATH=backend PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 /tmp/roadiq-latest-main-venv/bin/python -m pytest -q backend/tests` — 101 passed, 2 skipped, 2 dependency deprecation warnings. From `frontend/`, `npm run test` — 9 passed; `npm run lint` passed; `npm run build` (TypeScript + Vite) passed. `git diff --cached --check` passed.
 - **Not run:** browser end-to-end validation or Windows packaging/runtime test. The Linux environment cannot verify the Windows `.exe` build.
 - **Map scope:** Task B PR #14 has been merged into `main`; its India-bounded Bengaluru map and active-navigation changes are included in this integration branch. Street geometry comes from OSM; map scores remain illustrative fixtures.
-- **Review status:** PR #16 is the only open pull request. Its image evidence mapping still needs review. Do not claim a rated image score until validated component extraction and normalization references exist.
-- **Next:** after PR #16 is approved and merged, rebuild and smoke-test `RoadIQ.exe` on Windows. The Windows build/runtime test cannot run in this Linux environment.
+- **Review status:** PR #16 is merged. The integration exposes image upload/API in `main`, but actual uploads remain Unrated. Do not claim a rated image score until validated component extraction and normalization references exist.
+- **Next:** rebuild and smoke-test `RoadIQ.exe` on Windows using the merged source. The Windows build/runtime test cannot run in this Linux environment.
 
 ## Task B India-bounded map and aligned street geometry — 2026-10-16
 
