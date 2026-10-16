@@ -2,13 +2,40 @@
 
 This card records actual experiments and their limits. The implementation is a local research inspection aid, with candidate observations rather than an engineering condition/safety grade. Dataset-source labels are the evaluation reference; their completeness is not independently certified. Raw model scores are uncalibrated.
 
-## P0 remediation follow-up — not yet evaluated
+## PR #18 remediation — measured results, gates not met
 
-The approved initialization asset and pinned checksum are recorded in [DATASET_AND_RIGHTS_REGISTER.md](DATASET_AND_RIGHTS_REGISTER.md).
+The remediation runs completed on the frozen India splits. The official YOLO11n COCO checkpoint was used only for detector initialization (pinned asset/hash in [DATASET_AND_RIGHTS_REGISTER.md](DATASET_AND_RIGHTS_REGISTER.md)); all RoadIQ fine-tuning/evaluation images were India-only. The U-Net used random initialization. Hyperparameters and checkpoint selection were fixed before this run's holdout evaluation, using validation data. **The same frozen holdout had been used for earlier baseline experiments, so it is not a virgin independent test set across the project's full history.** No choices for these checkpoints were made using their final test results.
 
-The remediation code now configures YOLO11n transfer learning from the owner-approved official COCO checkpoint, training-box-derived class loss weights, a 90-epoch ceiling, and validation-selected early stopping. The new U-Net run is configured for 80 epochs maximum, class reweighting, pothole Dice loss, aspect-preserving input, and validation-only model selection. These are experiment settings, not results.
+### Remediated YOLO11n detector — final holdout
 
-No v2-remediation detector or v5 ROI checkpoint has been trained or evaluated in this checkout. The required local manifests and complete India datasets are absent; an RDD archive transfer was interrupted while still incomplete, and no archive passed verification. Consequently there are **no new real metrics**. The acceptance targets (mAP50 > 0.45, crack recall > 0.30, pothole recall > 0.50, source-resolution road-class IoU > 0.7391, and source-resolution pothole IoU > 0) remain unverified. The completed experiments below are the prior scratch/v2/v3 baselines only; do not attribute their metrics to the remediation code.
+Trained 90/90 epochs on the RTX 4050 Laptop GPU with the approved COCO initialization, capped inverse-square-root class weights from training boxes only, batch 4, and validation-fitness checkpoint selection. Ultralytics 8.4.178 internal validation evaluated the selected checkpoint once on the frozen 993-image test split (912 supported boxes). Its reported per-class P/R are at the framework's max-mean-F1 operating point; AP50 integrates its confidence sweep. They are **not** the application's fixed-confidence .25 operating-point metrics.
+
+| Class | Test boxes | Precision (max-F1) | Recall (max-F1) | AP50 | AP50–95 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Longitudinal crack | 204 | .334544 | .259804 | .248214 | .104980 |
+| Transverse crack | 15 | .122338 | .133333 | .078374 | .032025 |
+| Alligator crack | 265 | .576756 | .562264 | .550157 | .228768 |
+| Pothole | 428 | .446018 | .387850 | .336223 | .129169 |
+| Four-class aggregate | 912 | .369914 | .335813 | **.303242** | .123735 |
+
+Against the prior scratch-v1 detector AP50 of .137644, this run's AP50 is higher by .165598; it nevertheless misses the requested >.45 AP50 gate. Both crack recalls and pothole recall also miss their respective >.30 / >.50 gates. This improvement is real on the stated benchmark, but is not sufficient evidence of dependable detection.
+
+Detector checkpoint SHA-256: `173d10ec44da536c2848343cb4275f634e6f2494101c317f11f7863316fa9167`. India manifest SHA-256: `8aef52c077c9f9003d89bfdc67b1cd5ee2550b7cb694a9c4f6bf2cb36c2f562d`. COCO initialization SHA-256: `0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1`. Full machine-generated metrics remain local at `models/india-yolo11n-coco-v2/heldout-metrics.json`; the pinned manifest/counts and reproducible code are reviewable, while private/local weights, raw images and logs are not committed.
+
+### Remediated U-Net v5 — source-resolution holdout
+
+Trained 80/80 epochs, selecting epoch 68 by validation mean road/pothole IoU, with 512x288 aspect-preserving letterbox preprocessing, train-only class weighting, positive-image repeat 8, pothole CE weight floor 48 and Dice loss 1.0. The final evaluation used the sequence-reserved 350-image source test split; this sequence was also used for the earlier v2/v3 baseline reports, so it is not globally untouched across experiment history.
+
+| Source-resolution measure | v5 result | Gate / reference | Status |
+| --- | ---: | ---: | --- |
+| Road IoU | .547518 | > .7391 static-road diagnostic | Fail |
+| Road-or-pothole ROI union IoU | .547526 | > .7391 static-road diagnostic | Fail |
+| Pothole IoU | **.000000** | > 0 | Fail |
+| Five-class macro IoU | .219426 | Diagnostic only | — |
+
+U-Net checkpoint SHA-256: `677ccbc74afc29e1c1e3a28b94c5a602d7ac613618632d48f1fae76a2ac18b83`. ROI manifest SHA-256: `1a2f0068c22457e3c458c498df19df6a9249b8a53ba7cc804d5a67838dd17b7e`. Full metrics/confusion matrices are local in `models/india-roi-v5/roi-evaluation.json`; original imagery and weights remain local.
+
+**P0 accuracy verdict: NOT MET.** The detector's AP/recall improved over the scratch baseline but stays below every requested detector threshold, and the U-Net fails both ROI and pothole-overlap gates. Do not present the output as dependable condition assessment. The full API operating-point benchmark and model-enabled packaging need separate verification; see [VALIDATION_REPORT.md](VALIDATION_REPORT.md).
 
 ## Data and evaluation population
 
@@ -19,16 +46,15 @@ The P0 crack-recall gate applies separately to both longitudinal and transverse 
 | RDD2022 India, four box classes | 5,235 | 1,296 | 993 | Numeric-ID blocks are capture-order proxies; exact/dHash cross-split neighbors excluded. Unknown route/session dependence remains. |
 | e-Yantra IIT Bombay Indian Roads v2, five semantic classes | 2,475 | 375 | 350 | Four/two/one published sequences; 27 later-split near-duplicate exclusions. One test sequence is not 350 independent scenes. |
 
-The RDD labelled source contains 7,706 images; 182 are excluded by the frozen preparation. The official 1,959 unlabelled India test images are not training/evaluation negatives. RoadIQ fine-tuning and evaluation imagery is India-only. The completed scratch-v1 detector used no pretrained checkpoint; the pending remediation is approved to initialize from official YOLO11n COCO weights only, without adding COCO images to the RoadIQ dataset. Of the 993 labelled test images, 569 have no **supported source boxes**, which is not a healthy-road label. Transverse cracks have only 44 train / 9 validation / 15 test boxes. Full counts: [detector-label-distribution.json](evidence/detector-label-distribution.json).
+The RDD labelled source contains 7,706 images; 182 are excluded by the frozen preparation. The official 1,959 unlabelled India test images are not training/evaluation negatives. RoadIQ fine-tuning and evaluation imagery is India-only. Scratch-v1 used no pretrained checkpoint; the remediation uses only the approved official YOLO11n COCO initialization, without adding COCO images to the RoadIQ dataset. Of the 993 labelled test images, 569 have no **supported source boxes**, which is not a healthy-road label. Transverse cracks have only 44 train / 9 validation / 15 test boxes. Full counts: [detector-label-distribution.json](evidence/detector-label-distribution.json).
 
 India licence/source/attribution, ignored RDD codes, selected-member CRCs, source mask IDs, acquisition and complete duplicate-audit details: [DATASET_AND_RIGHTS_REGISTER.md](DATASET_AND_RIGHTS_REGISTER.md). The original Figshare outer archive and Kaggle whole-archive hashes are not claimed because only the required country/members were acquired.
 
-- RDD manifest SHA-256: `1db2111619e93e059ec0ce20db5965ab895d40c9316c99124f624293c1cc9bcf`.
-- ROI manifest SHA-256: `bad0de0072954e4ac5b1d8bd81db544e2c0e7fc2196de93245fe682d5fa975b8`.
+- Earlier scratch/v2-v3 baseline manifest hashes: RDD `1db2111619e93e059ec0ce20db5965ab895d40c9316c99124f624293c1cc9bcf`; ROI `bad0de0072954e4ac5b1d8bd81db544e2c0e7fc2196de93245fe682d5fa975b8`. These differ from the remediation run manifests reported above.
 - Source-label review: 12 box-review cells from 11 unique RDD images and eight paired semantic examples; mapping/alignment inspection, not independent relabelling or completeness certification.
 - No new independent 80–120-image field collection, severity/healthy labels, physical reference measurements or legitimate survey GPS/time was fabricated.
 
-## Detector experiment — completed
+## Historical detector experiment — scratch-v1
 
 The genuine `india-yolo11n-scratch-v1` run completed all **30 epochs**, taking 6,779.406 seconds through best-checkpoint preparation. Its frozen recipe is random YOLO11n, 640 pixels, batch 8, seed 20261016, AdamW lr .001 / final factor .05 / decay .0005, two warmup epochs, mosaic .5 closed for the final five epochs, horizontal flip .5, no vertical flip/perspective/mixup, deterministic setting and zero loader workers. AMP is disabled to prevent the upstream pretrained-model AMP check from downloading a checkpoint. Best validation framework fitness selects the checkpoint; for the pinned Ultralytics 8.4.178 implementation, fitness is validation mAP50–95. The CSV best is epoch 29 (.05988); the exported checkpoint exactly matches saved best.pt. The frozen test is not used for selection or operating-threshold tuning.
 
@@ -54,7 +80,22 @@ The report also retains the framework's max-mean-F1 precision/recall, which are 
 
 **Decision:** genuine trained candidate inference is available, but this weak source-heldout performance does not establish dependable defect detection or engineering assessment. Keep raw scores uncalibrated, no-detection distinct from healthy, and localized candidates visible. No test-driven checkpoint, threshold or architecture tuning follows this result.
 
-### Actual full CPU HTTP pipeline
+### Remediated full GPU HTTP pipeline — fixed operating point
+
+The completed pair was run through the real FastAPI image-analysis route on all 993 frozen labelled RDD images using GPU device 0, confidence .25, NMS IoU .5 and untiled inference. All 993 requests returned successfully with **zero HTTP failures and zero inference failures**. This is an actual integration/operating-point benchmark, not just an offline detector metric.
+
+| Class | TP | FP | FN | Precision | Recall |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Longitudinal crack | 40 | 36 | 164 | .526316 | .196078 |
+| Transverse crack | 1 | 4 | 14 | .200000 | .066667 |
+| Alligator crack | 131 | 53 | 134 | .711957 | .494340 |
+| Pothole | 117 | 75 | 311 | .609375 | .273364 |
+
+Class-specific descending-score greedy matching uses unique source boxes and IoU >= .5; quality abstentions count as misses. In this deployed operating point, every requested defect recall gate also fails. Statuses were 599 `no_defect_detected`, 282 `defects_detected`, and 112 `low_confidence`; “no defect detected” is not a certified healthy-road conclusion. Of 569 source-empty-label challenges, 18 had candidate predictions; these are incomplete labels, not verified healthy negatives.
+
+TestClient benchmark latency: model load 1,916.55 ms, first request 1,319.191 ms, warm p50 175.678 ms / p95 190.467 ms. It excludes browser rendering and real network transport and is not a desktop end-to-end latency claim. The 1,000-replicate, 14-source-block conditional intervals and all per-image records are in local ignored output `artifacts/genuine-demo/pipeline-benchmark.json` and `per-image-benchmark.json`; no raw images or model weights are committed.
+
+### Historical full CPU HTTP pipeline — scratch baseline
 
 All **993** frozen labelled test images passed through FastAPI, image quality, both actual models, source masks/geometry, VDA and legacy scorer at confidence .25 / NMS .5, untiled, four Torch threads. All returned HTTP 200, with zero model-inference failures. Quality abstentions count as misses for source boxes. Class-specific descending-score greedy matching uses IoU >= .5 and unique truth matches.
 
@@ -75,7 +116,7 @@ Actual CPU TestClient timings: model load **1,965.560 ms**, first request **3,07
 
 The deterministic genuine demo is India_006160: one alligator-crack match, no false candidates, and one missed source pothole. India_001993 is a hazy/shadowed, vehicle-containing no-supported-box challenge, not a certified intact road. Eight worst FP+FN examples are retained locally. Four were visually inspected: large merged/unmatched pothole boxes (India_002020, India_009171), and visibly distressed frames with no candidates (India_004755, India_009856). These observations describe disagreement with source boxes, not field-confirmed severity. [Error-review ledger](evidence/pipeline-error-review.json). Original inputs, complete JSON and predicted-box previews remain in `artifacts/genuine-demo/`; compact example JSON is committed compressed. Known low detector AP is exposed in each live report's reliability details and model provenance.
 
-## Semantic ROI / pothole experiments — actual results
+## Historical semantic ROI / pothole experiments — v2/v3
 
 Both completed experiments use a compact four-level U-Net, base channels 16, random weights, 512x288 RGB input, five classes (road, footpath, shallow, pothole, source background/unobserved), batch 8, seed 20261016 and 15 epochs. AdamW lr .001 / weight decay .0001, CUDA autocast plus GradScaler. Real source ID 255 is learned as source background in this explicit v2/v3 mode; it is not a validated object/occlusion taxonomy. Preserved legacy four-class behavior continues to ignore 255.
 
