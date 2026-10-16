@@ -8,6 +8,7 @@
 - **Verification:** `PYTHONPATH=backend PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 /tmp/roadiq-latest-main-venv/bin/python -m pytest -q backend/tests/test_image_analysis.py backend/tests/test_scoring.py` — 59 passed, 2 dependency deprecation warnings. From `frontend/`, `npm run build` (TypeScript + Vite) passed, `npm run lint` passed, and `npm run test` passed (6 tests). `git diff --check` passed after the final source and documentation edits.
 - **Not run:** full backend suite, browser end-to-end validation, or Windows packaging/runtime test. The Linux environment cannot verify the Windows `.exe` build.
 - **Map scope:** no new Task B map feature is being added by this integration; the current map already exists on `main`. Changes to image/report presentation are limited to the image-analysis integration.
+- **Push blocker:** `git push -u origin task/d-integration-release` could not authenticate because this environment has no GitHub HTTPS credentials. Authenticate with GitHub CLI or Git Credential Manager, then push the branch and open a PR against `main`.
 - **Next:** push this branch and open a PR against `main`; review the image evidence mapping with Tasks A/B/C. Do not claim a rated image score until validated component extraction and normalization references exist. After review and merge, rebuild and smoke-test `RoadIQ.exe` on Windows.
 
 ## Task B Leaflet/OpenStreetMap map and dashboard tests — 2026-10-16
