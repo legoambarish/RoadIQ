@@ -1,13 +1,19 @@
 # RoadIQ
 
-RoadIQ is a hackathon prototype whose primary objective is image-based road-surface quality assessment. Image analysis focuses on visible pavement structure—individual stone aggregates, their boundaries/gaps and coverage, surface texture, and deterioration. Literal metal fragments are a separate analysis target from stone aggregates. Mapping and transport-mode dashboards are secondary.
+RoadIQ is an image-based visible pavement-distress research prototype. The current implementation adds genuine India-only defect/road-mask learning to the existing React/FastAPI application, with source-image geometry, explicit reliability limits and evidence-gated reporting. Individual stone aggregates, metal fragments, physical depth and engineering condition grades remain separate, unsupported research targets. The OSM dashboard is secondary and its sample condition scores remain illustrative.
+
+## India-only implementation handoff
+
+See [training, genuine demo and startup](docs/TRAINING_AND_DEMO.md), [dataset/rights ledger](docs/DATASET_AND_RIGHTS_REGISTER.md), [measurement contract](docs/MEASUREMENT_AND_SCORING_SPEC.md), [model card](docs/MODEL_CARD.md) and [actual validation report](docs/VALIDATION_REPORT.md). Model experiments and final end-to-end verification are in progress on `feat/india-p0-implementation`; no final model-performance claim is made by this progress commit.
+
+The new VDA reports supported candidate classes/counts and localized caution flags. It assigns no arbitrary grade. RSQI remains Unrated and percentile/physical dimensions remain null because the required evidence does not exist. Raw model scores are explicitly uncalibrated.
 
 ## Current status
 - Frontend: React + TypeScript + Vite dashboard with an interactive Leaflet/OpenStreetMap map, five illustrative travel-profile overlays, filters, rankings, charts, distinct Everyday/Engineer assessment views, local image preview, manual Task C CLI report import, and image upload to the local analysis API
 - Backend: FastAPI + Pydantic with health and image-analysis routes
-- Computer vision: Task C has a working local image-analysis service and one-command demo. It produces structured observations, quality warnings, a named texture proxy, and optional experimental road-ROI gating. No active trained checkpoint is configured; individual aggregate/metal analysis remains unavailable. The multi-country RDD2022 detector is disabled under the India-only dataset policy, not because it is technically incompatible with Indian roads.
+- Computer vision: the existing image/texture service is extended with a local India-only YOLO adapter, versioned compact U-Net experiments, verified checkpoint provenance/readiness, source-coordinate boxes, optional tiles/NMS, and semantic mask geometry. Genuine training/evaluation is underway; no pretrained multinational or COCO weights are used. Individual aggregate/metal analysis remains unavailable.
 - Scoring: deterministic provisional RSQI scorer exists in `backend/app/services/scoring.py`; default normalization references are intentionally empty, so results remain `unrated` until fixed surface-type/capture-specific references and adequate component evidence are supplied. Weights and label cutoffs are unvalidated hypotheses.
-- Dataset/evaluation: no labelled India-road aggregate dataset or held-out RoadIQ road metrics are available. A 20-image, visually reviewed low-occlusion ACAD synthetic-concrete test sample produced pixel IoU 0.488 / precision 0.822 / recall 0.545 for the texture-region baseline; it does not measure individual counting or road performance.
+- Dataset/evaluation: RDD2022 India and e-Yantra Indian Roads are acquired and frozen with explicit rights, per-file hashes, scene/duplicate controls and genuine labelled holdouts. Current results are recorded in the model card/validation report. Historical ACAD synthetic-concrete texture measurements do not measure Indian-road defect accuracy or individual stones.
 - Mapping: the Leaflet/OpenStreetMap map is restricted to the OSM-mapped India boundary and opens on nine mapped streets in central Bengaluru. Street names/geometries come from OpenStreetMap; RoadIQ scores and travel-profile values remain illustrative fixtures, not surveys of those streets. Tiles require network access.
 - Testing: backend pytest checks include image-validation and inference-wrapper cases; frontend build/type validation remains available
 
@@ -20,7 +26,7 @@ RoadIQ is a hackathon prototype whose primary objective is image-based road-surf
 - `.gitignore` — generated-file and local-environment exclusions
 
 ## Prerequisites
-- Node.js 20+ and npm
+- Node.js 24 LTS and npm (the observed Node 25 host passed checks, but is outside Vitest's supported engine range)
 - Python 3.12.x
 - A local terminal with internet access to install project dependencies
 
@@ -74,7 +80,7 @@ Double-click `dist\RoadIQ.exe`, or run it from PowerShell:
 
 The launcher binds the service to an available loopback port (`127.0.0.1`), waits for both the health endpoint and dashboard to pass, and opens the default browser. If the browser does not open, the error dialog and log show the local URL.
 
-The bundled app does not require Python, Node, model downloads, API credentials, or a map-provider key at runtime. The dashboard uses illustrative fixture records. The integrated image-analysis endpoint returns Unrated because required component observations and fixed normalization references are unavailable. The Windows package has not yet been rebuilt or tested with this integration.
+The bundled app does not require separately installed Python/Node or API credentials. A default build is a dashboard/quality package with unavailable learned inference. A model-enabled build uses a clean CPU environment and `-IncludeModels` to validate/embed the completed local detector and ROI assets; follow [the exact model-enabled build](docs/TRAINING_AND_DEMO.md). Neither mode downloads weights during image analysis. RSQI remains Unrated for missing scoring evidence. Fresh build/runtime outcomes belong in VALIDATION_REPORT.md.
 
 Launching the same executable again safely requests a graceful restart only after verifying the recorded process is the same `RoadIQ.exe`; it then opens the newly started dashboard. Closing the browser does not stop the background service. To stop it, end `RoadIQ.exe` from Task Manager or shut down Windows.
 
@@ -87,7 +93,7 @@ Launching the same executable again safely requests a graceful restart only afte
 
 The package and startup/restart flow were exercised on the development Windows 11 machine. Startup was tested with Python and Node removed from the inherited `PATH`, then verified through the local health endpoint and dashboard. This was not a clean virtual machine test or compatibility test across other Windows versions.
 
-### Test results recorded for the package
+### Historical package results (prior release; not current verification)
 
 - `.\.venv\Scripts\python.exe -m pytest backend/tests -q`: 93 passed, 2 skipped; one existing Starlette deprecation warning.
 - Frontend `npm run build` and `npm run lint`: passed.

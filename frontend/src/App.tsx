@@ -28,7 +28,7 @@ function formatScore(value: number | null): string {
 }
 
 function HealthBadge({ status }: { status: HealthStatus }) {
-  const label = status === 'ok' ? 'API online · health only' : status === 'error' ? 'API offline · demo mode' : 'Checking API…'
+  const label = status === 'ok' ? 'Local API online' : status === 'error' ? 'API offline · fixtures available' : 'Checking API…'
   return <span className={`health-badge ${status}`}><i />{label}</span>
 }
 
@@ -161,7 +161,7 @@ function App() {
 
         <section className="demo-notice" role="note">
           <span className="notice-icon">✳</span>
-          <p><strong>Demo data:</strong> this workspace uses illustrative fixtures. The API currently exposes health status only; road scores and travel profiles below are not live measurements or safety ratings.</p>
+          <p><strong>Demo network:</strong> road scores and travel profiles are illustrative fixtures. Image uploads use the local backend and configured models in the separate image workspace. No safety rating is provided.</p>
           <span className="notice-tag">FIXTURE DATA</span>
         </section>
 
@@ -227,7 +227,7 @@ function App() {
           {summaryCards.map((card) => <MetricCard key={card.label} {...card} />)}
         </section>
 
-        <ImageReportPanel />
+        <ImageReportPanel view={view} />
 
         {selectedRecord ? (
           <section className="insight-grid" aria-label="Segment details and insights">

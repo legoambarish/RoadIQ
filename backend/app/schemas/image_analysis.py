@@ -12,7 +12,7 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
 class ImageContractModel(BaseModel):
-    model_config = ConfigDict(extra="forbid", protected_namespaces=())
+    model_config = ConfigDict(extra="forbid", protected_namespaces=(), allow_inf_nan=False)
 
 
 MeasurementStatus = Literal["observed", "estimated", "unavailable"]
@@ -71,6 +71,17 @@ class Detection(ImageContractModel):
     confidence: float = Field(ge=0, le=1)
     bbox_xyxy_px: ImageBox
     bbox_xyxy_normalized: ImageBox
+    instance_id: str | None = None
+    confidence_kind: Literal["raw_model_score"] = "raw_model_score"
+    coordinate_system: Literal["exif_oriented_source_pixels"] = "exif_oriented_source_pixels"
+    box_extent_width_px: float | None = Field(default=None, ge=0)
+    box_extent_height_px: float | None = Field(default=None, ge=0)
+    edge_clipped: bool = False
+    small_box_resolution: bool = False
+    segmented_area_px: None = None
+    crack_length_px: None = None
+    physical_width_mm: None = None
+    geometry_unavailable_reason: str = "Bounding boxes do not supply pixel masks or calibrated defect dimensions."
 
     @model_validator(mode="after")
     def validate_normalized_box(self) -> Detection:
@@ -87,6 +98,7 @@ class DefectObservation(ImageContractModel):
     annotation: ImageMeasurement
     detections: list[Detection] = Field(default_factory=list)
     mask_rle: BinaryRLEMask | None = None
+    mask_geometry: dict[str, Any] | None = None
 
 
 class ImageAnalysisResponse(ImageContractModel):
@@ -104,4 +116,5 @@ class ImageAnalysisResponse(ImageContractModel):
     processing_errors: list[dict[str, Any]]
     model: dict[str, Any]
     data_provenance: list[dict[str, str]]
+    processing_time_ms: dict[str, float | None] = Field(default_factory=dict)
 

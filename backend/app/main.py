@@ -11,6 +11,7 @@ from fastapi.staticfiles import StaticFiles
 from app.api.routes.health import router as health_router
 from app.api.routes.image_analysis import router as image_analysis_router
 from app.core.config import get_settings
+from app.core.upload_limits import ImageUploadLimitMiddleware
 
 
 DESKTOP_RESTART_PATH = '/__roadiq_internal/restart'
@@ -35,8 +36,8 @@ def create_app(frontend_directory: Path | None = None) -> FastAPI:
     settings = get_settings()
     app = FastAPI(
         title='RoadIQ API',
-        version='0.1.0',
-        description='Initial RoadIQ backend scaffold for road intelligence tooling.',
+        version='0.2.0',
+        description='RoadIQ visible-distress research prototype with evidence-gated reporting.',
     )
 
     app.add_middleware(
@@ -46,6 +47,7 @@ def create_app(frontend_directory: Path | None = None) -> FastAPI:
         allow_methods=['*'],
         allow_headers=['*'],
     )
+    app.add_middleware(ImageUploadLimitMiddleware)
 
     app.include_router(health_router, prefix=settings['api_prefix'])
     app.include_router(image_analysis_router, prefix=settings['api_prefix'])

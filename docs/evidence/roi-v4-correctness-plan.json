@@ -1,0 +1,18 @@
+{
+  "declared_utc": "2026-10-16T11:27:34Z",
+  "model": "indian-roads-unet-v4-letterbox",
+  "reason": "Code review found the preserved legacy dataset adapter stretches arbitrary source aspect ratios to 512x288. A separately versioned correction is required for the handoff's native-aspect preprocessing contract.",
+  "heldout_metrics_used_for_this_design": false,
+  "supersedes": "The v2/v3 validation-only selection plan for the active application. Both completed stretch baselines remain evidence, but cannot satisfy the aspect-preserving runtime contract. This is a correctness correction, not a test-driven accuracy search.",
+  "initialization": "random; no prior checkpoint loaded",
+  "seed": 20261016,
+  "epochs": 15,
+  "batch": 8,
+  "input_size": [512, 288],
+  "preprocessing": "Aspect-preserving RGB bilinear/mask-nearest letterbox; black RGB padding, synthetic mask sentinel 254 -> ignored target 255. Real source 255 remains learned background. Exclude padding from loss and evaluation.",
+  "runtime_projection": "Crop model-grid padding, argmax, nearest-neighbor project labels into the EXIF-oriented source frame; record actual x/y scales and padding. Source-size logits/softmax are avoided to bound memory.",
+  "training_recipe": "Retain v3's predeclared positive sampling weight 8, minimum pothole CE weight 32, soft Dice weight 0.5 and train-only flip/brightness augmentation; make Dice ignore-safe for padding.",
+  "selection": "Within this corrected run, best validation macro IoU only. Deploy the corrected preprocessing identity regardless of whether its heldout score exceeds the old stretch baselines.",
+  "split": "Same frozen source image/mask identities, sequences and duplicate exclusions; no new data source or relabelling.",
+  "limits": "One corrective run; no claim of accurate pothole masks, calibrated uncertainty or source-resolution geometry accuracy without actual validation. Prior negative experiments are retained."
+}

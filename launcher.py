@@ -62,7 +62,7 @@ def configure_logging() -> logging.Logger:
 
 
 def show_error(message: str) -> None:
-    if os.name == 'nt':
+    if os.name == 'nt' and os.environ.get('ROADIQ_HEADLESS') != '1':
         try:
             ctypes.windll.user32.MessageBoxW(None, message, 'RoadIQ could not start', 0x10)
             return
@@ -448,7 +448,15 @@ def create_desktop_app(
     os.environ.setdefault('CORS_ORIGINS', 'http://127.0.0.1')
 
     if getattr(sys, 'frozen', False):
-        backend_directory = Path(getattr(sys, '_MEIPASS')) / 'backend'
+        bundle_root = Path(getattr(sys, '_MEIPASS'))
+        backend_directory = bundle_root / 'backend'
+        for variable, relative in (('ROADIQ_DETECTOR_MODEL_PATH', 'models/india-yolo11n-v1/detector.pt'),
+                                   ('ROADIQ_SEGMENTATION_MODEL_PATH', 'models/india-roi-v4/roi.pt')):
+            if (bundle_root / relative).is_file():
+                os.environ.setdefault(variable, str(bundle_root / relative))
+        os.environ.setdefault('ROADIQ_DETECTOR_DEVICE', 'cpu')
+        os.environ.setdefault('ROADIQ_SEGMENTATION_DEVICE', 'cpu')
+        os.environ.setdefault('YOLO_CONFIG_DIR', str(app_data_directory() / 'ultralytics'))
     else:
         backend_directory = Path(__file__).resolve().parent / 'backend'
     if str(backend_directory) not in sys.path:
@@ -570,20 +578,23 @@ def run() -> int:
 
         dashboard_url = wait_for_dashboard(port, server_thread, restart_requested, logger)
         logger.info('Backend health and dashboard checks passed at %s.', dashboard_url)
-        try:
-            browser_opened = webbrowser.open(dashboard_url, new=2, autoraise=True)
-        except Exception:
-            browser_opened = False
-            logger.exception('Opening the default browser failed.')
-        if browser_opened:
-            logger.info('Opened the RoadIQ dashboard in the default browser.')
+        if os.environ.get('ROADIQ_HEADLESS') == '1':
+            logger.info('Headless verification: dashboard ready at %s.', dashboard_url)
         else:
-            logger.warning('RoadIQ is ready, but Windows did not open the default browser.')
-            show_error(
-                'RoadIQ is running, but Windows could not open a browser automatically.\n\n'
-                f'Open this local address:\n{dashboard_url}\n\n'
-                f'Log file: {log_file_path()}'
-            )
+            try:
+                browser_opened = webbrowser.open(dashboard_url, new=2, autoraise=True)
+            except Exception:
+                browser_opened = False
+                logger.exception('Opening the default browser failed.')
+            if browser_opened:
+                logger.info('Opened the RoadIQ dashboard in the default browser.')
+            else:
+                logger.warning('RoadIQ is ready, but Windows did not open the default browser.')
+                show_error(
+                    'RoadIQ is running, but Windows could not open a browser automatically.\n\n'
+                    f'Open this local address:\n{dashboard_url}\n\n'
+                    f'Log file: {log_file_path()}'
+                )
 
         while server_thread.is_alive():
             if restart_requested.is_set() and not server.should_exit:

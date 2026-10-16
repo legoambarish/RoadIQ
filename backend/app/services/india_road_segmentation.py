@@ -19,6 +19,7 @@ EXTENDED_CLASS_NAMES = CLASS_NAMES + ("background_unobserved",)
 SOURCE_LABEL_TO_MODEL_ID = {0: 0, 2: 1, 3: 2, 4: 3}
 IGNORE_LABEL = 255
 DEFAULT_INPUT_SIZE = (512, 288)  # width, height
+LETTERBOX_MODE = "letterbox_bilinear_rgb_nearest_mask_v1"
 DATASET_ID = "eyantraiit/semantic-segmentation-datasets-of-indian-roads"
 DATASET_LICENSE = "GPL-2.0 (as reported by the public Kaggle dataset metadata)"
 
@@ -57,16 +58,38 @@ def encode_binary_mask_rle(mask: Image.Image, foreground_label: str) -> dict[str
     }
 
 
+def letterbox_pair(image: Image.Image, size: tuple[int, int], mask: Image.Image | None = None):
+    """Keep aspect ratio; padding 254 is a synthetic ignore sentinel, not source 255."""
+    width, height = size
+    scale = min(width / image.width, height / image.height)
+    resized = (max(1, min(width, round(image.width * scale))), max(1, min(height, round(image.height * scale))))
+    left, top = (width - resized[0]) // 2, (height - resized[1]) // 2
+    rgb = Image.new("RGB", size, (0, 0, 0))
+    rgb.paste(image.convert("RGB").resize(resized, Image.Resampling.BILINEAR), (left, top))
+    target = None
+    if mask is not None:
+        if mask.size != image.size:
+            raise ValueError("image/mask source coordinates differ")
+        target = Image.new("L", size, 254)
+        target.paste(mask.convert("L").resize(resized, Image.Resampling.NEAREST), (left, top))
+    geometry = {"method": LETTERBOX_MODE, "source_size_px": list(image.size), "input_size_px": list(size),
+                "resized_size_px": list(resized), "padding_ltrb_px": [left, top, width - resized[0] - left, height - resized[1] - top],
+                "actual_scale_xy": [resized[0] / image.width, resized[1] / image.height],
+                "mask_projection": "crop padding, argmax on model grid, nearest-neighbor resize to source; no physical scale"}
+    return rgb, target, geometry
+
+
 class IndianRoadMaskDataset:
     """PIL/PyTorch dataset for an extracted directory containing Raw_images and Masks."""
 
-    def __init__(self, root: str | Path, split: str, size: tuple[int, int] = DEFAULT_INPUT_SIZE, *, include_background: bool = False) -> None:
+    def __init__(self, root: str | Path, split: str, size: tuple[int, int] = DEFAULT_INPUT_SIZE, *, include_background: bool = False, preserve_aspect: bool = False) -> None:
         if split not in {"train", "val"}:
             raise ValueError("split must be 'train' or 'val'; the source has no independent test split")
         self.root = Path(root).expanduser().resolve()
         self.split = split
         self.size = size
         self.include_background = include_background
+        self.preserve_aspect = preserve_aspect
         masks_root = self.root / "Masks" / split
         mask_paths = sorted(masks_root.rglob("*_gtFine_labelTrainIds.png"))
         if not mask_paths:
@@ -96,9 +119,14 @@ class IndianRoadMaskDataset:
         image_path, mask_path = self.pairs[index]
         width, height = self.size
         with Image.open(image_path) as source:
-            image = source.convert("RGB").resize((width, height), Image.Resampling.BILINEAR)
+            image = source.convert("RGB")
         with Image.open(mask_path) as source:
-            source_mask = source.convert("L").resize((width, height), Image.Resampling.NEAREST)
+            source_mask = source.convert("L")
+        if self.preserve_aspect:
+            image, source_mask, _ = letterbox_pair(image, (width, height), source_mask)
+        else:
+            image = image.resize((width, height), Image.Resampling.BILINEAR)
+            source_mask = source_mask.resize((width, height), Image.Resampling.NEAREST)
 
         image_tensor = torch.frombuffer(bytearray(image.tobytes()), dtype=torch.uint8)
         image_tensor = image_tensor.view(height, width, 3).permute(2, 0, 1).float().div_(255.0)
@@ -213,6 +241,9 @@ class IndiaRoadSegmentationModel:
                 raise ValueError("v2 segmentation checkpoint/evaluation identity mismatch")
             self.checkpoint_metadata["heldout_evaluation"] = {key: evaluation[key] for key in ("images", "evaluation_split", "metrics_at_model_input_resolution")}
         self.class_names = tuple(checkpoint["class_names"])
+        self.preprocessing = self.checkpoint_metadata.get("input_preprocessing", "legacy_stretch_v1")
+        if self.preprocessing not in ("legacy_stretch_v1", LETTERBOX_MODE):
+            raise ValueError("unsupported segmentation preprocessing")
         self.model_version = self.checkpoint_metadata.get("model_version", "indian-roads-unet-v2") if len(self.class_names) == 5 else MODEL_VERSION
         self.input_size_px = self.checkpoint_metadata.get("input_size_px", self.input_size_px)
         if any(not isinstance(self.input_size_px.get(key), int) or not 16 <= self.input_size_px[key] <= 2048 for key in ("width", "height")):
@@ -228,14 +259,22 @@ class IndiaRoadSegmentationModel:
         torch = self.torch
         width, height = image.size
         input_width, input_height = self.input_size_px["width"], self.input_size_px["height"]
-        resized = image.convert("RGB").resize((input_width, input_height), Image.Resampling.BILINEAR)
+        geometry = None
+        if self.preprocessing == LETTERBOX_MODE:
+            resized, _, geometry = letterbox_pair(image, (input_width, input_height))
+        else:
+            resized = image.convert("RGB").resize((input_width, input_height), Image.Resampling.BILINEAR)
         tensor = torch.frombuffer(bytearray(resized.tobytes()), dtype=torch.uint8)
         tensor = tensor.view(input_height, input_width, 3).permute(2, 0, 1).float().div_(255.0).unsqueeze(0)
         with torch.inference_mode():
             logits = self.network(tensor.to(self.device))
-            logits = torch.nn.functional.interpolate(
-                logits, size=(height, width), mode="bilinear", align_corners=False
-            )
+            if geometry:
+                left, top, right, bottom = geometry["padding_ltrb_px"]
+                logits = logits[:, :, top:input_height - bottom, left:input_width - right]
+            else:
+                logits = torch.nn.functional.interpolate(
+                    logits, size=(height, width), mode="bilinear", align_corners=False
+                )
             probabilities = torch.softmax(logits, dim=1)[0]
             labels_device = probabilities.argmax(dim=0)
             confidence = probabilities.max(dim=0).values.mean().item()
@@ -245,10 +284,14 @@ class IndiaRoadSegmentationModel:
                 if bool((labels_device == index).any())
             }
             labels = labels_device.to(torch.uint8).cpu().contiguous()
-        label_image = Image.frombytes("L", (width, height), labels.numpy().tobytes())
+        label_image = Image.frombytes("L", (labels.shape[1], labels.shape[0]), labels.numpy().tobytes())
+        if geometry:
+            label_image = label_image.resize((width, height), Image.Resampling.NEAREST)
         return {
             "mask": label_image,
             "confidence_raw_mean": float(confidence),
             "class_confidence_raw_mean": class_confidence,
             "confidence_calibrated": False,
+            "preprocessing_geometry": geometry,
+            "confidence_resolution": "unpadded model grid" if geometry else "source resolution",
         }

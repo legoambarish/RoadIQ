@@ -3,10 +3,13 @@
 from __future__ import annotations
 
 import uuid
+import threading
+import time
 from typing import Any, Literal
 
 from fastapi import APIRouter, File, HTTPException, UploadFile
 from pydantic import BaseModel, ConfigDict, Field
+from starlette.concurrency import run_in_threadpool
 
 from app.schemas.road_segment import ModeSuitability, QualityLabel
 from app.services.scoring import (
@@ -15,9 +18,11 @@ from app.services.scoring import (
     ScoringEvidence,
     score_surface_quality,
 )
-from app.services.vision import ImageValidationError, analyze_road_image
+from app.services.vision import MAX_IMAGE_BYTES, ImageValidationError, analyze_road_image
+from app.services.visual_distress import VisualDistressAssessment, assess_visual_distress
 
 router = APIRouter(tags=["image-analysis"])
+_analysis_slots = threading.BoundedSemaphore(2)
 
 
 class ImageAnalysisResult(BaseModel):
@@ -47,6 +52,20 @@ class ImageAnalysisResult(BaseModel):
     data_provenance: list[dict[str, Any]] = Field(default_factory=list)
     model: dict[str, Any] | None = None
     processing_errors: list[dict[str, Any]] = Field(default_factory=list)
+    contract_version: Literal["image-analysis-v1.1"] = "image-analysis-v1.1"
+    visual_distress: VisualDistressAssessment
+    calibration: dict[str, Any] | None = None
+    metal_fragments: dict[str, Any] | None = None
+    processing_time_ms: dict[str, float | None] = Field(default_factory=dict)
+
+
+def _bounded_analysis(image_bytes: bytes, source_name: str) -> dict[str, Any]:
+    if not _analysis_slots.acquire(blocking=False):
+        raise HTTPException(status_code=503, detail="Image analysis is busy; retry shortly.", headers={"Retry-After": "2"})
+    try:
+        return analyze_road_image(image_bytes=image_bytes, source_name=source_name)
+    finally:
+        _analysis_slots.release()
 
 
 def _map_vision_to_scoring_evidence(
@@ -87,20 +106,26 @@ def _map_vision_to_scoring_evidence(
 @router.post("/image-analyses", response_model=ImageAnalysisResult)
 async def analyze_image_endpoint(image: UploadFile = File(...)) -> ImageAnalysisResult:
     """Analyze an uploaded image and return an unrated result until evidence is sufficient."""
+    started = time.perf_counter()
+    if image.content_type not in {"image/jpeg", "image/png", "image/webp"}:
+        raise HTTPException(status_code=422, detail="Upload is not a valid supported image MIME type (JPEG, PNG, WebP).")
     try:
-        image_bytes = await image.read()
+        image_bytes = await image.read(MAX_IMAGE_BYTES + 1)
     except OSError as exc:
         raise HTTPException(status_code=400, detail="Could not read the uploaded image.") from exc
     if not image_bytes:
         raise HTTPException(status_code=400, detail="Uploaded file is empty.")
+    if len(image_bytes) > MAX_IMAGE_BYTES:
+        raise HTTPException(status_code=413, detail="Image exceeds the 10 MiB upload limit.")
 
     try:
-        vision_result = analyze_road_image(
-            image_bytes=image_bytes,
-            source_name=image.filename or "upload",
-        )
+        vision_result = await run_in_threadpool(_bounded_analysis, image_bytes, image.filename or "upload")
     except ImageValidationError as exc:
         raise HTTPException(status_code=422, detail=exc.message) from exc
+    actual_format = (vision_result.get("image") or {}).get("format")
+    expected_format = {"image/jpeg": "jpeg", "image/png": "png", "image/webp": "webp"}[image.content_type]
+    if actual_format != expected_format:
+        raise HTTPException(status_code=422, detail="Declared image MIME type differs from decoded image format.")
 
     scoring_result = score_surface_quality(
         _map_vision_to_scoring_evidence(vision_result),
@@ -133,4 +158,28 @@ async def analyze_image_endpoint(image: UploadFile = File(...)) -> ImageAnalysis
         data_provenance=vision_result.get("data_provenance") or [],
         model=vision_result.get("model"),
         processing_errors=processing_errors,
+        visual_distress=assess_visual_distress(vision_result),
+        calibration=vision_result.get("calibration"),
+        metal_fragments=vision_result.get("metal_fragments"),
+        processing_time_ms={**vision_result.get("processing_time_ms", {}), "api_total": round((time.perf_counter() - started) * 1000, 3)},
     )
+
+
+@router.get("/vision-readiness")
+def vision_readiness() -> dict[str, Any]:
+    """Actually load the configured checkpoint; liveness stays independent."""
+    from app.services.vision import _load_detector, _load_segmentation_model
+    result: dict[str, Any] = {"ready": False, "detector": {"status": "not_configured"}, "roi": {"status": "not_configured"}}
+    for key, loader in (("detector", _load_detector), ("roi", _load_segmentation_model)):
+        try:
+            model = loader()
+            if model is not None:
+                metadata = getattr(model, "checkpoint_metadata", None)
+                if key == "roi" and metadata:
+                    metadata = {name: value for name, value in metadata.items() if name in {"sha256", "model_version", "training_country", "pretrained_weights_used", "selected_epoch", "heldout_evaluation"}}
+                result[key] = {"status": "loaded", "model_version": model.model_version,
+                               "checkpoint": metadata, "confidence_calibrated": False}
+        except Exception as exc:
+            result[key] = {"status": "failed", "reason": "Configured model could not be loaded; check local setup/provenance.", "error_type": type(exc).__name__}
+    result["ready"] = result["detector"]["status"] == "loaded"
+    return result

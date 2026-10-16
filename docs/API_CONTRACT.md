@@ -316,3 +316,12 @@ The segment model rejects extra fields, invalid IDs, invalid coordinates/units/r
 - Calibration format, annotated-image storage/access/retention, and any future asynchronous processing.
 - Compatibility/mapping of image-analysis outputs into road-segment records; current Pydantic/TypeScript segment types do not yet implement the proposed image-specific fields.
 - Dataset/label version references and safe exposure of model provenance.
+# Image-analysis v1.1 implementation update — 2026-10-16
+
+`POST /api/v1/image-analyses` retains its existing fields and legacy RSQI semantics. Additive fields: `contract_version=image-analysis-v1.1`, `visual_distress` (`vda-observations-v1`), `calibration`, `metal_fragments` and `processing_time_ms`. Detection records add stable per-image instance IDs, raw-score/coordinate-system labels, rectangle extents, clipping/small-resolution flags and explicit null geometry that cannot be obtained from boxes. Semantic pothole observations may contain experimental `mask_geometry`; pavement may contain an additive road/pothole denominator mask excluding ambiguous shallow paths, footpaths and background.
+
+`GET /api/v1/vision-readiness` attempts real local checkpoint loading/provenance verification and reports detector/ROI status, hashes/version and uncalibrated-confidence status. `/health` remains process liveness. A missing model yields explicit unavailable observations, not a healthy image or 0-score. A loaded model yielding zero candidates uses VDA `no_defect_detected`; legacy `analysis_status=unrated` still refers to the preserved scorer.
+
+Intake requires matching JPEG/PNG/WebP MIME and decoded format, <=10 MiB image bytes, existing pixel/edge limits and a bounded raw multipart stream. Errors: empty file 400, byte ceiling 413, invalid/unsupported image or MIME mismatch 422, two-analysis concurrency ceiling 503 with Retry-After. Inference executes in a worker thread. No HTTP physical calibration/percentile endpoint is claimed. Road-segment schemas are unchanged.
+
+See [MEASUREMENT_AND_SCORING_SPEC.md](MEASUREMENT_AND_SCORING_SPEC.md) for exact state/quantity semantics and [TRAINING_AND_DEMO.md](TRAINING_AND_DEMO.md) for genuine assets/demo. Earlier sections above describe the preserved baseline/history; this additive update governs the new fields.

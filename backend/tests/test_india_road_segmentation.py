@@ -11,6 +11,7 @@ from app.services.india_road_segmentation import (
     IndianRoadMaskDataset,
     create_unet,
     encode_binary_mask_rle,
+    letterbox_pair,
 )
 from app.services.vision import analyze_road_image, reset_detector_for_tests
 
@@ -45,6 +46,24 @@ def test_dataset_pairs_by_stem_and_maps_india_mask_ids(tmp_path) -> None:
     assert image.shape == (3, 16, 32)
     assert target[0, :5].tolist() == [0, 1, 2, 3, IGNORE_LABEL]
     assert dataset.sequence_ids() == {sequence}
+    extended = IndianRoadMaskDataset(root, "train", size=(32, 16), include_background=True)
+    assert extended[0][1][0, :5].tolist() == [0, 1, 2, 3, 4]
+    letterboxed = IndianRoadMaskDataset(root, "train", size=(32, 32), include_background=True, preserve_aspect=True)
+    _, labels = letterboxed[0]
+    assert (labels[:8] == IGNORE_LABEL).all()  # synthetic padding is excluded
+    assert labels[8, :5].tolist() == [0, 1, 2, 3, 4]  # real 255 still learns background
+
+
+def test_letterbox_geometry_preserves_source_aspect_and_excludes_padding():
+    image = Image.new("RGB", (800, 400), "gray")
+    mask = Image.new("L", image.size, 3)
+    rgb, target, geometry = letterbox_pair(image, (512, 288), mask)
+    assert rgb.size == target.size == (512, 288)
+    assert geometry["resized_size_px"] == [512, 256]
+    assert geometry["padding_ltrb_px"] == [0, 16, 0, 16]
+    assert geometry["actual_scale_xy"] == [.64, .64]
+    assert target.getpixel((0, 0)) == 254
+    assert target.getpixel((0, 16)) == 3
 
 
 def test_unet_forward_preserves_input_resolution() -> None:
@@ -69,6 +88,8 @@ def test_segmentation_inference_returns_rle_and_keeps_instance_count_unavailable
             labels = Image.new("L", image.size, 1)
             labels.putpixel((0, 0), 0)
             labels.putpixel((1, 0), 3)
+            labels.putpixel((2, 0), 2)  # ambiguous shallow path, not drivable-road evidence
+            labels.putpixel((3, 0), 4)  # source background/unobserved
             return {
                 "mask": labels,
                 "class_confidence_raw_mean": {"pothole": 0.62},
@@ -87,6 +108,9 @@ def test_segmentation_inference_returns_rle_and_keeps_instance_count_unavailable
     assert pothole["count"]["value"] is None
     assert pothole["visible_area_ratio"]["value"] == pytest.approx(1 / 120000, abs=1e-8)
     assert pothole["confidence"] == pytest.approx(0.62)
+    assert pothole["mask_geometry"]["pavement_denominator_px"] == 2
+    assert pothole["mask_geometry"]["affected_pavement_pixel_fraction"] == .5
+    assert pothole["mask_geometry"]["measurement_status"] == "experimental_model_prediction"
 
 
 def test_missing_segmentation_checkpoint_is_reported_without_masks(monkeypatch: pytest.MonkeyPatch) -> None:

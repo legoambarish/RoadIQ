@@ -1,6 +1,8 @@
-import { useEffect, useState, type ChangeEvent, type DragEvent } from 'react'
+import { useEffect, useRef, useState, type ChangeEvent, type DragEvent } from 'react'
 import { analyzeImage, type ImageAnalysisResult } from '../lib/api'
 import { scoreTone } from '../data/demoRoadSegments'
+import { DefectFindings, DetectionOverlay } from './DefectFindings'
+import { SemanticMaskOverlay } from './SemanticMaskOverlay'
 
 type JsonObject = Record<string, unknown>
 type TaskCReport = JsonObject & {
@@ -54,7 +56,8 @@ function describeProcessingError(error: JsonObject): string {
   return typeof error.message === 'string' ? error.message : 'An image-processing step was unavailable.'
 }
 
-export function ImageReportPanel() {
+export function ImageReportPanel({ view = 'everyday' }: { view?: 'everyday' | 'engineer' }) {
+  const [showMasks, setShowMasks] = useState(false)
   const [file, setFile] = useState<File | null>(null)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const [report, setReport] = useState<TaskCReport | null>(null)
@@ -63,6 +66,10 @@ export function ImageReportPanel() {
   const [result, setResult] = useState<ImageAnalysisResult | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const requestId = useRef(0)
+  const requestController = useRef<AbortController | null>(null)
+
+  useEffect(() => () => { requestController.current?.abort() }, [])
 
   useEffect(() => () => {
     if (previewUrl) URL.revokeObjectURL(previewUrl)
@@ -72,27 +79,35 @@ export function ImageReportPanel() {
   }, [annotationUrl])
 
   const runEvaluation = async (candidate: File) => {
+    const id = ++requestId.current
+    requestController.current?.abort()
+    const controller = new AbortController()
+    requestController.current = controller
     setLoading(true)
     setError(null)
     setResult(null)
     try {
-      setResult(await analyzeImage(candidate))
+      const response = await analyzeImage(candidate, controller.signal)
+      if (id === requestId.current) setResult(response)
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : 'Image analysis request failed.')
+      if (id === requestId.current && !controller.signal.aborted) setError(cause instanceof Error ? cause.message : 'Image analysis request failed.')
     } finally {
-      setLoading(false)
+      if (id === requestId.current) setLoading(false)
     }
   }
 
   const acceptFile = (candidate: File | undefined) => {
     if (!candidate) return
-    if (!candidate.type.startsWith('image/')) {
+    if (!['image/jpeg', 'image/png', 'image/webp'].includes(candidate.type)) {
       setError('Select a JPEG, PNG, or WebP image.')
       return
     }
+    if (candidate.size > 10 * 1024 * 1024) { setError('Select an image no larger than 10 MiB.'); return }
     setFile(candidate)
     setPreviewUrl(URL.createObjectURL(candidate))
     setAnnotationUrl(null)
+    setReport(null)
+    setReportName(null)
     void runEvaluation(candidate)
   }
 
@@ -111,6 +126,12 @@ export function ImageReportPanel() {
     if (!selected) return
     try {
       const parsed = parseReport(JSON.parse(await selected.text()) as unknown)
+      ++requestId.current
+      requestController.current?.abort()
+      setResult(null)
+      setLoading(false)
+      setFile(null)
+      setPreviewUrl(null)
       setReport(parsed)
       setReportName(selected.name)
       setError(null)
@@ -142,9 +163,13 @@ export function ImageReportPanel() {
   }
 
   const clearSelection = () => {
+    ++requestId.current
+    requestController.current?.abort()
+    setLoading(false)
     setFile(null)
     setPreviewUrl(null)
     setResult(null)
+    setAnnotationUrl(null)
     setError(null)
   }
 
@@ -163,9 +188,24 @@ export function ImageReportPanel() {
     : report ? 'Unrated' : 'No analysis'
   const analysisTag = loading
     ? 'Analyzing image…'
-    : result ? `Backend analysis · ${rsqiStatus}`
+    : result ? 'Live backend observations'
     : report ? 'Imported local report · no rescoring'
     : 'Local image analysis'
+  const detections = result?.defects?.flatMap((item) => item.detections ?? []) ?? []
+  const assessmentChip = result?.visual_distress ? {
+    defects_detected: 'CANDIDATES', no_defect_detected: 'NO DETECTIONS', low_confidence: 'LIMITED',
+    unusable: 'UNUSABLE', unavailable: 'UNAVAILABLE',
+  }[result.visual_distress.status] : result?.quality_label ?? rsqiStatus.toUpperCase()
+
+  const downloadResult = () => {
+    if (!result) return
+    const url = URL.createObjectURL(new Blob([JSON.stringify(result, null, 2)], { type: 'application/json' }))
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `${result.analysis_id}.json`
+    link.click()
+    setTimeout(() => URL.revokeObjectURL(url), 1000)
+  }
 
   return (
     <section className="image-report-section" id="image-report" aria-labelledby="image-report-heading">
@@ -192,9 +232,12 @@ export function ImageReportPanel() {
               {previewUrl && annotationUrl && (
                 <img className="annotation-preview" src={annotationUrl} alt="Imported Task C annotation overlay" />
               )}
+              {previewUrl && result?.image?.width_px && result.image.height_px && <DetectionOverlay detections={detections} width={result.image.width_px} height={result.image.height_px} />}
+              {previewUrl && showMasks && result?.pavement_region?.mask_rle && <SemanticMaskOverlay mask={result.pavement_region.mask_rle} color="rgba(65, 204, 151, .28)" />}
+              {previewUrl && showMasks && result?.defects?.filter((item) => item.mask_rle).map((item) => <SemanticMaskOverlay key={item.class} mask={item.mask_rle!} color="rgba(243, 176, 42, .65)" />)}
               {annotationUrl && (
                 <span className="annotation-label">
-                  {previewUrl ? 'Imported Task C annotation overlay' : 'Task C annotated preview'}
+                  Imported annotation · image association unverified
                 </span>
               )}
             </div>
@@ -230,7 +273,7 @@ export function ImageReportPanel() {
           </label>
           <div className="image-status-row">
             <span>Analysis status</span>
-            <strong>{loading ? 'Processing…' : result?.analysis_status ?? (report ? 'Imported local report' : 'Waiting for image')}</strong>
+            <strong>{loading ? 'Processing…' : result?.visual_distress?.status.replaceAll('_', ' ') ?? result?.analysis_status ?? (report ? 'Imported local report' : 'Waiting for image')}</strong>
           </div>
           {reportName && <div className="image-status-row"><span>Imported report</span><strong>{reportName}</strong></div>}
           {error && <p className="report-import-error" role="alert">{error}</p>}
@@ -240,15 +283,19 @@ export function ImageReportPanel() {
           <p className="image-local-note">
             Uploaded images are analyzed by the local backend. Imported CLI reports and annotations remain local to this browser and do not run analysis.
           </p>
+          {detections.length > 0 && <p className="image-local-note">Dashed red/orange boxes are model predictions, not ground truth or damage masks.</p>}
+          {result?.pavement_region?.mask_rle && <label className="mask-toggle"><input type="checkbox" checked={showMasks} onChange={(event) => setShowMasks(event.target.checked)} /> Show experimental masks: road green, pothole amber. Predictions, not ground truth.</label>}
         </div>
 
         <div className="image-result-card">
           <div className="result-header">
-            <div><div className="section-kicker">Analysis report</div><h3>{loading ? 'Evaluating…' : qualityLabel}</h3></div>
+            <div><div className="section-kicker">Analysis report</div><h3>{loading ? 'Evaluating…' : result?.visual_distress ? 'Visual distress observations' : qualityLabel}</h3></div>
             <span className={`quality-chip ${scoreTone(rsqiValue)}`}>
-              {loading ? 'ANALYZING' : result ? result.quality_label ?? rsqiStatus.toUpperCase() : report ? 'UNRATED' : 'WAITING'}
+              {loading ? 'ANALYZING' : result ? assessmentChip : report ? 'UNRATED' : 'WAITING'}
             </span>
           </div>
+          {result && <DefectFindings result={result} view={view} />}
+          {result && <button type="button" className="download-analysis" onClick={downloadResult}>Download actual analysis JSON</button>}
           <p className="result-explanation">
             {result?.rsqi?.explanation ??
               (report
@@ -256,15 +303,15 @@ export function ImageReportPanel() {
                 : 'Current image observations do not establish all required RSQI components and fixed normalization references. The scorer will report Unrated rather than infer missing evidence.')}
           </p>
           <div className="result-index-row">
-            <span>Road Surface Quality Index</span>
+            <span>Legacy experimental RSQI</span>
             <strong>{rsqiValue === null ? '—' : rsqiValue.toFixed(1)} <small>/100</small></strong>
           </div>
 
           <div className="report-evidence-grid">
             <div><span>Source image</span><strong>{file?.name ?? displayValue(nested(reportImage, 'source_name'))}</strong></div>
             <div><span>Image dimensions</span><strong>
-              {result?.image?.size_px
-                ? `${result.image.size_px[0]} × ${result.image.size_px[1]} px`
+              {result?.image?.width_px && result.image.height_px
+                ? `${result.image.width_px} × ${result.image.height_px} px`
                 : report
                   ? `${displayValue(nested(reportImage, 'width_px'))} × ${displayValue(nested(reportImage, 'height_px'))} px`
                   : 'Unavailable'}
@@ -292,7 +339,7 @@ export function ImageReportPanel() {
             </div>
           )}
 
-          <div className="rsqi-breakdown">
+          <details open={view === 'engineer'} className="rsqi-breakdown"><summary>Legacy RSQI component evidence</summary>
             <div className="rsqi-breakdown-heading">
               <strong>RSQI component breakdown</strong>
               <span>{result ? 'Scorer output' : 'Unavailable until analyzed'}</span>
@@ -310,7 +357,7 @@ export function ImageReportPanel() {
               })}
             </ul>
             <p>Visible-defect score guardrails apply to normalized evidence. Missing evidence is not treated as zero.</p>
-          </div>
+          </details>
 
           <div className="profile-list" style={{ marginTop: '14px', marginBottom: '14px' }}>
             <div className="subsection-heading"><strong>Travel mode suitability</strong><span>Not scored</span></div>

@@ -1,0 +1,1246 @@
+{
+  "evaluation_split": "untouched_source_validation_sequence_reserved_as_test",
+  "images": 350,
+  "checkpoint_sha256": "fb754fa9128b6801b35c39818a3f19712cf29daefa15c4924d7a9850564bb0e5",
+  "manifest_sha256": "bad0de0072954e4ac5b1d8bd81db544e2c0e7fc2196de93245fe682d5fa975b8",
+  "metrics_at_model_input_resolution": {
+    "iou_by_class": {
+      "road": 0.4757898973893835,
+      "footpath": 0.11493602620189197,
+      "shallow": 0.008499262506145782,
+      "pothole": 0.0,
+      "background_unobserved": 0.3167654430249821
+    },
+    "dice_by_class": {
+      "road": 0.6447935417243847,
+      "footpath": 0.20617510511958184,
+      "shallow": 0.01685526766777182,
+      "pothole": 0.0,
+      "background_unobserved": 0.4811266041388243
+    },
+    "macro_iou": 0.1831981258244807,
+    "confusion_matrix_rows_true_columns_predicted": [
+      [
+        19352166,
+        413555,
+        2366385,
+        575,
+        16011147
+      ],
+      [
+        1591457,
+        468098,
+        85572,
+        1217,
+        1221213
+      ],
+      [
+        243162,
+        10924,
+        25498,
+        17,
+        14991
+      ],
+      [
+        2237,
+        2474,
+        655,
+        0,
+        850
+      ],
+      [
+        693080,
+        278173,
+        252821,
+        6219,
+        8567114
+      ]
+    ]
+  },
+  "input_size_px": {
+    "width": 512,
+    "height": 288
+  },
+  "elapsed_seconds": 1216.06,
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.9787254047009253,
+      "iou_by_class": {
+        "road": 0.6711893219175187,
+        "footpath": 0.10675371031373286,
+        "shallow": 0.05868299228645373,
+        "pothole": 0.0,
+        "background_unobserved": 0.8306789843041077
+      },
+      "dice_by_class": {
+        "road": 0.8032474993885165,
+        "footpath": 0.1929132187566306,
+        "shallow": 0.11086036653845771,
+        "pothole": 0.0,
+        "background_unobserved": 0.9075091716529122
+      },
+      "macro_iou": 0.3334610017643626,
+      "confusion_matrix_rows_true_columns_predicted": [
+        [
+          21040661,
+          4019324,
+          3313130,
+          0,
+          1609104
+        ],
+        [
+          134471,
+          747817,
+          235552,
+          0,
+          404647
+        ],
+        [
+          941792,
+          416438,
+          356942,
+          0,
+          324954
+        ],
+        [
+          53851,
+          50074,
+          6999,
+          0,
+          1959
+        ],
+        [
+          235992,
+          996745,
+          486739,
+          0,
+          19918809
+        ]
+      ],
+      "elapsed_seconds": 64.45
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.7478816213146333,
+      "iou_by_class": {
+        "road": 0.6959496308979123,
+        "footpath": 0.1006620405075352,
+        "shallow": 0.05769389945069865,
+        "pothole": 3.5363179857132754e-05,
+        "background_unobserved": 0.7120946152434582
+      },
+      "dice_by_class": {
+        "road": 0.8207196938147805,
+        "footpath": 0.18291180544596253,
+        "shallow": 0.10909375478228876,
+        "pothole": 7.072385869373033e-05,
+        "background_unobserved": 0.8318402603493955
+      },
+      "macro_iou": 0.3132871098558923,
+      "confusion_matrix_rows_true_columns_predicted": [
+        [
+          22279407,
+          2153612,
+          5207569,
+          64,
+          341567
+        ],
+        [
+          289240,
+          436956,
+          332065,
+          24,
+          464202
+        ],
+        [
+          1107750,
+          207029,
+          705391,
+          102,
+          19854
+        ],
+        [
+          58574,
+          32803,
+          11822,
+          4,
+          9680
+        ],
+        [
+          575176,
+          424891,
+          4634858,
+          39,
+          16003321
+        ]
+      ],
+      "elapsed_seconds": 131.17
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.651995524764061,
+      "iou_by_class": {
+        "road": 0.6292046807690683,
+        "footpath": 0.06196758876029078,
+        "shallow": 0.07512672122983542,
+        "pothole": 0.00013002548499505904,
+        "background_unobserved": 0.8352274854960707
+      },
+      "dice_by_class": {
+        "road": 0.7724071606178438,
+        "footpath": 0.11670335218540875,
+        "shallow": 0.13975416989710404,
+        "pothole": 0.00026001716113263477,
+        "background_unobserved": 0.9102168446112878
+      },
+      "macro_iou": 0.3203313003480521,
+      "confusion_matrix_rows_true_columns_predicted": [
+        [
+          19840457,
+          2898096,
+          6364950,
+          1169,
+          877547
+        ],
+        [
+          505553,
+          329385,
+          174988,
+          291,
+          512270
+        ],
+        [
+          840522,
+          295525,
+          763028,
+          1000,
+          140051
+        ],
+        [
+          56818,
+          33163,
+          11804,
+          15,
+          11083
+        ],
+        [
+          147484,
+          566169,
+          1564678,
+          19,
+          19359935
+        ]
+      ],
+      "elapsed_seconds": 195.58
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.5741768686040756,
+      "iou_by_class": {
+        "road": 0.7392102727100573,
+        "footpath": 0.13250828849558324,
+        "shallow": 0.09770396746943472,
+        "pothole": 0.0003126478739944568,
+        "background_unobserved": 0.8482812752320457
+      },
+      "dice_by_class": {
+        "road": 0.8500527904060864,
+        "footpath": 0.2340085098566588,
+        "shallow": 0.17801514864645007,
+        "pothole": 0.0006251003117054258,
+        "background_unobserved": 0.9179136169364122
+      },
+      "macro_iou": 0.36360329035622313,
+      "confusion_matrix_rows_true_columns_predicted": [
+        [
+          23507104,
+          1160252,
+          4155271,
+          2860,
+          1156732
+        ],
+        [
+          325498,
+          438244,
+          518662,
+          515,
+          239568
+        ],
+        [
+          898853,
+          161657,
+          748412,
+          69,
+          231135
+        ],
+        [
+          68047,
+          18640,
+          20381,
+          37,
+          5778
+        ],
+        [
+          525677,
+          444259,
+          925556,
+          2017,
+          19740776
+        ]
+      ],
+      "elapsed_seconds": 258.83
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.5250282789430311,
+      "iou_by_class": {
+        "road": 0.6830892292303226,
+        "footpath": 0.16266286710044603,
+        "shallow": 0.09653202563264798,
+        "pothole": 0.0,
+        "background_unobserved": 0.8592351907634821
+      },
+      "dice_by_class": {
+        "road": 0.8117088712435044,
+        "footpath": 0.27981089222555017,
+        "shallow": 0.17606786373057093,
+        "pothole": 0.0,
+        "background_unobserved": 0.9242888635414039
+      },
+      "macro_iou": 0.36030386254537977,
+      "confusion_matrix_rows_true_columns_predicted": [
+        [
+          21377218,
+          2086098,
+          5464786,
+          4,
+          1054113
+        ],
+        [
+          271414,
+          813978,
+          10474,
+          0,
+          426621
+        ],
+        [
+          786815,
+          274411,
+          753693,
+          20,
+          225187
+        ],
+        [
+          67271,
+          16659,
+          15439,
+          0,
+          13514
+        ],
+        [
+          187194,
+          1104425,
+          276874,
+          17,
+          20069775
+        ]
+      ],
+      "elapsed_seconds": 319.0
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.4540885250895254,
+      "iou_by_class": {
+        "road": 0.8136481159974632,
+        "footpath": 0.19009506810338567,
+        "shallow": 0.10638098587063974,
+        "pothole": 0.0007737941707505803,
+        "background_unobserved": 0.8567130520906582
+      },
+      "dice_by_class": {
+        "road": 0.8972502535862379,
+        "footpath": 0.31946198786679075,
+        "shallow": 0.19230443622804272,
+        "pothole": 0.0015463917525773195,
+        "background_unobserved": 0.9228276293162259
+      },
+      "macro_iou": 0.3935222032465795,
+      "confusion_matrix_rows_true_columns_predicted": [
+        [
+          26147631,
+          411459,
+          2456502,
+          7462,
+          959165
+        ],
+        [
+          452881,
+          452842,
+          221085,
+          6420,
+          389259
+        ],
+        [
+          1096615,
+          109407,
+          596280,
+          240,
+          237584
+        ],
+        [
+          81072,
+          11953,
+          9595,
+          102,
+          10161
+        ],
+        [
+          523502,
+          326881,
+          877829,
+          4813,
+          19905260
+        ]
+      ],
+      "elapsed_seconds": 386.98
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.4091342777013779,
+      "iou_by_class": {
+        "road": 0.8293969810029607,
+        "footpath": 0.11022550485270473,
+        "shallow": 0.09848149592239214,
+        "pothole": 0.0009579113961707343,
+        "background_unobserved": 0.8526075959492557
+      },
+      "dice_by_class": {
+        "road": 0.90674357683508,
+        "footpath": 0.19856417344209457,
+        "shallow": 0.1793047880878457,
+        "pothole": 0.001913989360121259,
+        "background_unobserved": 0.920440570160125
+      },
+      "macro_iou": 0.37833389782469684,
+      "confusion_matrix_rows_true_columns_predicted": [
+        [
+          27047489,
+          463996,
+          1336945,
+          12305,
+          1121484
+        ],
+        [
+          626318,
+          254002,
+          163646,
+          24408,
+          454113
+        ],
+        [
+          1318945,
+          70676,
+          426605,
+          165,
+          223735
+        ],
+        [
+          89234,
+          3791,
+          4735,
+          161,
+          14962
+        ],
+        [
+          594313,
+          243435,
+          786377,
+          18313,
+          19995847
+        ]
+      ],
+      "elapsed_seconds": 473.44
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.3948132590901467,
+      "iou_by_class": {
+        "road": 0.7512873147111274,
+        "footpath": 0.09801342339438171,
+        "shallow": 0.08256199195829077,
+        "pothole": 0.0,
+        "background_unobserved": 0.7974981091907148
+      },
+      "dice_by_class": {
+        "road": 0.8579829344964465,
+        "footpath": 0.17852864328631707,
+        "shallow": 0.15253074202049344,
+        "pothole": 0.0,
+        "background_unobserved": 0.8873423622679318
+      },
+      "macro_iou": 0.3458721678509029,
+      "confusion_matrix_rows_true_columns_predicted": [
+        [
+          24265696,
+          747179,
+          4539949,
+          1653,
+          427742
+        ],
+        [
+          560916,
+          260568,
+          478317,
+          0,
+          222686
+        ],
+        [
+          1001085,
+          119280,
+          818422,
+          6,
+          101333
+        ],
+        [
+          78888,
+          2531,
+          22371,
+          0,
+          9093
+        ],
+        [
+          675715,
+          267016,
+          2832055,
+          228,
+          17863271
+        ]
+      ],
+      "elapsed_seconds": 562.0
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.3402794344771293,
+      "iou_by_class": {
+        "road": 0.8264822482655607,
+        "footpath": 0.1715206928607571,
+        "shallow": 0.12104453978122771,
+        "pothole": 0.0001859725944022249,
+        "background_unobserved": 0.8546794140842943
+      },
+      "dice_by_class": {
+        "road": 0.9049989388622787,
+        "footpath": 0.2928171801078779,
+        "shallow": 0.21594956397512913,
+        "pothole": 0.00037187603005434463,
+        "background_unobserved": 0.9216465202491858
+      },
+      "macro_iou": 0.3947825735172484,
+      "confusion_matrix_rows_true_columns_predicted": [
+        [
+          26498273,
+          825037,
+          1101782,
+          290,
+          1556837
+        ],
+        [
+          371623,
+          510160,
+          126279,
+          251,
+          514174
+        ],
+        [
+          1116490,
+          193784,
+          415543,
+          29,
+          314280
+        ],
+        [
+          81225,
+          11018,
+          7221,
+          22,
+          13397
+        ],
+        [
+          509958,
+          422009,
+          157568,
+          4844,
+          20543906
+        ]
+      ],
+      "elapsed_seconds": 645.11
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.31070788377715697,
+      "iou_by_class": {
+        "road": 0.829532942574318,
+        "footpath": 0.15419351689123217,
+        "shallow": 0.08198105146455303,
+        "pothole": 0.0,
+        "background_unobserved": 0.81406135210016
+      },
+      "dice_by_class": {
+        "road": 0.9068248220850184,
+        "footpath": 0.26718832610764515,
+        "shallow": 0.15153879331543696,
+        "pothole": 0.0,
+        "background_unobserved": 0.8975014556786756
+      },
+      "macro_iou": 0.37595377260605267,
+      "confusion_matrix_rows_true_columns_predicted": [
+        [
+          26890329,
+          1146337,
+          1376125,
+          2845,
+          566583
+        ],
+        [
+          521433,
+          625383,
+          195434,
+          2878,
+          177359
+        ],
+        [
+          1316172,
+          182269,
+          428290,
+          3,
+          113392
+        ],
+        [
+          81142,
+          14595,
+          11074,
+          0,
+          6072
+        ],
+        [
+          515262,
+          1190144,
+          1601497,
+          13625,
+          18317757
+        ]
+      ],
+      "elapsed_seconds": 729.38
+    },
+    {
+      "epoch": 11,
+      "train_loss": 0.303679773547957,
+      "iou_by_class": {
+        "road": 0.8173752035380144,
+        "footpath": 0.18411937637949347,
+        "shallow": 0.10460936064476002,
+        "pothole": 0.0,
+        "background_unobserved": 0.8574735104792486
+      },
+      "dice_by_class": {
+        "road": 0.8995117815482148,
+        "footpath": 0.31098110554097685,
+        "shallow": 0.18940516778474442,
+        "pothole": 0.0,
+        "background_unobserved": 0.9232686287493931
+      },
+      "macro_iou": 0.3927154902083033,
+      "confusion_matrix_rows_true_columns_predicted": [
+        [
+          26356431,
+          857483,
+          1919664,
+          335,
+          848306
+        ],
+        [
+          400405,
+          499090,
+          216369,
+          592,
+          406031
+        ],
+        [
+          1132223,
+          162126,
+          544262,
+          0,
+          201515
+        ],
+        [
+          81426,
+          9202,
+          12350,
+          0,
+          9905
+        ],
+        [
+          648932,
+          159389,
+          1014295,
+          4565,
+          19811104
+        ]
+      ],
+      "elapsed_seconds": 845.19
+    },
+    {
+      "epoch": 12,
+      "train_loss": 0.26623883917927743,
+      "iou_by_class": {
+        "road": 0.8365518532841444,
+        "footpath": 0.19850153328044154,
+        "shallow": 0.0745494788330027,
+        "pothole": 0.0012759248423379495,
+        "background_unobserved": 0.8662156035846523
+      },
+      "dice_by_class": {
+        "road": 0.9110027051925729,
+        "footpath": 0.33124952746137787,
+        "shallow": 0.1387548555027284,
+        "pothole": 0.002548597865346374,
+        "background_unobserved": 0.9283124649915193
+      },
+      "macro_iou": 0.3954188787649158,
+      "confusion_matrix_rows_true_columns_predicted": [
+        [
+          26616055,
+          1780950,
+          493705,
+          6873,
+          1084636
+        ],
+        [
+          150130,
+          887203,
+          95874,
+          0,
+          389280
+        ],
+        [
+          1277108,
+          297041,
+          211790,
+          135,
+          254052
+        ],
+        [
+          80811,
+          15271,
+          5679,
+          157,
+          10965
+        ],
+        [
+          326116,
+          853753,
+          205548,
+          3157,
+          20249711
+        ]
+      ],
+      "elapsed_seconds": 925.94
+    },
+    {
+      "epoch": 13,
+      "train_loss": 0.2579495838572902,
+      "iou_by_class": {
+        "road": 0.8385276670230007,
+        "footpath": 0.2340637139908356,
+        "shallow": 0.0735089915547487,
+        "pothole": 0.0,
+        "background_unobserved": 0.8522186729980713
+      },
+      "dice_by_class": {
+        "road": 0.9121730198172867,
+        "footpath": 0.3793381351987047,
+        "shallow": 0.13695086325879136,
+        "pothole": 0.0,
+        "background_unobserved": 0.9202138877248633
+      },
+      "macro_iou": 0.3996638091133313,
+      "confusion_matrix_rows_true_columns_predicted": [
+        [
+          27016377,
+          801696,
+          497865,
+          1108,
+          1665173
+        ],
+        [
+          325116,
+          698738,
+          59151,
+          1367,
+          438115
+        ],
+        [
+          1377296,
+          131918,
+          202172,
+          98,
+          328642
+        ],
+        [
+          82349,
+          14818,
+          6177,
+          0,
+          9539
+        ],
+        [
+          451846,
+          514328,
+          146984,
+          3911,
+          20521216
+        ]
+      ],
+      "elapsed_seconds": 1030.17
+    },
+    {
+      "epoch": 14,
+      "train_loss": 0.2420746686477815,
+      "iou_by_class": {
+        "road": 0.8376923108366517,
+        "footpath": 0.2283315335153461,
+        "shallow": 0.060167522702602526,
+        "pothole": 5.7375638303976134e-05,
+        "background_unobserved": 0.8572643165370292
+      },
+      "dice_by_class": {
+        "road": 0.9116785284423081,
+        "footpath": 0.37177509049513213,
+        "shallow": 0.11350568926922444,
+        "pothole": 0.00011474469305794607,
+        "background_unobserved": 0.9231473505456083
+      },
+      "macro_iou": 0.39670261184598676,
+      "confusion_matrix_rows_true_columns_predicted": [
+        [
+          27460973,
+          1147537,
+          425418,
+          16554,
+          931737
+        ],
+        [
+          245766,
+          745747,
+          181119,
+          125,
+          349730
+        ],
+        [
+          1482216,
+          152046,
+          181807,
+          4051,
+          220006
+        ],
+        [
+          84261,
+          17167,
+          1787,
+          8,
+          9660
+        ],
+        [
+          987232,
+          426834,
+          373230,
+          5819,
+          19845170
+        ]
+      ],
+      "elapsed_seconds": 1120.34
+    },
+    {
+      "epoch": 15,
+      "train_loss": 0.21698034501844837,
+      "iou_by_class": {
+        "road": 0.8366736367274634,
+        "footpath": 0.2507484100674847,
+        "shallow": 0.09312247840044677,
+        "pothole": 0.001150441236303436,
+        "background_unobserved": 0.8591155073900204
+      },
+      "dice_by_class": {
+        "road": 0.911074912817093,
+        "footpath": 0.40095739166912947,
+        "shallow": 0.17037885550887544,
+        "pothole": 0.0022982384842836923,
+        "background_unobserved": 0.9242196130095408
+      },
+      "macro_iou": 0.4081620947643437,
+      "confusion_matrix_rows_true_columns_predicted": [
+        [
+          26968585,
+          885094,
+          1052794,
+          8149,
+          1067597
+        ],
+        [
+          371806,
+          892718,
+          26734,
+          6671,
+          224558
+        ],
+        [
+          1350001,
+          153210,
+          319490,
+          178,
+          217247
+        ],
+        [
+          78535,
+          16287,
+          12468,
+          164,
+          5429
+        ],
+        [
+          450539,
+          983136,
+          298736,
+          14673,
+          19891201
+        ]
+      ],
+      "elapsed_seconds": 1207.8
+    }
+  ],
+  "metadata": {
+    "dataset_id": "eyantraiit/semantic-segmentation-datasets-of-indian-roads",
+    "dataset_license": "GPL-2.0 (public metadata)",
+    "model_version": "indian-roads-unet-v2",
+    "training_country": "India",
+    "pretrained_weights_used": false,
+    "input_size_px": {
+      "width": 512,
+      "height": 288
+    },
+    "split_audit": {
+      "counts": {
+        "train": 2475,
+        "validation": 375,
+        "test": 350
+      },
+      "manifest_sha256": "bad0de0072954e4ac5b1d8bd81db544e2c0e7fc2196de93245fe682d5fa975b8",
+      "test_sequence": "2_006",
+      "train_sequences": [
+        "1_005",
+        "1_012",
+        "1_016",
+        "1_018"
+      ],
+      "validation_sequences": [
+        "1_007",
+        "1_017"
+      ],
+      "test_sequences": [
+        "2_006"
+      ],
+      "cross_split_exclusions": [
+        {
+          "image_id": "1_007_frame1120_leftImg8bit",
+          "split": "validation",
+          "reason": "cross_split_dhash_le4",
+          "matches": [
+            "1_018_frame4151_leftImg8bit",
+            "1_018_frame4158_leftImg8bit"
+          ]
+        },
+        {
+          "image_id": "1_007_frame1127_leftImg8bit",
+          "split": "validation",
+          "reason": "cross_split_dhash_le4",
+          "matches": [
+            "1_018_frame4158_leftImg8bit"
+          ]
+        },
+        {
+          "image_id": "1_007_frame1155_leftImg8bit",
+          "split": "validation",
+          "reason": "cross_split_dhash_le4",
+          "matches": [
+            "1_018_frame1337_leftImg8bit",
+            "1_018_frame4123_leftImg8bit",
+            "1_018_frame4088_leftImg8bit",
+            "1_018_frame4102_leftImg8bit"
+          ]
+        },
+        {
+          "image_id": "1_007_frame1162_leftImg8bit",
+          "split": "validation",
+          "reason": "cross_split_dhash_le4",
+          "matches": [
+            "1_018_frame1337_leftImg8bit",
+            "1_018_frame4123_leftImg8bit",
+            "1_018_frame4088_leftImg8bit",
+            "1_018_frame4102_leftImg8bit"
+          ]
+        },
+        {
+          "image_id": "1_007_frame1169_leftImg8bit",
+          "split": "validation",
+          "reason": "cross_split_dhash_le4",
+          "matches": [
+            "1_018_frame1337_leftImg8bit",
+            "1_018_frame4088_leftImg8bit",
+            "1_018_frame4102_leftImg8bit"
+          ]
+        },
+        {
+          "image_id": "1_007_frame1197_leftImg8bit",
+          "split": "validation",
+          "reason": "cross_split_dhash_le4",
+          "matches": [
+            "1_018_frame4123_leftImg8bit",
+            "1_018_frame4088_leftImg8bit",
+            "1_018_frame4102_leftImg8bit"
+          ]
+        },
+        {
+          "image_id": "1_017_frame0161_leftImg8bit",
+          "split": "validation",
+          "reason": "cross_split_dhash_le4",
+          "matches": [
+            "1_018_frame1120_leftImg8bit"
+          ]
+        },
+        {
+          "image_id": "1_017_frame0308_leftImg8bit",
+          "split": "validation",
+          "reason": "cross_split_dhash_le4",
+          "matches": [
+            "1_018_frame1120_leftImg8bit"
+          ]
+        },
+        {
+          "image_id": "2_006_frame0007_leftImg8bit",
+          "split": "test",
+          "reason": "cross_split_dhash_le4",
+          "matches": [
+            "1_018_frame4102_leftImg8bit"
+          ]
+        },
+        {
+          "image_id": "2_006_frame0014_leftImg8bit",
+          "split": "test",
+          "reason": "cross_split_dhash_le4",
+          "matches": [
+            "1_018_frame4088_leftImg8bit",
+            "1_018_frame4102_leftImg8bit"
+          ]
+        },
+        {
+          "image_id": "2_006_frame0238_leftImg8bit",
+          "split": "test",
+          "reason": "cross_split_dhash_le4",
+          "matches": [
+            "1_018_frame1078_leftImg8bit"
+          ]
+        },
+        {
+          "image_id": "2_006_frame0294_leftImg8bit",
+          "split": "test",
+          "reason": "cross_split_dhash_le4",
+          "matches": [
+            "1_018_frame4102_leftImg8bit"
+          ]
+        },
+        {
+          "image_id": "2_006_frame0301_leftImg8bit",
+          "split": "test",
+          "reason": "cross_split_dhash_le4",
+          "matches": [
+            "1_018_frame4102_leftImg8bit"
+          ]
+        },
+        {
+          "image_id": "2_006_frame0350_leftImg8bit",
+          "split": "test",
+          "reason": "cross_split_dhash_le4",
+          "matches": [
+            "1_017_frame0182_leftImg8bit",
+            "1_018_frame4088_leftImg8bit",
+            "1_018_frame4102_leftImg8bit",
+            "1_018_frame4109_leftImg8bit"
+          ]
+        },
+        {
+          "image_id": "2_006_frame0357_leftImg8bit",
+          "split": "test",
+          "reason": "cross_split_dhash_le4",
+          "matches": [
+            "1_018_frame4151_leftImg8bit",
+            "1_018_frame4081_leftImg8bit",
+            "1_018_frame1120_leftImg8bit",
+            "1_018_frame4088_leftImg8bit",
+            "1_018_frame1204_leftImg8bit",
+            "1_018_frame1127_leftImg8bit",
+            "1_018_frame4102_leftImg8bit",
+            "1_018_frame4109_leftImg8bit"
+          ]
+        },
+        {
+          "image_id": "2_006_frame0364_leftImg8bit",
+          "split": "test",
+          "reason": "cross_split_dhash_le4",
+          "matches": [
+            "1_017_frame0182_leftImg8bit",
+            "1_018_frame4088_leftImg8bit",
+            "1_018_frame4102_leftImg8bit",
+            "1_018_frame4109_leftImg8bit"
+          ]
+        },
+        {
+          "image_id": "2_006_frame0371_leftImg8bit",
+          "split": "test",
+          "reason": "cross_split_dhash_le4",
+          "matches": [
+            "1_018_frame4088_leftImg8bit",
+            "1_018_frame1127_leftImg8bit",
+            "1_018_frame4102_leftImg8bit",
+            "1_018_frame4109_leftImg8bit"
+          ]
+        },
+        {
+          "image_id": "2_006_frame0378_leftImg8bit",
+          "split": "test",
+          "reason": "cross_split_dhash_le4",
+          "matches": [
+            "1_016_frame2590_leftImg8bit",
+            "1_018_frame1092_leftImg8bit",
+            "1_018_frame4081_leftImg8bit",
+            "1_018_frame1120_leftImg8bit",
+            "1_018_frame4088_leftImg8bit",
+            "1_018_frame1127_leftImg8bit",
+            "1_018_frame4102_leftImg8bit",
+            "1_018_frame4109_leftImg8bit"
+          ]
+        },
+        {
+          "image_id": "2_006_frame0483_leftImg8bit",
+          "split": "test",
+          "reason": "cross_split_dhash_le4",
+          "matches": [
+            "1_005_frame0126_leftImg8bit"
+          ]
+        },
+        {
+          "image_id": "2_006_frame0630_leftImg8bit",
+          "split": "test",
+          "reason": "cross_split_dhash_le4",
+          "matches": [
+            "1_016_frame2639_leftImg8bit"
+          ]
+        },
+        {
+          "image_id": "2_006_frame0672_leftImg8bit",
+          "split": "test",
+          "reason": "cross_split_dhash_le4",
+          "matches": [
+            "1_018_frame1092_leftImg8bit"
+          ]
+        },
+        {
+          "image_id": "2_006_frame0679_leftImg8bit",
+          "split": "test",
+          "reason": "cross_split_dhash_le4",
+          "matches": [
+            "1_018_frame1092_leftImg8bit"
+          ]
+        },
+        {
+          "image_id": "2_006_frame0686_leftImg8bit",
+          "split": "test",
+          "reason": "cross_split_dhash_le4",
+          "matches": [
+            "1_016_frame2632_leftImg8bit"
+          ]
+        },
+        {
+          "image_id": "2_006_frame0714_leftImg8bit",
+          "split": "test",
+          "reason": "cross_split_dhash_le4",
+          "matches": [
+            "1_018_frame1169_leftImg8bit"
+          ]
+        },
+        {
+          "image_id": "2_006_frame0728_leftImg8bit",
+          "split": "test",
+          "reason": "cross_split_dhash_le4",
+          "matches": [
+            "1_018_frame1092_leftImg8bit",
+            "1_018_frame1120_leftImg8bit",
+            "1_018_frame1127_leftImg8bit"
+          ]
+        },
+        {
+          "image_id": "2_006_frame0749_leftImg8bit",
+          "split": "test",
+          "reason": "cross_split_dhash_le4",
+          "matches": [
+            "1_018_frame1652_leftImg8bit",
+            "1_016_frame2590_leftImg8bit",
+            "1_018_frame1015_leftImg8bit",
+            "1_018_frame4102_leftImg8bit",
+            "1_018_frame4109_leftImg8bit"
+          ]
+        },
+        {
+          "image_id": "2_006_frame1722_leftImg8bit",
+          "split": "test",
+          "reason": "cross_split_dhash_le4",
+          "matches": [
+            "1_018_frame1652_leftImg8bit"
+          ]
+        }
+      ],
+      "duplicate_audit_complete": true,
+      "grouping": "published sequences; final validation sequence reserved for test",
+      "limitation": "Only seven source sequences; no independent field collection or physical measurements."
+    },
+    "seed": 20261016,
+    "batch": 8,
+    "epochs_requested": 15,
+    "hardware": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "python": "3.12.3",
+    "torch": "2.9.1+cu128",
+    "class_loss_weights": [
+      0.25,
+      1.0,
+      6.782830238342285,
+      8.0,
+      0.25
+    ],
+    "source_label_mapping": {
+      "0": "road",
+      "1": "background_unobserved (absent)",
+      "2": "footpath",
+      "3": "shallow",
+      "4": "pothole",
+      "255": "background_unobserved"
+    },
+    "background_policy": "Source card includes backgrounds; acquired 255 outside regions are learned as source background/unannotated, not a verified occlusion taxonomy. Legacy v1 continues to ignore 255.",
+    "confidence_calibrated": false,
+    "training_status": "trained_on_india_only_dataset"
+  },
+  "limitations": [
+    "Source sequences from one small corpus, not India-wide deployment validation.",
+    "Metrics at model input resolution; full-resolution geometry errors not established.",
+    "Background means source unknown/background, not a validated object/occlusion taxonomy."
+  ]
+}

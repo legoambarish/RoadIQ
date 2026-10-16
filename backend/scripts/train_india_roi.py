@@ -20,7 +20,7 @@ os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
 from PIL import Image
 
 from backend.scripts.prepare_rdd_india import HashTree, dhash, sha256
-from app.services.india_road_segmentation import IndianRoadMaskDataset, EXTENDED_CLASS_NAMES, create_unet, IGNORE_LABEL
+from app.services.india_road_segmentation import IndianRoadMaskDataset, EXTENDED_CLASS_NAMES, create_unet, IGNORE_LABEL, LETTERBOX_MODE
 
 
 def metrics_from_confusion(confusion):
@@ -34,10 +34,10 @@ def metrics_from_confusion(confusion):
             "confusion_matrix_rows_true_columns_predicted": confusion.cpu().tolist()}
 
 
-def prepare_splits(root: Path, output: Path, size: tuple[int, int]):
-    train = IndianRoadMaskDataset(root, "train", size, include_background=True)
-    validation = IndianRoadMaskDataset(root, "val", size, include_background=True)
-    test = IndianRoadMaskDataset(root, "val", size, include_background=True)
+def prepare_splits(root: Path, output: Path, size: tuple[int, int], *, preserve_aspect=False):
+    train = IndianRoadMaskDataset(root, "train", size, include_background=True, preserve_aspect=preserve_aspect)
+    validation = IndianRoadMaskDataset(root, "val", size, include_background=True, preserve_aspect=preserve_aspect)
+    test = IndianRoadMaskDataset(root, "val", size, include_background=True, preserve_aspect=preserve_aspect)
     sequences = sorted(validation.sequence_ids())
     if len(sequences) < 2 or train.sequence_ids() & validation.sequence_ids():
         raise ValueError("need disjoint train/validation and at least two validation sequences")
@@ -96,7 +96,7 @@ def run(args):
         raise RuntimeError("This full ROI experiment requires CUDA")
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=True)
-    train, validation, test, audit = prepare_splits(args.data.resolve(), output, (args.width, args.height))
+    train, validation, test, audit = prepare_splits(args.data.resolve(), output, (args.width, args.height), preserve_aspect=args.preserve_aspect)
     if min(len(train), len(validation), len(test)) < 20:
         raise ValueError("too few independently grouped ROI samples")
     classes = len(EXTENDED_CLASS_NAMES)
@@ -143,6 +143,8 @@ def run(args):
                 "source_label_mapping": {"0": "road", "1": "background_unobserved (absent)", "2": "footpath", "3": "shallow", "4": "pothole", "255": "background_unobserved"},
                 "background_policy": "Source card includes backgrounds; acquired 255 outside regions are learned as source background/unannotated, not a verified occlusion taxonomy. Legacy v1 continues to ignore 255.",
                 "confidence_calibrated": False, "training_status": "trained_on_india_only_dataset"}
+    metadata["input_preprocessing"] = LETTERBOX_MODE if args.preserve_aspect else "legacy_stretch_v1"
+    metadata["padding_policy"] = "Synthetic source sentinel 254 -> target ignore 255 in loss and evaluation; real source 255 remains background class 4" if args.preserve_aspect else "no padding"
     start, best = time.monotonic(), -1.0
 
     def evaluate(loader):
@@ -169,8 +171,9 @@ def run(args):
                 device_targets = targets.cuda(non_blocking=True)
                 loss = criterion(logits, device_targets)
                 if args.dice_weight:
-                    probabilities = logits.float().softmax(1)
-                    target_mask = torch.nn.functional.one_hot(device_targets, num_classes=classes).permute(0, 3, 1, 2).float()
+                    valid_pixels = device_targets != IGNORE_LABEL
+                    probabilities = logits.float().softmax(1) * valid_pixels.unsqueeze(1)
+                    target_mask = torch.nn.functional.one_hot(device_targets.masked_fill(~valid_pixels, 0), num_classes=classes).permute(0, 3, 1, 2).float() * valid_pixels.unsqueeze(1)
                     intersection = (probabilities * target_mask).sum((0, 2, 3))
                     dice = (2 * intersection + 1) / (probabilities.sum((0, 2, 3)) + target_mask.sum((0, 2, 3)) + 1)
                     loss = loss + args.dice_weight * (1 - dice).mean()
@@ -217,4 +220,5 @@ if __name__ == "__main__":
     parser.add_argument("--positive-repeat", type=float, default=1)
     parser.add_argument("--pothole-weight-min", type=float, default=0)
     parser.add_argument("--dice-weight", type=float, default=0)
+    parser.add_argument("--preserve-aspect", action="store_true")
     run(parser.parse_args())

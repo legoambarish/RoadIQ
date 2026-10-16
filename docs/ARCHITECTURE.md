@@ -65,3 +65,8 @@ The API integration does not currently produce a numeric score from a road image
 - Pretrained baseline choice, held-out dataset size/splits, and field validation availability.
 - Map provider and handling of licensed basemaps/geocoding.
 - API pagination/error envelope and generated frontend contract strategy.
+# India implementation update — 2026-10-16
+
+The existing upload boundary now runs `vision.py` in a bounded worker thread, loads provenance-checked local detector/semantic checkpoints, and returns observations plus a separate versioned VDA. `india_detector.py` owns letterbox/tile reconstruction and NMS; `mask_geometry.py` computes image-projected quantities only from semantic masks; the preserved scorer still receives no fabricated component inputs. React draws actual source-coordinate predictions and optional experimental masks and exposes model/timing/calibration evidence in Engineer view. The frozen road-segment contract and illustrative Bengaluru network remain separate.
+
+Offline scripts acquire two rights-recorded India corpora, freeze duplicate-aware splits, train from random initialization, and evaluate actual heldouts. Local raw assets/weights/runs are ignored by Git; compact manifests, hashes, source ledgers and actual benchmark summaries are retained for review. A one-origin source launcher and optional CPU model-enabled Windows package use these same services. See TRAINING_AND_DEMO.md and MEASUREMENT_AND_SCORING_SPEC.md. No physical-depth, aggregate-instance, percentile or measured-map capability is implied by these layers.
