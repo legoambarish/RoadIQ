@@ -6,6 +6,7 @@ import { ModeAssessmentPanel } from './components/ModeAssessmentPanel'
 import { SegmentMap } from './components/SegmentMap'
 import { demoRoadRecords, getOverlayValue, overlayLabel, scoreTone, travelModes, type DemoRoadRecord, type OverlayKey } from './data/demoRoadSegments'
 import { fetchHealth } from './lib/api'
+import { dashboardSectionForHash, type DashboardSection } from './lib/dashboardNavigation'
 import { filterRoadRecords, rankRoadRecords, selectVisibleRecord } from './lib/roadSegments'
 import type { QualityLabel, RoadSegment, TravelMode } from './types/road-segment'
 
@@ -88,6 +89,13 @@ function App() {
   const [minimumScore, setMinimumScore] = useState('all')
   const [selectedId, setSelectedId] = useState(demoRoadRecords[0].segment.segment_id)
   const [healthStatus, setHealthStatus] = useState<HealthStatus>('loading')
+  const [activeSection, setActiveSection] = useState<DashboardSection>(() => dashboardSectionForHash(window.location.hash))
+
+  useEffect(() => {
+    const syncActiveSection = () => setActiveSection(dashboardSectionForHash(window.location.hash))
+    window.addEventListener('hashchange', syncActiveSection)
+    return () => window.removeEventListener('hashchange', syncActiveSection)
+  }, [])
 
   useEffect(() => {
     const controller = new AbortController()
@@ -132,9 +140,9 @@ function App() {
           <span>road<span>iq</span></span>
         </a>
         <nav className="primary-nav" aria-label="Main navigation">
-          <a className="active" href="#network">Network</a>
-          <a href="#insights">Insights</a>
-          <a href="#image-report">Image report</a>
+          <a className={activeSection === 'network' ? 'active' : ''} aria-current={activeSection === 'network' ? 'location' : undefined} href="#network">Network</a>
+          <a className={activeSection === 'insights' ? 'active' : ''} aria-current={activeSection === 'insights' ? 'location' : undefined} href="#insights">Insights</a>
+          <a className={activeSection === 'image-report' ? 'active' : ''} aria-current={activeSection === 'image-report' ? 'location' : undefined} href="#image-report">Image report</a>
         </nav>
         <div className="topbar-right">
           <HealthBadge status={healthStatus} />

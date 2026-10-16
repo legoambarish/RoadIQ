@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-16 — Task B primary navigation active state
+
+- Fixed the hard-coded Network active style: the active navigation link now follows `#network`, `#insights`, and `#image-report`, including browser hash-history changes. Added `aria-current="location"` to the current section link and tests for supported and fallback hashes.
+- Verified the frontend type check, eight unit tests, lint, production build, and manual Insights/Image report/back-button navigation. See `docs/HANDOFF.md` for exact commands and branch status.
+
 ## 2026-10-16 — Task B Leaflet/OpenStreetMap map and dashboard tests
 
 - Replaced the drawn SVG street schematic with an interactive Leaflet map using OpenStreetMap tiles, attribution, accessible selectable fixture polylines, and map zoom controls. Tile failures show a notice while fixture routes remain available.

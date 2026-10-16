@@ -1,5 +1,15 @@
 # RoadIQ handoff
 
+## Task B primary navigation active-state fix — 2026-10-16
+
+- **Branch/base:** `task/b-map-dashboard`; started clean at `baec8032c6b82ae2081736c8d3e43cfd340d4e30`. Fetched remotes before editing; `origin/main` is `dc34461` and includes the merge of PR #13. The task branch was clean and synced with its remote before this fix.
+- **Completed:** replaced the hard-coded Network `active` class with current-hash state for Network, Insights, and Image report. The state initializes from a direct URL fragment and synchronizes on `hashchange`, including browser back/forward navigation. Current navigation item exposes `aria-current="location"`.
+- **Files changed:** `frontend/src/App.tsx`, new `frontend/src/lib/dashboardNavigation.ts`, new `frontend/src/lib/dashboardNavigation.test.ts`, `TASKS.md`, `CHANGELOG.md`, root `HANDOFF.md`, and `docs/HANDOFF.md`.
+- **Checks actually run:** from `frontend/`, `node_modules/.bin/tsc.CMD -b` passed; `node_modules/.bin/vitest.CMD run` passed (2 files, 8 tests); `node_modules/.bin/oxlint.CMD src` passed; `node_modules/.bin/vite.CMD build` passed (28 modules transformed). Manual production-preview check at `http://127.0.0.1:4174/` confirmed Insights, Image report, and back-button navigation each highlight the matching link. `git diff --check` will be run before commit. Backend tests were not run because backend code was unchanged.
+- **Known issues:** none identified for this fix. No API or contract changes. The older preview at port 4173 was stale and was not used for verification.
+- **Current Git state:** implementation and handoff updates are in progress on the assigned branch; final commit, push status, and PR will be recorded after verification.
+- **Single most useful next task:** review and integrate this navigation fix on `main` through the Task B pull request.
+
 ## Task B Leaflet/OpenStreetMap map and dashboard tests — 2026-10-16
 
 - **Branch and source review:** assigned branch `task/b-map-dashboard`; clean at `6ddcc117e72d4522009ba3ee4766f7c80d4dc01e` before this work. `git fetch --all --prune` found current Task A/C at `f83b4d7` (same as `origin/main`) and Task D at `0431d64`. Task D's latest commit is documentation-only; its branch includes a Windows package but no image-analysis route. Its checklist confirms the C/A field mapping and image endpoint remain unresolved. No A/C/D code or shared API contract was changed.

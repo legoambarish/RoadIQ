@@ -1,5 +1,9 @@
 # RoadIQ task tracker
 
+## Task B navigation active-state fix — 2026-10-16
+
+Fixed the primary navigation so Network, Insights, or Image report is highlighted according to the current URL hash instead of hard-coding Network as active. Hash changes (including browser back/forward) update the active link, and the current section is exposed with `aria-current="location"`. Added unit tests for valid hashes and fallback behavior. Verified navigation interactions on a fresh production preview. Exact checks and branch status are recorded in `docs/HANDOFF.md` and root `HANDOFF.md`.
+
 ## Task B Leaflet/OpenStreetMap map implementation — 2026-10-16
 
 Replaced the hand-drawn SVG schematic with a Leaflet map using OpenStreetMap tiles and the existing typed GeoJSON fixture lines. Routes remain selectable, keyboard accessible, zoomable, and recolored by Road Quality or any of the five travel-profile overlays; existing filters, rankings, legend, details, and fixture warnings remain in place. The Engineer panel now surfaces survey source and timestamp, explicitly labeled fixture metadata. Added frontend tests for overlay lookup, status bands, unrated/null handling, filtering/ranking, and visible-segment selection. The map’s route names/scores are still fixture data, distinct from the OSM basemap; map tiles require an internet connection. Implementation commit: `8a06f0c6bf5d2f14637e5a4d52db52d6272f4066` on `task/b-map-dashboard`; pushed branch status and checks are recorded in `docs/HANDOFF.md` and root `HANDOFF.md`.
