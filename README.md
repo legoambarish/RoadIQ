@@ -46,13 +46,9 @@ The new VDA reports supported candidate classes/counts and localized caution fla
 3. Install frontend dependencies.
    ```bash
    cd frontend
-   npm install
+   npm ci
    ```
-4. Copy the environment template and adjust values as needed.
-   ```bash
-   cd ..
-   cp .env.example .env
-   ```
+4. Return to the root and set any required variables in your shell, using `.env.example` as a reference. The backend does not automatically load a root `.env` file. For genuine learned inference, follow [the data, training and startup commands](docs/TRAINING_AND_DEMO.md); a fresh clone does not include the large datasets/checkpoints. The documented `serve_local` command validates the local model assets and serves the built frontend and API together.
 
 ## Windows desktop app
 
@@ -60,7 +56,7 @@ RoadIQ can be built as a single-file Windows desktop package. It bundles the Fas
 
 ### Build
 
-Build on Windows with Python 3.12, Node.js 20+ and npm. From the repository root, create a Python 3.12 virtual environment and install the build requirements:
+Build on Windows with Python 3.12, Node.js 24 LTS and npm. From the repository root, create a Python 3.12 virtual environment and install the build requirements:
 
 ~~~powershell
 py -3.12 -m venv .venv

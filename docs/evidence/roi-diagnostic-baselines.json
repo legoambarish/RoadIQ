@@ -1,0 +1,29 @@
+{
+  "recorded_utc": "2026-10-16T12:15:47.094204+00:00",
+  "purpose": "Post-evaluation diagnostic baselines computed from retained source confusion/per-image truth counts. No retraining, model selection or threshold change.",
+  "images": 350,
+  "total_source_pixels": 322560000,
+  "source_road_pixels": 238380536,
+  "source_pothole_pixels": 38729,
+  "constant_road_prediction": {
+    "road_iou": 0.7390269593253969,
+    "road_or_pothole_roi_iou": 0.7391470269097222,
+    "five_class_macro_iou": 0.14780539186507938,
+    "pixel_accuracy": 0.7390269593253969,
+    "pothole_iou": 0.0
+  },
+  "constant_no_pothole_mask": {
+    "pothole_area_mae_source_px_all_images": 110.65428571428572,
+    "pothole_area_mae_source_px_positive_images": 2766.3571428571427
+  },
+  "learned_runtime": {
+    "road_iou": 0.5126706309390456,
+    "road_or_pothole_roi_iou": 0.5125988917441573,
+    "five_class_macro_iou": 0.22574894252052888,
+    "pixel_accuracy": 0.5692981398809523,
+    "pothole_iou": 0.0,
+    "pothole_area_mae_source_px_all_images": 1435.8085714285714
+  },
+  "interpretation": "The learned model exceeds constant-road five-class macro IoU but loses road/ROI IoU and pixel accuracy. Its zero pothole overlap and worse all-image area error than an empty mask mean it cannot support reliable ROI/damage measurement. Class imbalance makes average area error and pixel accuracy misleading alone.",
+  "limits": "All numbers conditional on one source-heldout sequence. No independent physical/healthy labels, ground area, uncertainty calibration or deployment validation."
+}

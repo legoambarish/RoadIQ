@@ -1,0 +1,51 @@
+{
+  "train": {
+    "images": 5235,
+    "images_without_supported_source_boxes": 3049,
+    "images_with_class": {
+      "longitudinal_crack": 760,
+      "transverse_crack": 41,
+      "alligator_crack": 1200,
+      "pothole": 1021
+    },
+    "boxes_by_class": {
+      "longitudinal_crack": 1074,
+      "transverse_crack": 44,
+      "alligator_crack": 1378,
+      "pothole": 2124
+    }
+  },
+  "validation": {
+    "images": 1296,
+    "images_without_supported_source_boxes": 770,
+    "images_with_class": {
+      "longitudinal_crack": 169,
+      "transverse_crack": 9,
+      "alligator_crack": 281,
+      "pothole": 268
+    },
+    "boxes_by_class": {
+      "longitudinal_crack": 228,
+      "transverse_crack": 9,
+      "alligator_crack": 322,
+      "pothole": 542
+    }
+  },
+  "test": {
+    "images": 993,
+    "images_without_supported_source_boxes": 569,
+    "images_with_class": {
+      "longitudinal_crack": 146,
+      "transverse_crack": 10,
+      "alligator_crack": 226,
+      "pothole": 201
+    },
+    "boxes_by_class": {
+      "longitudinal_crack": 204,
+      "transverse_crack": 15,
+      "alligator_crack": 265,
+      "pothole": 428
+    }
+  },
+  "limitation": "Supported source boxes are not severity labels; empty supported labels are not certified healthy road. Ignored source codes and unknown annotation completeness remain documented."
+}

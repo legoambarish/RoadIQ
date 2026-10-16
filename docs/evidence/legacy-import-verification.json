@@ -1,0 +1,26 @@
+{
+  "checked_utc": "2026-10-16T12:09:55.727982+00:00",
+  "scope": "Preserved Task C CLI/report and browser-local annotation import, separate from trained-model integration",
+  "input": "India_000205.jpg, frozen RDD India heldout source",
+  "synthetic_input": false,
+  "report_sha256": "387ec386f4678035bb3d47b06c0a6e38f3acba403c18cdfb80b0e98cedd487b4",
+  "cli_exit_code": 0,
+  "cli_status": "unrated",
+  "method": "pillow_high_frequency_texture_regions_v1",
+  "aggregate_count": null,
+  "browser_observations": [
+    "Imported local report - no rescoring",
+    "Source India_000205.jpg, dimensions 720x720",
+    "Texture candidate area 0.129997, physical/individual aggregate measures unavailable",
+    "Annotation visible with image association unverified warning",
+    "RSQI Unrated and all travel scores unavailable"
+  ],
+  "default_viewport_px": [
+    1280,
+    720
+  ],
+  "horizontal_document_width_px": 1265,
+  "viewport_override_used": false,
+  "mobile_device_tested": false,
+  "limitation": "This confirms preserved import presentation only, not trained-model road accuracy or verified preview association."
+}

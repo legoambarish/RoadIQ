@@ -5,7 +5,7 @@
 - Acquired and froze two India-only corpora with rights/hash/duplicate evidence; actual detector training is ongoing and two genuine ROI experiments completed.
 - Integrated separate VDA, source boxes/semantic masks, guarded readiness/intake, live Everyday/Engineer findings and actual JSON export. Preserved legacy RSQI and map/import workflows.
 - Exported unchanged v3 parameters into a separately versioned letterbox runtime after proving all 3,200 training/evaluation inputs identical. Retained redundant v4 as incomplete; do not claim new training.
-- Actual 350-image CPU source-resolution evaluation found road IoU 0.51267 and pothole IoU zero. Kept negative evidence and expose failed mask quality beside experimental geometry. Backend 134 tests and frontend 13 tests/lint/build passed; final detector/E2E/package results remain pending.
+- Actual 350-image CPU source-resolution evaluation found road IoU 0.51267 and pothole IoU zero. Diagnostic constant-road ROI IoU .739147 exceeds the learned .512599; model card and full per-image evidence retain this failed measurement gate. Backend 135 tests (including HTTP concurrency) and frontend 13 tests/lint/build passed; actual saved-report browser import passed. Final detector/E2E/model-enabled package results remain pending.
 
 ## 2026-10-16 — Task D image-analysis scorer integration (merged in PR #16)
 
