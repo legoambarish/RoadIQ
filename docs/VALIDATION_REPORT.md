@@ -64,7 +64,7 @@ The detector-heldout/AP report is complete; see [MODEL_CARD.md](MODEL_CARD.md) a
 | Genuine India-only data, training and source-heldout evaluation | Executed, versioned and retained; route independence/annotation completeness limited |
 | Actual image -> trained inference -> HTTP -> Everyday/Engineer -> JSON | Passed, with exact source geometry/provenance and honest nulls |
 | Changed Windows package, standalone genuine inference/lifecycle | Passed on this Windows 11 host; no clean VM/device matrix |
-| Dependable defect detection | **Not established**: both crack classes emit no fixed-.25 predictions; pothole recall .116822 |
+| Dependable defect detection | **Not established**: longitudinal/transverse cracks emit no fixed-.25 predictions; alligator recall .290566 and pothole recall .116822 |
 | Useful ROI/pothole measurements | **Failed**: ROI overlap below constant-road diagnostic; pothole IoU zero; visible false masks |
 | Independent new field set, validated physical/condition measurements | **Unavailable**, not replaced with synthetic data or source holdout |
 | P1 physical dimensions, eligible percentile cohort, real survey map | **Deferred** by missing inputs and P0 quality; no fabricated numbers/locations |

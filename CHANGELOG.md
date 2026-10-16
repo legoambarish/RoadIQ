@@ -10,6 +10,7 @@
 - Final backend 138 passed (136 unit + 2 genuine integration); frontend 13 tests/lint/build passed. Actual browser Everyday/Engineer uploads, source-coordinate overlays, optional failed masks, JSON download, no-detection/unusable controls and preserved CLI import passed. Fresh model-enabled Windows outcomes are recorded separately in VALIDATION_REPORT.md.
 - Fresh CPU model-enabled Windows EXE built at 281,615,820 bytes and passed genuine embedded-model upload, readiness and owned relaunch/shutdown outside the checkout without Python/Node on child PATH. Retained build warnings and clean-VM limitation; no old-package verification substituted.
 - Overall PARTIALLY VERIFIED: the real application path operates but model/measurement quality and independent field validation remain inadequate. Physical dimensions, valid RSQI/cohort percentile and real survey mapping remain evidence-gated; JSON export is implemented.
+- Delivered upstream draft review PR [#18](https://github.com/Sine-Ads/RoadIQ/pull/18) from `legoambarish:feat/india-p0-implementation`; final implementation/evidence commit `39b14a1`. No merge or deployment.
 
 ## 2026-10-16 — Task D image-analysis scorer integration (merged in PR #16)
 

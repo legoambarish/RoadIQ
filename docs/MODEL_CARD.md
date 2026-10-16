@@ -55,7 +55,7 @@ All **993** frozen labelled test images passed through FastAPI, image quality, b
 | Alligator crack | 77 | 34 | 188 | .693694 | .290566 |
 | Pothole | 50 | 65 | 378 | .434783 | .116822 |
 
-Thus **neither crack class produces any predictions at the fixed application threshold**, and 88.3% of source pothole boxes are missed. This is a measured failure, not evidence that the roads are healthy. Of 569 images with no supported source boxes, 13 have candidate predictions; source-label incompleteness/ignored classes prevent calling this a certified healthy-road false-positive rate.
+Thus **neither longitudinal nor transverse cracks produce any predictions at the fixed application threshold**, and 88.3% of source pothole boxes are missed. Alligator cracks do produce the candidates counted above. This is a measured failure, not evidence that the roads are healthy. Of 569 images with no supported source boxes, 13 have candidate predictions; source-label incompleteness/ignored classes prevent calling this a certified healthy-road false-positive rate.
 
 VDA states: 693 `no_defect_detected`, 153 `defects_detected`, 147 `low_confidence`. All RSQI values and reference percentiles remain null. Black/low-resolution controls return `unusable`; the transformed blur challenge returns `low_confidence`. These controls test plumbing, not field rejection sensitivity/specificity.
 
