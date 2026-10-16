@@ -44,6 +44,10 @@
 - Audited the assigned `task/b-map-dashboard` branch and confirmed the existing frontend acceptance items are complete except for image-analysis report integration, which remains dependent on Task C/Task D API agreement and endpoint work.
 - Verified frontend TypeScript, Vite production build, and Oxlint using the bundled Node runtime. No product code or shared API contract changed.
 - Recorded the repository documentation-path mismatch: the requested `docs/HANDOFF.md` is absent; the repository instructions designate root `HANDOFF.md` as the handoff record.
+## 2026-10-16 — Task A visible-defect RSQI caps
+
+- Capped the calculated RSQI at 55 when normalized visible-defect burden is at least 15, and at 30 when it is at least 25; quality labels are assigned from the capped score.
+- Added scoring boundary coverage for both thresholds and documented the guardrail in the scoring specification.
 
 ## 2026-10-16 — Task C MVP status and evaluation clarification
 

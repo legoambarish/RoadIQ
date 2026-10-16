@@ -77,6 +77,12 @@
 - **Known blockers:** real reviewed analysis output cannot be rendered until the Task C/Task D mapping and HTTP endpoint are agreed and available. The `npm` command is unavailable, and bundled pnpm will not operate against the existing modules in this non-interactive session; direct frontend checks all passed.
 - **Next task:** Task D should finalize the compatible image-analysis HTTP response mapping with Task C, then Task B can connect the existing local-only image report shell to that reviewed endpoint.
 - **Commit/push:** audit documentation was committed as `c7749a8a8bb9ef88f4830bfd561941a525f0144` (`Document Task B continuation audit`) and pushed to `origin/task/b-map-dashboard`. The branch was clean and in sync after push. This handoff correction will be committed as a follow-up; its identifier will be reported in the task result.
+## Task A RSQI visible-defect cap update — 2026-10-16
+
+- **Branch/implementation commit:** `task/a-scoring-engine` at `389261b` (`Cap RSQI for significant visible defects`), based on latest `main` commit `dc34461`.
+- **Change:** `score_surface_quality` applies a maximum score of 55 when normalized visible-defect burden is at least 15, and a maximum of 30 when it is at least 25. The quality label uses the capped score; weighted component contributions remain unchanged.
+- **Verification:** `PYTHONPATH=backend PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 /tmp/roadiq-latest-main-venv/bin/python -m pytest -q backend/tests/test_scoring.py` — 55 passed. `git diff --check` passed.
+- **Known limitations:** guardrail thresholds are explicit product inputs, but overall RSQI weights, normalization references, and labels remain provisional and unvalidated. No shared API schema or dependency changes were made.
 
 ## Current Task C status — 2026-10-16
 

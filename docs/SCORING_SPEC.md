@@ -114,6 +114,8 @@ RSQI = 100 - Damage
 
 Weights sum to 1. These are initial hypotheses only and must be configurable/versioned and validated before reporting as a meaningful quality index:
 
+After calculating the weighted score, apply a visible-defect guardrail to the normalized `V` component: when `visible_defect_burden` is at least 15.0, the score cannot exceed 55.0; when it is at least 25.0, the score cannot exceed 30.0. Apply the stricter cap at 25.0 and assign the provisional label from the capped score. These guardrails do not alter the reported weighted component contributions.
+
 | Component | Weight | Candidate evidence and direction |
 | --- | ---: | --- |
 | `V` — visible defect burden | 0.35 | Area fraction and/or severity of visible cracks, potholes, raveling, and deterioration in usable pavement; more visible deterioration increases damage. |
