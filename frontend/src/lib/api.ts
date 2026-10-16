@@ -29,6 +29,7 @@ export type ModeSuitabilityScores = {
 export type ImageAnalysisResult = {
   analysis_id: string
   analysis_status: string
+  contract_version?: 'image-analysis-v1.2'
   image?: {
     width_px?: number
     height_px?: number
@@ -118,8 +119,19 @@ export type ImageAnalysisResult = {
   model?: Record<string, unknown>
   processing_errors?: Array<Record<string, unknown>> | null
   visual_distress?: VisualDistress
+  experimental_image_indicator?: ExperimentalImageIndicator
   calibration?: Record<string, unknown>
   processing_time_ms?: Record<string, number | null>
+}
+
+export type ExperimentalImageIndicator = {
+  version: 'candidate-coverage-v1'
+  status: 'available' | 'limited' | 'unavailable'
+  candidate_count: number | null
+  candidate_box_coverage_percent: number | null
+  predicted_pothole_pixel_fraction_percent: number | null
+  unavailable_reason: string | null
+  limitations: string[]
 }
 
 export type Detection = {

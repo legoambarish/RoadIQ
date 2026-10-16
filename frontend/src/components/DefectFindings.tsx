@@ -37,7 +37,7 @@ export function DefectFindings({ result, view }: { result: ImageAnalysisResult; 
     {vda.caution_flags.length > 0 && <div className="localized-cautions" role="note"><strong>Localized findings need inspection</strong><ul>
       {vda.caution_flags.map((flag) => <li key={flag}>{flag.replaceAll('_', ' ').replaceAll(':', ' · ')}</li>)}
     </ul><p>A small affected region can still matter. Depth and operational severity are unknown.</p></div>}
-    <p>Physical defect dimensions: unavailable. Reference percentile: unavailable. No engineering condition grade is assigned.</p>
+    <p>Physical defect dimensions: unavailable. RSQI reference percentile: unavailable because no eligible, compatible scored cohort exists. No engineering condition grade is assigned.</p>
     {result.defects?.filter((item) => typeof item.mask_geometry?.heldout_pothole_iou_model_input_resolution === 'number').map((item) =>
       <p key={item.class} className="image-local-note" role="note">Experimental pothole mask: source held-out IoU {(item.mask_geometry!.heldout_pothole_iou_model_input_resolution as number).toFixed(3)} at model-input resolution. Predicted areas are not validated measurements.</p>)}
     <details open={view === 'engineer'}><summary>Evidence reliability: {vda.reliability}</summary><ul>

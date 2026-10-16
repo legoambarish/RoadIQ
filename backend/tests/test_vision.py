@@ -143,6 +143,16 @@ def test_low_resolution_blocks_detector_and_keeps_measurements_unavailable() -> 
     assert report["annotated_image"]["status"] == "unavailable"
 
 
+def test_portrait_low_resolution_runs_only_a_limited_preview() -> None:
+    detector = FakeDetector()
+    report = analyze_road_image(road_image_bytes((249, 335)), detector=detector)
+    assert detector.calls == 1
+    assert report["image_quality"]["usable"] is False
+    assert report["model"]["inference_status"] == "limited_quality"
+    assert report["analysis_status"] == "unrated"
+    assert sum(len(item["detections"]) for item in report["defects"]) == 2
+
+
 def test_calibration_must_be_verified_and_bound_to_same_file() -> None:
     image_bytes = road_image_bytes()
     digest = hashlib.sha256(image_bytes).hexdigest()
@@ -215,4 +225,3 @@ def test_inference_failure_is_reported_without_substituting_zeroes() -> None:
     assert report["processing_errors"][0]["code"] == "inference_failed"
     assert by_class(report)["crack"]["count"]["value"] is None
     assert by_class(report)["pothole"]["count"]["value"] is None
-

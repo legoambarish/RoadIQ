@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type ChangeEvent, type DragEvent } from 'r
 import { analyzeImage, type ImageAnalysisResult } from '../lib/api'
 import { scoreTone } from '../data/demoRoadSegments'
 import { DefectFindings, DetectionOverlay } from './DefectFindings'
+import { ExperimentalImageIndicator } from './ExperimentalImageIndicator'
 import { SemanticMaskOverlay } from './SemanticMaskOverlay'
 
 type JsonObject = Record<string, unknown>
@@ -303,9 +304,10 @@ export function ImageReportPanel({ view = 'everyday' }: { view?: 'everyday' | 'e
                 : 'Current image observations do not establish all required RSQI components and fixed normalization references. The scorer will report Unrated rather than infer missing evidence.')}
           </p>
           <div className="result-index-row">
-            <span>Legacy experimental RSQI</span>
+            <span>RSQI · no compatible scored evidence</span>
             <strong>{rsqiValue === null ? '—' : rsqiValue.toFixed(1)} <small>/100</small></strong>
           </div>
+          {result?.experimental_image_indicator && <ExperimentalImageIndicator indicator={result.experimental_image_indicator} />}
 
           <div className="report-evidence-grid">
             <div><span>Source image</span><strong>{file?.name ?? displayValue(nested(reportImage, 'source_name'))}</strong></div>

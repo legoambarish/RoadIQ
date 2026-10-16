@@ -310,6 +310,10 @@
 .result-index-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 10px; border: 1px solid #edf0ed; border-radius: 6px; background: #fafbfa; color: #78857d; font-size: 8px; }
 .result-index-row strong { color: #87948b; font: 800 15px 'Manrope', sans-serif; }
 .result-index-row small { color: #a4ada6; font: 600 7px 'DM Sans', sans-serif; }
+.experimental-indicator { margin-top: 8px; padding: 9px; border: 1px solid #e8ece8; border-radius: 6px; background: #fafbf9; }
+.experimental-indicator .subsection-heading { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.experimental-indicator .subsection-heading strong { color: #52645a; font-size: 8px; }
+.experimental-indicator .subsection-heading span { color: #9a7943; font-size: 7px; font-weight: 700; }
 .report-evidence-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-top: 8px; }
 .report-evidence-grid > div { display: flex; min-height: 48px; flex-direction: column; justify-content: space-between; gap: 5px; padding: 7px; border: 1px solid #eef1ee; border-radius: 6px; }
 .report-evidence-grid span { color: #9ba69f; font-size: 7px; line-height: 1.3; }

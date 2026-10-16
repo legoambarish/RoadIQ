@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-17 — Add experimental image-space measurements
+
+- Added an additive `image-analysis-v1.2` response field reporting detector candidate count, exact union coverage of candidate boxes over the uploaded image, and semantic pothole pixels as a fraction of predicted pavement when available.
+- Display the image-derived measurements in the upload report while preserving RSQI `Unrated` behavior, VDA non-score semantics, and unavailable percentile. These values are model observations, not a road-condition score; no forced 50–60 value or rank is generated.
+- Documented that the percentile feature is represented as unavailable because no eligible compatible scored reference cohort exists. Added backend API/geometry tests and frontend rendering tests.
+
 ## 2026-10-17 — PR #18 model-remediation holdout results
 
 - Completed the approved YOLO11n COCO-initialized India fine-tune (90 epochs) and U-Net v5 run (80 epochs, validation-selected epoch 68); the full India dataset and per-checkpoint evidence remain local.

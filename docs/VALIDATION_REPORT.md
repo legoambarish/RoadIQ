@@ -1,12 +1,18 @@
 # RoadIQ implementation validation
 
-**Overall verdict: PARTIALLY VERIFIED.** Earlier baseline validation included a full 993-image CPU API benchmark, UI flow, and standalone Windows package. In the current PR #18 remediation follow-up, both models have been trained and the real-checkpoint API integration suite passes, but all target accuracy metrics fail; a new 993-image API benchmark is in progress and the new model-enabled Windows package has not been tested. This is an experimental inspection prototype, not a validated road-condition/safety product.
+**Overall verdict: PARTIALLY VERIFIED.** Earlier baseline validation included a full 993-image CPU API benchmark, UI flow, and standalone Windows package. In the current PR #18 remediation follow-up, both models have been trained and the real-checkpoint API integration suite passes, but all target accuracy metrics fail and Windows packaging with the new weights has not been tested. The upload contract now also returns a separately labeled experimental image-space indicator; RSQI and percentile remain unavailable without the required measurements/cohort. This is an experimental inspection prototype, not a validated road-condition/safety product.
 
 ## Current PR #18 remediation follow-up
 
 Both remediated checkpoints have now completed training and final holdout evaluation. All requested accuracy gates **remain failed**: detector AP50 .303242, longitudinal recall .259804, transverse recall .133333, pothole recall .387850 (Ultralytics confidence-sweep/max-F1 report); U-Net road IoU .547518 against the .739147 static diagnostic and pothole IoU .000000. Full measured results and checkpoint/manifest hashes are in [MODEL_CARD.md](MODEL_CARD.md). The frozen holdouts were selected independently of these runs' test scores but were already used in earlier baseline reporting; they are not virgin test sets across project history.
 
 Latest backend check on the actual environment: `PYTHONPATH=backend PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python -m pytest backend/tests backend/integration_tests -q` passed **142 tests**, including real inference/HTTP integration with both newly trained checkpoints (two dependency deprecation warnings, 8.80 s). A fresh 993-image GPU API benchmark also completed: 993 HTTP successes, zero inference failures; fixed-.25 recall longitudinal .196078, transverse .066667, alligator .494340, pothole .273364; warm p50 175.678 ms / p95 190.467 ms in TestClient. Frontend verification for the same code state was 13 tests plus lint, TypeScript and build. Windows EXE packaging with these new weights has not been run.
+
+### Experimental image indicator
+
+Image-analysis contract v1.2 adds `experimental_image_indicator`: actual detector candidate count, exact union of clipped box area as a percentage of full image pixels, and predicted pothole-mask pixels as a percentage of the predicted pavement denominator when the mask is available. The value is deliberately not called RSQI or a road-condition score. Unusable images or unavailable/failed detector inference yield null indicator values; a sole minimum-resolution warning allows a `limited` preview while RSQI remains Unrated. Zero detections do not imply a clear road. The RSQI percentile remains unavailable because no eligible, compatible scored cohort exists.
+
+Verification of this follow-up: backend unit + real-model integration suite **151 passed** (two dependency deprecation warnings); frontend **15 tests passed**, lint, TypeScript check and Vite production build passed. The low-resolution preview is covered by a service test; it is not an accuracy validation. Windows packaging with the updated response/UI has not been run.
 
 ## Executed checks
 

@@ -478,7 +478,17 @@ def analyze_road_image(
                 "details": type(exc).__name__,
                 "retryable": False,
             })
+    quality_issues = quality.get("issues", [])
+    low_resolution_preview = (
+        quality["usable"] is False
+        and isinstance(quality_issues, list)
+        and set(quality_issues) == {"effective_resolution_below_minimum"}
+        and min(width, height) >= 240
+        and max(width, height) >= 320
+    )
+    inference_allowed = quality["usable"] or low_resolution_preview
     detector_available = actual_detector is not None and quality["usable"]
+    detector_inference_completed = False
     actual_segmentation_model = segmentation_model
     segmentation_error: str | None = None
     if actual_segmentation_model is None:
@@ -494,7 +504,7 @@ def analyze_road_image(
             })
     segmentation_output: dict[str, Any] | None = None
     road_roi_mask: Image.Image | None = None
-    if actual_segmentation_model is not None and quality["usable"]:
+    if actual_segmentation_model is not None and inference_allowed:
         try:
             segmentation_started = time.perf_counter()
             prediction = actual_segmentation_model.predict(image)
@@ -546,7 +556,7 @@ def analyze_road_image(
                 "retryable": False,
             })
     detections = {"crack": [], "pothole": []}
-    if actual_detector is not None and quality["usable"]:
+    if actual_detector is not None and inference_allowed:
         try:
             detector_started = time.perf_counter()
             raw = actual_detector.predict(image, confidence_threshold)
@@ -554,6 +564,7 @@ def analyze_road_image(
             rows, _ = _prediction_rows(raw)
             rows = [row for row in rows if row[1] >= confidence_threshold]
             detections = _detection_objects(rows, width, height)
+            detector_inference_completed = True
             for class_detections in detections.values():
                 for index, detection in enumerate(class_detections):
                     detection["instance_id"] = f"{image_sha256[:12]}-{detection['class']}-{index + 1}"
@@ -597,7 +608,11 @@ def analyze_road_image(
         "input_size_px": getattr(actual_detector, "input_size_px", None) if actual_detector is not None else None,
         "confidence_threshold": confidence_threshold,
         "load_status": "loaded" if actual_detector else ("failed" if detector_error else "not_configured"),
-        "inference_status": "completed" if detector_available else ("quality_blocked" if not quality["usable"] else "unavailable"),
+        "inference_status": (
+            "completed" if detector_available else
+            "limited_quality" if detector_inference_completed else
+            "quality_blocked" if not quality["usable"] else "unavailable"
+        ),
         "confidence_calibrated": False,
         "segmentation": segmentation_metadata,
         "aggregate_analysis": {
@@ -607,7 +622,7 @@ def analyze_road_image(
             "confidence_calibrated": False,
         },
     }
-    model_observed = actual_detector is not None and detector_available
+    model_observed = actual_detector is not None and detector_inference_completed
     surface_reason = "no validated asphalt/concrete classifier is configured"
     aggregate_reason = "no validated individual-aggregate segmentation model is configured"
     aggregate_started = time.perf_counter()

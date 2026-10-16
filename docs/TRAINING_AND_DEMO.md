@@ -69,6 +69,8 @@ Open [RoadIQ local application](http://127.0.0.1:8123/#image-report). The single
 
 The demo runs all 993 frozen labelled holdout images at the fixed application threshold and writes genuine inputs, exact HTTP JSON, predicted-box previews, error examples, readiness, operating-point counts with conditional source-block bootstrap intervals and latency summaries to `artifacts/genuine-demo/`. A faster `--samples 60` subset is also available and explicitly identified as a subset. The black and low-resolution controls are synthetic/transformed plumbing checks, not road-accuracy evidence. The no-supported-source-box example is a false-positive challenge, not a certified healthy road. Choose these inputs in the live browser to reproduce Everyday and Engineer reports. Enable the experimental mask overlay to inspect road/pothole predictions. No numeric road grade, metric depth or percentile should appear.
 
+Image-analysis contract v1.2 also shows experimental image-space observations: detector candidate count, unioned box coverage of the full image, and predicted pothole-mask fraction when available. These are not RSQI or condition scores. If minimum resolution is the sole quality warning, a limited preview may still run; RSQI remains Unrated. Restart the local app after updating code so the backend serves the current contract.
+
 For separate frontend development: export `VITE_API_BASE_URL=http://127.0.0.1:8123/api/v1` before `npm run dev`; export matching CORS_ORIGINS for that development origin. `.env.example` documents shell variables; the backend does not silently load a root .env file.
 
 ## Verification and Windows package

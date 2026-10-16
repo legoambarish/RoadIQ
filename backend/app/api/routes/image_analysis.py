@@ -18,6 +18,10 @@ from app.services.scoring import (
     ScoringEvidence,
     score_surface_quality,
 )
+from app.services.experimental_image_indicator import (
+    ExperimentalImageIndicator,
+    calculate_experimental_image_indicator,
+)
 from app.services.vision import MAX_IMAGE_BYTES, ImageValidationError, analyze_road_image
 from app.services.visual_distress import VisualDistressAssessment, assess_visual_distress
 
@@ -52,8 +56,9 @@ class ImageAnalysisResult(BaseModel):
     data_provenance: list[dict[str, Any]] = Field(default_factory=list)
     model: dict[str, Any] | None = None
     processing_errors: list[dict[str, Any]] = Field(default_factory=list)
-    contract_version: Literal["image-analysis-v1.1"] = "image-analysis-v1.1"
+    contract_version: Literal["image-analysis-v1.2"] = "image-analysis-v1.2"
     visual_distress: VisualDistressAssessment
+    experimental_image_indicator: ExperimentalImageIndicator
     calibration: dict[str, Any] | None = None
     metal_fragments: dict[str, Any] | None = None
     processing_time_ms: dict[str, float | None] = Field(default_factory=dict)
@@ -159,6 +164,7 @@ async def analyze_image_endpoint(image: UploadFile = File(...)) -> ImageAnalysis
         model=vision_result.get("model"),
         processing_errors=processing_errors,
         visual_distress=assess_visual_distress(vision_result),
+        experimental_image_indicator=calculate_experimental_image_indicator(vision_result),
         calibration=vision_result.get("calibration"),
         metal_fragments=vision_result.get("metal_fragments"),
         processing_time_ms={**vision_result.get("processing_time_ms", {}), "api_total": round((time.perf_counter() - started) * 1000, 3)},
