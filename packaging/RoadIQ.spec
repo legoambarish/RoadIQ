@@ -21,10 +21,10 @@ if include_models:
     sys.path.insert(0, str(repo_root / 'backend'))
     from app.services.india_detector import IndiaRoadDamageDetector
     from app.services.india_road_segmentation import IndiaRoadSegmentationModel
-    IndiaRoadDamageDetector(repo_root / 'models/india-yolo11n-v1/detector.pt', device='cpu')
-    IndiaRoadSegmentationModel(repo_root / 'models/india-roi-v3-letterbox-v1/roi.pt', device='cpu')
-    for relative in ('models/india-yolo11n-v1/detector.pt', 'models/india-yolo11n-v1/detector.json',
-                     'models/india-roi-v3-letterbox-v1/roi.pt', 'models/india-roi-v3-letterbox-v1/roi-evaluation.json'):
+    IndiaRoadDamageDetector(repo_root / 'models/india-yolo11n-coco-v2/detector.pt', device='cpu')
+    IndiaRoadSegmentationModel(repo_root / 'models/india-roi-v5/roi.pt', device='cpu')
+    for relative in ('models/india-yolo11n-coco-v2/detector.pt', 'models/india-yolo11n-coco-v2/detector.json',
+                     'models/india-roi-v5/roi.pt', 'models/india-roi-v5/roi-evaluation.json'):
         source = repo_root / relative
         model_datas.append((str(source), str(Path(relative).parent)))
     for name in ('MODEL_CARD.md', 'DATASET_AND_RIGHTS_REGISTER.md'):

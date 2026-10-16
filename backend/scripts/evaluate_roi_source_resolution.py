@@ -120,6 +120,6 @@ def run(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data", type=Path, default=ROOT / "data/indian-roads-v2")
-    parser.add_argument("--checkpoint", type=Path, default=ROOT / "models/india-roi-v3-letterbox-v1/roi.pt")
+    parser.add_argument("--checkpoint", type=Path, default=ROOT / "models/india-roi-v5/roi.pt")
     parser.add_argument("--output", type=Path, default=ROOT / "artifacts/roi-source-evaluation")
     run(parser.parse_args())

@@ -1,5 +1,12 @@
 # RoadIQ task tracker
 
+## PR #18 P0 model remediation follow-up — 2026-10-16
+
+- Owner request: continue on the unmerged PR #18 branch and remediate YOLO11n transfer learning/class recall and U-Net road/pothole IoU without changing the API contract, abstention behavior, or desktop package integration. The local checkout branch is `pr-18`, at the same commit as PR source branch `feat/india-p0-implementation`; do not merge.
+- Acceptance gates: real India-only fine-tuning/evaluation with a clean frozen holdout; mAP50 > 0.45, both longitudinal- and transverse-crack recall > 0.30, pothole recall > 0.50, source-resolution road ROI IoU > 0.7391 and pothole IoU > 0.00; then backend/frontend and model-enabled package integration checks. Test data may not be used for tuning.
+- Implemented in the current working tree: approved official COCO initialization for YOLO, train-only detector class weights, longer validation-selected training, stronger/validation-selected U-Net training with source-resolution metrics, and aligned local model paths/provenance. No shared API fields or scorer contracts changed.
+- **Blocked/incomplete:** this checkout lacks complete verified datasets and manifests. Only partial RDD download chunks exist; no new model has been trained and no target metric has been measured. The accuracy gates are still open. Current test results and exact next steps are in HANDOFF.md and docs/VALIDATION_REPORT.md.
+
 ## Owner-authorized implementation handoff — 2026-10-16
 
 The owner's current assignment authorizes coordinated A/B/C/D implementation, local commits, remote branches and review PRs. The handoff archive's older local-only/no-push restriction is superseded by that direct request. No merge, deployment, or history rewrite is authorized. The existing scaffold-only mission is reconciled in AGENTS.md.

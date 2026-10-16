@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-10-16 — PR #18 model-remediation implementation (results pending)
+
+- Updated the detector recipe to initialize from the owner-approved official YOLO11n COCO checkpoint, apply training-box-derived class weights, and train for up to 90 epochs with validation-driven early stopping.
+- Updated the U-Net recipe for up to 80 epochs, train-only pothole weighting/Dice loss, validation-only checkpoint selection, aspect-preserving inputs and source-resolution holdout metrics. Fixed its missing `letterbox_pair` import.
+- Aligned runtime/demo/launcher/packaging defaults and checkpoint provenance checks to the new versioned model output paths. Documented the COCO initialization exception and commands.
+- No new checkpoint or accuracy result was produced: complete verified datasets are unavailable in this checkout and the partial RDD acquisition did not finish. Existing weak model results remain the only real measurements; all requested P0 quality gates remain unverified.
+- Verification: 140 backend unit tests passed in the Python 3.10 CUDA environment; Python 3.12 base tests passed 138 with two optional-ML skips; frontend 13 tests, lint and build passed. Two real-model integration tests could not start without the new detector checkpoint. No training or EXE rebuild was run.
+
 ## 2026-10-16 — India model pipeline and measured quality limits
 
 - Acquired and froze two India-only corpora with rights/hash/duplicate evidence; scratch detector training completed 30 epochs and two genuine ROI experiments completed 15 epochs each. Detector heldout AP50 .137644 / AP50–95 .054486, transverse AP zero.

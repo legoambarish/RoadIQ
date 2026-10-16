@@ -176,7 +176,10 @@ def vision_readiness() -> dict[str, Any]:
             if model is not None:
                 metadata = getattr(model, "checkpoint_metadata", None)
                 if key == "roi" and metadata:
-                    metadata = {name: value for name, value in metadata.items() if name in {"sha256", "model_version", "training_country", "pretrained_weights_used", "selected_epoch", "heldout_evaluation"}}
+                    metadata = {name: value for name, value in metadata.items() if name in {
+                        "sha256", "model_version", "training_country", "pretrained_weights_used",
+                        "selected_epoch", "heldout_evaluation",
+                    }}
                 result[key] = {"status": "loaded", "model_version": model.model_version,
                                "checkpoint": metadata, "confidence_calibrated": False}
         except Exception as exc:

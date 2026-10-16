@@ -576,7 +576,8 @@ def analyze_road_image(
         "training_status": getattr(actual_segmentation_model, "training_status", "not_reported") if actual_segmentation_model else "not_reported",
         "provider": getattr(actual_segmentation_model, "provider", "pytorch") if actual_segmentation_model else None,
         "checkpoint": ({key: value for key, value in getattr(actual_segmentation_model, "checkpoint_metadata", {}).items()
-                       if key in {"sha256", "model_version", "training_country", "pretrained_weights_used", "selected_epoch", "validation_metrics", "heldout_evaluation"}}
+                       if key in {"sha256", "model_version", "training_country", "pretrained_weights_used",
+                                  "selected_epoch", "validation_metrics", "heldout_evaluation"}}
                        if actual_segmentation_model else None),
         "runtime": {"device": str(getattr(actual_segmentation_model, "device", "unknown"))} if actual_segmentation_model else None,
         "preprocessing_geometry": segmentation_output.get("preprocessing_geometry") if segmentation_output else None,

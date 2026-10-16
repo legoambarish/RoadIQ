@@ -117,8 +117,8 @@ def run(args):
     root = ROOT / "data/rdd2022-india-v1"
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=True)
-    for variable, relative in (("ROADIQ_DETECTOR_MODEL_PATH", "models/india-yolo11n-v1/detector.pt"),
-                               ("ROADIQ_SEGMENTATION_MODEL_PATH", "models/india-roi-v3-letterbox-v1/roi.pt")):
+    for variable, relative in (("ROADIQ_DETECTOR_MODEL_PATH", "models/india-yolo11n-coco-v2/detector.pt"),
+                               ("ROADIQ_SEGMENTATION_MODEL_PATH", "models/india-roi-v5/roi.pt")):
         path = ROOT / relative
         if not path.is_file():
             raise FileNotFoundError(f"Real trained model required: {relative}")

@@ -18,6 +18,24 @@ from typing import Any
 from PIL import Image
 
 CLASSES = ("longitudinal_crack", "transverse_crack", "alligator_crack", "pothole")
+APPROVED_PRETRAINING_SOURCE = "https://github.com/ultralytics/assets/releases/download/v8.4.0/yolo11n.pt"
+APPROVED_PRETRAINING_CHECKPOINT_SHA256 = "0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1"
+
+
+def validate_pretraining_provenance(metadata: dict[str, Any]) -> bool:
+    """Allow legacy India-scratch weights or the explicitly approved COCO initialization."""
+    pretrained = metadata.get("pretrained")
+    if pretrained is False:
+        return False
+    if (
+        pretrained is True
+        and metadata.get("pretraining_source") == APPROVED_PRETRAINING_SOURCE
+        and metadata.get("pretraining_dataset") == "COCO 2017"
+        and metadata.get("pretraining_license") == "AGPL-3.0 (Ultralytics model weights)"
+        and metadata.get("pretraining_checkpoint_sha256") == APPROVED_PRETRAINING_CHECKPOINT_SHA256
+    ):
+        return True
+    raise ValueError("unapproved or incomplete pretrained checkpoint provenance")
 
 
 def tile_windows(width: int, height: int, size: int, overlap: float = 0.25, max_tiles: int = 16) -> list[tuple[int, int, int, int]]:
@@ -64,9 +82,10 @@ class IndiaRoadDamageDetector:
         if metadata.get("checkpoint_sha256") != digest:
             raise ValueError("checkpoint hash differs from training provenance")
         if metadata.get("training_country") != "India" or metadata.get("dataset") != "RDD2022 India":
-            raise ValueError("checkpoint does not meet India-only road-data policy")
-        if metadata.get("class_names") != list(CLASSES) or metadata.get("pretrained") is not False:
-            raise ValueError("unsupported class map or unreviewed pretraining provenance")
+            raise ValueError("detector fine-tuning data is not the approved India RDD dataset")
+        if metadata.get("class_names") != list(CLASSES):
+            raise ValueError("unsupported detector class map")
+        pretrained = validate_pretraining_provenance(metadata)
         if not metadata.get("manifest_sha256") or not metadata.get("heldout_evaluation"):
             raise ValueError("checkpoint is missing frozen data/evaluation provenance")
         # Caller-supplied checkpoints are trusted local research assets, never uploads.
@@ -88,7 +107,12 @@ class IndiaRoadDamageDetector:
         self.model_version = metadata["model_version"]
         self.checkpoint_metadata = {"sha256": digest, "manifest_sha256": metadata["manifest_sha256"],
                                     "training_country": "India", "license": "AGPL-3.0",
-                                    "dataset_license": "CC-BY-4.0", "pretrained": False,
+                                    "dataset_license": "CC-BY-4.0", "pretrained": pretrained,
+                                    "pretraining_source": metadata.get("pretraining_source"),
+                                    "pretraining_dataset": metadata.get("pretraining_dataset"),
+                                    "pretraining_license": metadata.get("pretraining_license"),
+                                    "pretraining_checkpoint_sha256": metadata.get("pretraining_checkpoint_sha256"),
+                                    "class_loss_weights": metadata.get("class_loss_weights"),
                                     "heldout_evaluation": {key: metadata["heldout_evaluation"].get(key) for key in
                                         ("dataset_split", "images", "map50", "map50_95", "manifest_sha256", "checkpoint_sha256")}}
         self.runtime_metadata = {"device": device, "letterbox_reversed_by": "ultralytics_orig_shape",

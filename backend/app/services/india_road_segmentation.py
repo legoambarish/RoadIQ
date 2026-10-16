@@ -239,7 +239,13 @@ class IndiaRoadSegmentationModel:
             evaluation = json.loads((self.path.parent / "roi-evaluation.json").read_text(encoding="utf-8"))
             if evaluation.get("checkpoint_sha256") != self.checkpoint_metadata["sha256"] or evaluation.get("manifest_sha256") != self.checkpoint_metadata.get("split_audit", {}).get("manifest_sha256"):
                 raise ValueError("v2 segmentation checkpoint/evaluation identity mismatch")
-            self.checkpoint_metadata["heldout_evaluation"] = {key: evaluation[key] for key in ("images", "evaluation_split", "metrics_at_model_input_resolution")}
+            heldout_keys = (
+                "images", "evaluation_split", "metrics_at_model_input_resolution",
+                "metrics_at_source_resolution", "road_or_pothole_roi_iou_source_resolution",
+            )
+            self.checkpoint_metadata["heldout_evaluation"] = {
+                key: evaluation[key] for key in heldout_keys if key in evaluation
+            }
         self.class_names = tuple(checkpoint["class_names"])
         self.preprocessing = self.checkpoint_metadata.get("input_preprocessing", "legacy_stretch_v1")
         if self.preprocessing not in ("legacy_stretch_v1", LETTERBOX_MODE):

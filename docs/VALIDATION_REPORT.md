@@ -2,6 +2,12 @@
 
 **Final verdict: PARTIALLY VERIFIED.** Genuine detector/ROI training and heldout evaluation, the full 993-image CPU API benchmark, regression/real-model tests, Everyday/Engineer browser flow and fresh standalone model-enabled Windows executable all ran successfully. Scientific P0 quality remains inadequate: the detector is weak, useful ROI/pothole measurement fails, and independent field/physical/condition ground truth is absent. This is a working experimental observation system, not a validated road-condition/safety product.
 
+## Current PR #18 remediation follow-up
+
+The working-tree remediation changes are **not trained or accuracy-verified**. This checkout has no verified dataset manifests or complete India imagery. The RDD range download was interrupted before its archive could be assembled and verified; no segmentation data was acquired. No new checkpoint or test metric exists, so the old scratch/v2/v3 results below remain the only real accuracy evidence and the requested P0 gates remain open.
+
+Current code checks: `PYTHONPATH=backend PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 /tmp/roadiq-pr18-venv/bin/python -m pytest backend/tests -q` passed **140 tests** (two dependency deprecation warnings) in Python 3.10 with CUDA PyTorch. The documented Python 3.12 base-dependency run passed **138 tests, 2 skipped** because optional PyTorch was absent. The combined `backend/tests backend/integration_tests` run had 140 passing tests and **2 integration setup errors** because the new local detector checkpoint is missing; it is not a passing integration suite. Frontend `npm run test` passed 13 tests; `npm run lint` and `npm run build` passed. Python compilation and both trainer `--help` commands passed. Windows EXE packaging and genuine model-load integration were not run for this follow-up.
+
 ## Executed checks
 
 | Check | Actual result | Scope |

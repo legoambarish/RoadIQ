@@ -1,11 +1,8 @@
-"""Train/evaluate a reproducible India-only YOLO11n detector from random weights.
-
-No COCO detector or multinational road weights are loaded. AMP's upstream
-auto-check downloads pretrained models, so it is explicitly disabled here.
-"""
+"""Fine-tune official YOLO11n COCO weights on the frozen India-only RDD split."""
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 import json
 import os
 import platform
@@ -13,7 +10,28 @@ import shutil
 import time
 from pathlib import Path
 
+from backend.app.services.india_detector import (
+    APPROVED_PRETRAINING_CHECKPOINT_SHA256,
+    APPROVED_PRETRAINING_SOURCE,
+)
 from backend.scripts.prepare_rdd_india import CLASS_MAP, sha256
+
+
+def calculate_class_weights(manifest_path: Path, max_weight: float = 4.0) -> tuple[list[float], list[int]]:
+    """Compute capped inverse-square-root weights from training boxes only."""
+    counts = Counter()
+    with manifest_path.open(encoding="utf-8") as manifest:
+        for line in manifest:
+            row = json.loads(line)
+            if row.get("split") == "train":
+                counts.update(int(box[0]) for box in row["boxes_xyxy_px"])
+    class_counts = [counts[index] for index in range(len(CLASS_MAP))]
+    if max_weight < 1 or any(count == 0 for count in class_counts):
+        raise ValueError("class weighting requires every class in the training split and max_weight >= 1")
+    largest = max(class_counts)
+    raw = [min(max_weight, (largest / count) ** 0.5) for count in class_counts]
+    mean = sum(raw) / len(raw)
+    return [weight / mean for weight in raw], class_counts
 
 
 def run(args: argparse.Namespace) -> None:
@@ -37,13 +55,25 @@ def run(args: argparse.Namespace) -> None:
     experiment = args.output / "experiment.json"
     if experiment.exists():
         raise FileExistsError("experiment identity exists; use a different run name")
+    class_weights, class_counts = calculate_class_weights(data / "manifest.jsonl", args.class_weight_cap)
+    model = YOLO(args.pretrained_model)
+    pretrained_checkpoint = Path(model.ckpt_path).expanduser().resolve()
+    if not pretrained_checkpoint.is_file():
+        raise RuntimeError("Ultralytics did not resolve the requested pretrained checkpoint")
+    pretrained_hash = sha256(pretrained_checkpoint)
+    if pretrained_hash != APPROVED_PRETRAINING_CHECKPOINT_SHA256:
+        raise ValueError("pretrained weights do not match the approved official YOLO11n COCO checkpoint")
     meta = {"model_version": args.name, "architecture": "yolo11n", "framework": f"ultralytics-{ultralytics.__version__}",
             "framework_license": "AGPL-3.0", "training_country": "India", "dataset": "RDD2022 India",
             "dataset_license": "CC-BY-4.0", "dataset_source": "https://figshare.com/articles/dataset/21431547",
             "class_names": list(CLASS_MAP.values()), "manifest_sha256": manifest_hash,
             "archive_sha256": audit["archive_sha256"], "splits": audit["split_counts"],
             "seed": args.seed, "epochs_requested": args.epochs, "batch": args.batch, "imgsz": args.imgsz,
-            "pretrained": False, "amp": False, "device": args.device,
+            "pretrained": True, "pretraining_source": APPROVED_PRETRAINING_SOURCE,
+            "pretraining_dataset": "COCO 2017", "pretraining_license": "AGPL-3.0 (Ultralytics model weights)",
+            "pretraining_checkpoint_sha256": pretrained_hash, "amp": False, "device": args.device,
+            "class_counts_train": class_counts, "class_loss_weights": class_weights,
+            "class_weight_method": "capped inverse-square-root frequency, mean normalized; train split boxes only",
             "hardware": torch.cuda.get_device_name(0) if torch.cuda.is_available() else platform.processor(),
             "python": platform.python_version(), "torch": str(torch.__version__),
             "training_status": "roadIQ_trained", "confidence_calibrated": False,
@@ -51,18 +81,23 @@ def run(args: argparse.Namespace) -> None:
     experiment.write_text(json.dumps(meta, indent=2), encoding="utf-8")
     print(json.dumps({"event": "training_started", **meta}), flush=True)
     start = time.monotonic()
-    model = YOLO("yolo11n.yaml")
 
     def epoch_end(trainer):
         print(json.dumps({"event": "epoch_completed", "epoch": trainer.epoch + 1,
                           "elapsed_seconds": round(time.monotonic() - start, 1),
                           "metrics": {str(k): float(v) for k, v in trainer.metrics.items()}}), flush=True)
+
+    def apply_class_weights(trainer):
+        trainer.model.class_weights = torch.tensor(class_weights, dtype=torch.float32)
+        trainer.model.criterion = None
+
+    model.add_callback("on_train_start", apply_class_weights)
     model.add_callback("on_fit_epoch_end", epoch_end)
     model.train(data=str(data / "dataset.yaml"), epochs=args.epochs, batch=args.batch, imgsz=args.imgsz,
-                device=args.device, workers=0, seed=args.seed, deterministic=True, pretrained=False,
-                amp=False, optimizer="AdamW", lr0=0.001, lrf=0.05, weight_decay=0.0005,
-                warmup_epochs=2, mosaic=0.5, close_mosaic=5, fliplr=0.5, flipud=0.0,
-                degrees=0.0, perspective=0.0, mixup=0.0, patience=12, plots=True,
+                device=args.device, workers=0, seed=args.seed, deterministic=True, pretrained=True,
+                amp=False, optimizer="AdamW", lr0=0.0005, lrf=0.05, weight_decay=0.0005,
+                warmup_epochs=3, mosaic=0.5, close_mosaic=10, fliplr=0.5, flipud=0.0,
+                degrees=0.0, perspective=0.0, mixup=0.0, patience=args.patience, plots=True,
                 project=str(args.output.resolve()), name="fit", exist_ok=False, verbose=False, cache=False)
     best = Path(model.trainer.best)
     if not best.is_file():
@@ -98,10 +133,13 @@ def run(args: argparse.Namespace) -> None:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data", type=Path, default=Path("data/rdd2022-india-v1"))
-    parser.add_argument("--output", type=Path, default=Path("models/india-yolo11n-v1"))
-    parser.add_argument("--name", default="india-yolo11n-scratch-v1")
-    parser.add_argument("--epochs", type=int, default=30)
-    parser.add_argument("--batch", type=int, default=8)
+    parser.add_argument("--output", type=Path, default=Path("models/india-yolo11n-coco-v2"))
+    parser.add_argument("--name", default="india-yolo11n-coco-transfer-v2")
+    parser.add_argument("--pretrained-model", default="yolo11n.pt")
+    parser.add_argument("--epochs", type=int, default=90)
+    parser.add_argument("--batch", type=int, default=4)
+    parser.add_argument("--patience", type=int, default=20)
+    parser.add_argument("--class-weight-cap", type=float, default=4.0)
     parser.add_argument("--imgsz", type=int, default=640)
     parser.add_argument("--device", default="0")
     parser.add_argument("--seed", type=int, default=20261016)

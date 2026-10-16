@@ -22,12 +22,12 @@ ROOT = Path(__file__).resolve().parents[2]
 
 @pytest.fixture(scope="module")
 def live_client():
-    checkpoint = ROOT / "models/india-yolo11n-v1/detector.pt"
+    checkpoint = ROOT / "models/india-yolo11n-coco-v2/detector.pt"
     assert checkpoint.is_file(), "Real India-trained weights required. Run documented preparation/training first."
     assert checkpoint.with_suffix(".json").is_file(), "Trained checkpoint/evaluation provenance required."
     os.environ["ROADIQ_DETECTOR_MODEL_PATH"] = str(checkpoint)
     os.environ["ROADIQ_DETECTOR_DEVICE"] = "cpu"
-    roi_checkpoint = ROOT / "models/india-roi-v3-letterbox-v1/roi.pt"
+    roi_checkpoint = ROOT / "models/india-roi-v5/roi.pt"
     assert roi_checkpoint.is_file(), "Real corrected-aspect ROI checkpoint required."
     os.environ["ROADIQ_SEGMENTATION_MODEL_PATH"] = str(roi_checkpoint)
     os.environ["ROADIQ_SEGMENTATION_DEVICE"] = "cpu"
@@ -57,11 +57,14 @@ def test_real_india_image_to_actual_model_to_http_contract(live_client):
         assert result["model"]["load_status"] == "loaded"
         assert result["model"]["training_status"] == "roadIQ_trained"
         assert len(result["model"]["checkpoint"]["sha256"]) == 64
+        assert result["model"]["checkpoint"]["pretrained"] is True
+        assert result["model"]["checkpoint"]["pretraining_dataset"] == "COCO 2017"
         assert result["model"]["checkpoint"]["heldout_evaluation"]["images"] == 993
         assert any("Source-heldout detector AP50" in reason for reason in result["visual_distress"]["reliability_reasons"])
         assert result["processing_time_ms"]["detector"] > 0
         assert result["processing_time_ms"]["segmentation"] > 0
         assert result["model"]["segmentation"]["load_status"] == "loaded"
+        assert result["model"]["segmentation"]["checkpoint"]["heldout_evaluation"]["images"] == 350
         preprocessing = result["model"]["segmentation"]["preprocessing_geometry"]
         assert preprocessing["method"] == "letterbox_bilinear_rgb_nearest_mask_v1"
         assert preprocessing["source_size_px"] == [result["image"]["width_px"], result["image"]["height_px"]]

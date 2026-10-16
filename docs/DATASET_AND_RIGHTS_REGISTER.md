@@ -1,6 +1,6 @@
 # Dataset and rights register — 2026-10-16
 
-Two existing India road corpora are used. No third road dataset, multinational detector checkpoint, COCO pretrained weight, or external image search supplied training images. Random initialization is intentional. Raw imagery, downloaded archives, weights and private surveys stay in ignored local directories; Git contains code, compact ledgers and benchmark evidence.
+Two existing India road corpora supply all RoadIQ fine-tuning, validation and evaluation images. With the project owner's explicit approval for this remediation, YOLO11n is initialized from the official [Ultralytics YOLO11n checkpoint](https://github.com/ultralytics/assets/releases/download/v8.4.0/yolo11n.pt) (pretraining-source exception), whose SHA-256 is pinned as `0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1`; U-Net remains randomly initialized. No COCO images are added to the India road dataset or used for RoadIQ fine-tuning, validation or evaluation. The trainer rejects a checkpoint that differs from this approved hash and records the source/hash/license in the experiment and deployed checkpoint sidecar. Raw imagery, downloaded archives, weights and private surveys stay in ignored local directories; Git contains code, compact ledgers and benchmark evidence.
 
 ## RDD2022 India
 
@@ -39,7 +39,7 @@ Four published train sequences (1_005, 1_012, 1_016, 1_018) remain train. Publis
 
 ## Runtime/framework and limits
 
-[Ultralytics](https://www.ultralytics.com/license) reports AGPL-3.0 for the selected framework. This is an optional local research dependency, with its own source/distribution obligations; do not describe an exported proprietary deployment as cleared by this implementation. CPU/GPU [PyTorch builds](https://pytorch.org/get-started/previous-versions/) and torchvision are pinned. No upstream pretrained detector weights are used. Local weights are trusted research assets; the image upload endpoint never accepts checkpoints.
+[Ultralytics](https://www.ultralytics.com/license) reports AGPL-3.0 for the selected framework and official YOLO11n weights. This is an optional local research dependency, with its own source/distribution obligations; do not describe an exported proprietary deployment as cleared by this implementation. CPU/GPU [PyTorch builds](https://pytorch.org/get-started/previous-versions/) and torchvision are pinned. The approved COCO checkpoint is initialization only; the separately reported training geography refers to the India-only fine-tuning dataset. U-Net uses no external pretrained weights. Local weights are trusted research assets; the image upload endpoint never accepts checkpoints.
 
 No field-grade labels, verified material/camera cohorts, physical calibration ground truth, actual survey GPS/time, stone-instance/metal-fragment labels, structural condition, safety, friction, IRI or PCI measurements were acquired. A new independent 80–120-image field collection was not fabricated. The source-heldout evaluation and small qualitative reviews must not be described as that collection. The historical 20-image ACAD synthetic-concrete texture result is unrelated to these road benchmarks.
 

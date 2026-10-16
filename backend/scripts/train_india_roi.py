@@ -1,8 +1,7 @@
-"""Train the existing compact U-Net with explicit background and untouched sequence test.
+"""Train the compact India-road U-Net and evaluate its source-space output once.
 
-Version 2 explicitly learns source background/unannotated pixels (255). The final
-published validation sequence is reserved as test before training; remaining
-published validation sequences select checkpoints. No external pretraining.
+The final published validation sequence is reserved as test before training.
+Checkpoint selection and early stopping use validation road/pothole IoU only.
 """
 from __future__ import annotations
 
@@ -20,7 +19,14 @@ os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
 from PIL import Image
 
 from backend.scripts.prepare_rdd_india import HashTree, dhash, sha256
-from app.services.india_road_segmentation import IndianRoadMaskDataset, EXTENDED_CLASS_NAMES, create_unet, IGNORE_LABEL, LETTERBOX_MODE
+from app.services.india_road_segmentation import (
+    IndianRoadMaskDataset,
+    EXTENDED_CLASS_NAMES,
+    create_unet,
+    IGNORE_LABEL,
+    LETTERBOX_MODE,
+    letterbox_pair,
+)
 
 
 def metrics_from_confusion(confusion):
@@ -32,6 +38,14 @@ def metrics_from_confusion(confusion):
             "dice_by_class": {name: float(2 * diagonal[i] / denominator[i]) if denominator[i] else None for i, name in enumerate(EXTENDED_CLASS_NAMES)},
             "macro_iou": float((diagonal[union > 0] / union[union > 0]).mean()),
             "confusion_matrix_rows_true_columns_predicted": confusion.cpu().tolist()}
+
+
+def validation_selection_score(scores):
+    iou = scores["iou_by_class"]
+    road, pothole = iou["road"], iou["pothole"]
+    if road is None or pothole is None:
+        raise ValueError("validation split must contain both road and pothole labels")
+    return (road + pothole) / 2
 
 
 def prepare_splits(root: Path, output: Path, size: tuple[int, int], *, preserve_aspect=False):
@@ -94,6 +108,8 @@ def run(args):
     torch.manual_seed(args.seed)
     if not torch.cuda.is_available():
         raise RuntimeError("This full ROI experiment requires CUDA")
+    if not args.preserve_aspect:
+        raise ValueError("The v5 runtime checkpoint requires --preserve-aspect")
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=True)
     train, validation, test, audit = prepare_splits(args.data.resolve(), output, (args.width, args.height), preserve_aspect=args.preserve_aspect)
@@ -116,6 +132,9 @@ def run(args):
     weights = torch.tensor(weights, device="cuda", dtype=torch.float32)
     network = create_unet(classes, args.base_channels).cuda()
     optimizer = torch.optim.AdamW(network.parameters(), lr=.001, weight_decay=.0001)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+        optimizer, mode="max", factor=.5, patience=5, min_lr=1e-5
+    )
     criterion = torch.nn.CrossEntropyLoss(weight=weights, ignore_index=IGNORE_LABEL)
     scaler = torch.amp.GradScaler("cuda")
     loaders = {name: DataLoader(dataset, batch_size=args.batch, shuffle=name == "train", num_workers=0, pin_memory=True)
@@ -139,7 +158,9 @@ def run(args):
                 "seed": args.seed, "batch": args.batch, "epochs_requested": args.epochs, "hardware": torch.cuda.get_device_name(0),
                 "python": platform.python_version(), "torch": str(torch.__version__), "class_loss_weights": weights.cpu().tolist(),
                 "positive_image_sampling_weight": args.positive_repeat, "positive_training_images": sum(positive_images),
-                "dice_loss_weight": args.dice_weight, "training_augmentation": "horizontal flip + brightness .85-1.15" if args.positive_repeat > 1 else "none",
+                "dice_loss_weight": args.dice_weight, "early_stopping_patience": args.patience,
+                "validation_selection_metric": "mean road and pothole IoU",
+                "training_augmentation": "horizontal flip + brightness .85-1.15" if args.positive_repeat > 1 else "none",
                 "source_label_mapping": {"0": "road", "1": "background_unobserved (absent)", "2": "footpath", "3": "shallow", "4": "pothole", "255": "background_unobserved"},
                 "background_policy": "Source card includes backgrounds; acquired 255 outside regions are learned as source background/unannotated, not a verified occlusion taxonomy. Legacy v1 continues to ignore 255.",
                 "confidence_calibrated": False, "training_status": "trained_on_india_only_dataset"}
@@ -147,8 +168,10 @@ def run(args):
     metadata["padding_policy"] = "Synthetic source sentinel 254 -> target ignore 255 in loss and evaluation; real source 255 remains background class 4" if args.preserve_aspect else "no padding"
     start, best = time.monotonic(), -1.0
 
-    def evaluate(loader):
+    def evaluate(loader, *, source_resolution=False):
         confusion = torch.zeros((classes, classes), dtype=torch.int64, device="cuda")
+        source_confusion = torch.zeros_like(confusion) if source_resolution else None
+        processed = 0
         network.eval()
         with torch.inference_mode():
             for images, targets in loader:
@@ -158,9 +181,42 @@ def run(args):
                 predicted = logits.argmax(1)
                 valid = targets != IGNORE_LABEL
                 confusion += torch.bincount(targets[valid] * classes + predicted[valid], minlength=classes ** 2).reshape(classes, classes)
-        return metrics_from_confusion(confusion)
+                if source_resolution:
+                    for sample_index in range(len(images)):
+                        image_path, mask_path = loader.dataset.pairs[processed + sample_index]
+                        with Image.open(image_path) as opened_image:
+                            source_image = opened_image.convert("RGB")
+                        with Image.open(mask_path) as opened_mask:
+                            source_mask = opened_mask.convert("L")
+                        _, _, geometry = letterbox_pair(source_image, (args.width, args.height))
+                        left, top, right, bottom = geometry["padding_ltrb_px"]
+                        row_end = args.height - bottom if bottom else args.height
+                        column_end = args.width - right if right else args.width
+                        prediction = predicted[sample_index, top:row_end, left:column_end]
+                        prediction_image = Image.fromarray(prediction.byte().cpu().numpy())
+                        prediction_image = prediction_image.resize(source_image.size, Image.Resampling.NEAREST)
+                        source_prediction = torch.frombuffer(
+                            bytearray(prediction_image.tobytes()), dtype=torch.uint8
+                        ).long().cuda()
+                        raw_target = torch.frombuffer(
+                            bytearray(source_mask.tobytes()), dtype=torch.uint8
+                        ).cuda()
+                        source_target = torch.full_like(raw_target, 4, dtype=torch.long)
+                        for source_id, model_id in ((0, 0), (2, 1), (3, 2), (4, 3)):
+                            source_target[raw_target == source_id] = model_id
+                        source_valid = source_target != IGNORE_LABEL
+                        source_confusion += torch.bincount(
+                            source_target[source_valid] * classes + source_prediction[source_valid],
+                            minlength=classes ** 2,
+                        ).reshape(classes, classes)
+                    processed += len(images)
+        result = metrics_from_confusion(confusion)
+        if source_confusion is not None:
+            result["source_resolution"] = metrics_from_confusion(source_confusion)
+        return result
 
     history = []
+    stale_epochs = 0
     for epoch in range(args.epochs):
         network.train()
         loss_sum = 0
@@ -182,25 +238,49 @@ def run(args):
             scaler.update()
             loss_sum += loss.item()
         scores = evaluate(loaders["validation"])
-        row = {"epoch": epoch + 1, "train_loss": loss_sum / len(loaders["train"]), **scores,
+        selection_score = validation_selection_score(scores)
+        scheduler.step(selection_score)
+        row = {"epoch": epoch + 1, "train_loss": loss_sum / len(loaders["train"]),
+               "validation_road_pothole_mean_iou": selection_score,
+               "learning_rate": optimizer.param_groups[0]["lr"], **scores,
                "elapsed_seconds": round(time.monotonic() - start, 2)}
         history.append(row)
         print(json.dumps({"event": "roi_epoch_completed", **row}), flush=True)
-        if scores["macro_iou"] > best:
-            best = scores["macro_iou"]
+        if selection_score > best:
+            best = selection_score
+            stale_epochs = 0
             state = {name: tensor.detach().cpu() for name, tensor in network.state_dict().items()}
             torch.save({"format_version": 2, "architecture": "compact_unet_4level", "base_channels": args.base_channels,
                         "class_names": list(EXTENDED_CLASS_NAMES), "state_dict": state,
-                        "metadata": {**metadata, "selected_epoch": epoch + 1, "validation_metrics": scores}}, output / "roi.pt")
+                        "metadata": {**metadata, "selected_epoch": epoch + 1,
+                                     "validation_selection_score": selection_score,
+                                     "validation_metrics": scores}}, output / "roi.pt")
+        else:
+            stale_epochs += 1
+        if stale_epochs >= args.patience:
+            print(json.dumps({"event": "roi_early_stopping", "epoch": epoch + 1,
+                              "patience": args.patience, "best_validation_score": best}), flush=True)
+            break
     checkpoint = torch.load(output / "roi.pt", map_location="cuda", weights_only=True)
     network.load_state_dict(checkpoint["state_dict"])
-    heldout = evaluate(loaders["test"])
+    heldout = evaluate(loaders["test"], source_resolution=True)
+    source_metrics = heldout.pop("source_resolution")
+    source_confusion = torch.tensor(
+        source_metrics["confusion_matrix_rows_true_columns_predicted"], dtype=torch.int64
+    )
+    roi_intersection = int(source_confusion[[0, 3]][:, [0, 3]].sum())
+    roi_union = int(source_confusion[[0, 3], :].sum() + source_confusion[:, [0, 3]].sum()) - roi_intersection
+    roi_iou = roi_intersection / roi_union if roi_union else None
     report = {"evaluation_split": "untouched_source_validation_sequence_reserved_as_test", "images": len(test),
               "checkpoint_sha256": sha256(output / "roi.pt"), "manifest_sha256": audit["manifest_sha256"],
-              "metrics_at_model_input_resolution": heldout, "input_size_px": metadata["input_size_px"],
-              "elapsed_seconds": round(time.monotonic() - start, 2), "history": history, "metadata": metadata,
+              "metrics_at_model_input_resolution": heldout, "metrics_at_source_resolution": source_metrics,
+              "road_or_pothole_roi_iou_source_resolution": roi_iou,
+              "selected_epoch": checkpoint["metadata"]["selected_epoch"],
+              "epochs_completed": len(history), "selection_metric": "validation mean of road and pothole IoU",
+              "input_size_px": metadata["input_size_px"], "elapsed_seconds": round(time.monotonic() - start, 2),
+              "history": history, "metadata": metadata,
               "limitations": ["Source sequences from one small corpus, not India-wide deployment validation.",
-                              "Metrics at model input resolution; full-resolution geometry errors not established.",
+                              "Source-resolution masks use model-grid argmax followed by nearest-neighbor projection.",
                               "Background means source unknown/background, not a validated object/occlusion taxonomy."]}
     (output / "roi-evaluation.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
     print(json.dumps({"event": "roi_training_and_test_completed", **{k: v for k, v in report.items() if k != "history"}}), flush=True)
@@ -209,16 +289,17 @@ def run(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data", type=Path, default=Path("data/indian-roads-v2"))
-    parser.add_argument("--output", type=Path, default=Path("models/india-roi-v2"))
+    parser.add_argument("--output", type=Path, default=Path("models/india-roi-v5"))
     parser.add_argument("--width", type=int, default=512)
     parser.add_argument("--height", type=int, default=288)
     parser.add_argument("--base-channels", type=int, default=16)
-    parser.add_argument("--batch", type=int, default=8)
-    parser.add_argument("--epochs", type=int, default=15)
+    parser.add_argument("--batch", type=int, default=4)
+    parser.add_argument("--epochs", type=int, default=80)
+    parser.add_argument("--patience", type=int, default=15)
     parser.add_argument("--seed", type=int, default=20261016)
-    parser.add_argument("--name", default="indian-roads-unet-v2")
+    parser.add_argument("--name", default="indian-roads-unet-v5")
     parser.add_argument("--positive-repeat", type=float, default=1)
-    parser.add_argument("--pothole-weight-min", type=float, default=0)
-    parser.add_argument("--dice-weight", type=float, default=0)
+    parser.add_argument("--pothole-weight-min", type=float, default=48)
+    parser.add_argument("--dice-weight", type=float, default=1.0)
     parser.add_argument("--preserve-aspect", action="store_true")
     run(parser.parse_args())

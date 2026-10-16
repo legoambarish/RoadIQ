@@ -2,14 +2,24 @@
 
 This card records actual experiments and their limits. The implementation is a local research inspection aid, with candidate observations rather than an engineering condition/safety grade. Dataset-source labels are the evaluation reference; their completeness is not independently certified. Raw model scores are uncalibrated.
 
+## P0 remediation follow-up — not yet evaluated
+
+The approved initialization asset and pinned checksum are recorded in [DATASET_AND_RIGHTS_REGISTER.md](DATASET_AND_RIGHTS_REGISTER.md).
+
+The remediation code now configures YOLO11n transfer learning from the owner-approved official COCO checkpoint, training-box-derived class loss weights, a 90-epoch ceiling, and validation-selected early stopping. The new U-Net run is configured for 80 epochs maximum, class reweighting, pothole Dice loss, aspect-preserving input, and validation-only model selection. These are experiment settings, not results.
+
+No v2-remediation detector or v5 ROI checkpoint has been trained or evaluated in this checkout. The required local manifests and complete India datasets are absent; an RDD archive transfer was interrupted while still incomplete, and no archive passed verification. Consequently there are **no new real metrics**. The acceptance targets (mAP50 > 0.45, crack recall > 0.30, pothole recall > 0.50, source-resolution road-class IoU > 0.7391, and source-resolution pothole IoU > 0) remain unverified. The completed experiments below are the prior scratch/v2/v3 baselines only; do not attribute their metrics to the remediation code.
+
 ## Data and evaluation population
+
+The P0 crack-recall gate applies separately to both longitudinal and transverse cracks; neither class may be averaged away by another class.
 
 | Track | Train | Validation | Test | Grouping and limits |
 | --- | ---: | ---: | ---: | --- |
 | RDD2022 India, four box classes | 5,235 | 1,296 | 993 | Numeric-ID blocks are capture-order proxies; exact/dHash cross-split neighbors excluded. Unknown route/session dependence remains. |
 | e-Yantra IIT Bombay Indian Roads v2, five semantic classes | 2,475 | 375 | 350 | Four/two/one published sequences; 27 later-split near-duplicate exclusions. One test sequence is not 350 independent scenes. |
 
-The RDD labelled source contains 7,706 images; 182 are excluded by the frozen preparation. The official 1,959 unlabelled India test images are not training/evaluation negatives. Only India images are used; no COCO or multinational checkpoint is loaded. Of the 993 labelled test images, 569 have no **supported source boxes**, which is not a healthy-road label. Transverse cracks have only 44 train / 9 validation / 15 test boxes. Full counts: [detector-label-distribution.json](evidence/detector-label-distribution.json).
+The RDD labelled source contains 7,706 images; 182 are excluded by the frozen preparation. The official 1,959 unlabelled India test images are not training/evaluation negatives. RoadIQ fine-tuning and evaluation imagery is India-only. The completed scratch-v1 detector used no pretrained checkpoint; the pending remediation is approved to initialize from official YOLO11n COCO weights only, without adding COCO images to the RoadIQ dataset. Of the 993 labelled test images, 569 have no **supported source boxes**, which is not a healthy-road label. Transverse cracks have only 44 train / 9 validation / 15 test boxes. Full counts: [detector-label-distribution.json](evidence/detector-label-distribution.json).
 
 India licence/source/attribution, ignored RDD codes, selected-member CRCs, source mask IDs, acquisition and complete duplicate-audit details: [DATASET_AND_RIGHTS_REGISTER.md](DATASET_AND_RIGHTS_REGISTER.md). The original Figshare outer archive and Kaggle whole-archive hashes are not claimed because only the required country/members were acquired.
 

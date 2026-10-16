@@ -14,7 +14,7 @@ npm run build
 cd ..
 ```
 
-For CPU-only deployment, use the official `https://download.pytorch.org/whl/cpu` index instead. Do not install the legacy multinational RF-DETR checkpoint. Training and runtime do not fetch pretrained weights. The optional ML framework license and each dataset's separate rights are recorded in DATASET_AND_RIGHTS_REGISTER.md. Base UI/quality tests can use only backend/requirements.txt and explicit unavailable model states.
+For CPU-only deployment, use the official `https://download.pytorch.org/whl/cpu` index instead. Do not install the legacy multinational RF-DETR checkpoint. The owner approved the official Ultralytics YOLO11n COCO checkpoint at `https://github.com/ultralytics/assets/releases/download/v8.4.0/yolo11n.pt` for detector initialization only; the trainer enforces SHA-256 `0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1`. All RoadIQ fine-tuning and evaluation imagery remains India-only. The U-Net remains randomly initialized. The optional ML framework/model license and each dataset's separate rights are recorded in DATASET_AND_RIGHTS_REGISTER.md. Base UI/quality tests can use only backend/requirements.txt and explicit unavailable model states.
 
 ## Acquire and freeze the two India tracks
 
@@ -31,7 +31,7 @@ Manifests and ledgers are local:
 - `data/sources/rdd2022-official-record.json`, `rdd2022-india-acquisition.json`, nested-member directory metadata.
 - `data/rdd2022-india-v1/manifest.jsonl`, `split-audit.json`, `manifest-validation.json`, dataset.yaml and explicit image lists.
 - `data/indian-roads-v2/acquisition.json`: each selected member CRC/SHA-256.
-- `models/india-roi-v3/roi-manifest.jsonl`, `roi-split-audit.json`: sequence split frozen before training; all experiments preserve the same source identities.
+- `models/india-roi-v5/roi-manifest.jsonl`, `roi-split-audit.json`: sequence split frozen before training; this experiment uses the same source identities as the earlier ROI runs.
 
 Preparation refuses to overwrite a frozen manifest. A changed split or experiment uses a fresh output/version. Failed/unfrozen preparation files and incomplete runs remain separate evidence; never erase a failed result to improve the report. The full manifest records source-relative paths, labels, IDs, groups and hashes; small committed ledgers permit checking identity without publishing raw datasets.
 
@@ -39,28 +39,26 @@ Preparation refuses to overwrite a frozen manifest. A changed split or experimen
 
 ```powershell
 $env:PYTHONPATH='backend'
-.\.venv\Scripts\python.exe -u -m backend.scripts.train_india_detector --batch 8 --epochs 30
-.\.venv\Scripts\python.exe -u -m backend.scripts.train_india_roi --output models/india-roi-v3 --name indian-roads-unet-v3 --positive-repeat 8 --pothole-weight-min 32 --dice-weight 0.5 --batch 8 --epochs 15
-.\.venv\Scripts\python.exe -u -m backend.scripts.export_roi_letterbox
+.\.venv\Scripts\python.exe -u -m backend.scripts.train_india_detector --pretrained-model yolo11n.pt --output models/india-yolo11n-coco-v2 --name india-yolo11n-coco-transfer-v2 --batch 4 --epochs 90 --patience 20 --class-weight-cap 4
+.\.venv\Scripts\python.exe -u -m backend.scripts.train_india_roi --output models/india-roi-v5 --name indian-roads-unet-v5 --positive-repeat 8 --pothole-weight-min 48 --dice-weight 1.0 --batch 4 --epochs 80 --patience 15 --preserve-aspect
 ```
 
-Execute GPU jobs sequentially on smaller devices. The actual run used separate jobs on the same 8 GiB device, recording requested/completed epochs and hardware. Both start randomly. Detector AMP is off to prevent the upstream AMP check from downloading a pretrained model. Validation selects checkpoints; the frozen labelled test is evaluated after selection. Test data is not a percentile cohort. Training JSON epoch records show actual losses and validation metrics. To retain logs in PowerShell, append `*> artifacts/detector-training.log` (create artifacts/ first); follow with `Get-Content ... -Tail 2 -Wait` in a separate terminal.
+Execute GPU jobs sequentially on smaller devices. The commands use batch 4 for a 6 GiB GPU. Detector class loss weights are derived only from training-box counts using capped inverse-square-root frequency; U-Net class weights, positive-image sampling and pothole Dice loss are also training-only. The U-Net selects and early-stops on validation mean road/pothole IoU. Each trainer writes a final evaluation only after model selection; the ROI script computes model-grid and source-resolution metrics from one holdout pass. Do not rerun, tune or choose a model based on test metrics. Detector AMP is off; the official pretrained checkpoint is explicitly requested and its SHA-256 is retained. The final full API benchmark evaluates the already selected weights and is not a tuning loop. Training JSON epoch records show actual losses and validation metrics. To retain logs in PowerShell, append `*> artifacts/detector-training.log` (create artifacts/ first); follow with `Get-Content ... -Tail 2 -Wait` in a separate terminal.
 
 Expected actual assets after successful evaluation:
 
-- `models/india-yolo11n-v1/detector.pt` + `detector.json`, `experiment.json`, `heldout-metrics.json`, fit/results.csv and heldout plots/predictions.
-- `models/india-roi-v3/roi.pt` + `roi-evaluation.json` containing actual training history, heldout confusion, IoU/Dice and hashes.
-- `models/india-roi-v3-letterbox-v1/roi.pt` + matching evaluation and `export-provenance.json`: a deployment export of the identical learned v3 parameters, with explicitly recorded letterbox and inverse mask transform. This is **not a separately trained experiment**. The exporter verifies all 3,200 original image/mask hashes and byte equality of old/new model inputs before reusing the model-input evaluation. CPU source-resolution projection is evaluated afresh below.
+- `models/india-yolo11n-coco-v2/detector.pt` + `detector.json`, `experiment.json`, `heldout-metrics.json`, fit/results.csv and heldout plots/predictions.
+- `models/india-roi-v5/roi.pt` + `roi-evaluation.json` containing training history, validation selection, model-grid and one-pass source-resolution heldout IoU/Dice, and hashes.
+- Historical only: `models/india-roi-v3-letterbox-v1/roi.pt` was a deployment export of v3 parameters, not a separately trained experiment. The v5 training command creates and evaluates its own aspect-preserving checkpoint.
 
-The original v2 and improved v3 experiments completed 15 epochs each. A v4 retraining attempt was stopped after three epochs when the dimension audit established that every retained image is already 1280x720: repeating 15 epochs would train on identical inputs. Its incomplete checkpoint/log and the predeclared correction plan remain retained as negative/history evidence. A new versioned runtime export fixes square-upload distortion without changing or relabelling the frozen v3 experiment. No test-based accuracy selection or new-training claim is made.
+Earlier scratch/v2/v3/v4 experiment evidence remains immutable. The v5 U-Net is configured with letterbox preprocessing, so its trained checkpoint will itself be the runtime checkpoint; no parameter-reusing export is necessary. Test metrics must never be used to select epochs, weights, operating thresholds or later model versions.
 
-The detector adapter verifies weights hash, India provenance, class order, absence of pretrained weights and heldout evaluation. The v2 ROI adapter also requires a matching completed evaluation file. Unfinished checkpoints cannot pass these readiness checks. Sidecars are provenance checks for **trusted local assets**, not an authentication mechanism for arbitrary untrusted checkpoints. Never upload/load foreign pickle weights through the image API.
+The detector adapter verifies weights hash, India fine-tuning provenance, the approved pretraining source/hash/license, class order and heldout evaluation. The ROI adapter requires matching completed evaluation/checkpoint/manifest identities. Unfinished checkpoints cannot pass these readiness checks. Sidecars are provenance checks for **trusted local assets**, not an authentication mechanism for arbitrary untrusted checkpoints. Never upload/load foreign pickle weights through the image API.
 
 ## Real demo and application
 
 ```powershell
 .\.venv\Scripts\python.exe -m backend.scripts.demo_trained_pipeline --samples 993 --device cpu
-.\.venv\Scripts\python.exe -m backend.scripts.evaluate_roi_source_resolution
 cd frontend
 npm run build
 cd ..
