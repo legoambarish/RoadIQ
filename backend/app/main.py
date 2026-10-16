@@ -9,6 +9,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from app.api.routes.health import router as health_router
+from app.api.routes.image_analysis import router as image_analysis_router
 from app.core.config import get_settings
 
 
@@ -47,6 +48,7 @@ def create_app(frontend_directory: Path | None = None) -> FastAPI:
     )
 
     app.include_router(health_router, prefix=settings['api_prefix'])
+    app.include_router(image_analysis_router, prefix=settings['api_prefix'])
     app.state.launcher_token = None
     app.state.restart_requested = None
 

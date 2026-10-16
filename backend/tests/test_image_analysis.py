@@ -1,0 +1,60 @@
+"""Integration tests for the POST /api/v1/image-analyses route."""
+
+import io
+import pytest
+from fastapi.testclient import TestClient
+from PIL import Image
+
+from app.main import create_app
+
+
+@pytest.fixture
+def client():
+    app = create_app()
+    return TestClient(app)
+
+
+def _make_dummy_image(width: int = 640, height: int = 480, color=(128, 128, 128)) -> bytes:
+    buf = io.BytesIO()
+    Image.new("RGB", (width, height), color=color).save(buf, format="JPEG")
+    return buf.getvalue()
+
+
+def test_image_analysis_successful_post(client):
+    img_data = _make_dummy_image()
+    res = client.post(
+        "/api/v1/image-analyses",
+        files={"image": ("road.jpg", img_data, "image/jpeg")},
+    )
+    assert res.status_code == 200
+    data = res.json()
+    assert "analysis_id" in data
+    assert "analysis_status" in data
+    assert "rsqi" in data
+    assert data["rsqi"]["status"] in ("rated", "low_confidence", "unrated")
+    assert "image_quality" in data
+    assert "texture_features" in data
+    assert "mode_suitability" in data
+    modes = data["mode_suitability"]
+    assert "walking" in modes
+    assert "cycling" in modes
+    assert "two_wheeler" in modes
+    assert "car" in modes
+    assert "bus" in modes
+
+
+def test_empty_file_rejected(client):
+    res = client.post(
+        "/api/v1/image-analyses",
+        files={"image": ("empty.jpg", b"", "image/jpeg")},
+    )
+    assert res.status_code == 400
+
+
+def test_invalid_filetype_rejected(client):
+    res = client.post(
+        "/api/v1/image-analyses",
+        files={"image": ("doc.txt", b"plain text", "text/plain")},
+    )
+    assert res.status_code == 422
+    assert "corrupt_image" in res.text or "not a valid" in res.text
