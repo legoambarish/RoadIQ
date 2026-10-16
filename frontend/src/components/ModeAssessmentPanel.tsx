@@ -118,12 +118,14 @@ export function ModeAssessmentPanel({ record, mode, view }: ModeAssessmentPanelP
           <p>{profile.engineerDefinition}</p>
           <EvidenceLedger record={record} mode={mode} />
           <div className="engineer-gates">
+            <div><span>Survey source</span><strong>{segment.survey_source || 'Unavailable'}</strong></div>
+            <div><span>Survey date/time · fixture metadata</span><strong>{segment.surveyed_at || 'Unavailable'}</strong></div>
             <div><span>Mode value provenance</span><strong>{source}</strong></div>
             <div><span>Calibrated confidence</span><strong>{segment.confidence === null ? 'Unavailable' : `${Math.round(segment.confidence * 100)}%`}</strong></div>
             <div><span>Evidence coverage</span><strong>{segment.evidence_coverage === null ? 'Unavailable' : `${Math.round(segment.evidence_coverage * 100)}%`}</strong></div>
             <div><span>Assessment status</span><strong>{segment.assessment_status} · fixture record</strong></div>
           </div>
-          <p className="fixture-interpretation">This audit shows contract fields only. Demo values are not measurements or output from Task A’s scoring service.</p>
+          <p className="fixture-interpretation">This audit shows contract fields only. Demo values and survey timestamps are fixture metadata, not real surveys or output from Task A’s scoring service.</p>
         </section>
       )}
 

@@ -1,5 +1,33 @@
 # RoadIQ task tracker
 
+## Task B Leaflet/OpenStreetMap map implementation — 2026-10-16
+
+Replaced the hand-drawn SVG schematic with a Leaflet map using OpenStreetMap tiles and the existing typed GeoJSON fixture lines. Routes remain selectable, keyboard accessible, zoomable, and recolored by Road Quality or any of the five travel-profile overlays; existing filters, rankings, legend, details, and fixture warnings remain in place. The Engineer panel now surfaces survey source and timestamp, explicitly labeled fixture metadata. Added frontend tests for overlay lookup, status bands, unrated/null handling, filtering/ranking, and visible-segment selection. The map’s route names/scores are still fixture data, distinct from the OSM basemap; map tiles require an internet connection. Implementation commit: `8a06f0c6bf5d2f14637e5a4d52db52d6272f4066` on `task/b-map-dashboard`; pushed branch status and checks are recorded in `docs/HANDOFF.md` and root `HANDOFF.md`.
+
+## Task B Everyday brief layout and explainer clarity — 2026-10-16
+
+Fixed traveler checklist layout so “What matters for this profile” sits above wrapped, responsive items rather than sharing a cramped row; checked the Everyday state for all five profiles in the built site. Clarified in Insights that charts summarize the currently filtered demo network, not the selected map segment or imported image. Expanded image-import help: JSON loads saved report data; optional annotated preview displays the CLI visualization, and the CLI JSON stores its preview as a local path. An annotation can now display on its own or overlay the selected road image. See root `HANDOFF.md` for verification and branch status.
+
+## Task B alignment with latest Task A/C/D updates — 2026-10-16
+
+Reviewed the merged Task C report fields, current Task A scorer defaults, and the latest Task D branch. The B frontend remains API-compatible: Task D's latest changes are docs-only for dependency status, the desktop package still has no image-analysis route, and Task A's scorer defaults remain unrated without configured references. Updated local Task C report rendering to expose the candidate method, analysis path, experimental ROI-gate state, uncalibrated confidence, and measured runtime when present. Refreshed README and architecture status text that still described report import as unavailable. No shared API contract or backend code changed. See root `HANDOFF.md` for branch, changed files, and checks.
+
+## Task B cross-task UI refresh — 2026-10-16
+
+Updated the image-report workspace to reflect the current Task A scorer, Task C local CLI baseline, and Task D Windows package branch. The panel now explains that Task C's untrained texture-region output is CLI-only and not individual aggregate/defect segmentation, that Task A's scorer remains Unrated without evidence and fixed normalization references, and that Task D's package serves the dashboard/health service without an image-analysis route. Production health checks now default to the same-origin `/api/v1`, as used by the Task D package build; `VITE_API_BASE_URL` remains configurable and development retains `http://localhost:8000/api/v1`. Image selection was preview-only at this point; the follow-up below adds manual import of Task C's local JSON report and annotated image without claiming browser-triggered inference.
+
+## Task B Surface Quality selection clarification — 2026-10-16
+
+Made dashboard overlay selection exclusive: travel-profile buttons now reflect the active map overlay instead of retaining a separate highlighted profile, and the Surface Quality overlay uses the same high-contrast selected styling. Renamed the control group for clarity. Verified cycling-to-surface and surface-to-cycling transitions in the built local site; map label/ranking and pressed state update. Frontend typecheck/build, lint, and browser verification passed; see root `HANDOFF.md`.
+
+## Task B local Task C report import — 2026-10-16
+
+Added a browser-local import flow for the existing Task C `analysis-report.json` and optional `annotated-preview.jpg`. The UI validates the report's key structure, renders available image metadata, image quality, texture proxy, and texture-candidate area observations, and keeps absent values unavailable and RSQI Unrated. The CLI report stores its annotation as a local path, so the user must select the companion preview image; data URIs from direct analyzer output are accepted only for supported image types. No image API, backend, scoring, or shared contract was changed. Frontend build and lint passed; exact commands and commit/push state are recorded in root `HANDOFF.md`.
+
+## Task B continuation audit — 2026-10-16
+
+The active checkout is the clean `task/b-map-dashboard` branch at `f83b4d7`, tracking `origin/task/b-map-dashboard`; `git fetch --all --prune` completed and found no newer Task B commit. The assigned Task B UI acceptance items are complete. Its only unchecked acceptance item—displaying reviewed image-analysis output and annotations—depends on Task C/Task D finalizing the response mapping and implementing the image endpoint. Those dependencies remain unresolved, and `docs/API_CONTRACT.md` confirms the endpoint is not implemented. No new UI behavior was added or represented as integrated in this continuation. Frontend typecheck, Vite build, and Oxlint were run directly with the bundled Node runtime and all passed; see root `HANDOFF.md` for exact commands and the npm/pnpm environment limitations.
+
 ## Task C MVP continuation — 2026-10-16
 
 The Task C local hackathon MVP is demonstrable on the assigned `task/c-computer-vision` branch. It analyzes a deterministic synthetic texture or a local road image, applies quality checks, produces an untrained texture-candidate mask and annotated JPEG, and writes a structured JSON report. An explicitly configured experimental India-road semantic checkpoint can optionally gate candidates to a predicted road ROI. API and frontend integration remain owned by Task D and Task B.
@@ -75,16 +103,16 @@ Task A implementation is on `task/a-scoring-engine` in `backend/app/services/sco
 
 ### Task B — dashboard (core and view follow-ups merged in PRs #2, #5, and #6; current remote branch adds handoff documentation only)
 
-- [x] Renders an interactive schematic map from typed GeoJSON fixtures, with selectable, zoomable segments and a color-coded Road Quality overlay. No live basemap is claimed while provider choice is unresolved.
+- [x] Renders an interactive Leaflet map with OpenStreetMap tiles and selectable, zoomable polylines from the typed GeoJSON schema; color-codes the selected Road Quality or travel-profile overlay. Clearly separates illustrative RoadIQ fixture routes and scores from OSM basemap data.
 - [x] Offers five separate travel-profile overlays (walking, cycling, two-wheeler, car, bus), ranked segment lists, quality/search/minimum-score filters, and quality/profile charts.
-- [x] Provides materially distinct Everyday traveler briefs and Engineer evidence/provenance audits, with unknown-value gates and score explanations in segment details.
+- [x] Provides materially distinct Everyday traveler briefs and Engineer evidence/provenance audits, including source, survey timestamp, underlying fields, confidence, limitations, unknown-value gates, and score explanations in segment details.
 - [x] Keeps all five full travel-profile choices and the Everyday/Engineer switch visible in a sticky control dock while scrolling; controls adapt to narrow screens.
 - [x] Uses a calmer sage/forest Everyday palette, a distinct high-contrast Engineer palette, clearer spacing, and larger rounded panels.
 - [x] Keeps pedestrian infrastructure and comfort separate; lane markings are not treated as a walkability proxy, and unknown observations remain distinct from observed absence.
 - [x] Keeps unrated values null/Unrated and separates surface condition from mode suitability and pedestrian context.
 - [x] Clearly marks all sample values as illustrative `demo_fixture` data; retains the health-only API honestly and does not claim segment retrieval or image analysis is connected.
 - [x] Provides a local-only image preview and Unrated/unavailable report shell. It does not upload files or imply inference/annotation occurred.
-- [ ] Displays real reviewed image-analysis outputs and annotated images after Task C/Task D finalize the compatible API response and endpoint.
+- [x] Imports and displays available fields from a Task C local CLI JSON report and optional annotated image; browser upload/inference and the reviewed Task D HTTP integration remain pending.
 - [x] Passes frontend TypeScript checks, lint, and Vite production build.
 
 ### Task C — computer vision (local hackathon MVP demonstrated; learned inference remains data-limited)

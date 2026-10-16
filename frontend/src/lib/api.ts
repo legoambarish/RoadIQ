@@ -3,7 +3,7 @@ export type HealthResponse = {
   service: string
 }
 
-const defaultBaseUrl = 'http://localhost:8000/api/v1'
+const defaultBaseUrl = import.meta.env.DEV ? 'http://localhost:8000/api/v1' : '/api/v1'
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? defaultBaseUrl
 
 export async function fetchHealth(signal?: AbortSignal): Promise<HealthResponse> {

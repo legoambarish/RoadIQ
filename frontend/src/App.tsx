@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import './App.css'
 import { DashboardCharts } from './components/DashboardCharts'
 import { ImageReportPanel } from './components/ImageReportPanel'
@@ -6,6 +6,7 @@ import { ModeAssessmentPanel } from './components/ModeAssessmentPanel'
 import { SegmentMap } from './components/SegmentMap'
 import { demoRoadRecords, getOverlayValue, overlayLabel, scoreTone, travelModes, type DemoRoadRecord, type OverlayKey } from './data/demoRoadSegments'
 import { fetchHealth } from './lib/api'
+import { filterRoadRecords, rankRoadRecords, selectVisibleRecord } from './lib/roadSegments'
 import type { QualityLabel, RoadSegment, TravelMode } from './types/road-segment'
 
 type DashboardView = 'everyday' | 'engineer'
@@ -97,28 +98,11 @@ function App() {
   }, [])
 
   const filteredRecords = useMemo(() => {
-    const query = search.trim().toLocaleLowerCase()
-    return demoRoadRecords.filter((record) => {
-      const matchesSearch = !query
-        || record.roadName.toLocaleLowerCase().includes(query)
-        || record.segment.segment_id.toLocaleLowerCase().includes(query)
-      const matchesQuality = qualityFilter === 'all'
-        || (qualityFilter === 'unrated' ? record.segment.assessment_status === 'unrated' : record.segment.quality_label === qualityFilter)
-      const value = getOverlayValue(record, overlay)
-      const matchesMinimum = minimumScore === 'all' || (value !== null && value >= Number(minimumScore))
-      return matchesSearch && matchesQuality && matchesMinimum
-    })
+    return filterRoadRecords(demoRoadRecords, { search, quality: qualityFilter, minimumScore, overlay })
   }, [search, qualityFilter, minimumScore, overlay])
 
-  const selectedRecord = filteredRecords.find((record) => record.segment.segment_id === selectedId) ?? filteredRecords[0]
-  const rankedRecords = [...filteredRecords].sort((left, right) => {
-    const leftValue = getOverlayValue(left, overlay)
-    const rightValue = getOverlayValue(right, overlay)
-    if (leftValue === null && rightValue === null) return left.roadName.localeCompare(right.roadName)
-    if (leftValue === null) return 1
-    if (rightValue === null) return -1
-    return rightValue - leftValue
-  })
+  const selectedRecord = selectVisibleRecord(filteredRecords, selectedId)
+  const rankedRecords = useMemo(() => rankRoadRecords(filteredRecords, overlay), [filteredRecords, overlay])
   const ratedRecords = filteredRecords.filter((record) => record.segment.surface_quality_score !== null)
   const averageQuality = ratedRecords.length > 0
     ? Math.round(ratedRecords.reduce((sum, record) => sum + (record.segment.surface_quality_score ?? 0), 0) / ratedRecords.length)
@@ -138,7 +122,7 @@ function App() {
         { label: 'Evidence coverage', value: 'Unavailable', detail: 'No live survey feed connected', icon: '◌', tone: 'metric-muted' },
       ]
 
-  const chooseSegment = (segmentId: string) => setSelectedId(segmentId)
+  const chooseSegment = useCallback((segmentId: string) => setSelectedId(segmentId), [])
 
   return (
     <main className={`app-shell ${view === 'engineer' ? 'engineer-view' : 'everyday-view'}`}>
@@ -174,11 +158,11 @@ function App() {
         </section>
 
         <div className="sticky-assessment-controls" role="region" aria-label="Dashboard controls">
-          <div className="sticky-controls-label"><span>Explore by travel mode</span><span>Switch view</span></div>
+          <div className="sticky-controls-label"><span>Map overlay</span><span>Switch view</span></div>
           <div className="sticky-controls-row">
-            <div className="overlay-switch" role="group" aria-label="Travel profile">
+            <div className="overlay-switch" role="group" aria-label="Map overlay">
               {travelModes.map((mode) => (
-                <button type="button" key={mode.key} className={profileMode === mode.key ? 'active' : ''} aria-pressed={profileMode === mode.key} onClick={() => { setOverlay(mode.key); setProfileMode(mode.key) }}><span aria-hidden="true">{mode.icon}</span>{mode.label}</button>
+                <button type="button" key={mode.key} className={overlay === mode.key ? 'active' : ''} aria-pressed={overlay === mode.key} onClick={() => { setOverlay(mode.key); setProfileMode(mode.key) }}><span aria-hidden="true">{mode.icon}</span>{mode.label}</button>
               ))}
               <button type="button" className={`surface-mode-button ${overlay === 'surface_quality_score' ? 'surface-active' : ''}`} aria-pressed={overlay === 'surface_quality_score'} onClick={() => setOverlay('surface_quality_score')}>Surface quality</button>
             </div>
