@@ -1,0 +1,233 @@
+{
+  "selection": "Eight largest per-image FP+FN at fixed confidence .25 / source-box IoU .5; full 993 holdout retained, no tuning.",
+  "review_scope": "Four retained worst-case predicted-box previews plus the deterministic damaged/challenge images inspected; visual interpretation is not independent field annotation.",
+  "worst_cases": [
+    {
+      "image_id": "India_002020",
+      "state": "defects_detected",
+      "source_matching": {
+        "longitudinal_crack": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "transverse_crack": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "alligator_crack": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "pothole": {
+          "tp": 0,
+          "fp": 2,
+          "fn": 8
+        }
+      },
+      "qualitative_review": "Large merged/unmatched boxes over distressed pavement; 0 source-matched potholes, 2 FP, 8 FN.",
+      "local_artifact_directory": "artifacts/genuine-demo/error-example-1"
+    },
+    {
+      "image_id": "India_009171",
+      "state": "defects_detected",
+      "source_matching": {
+        "longitudinal_crack": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "transverse_crack": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "alligator_crack": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "pothole": {
+          "tp": 1,
+          "fp": 3,
+          "fn": 6
+        }
+      },
+      "qualitative_review": "Several small/merged candidate boxes; only 1 source-matched pothole, 3 FP, 6 FN, plus missed alligator box.",
+      "local_artifact_directory": "artifacts/genuine-demo/error-example-2"
+    },
+    {
+      "image_id": "India_003013",
+      "state": "defects_detected",
+      "source_matching": {
+        "longitudinal_crack": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "transverse_crack": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "alligator_crack": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "pothole": {
+          "tp": 2,
+          "fp": 4,
+          "fn": 6
+        }
+      },
+      "qualitative_review": null,
+      "local_artifact_directory": "artifacts/genuine-demo/error-example-3"
+    },
+    {
+      "image_id": "India_004028",
+      "state": "defects_detected",
+      "source_matching": {
+        "longitudinal_crack": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "transverse_crack": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "alligator_crack": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "pothole": {
+          "tp": 1,
+          "fp": 2,
+          "fn": 6
+        }
+      },
+      "qualitative_review": null,
+      "local_artifact_directory": "artifacts/genuine-demo/error-example-4"
+    },
+    {
+      "image_id": "India_004755",
+      "state": "no_defect_detected",
+      "source_matching": {
+        "longitudinal_crack": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 3
+        },
+        "transverse_crack": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "alligator_crack": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "pothole": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 4
+        }
+      },
+      "qualitative_review": "Visible patch/crack distress, no candidates; 8 source boxes missed across supported classes.",
+      "local_artifact_directory": "artifacts/genuine-demo/error-example-5"
+    },
+    {
+      "image_id": "India_006274",
+      "state": "defects_detected",
+      "source_matching": {
+        "longitudinal_crack": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 2
+        },
+        "transverse_crack": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "alligator_crack": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 2
+        },
+        "pothole": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 4
+        }
+      },
+      "qualitative_review": null,
+      "local_artifact_directory": "artifacts/genuine-demo/error-example-6"
+    },
+    {
+      "image_id": "India_009856",
+      "state": "no_defect_detected",
+      "source_matching": {
+        "longitudinal_crack": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "transverse_crack": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "alligator_crack": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "pothole": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 8
+        }
+      },
+      "qualitative_review": "Visible distressed pavement and shadows, no candidates; all 8 source pothole boxes missed.",
+      "local_artifact_directory": "artifacts/genuine-demo/error-example-7"
+    },
+    {
+      "image_id": "India_000209",
+      "state": "defects_detected",
+      "source_matching": {
+        "longitudinal_crack": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "transverse_crack": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "alligator_crack": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "pothole": {
+          "tp": 1,
+          "fp": 2,
+          "fn": 5
+        }
+      },
+      "qualitative_review": null,
+      "local_artifact_directory": "artifacts/genuine-demo/error-example-8"
+    }
+  ],
+  "positive_demo": "India_006160, alligator TP=1 and pothole FN=1; selected by fixed demo rule, not a perfect-success case.",
+  "empty_label_challenge": "India_001993; no source boxes, no model candidates; no healthy-road claim.",
+  "rights": "RDD2022 India, Arya et al.; CC BY 4.0; source https://figshare.com/articles/dataset/21431547; model-box overlays are modifications."
+}

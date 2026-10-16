@@ -29,6 +29,15 @@ def test_no_detection_is_never_a_good_grade():
     assert "healthy" in result.summary
 
 
+def test_known_detector_validation_is_disclosed_without_becoming_condition_confidence():
+    report = observation()
+    report["model"]["checkpoint"] = {"heldout_evaluation": {"images": 993, "map50": .1376441299, "map50_95": .0544858997}}
+    result = assess_visual_distress(report)
+    assert any("AP50 0.138, AP50-95 0.054 on 993" in reason for reason in result.reliability_reasons)
+    assert result.status == "no_defect_detected"
+    assert result.confidence is None and result.score is None and result.grade is None
+
+
 @pytest.mark.parametrize("loaded", [False, True])
 def test_unusable_image_does_not_get_zero_defects(loaded):
     result = assess_visual_distress(observation(usable=False, loaded=loaded))

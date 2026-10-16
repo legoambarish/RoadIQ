@@ -1,0 +1,193 @@
+{
+  "version": "real-http-pipeline-benchmark-v1",
+  "images": 993,
+  "sampling": "full frozen labelled holdout, shuffled seed 20261016; no tuning",
+  "full_labelled_holdout": true,
+  "device": "cpu",
+  "python": "3.12.3",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "processor": "AMD64 Family 25 Model 68 Stepping 1, AuthenticAMD",
+  "manifest_sha256": "1db2111619e93e059ec0ce20db5965ab895d40c9316c99124f624293c1cc9bcf",
+  "model_load_ms": 1965.56,
+  "first_request_ms": 3079.848,
+  "warm_requests": 993,
+  "latency_ms": {
+    "min": 301.352,
+    "p50": 574.053,
+    "p90": 602.57,
+    "p95": 611.3724,
+    "max": 1058.713
+  },
+  "http_failures": 0,
+  "inference_failures": 0,
+  "status_counts": {
+    "no_defect_detected": 693,
+    "defects_detected": 153,
+    "low_confidence": 147
+  },
+  "per_class_fixed_conf25_iou50": {
+    "longitudinal_crack": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 204,
+      "precision": null,
+      "recall": 0.0
+    },
+    "transverse_crack": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 15,
+      "precision": null,
+      "recall": 0.0
+    },
+    "alligator_crack": {
+      "tp": 77,
+      "fp": 34,
+      "fn": 188,
+      "precision": 0.6936936936936937,
+      "recall": 0.29056603773584905
+    },
+    "pothole": {
+      "tp": 50,
+      "fp": 65,
+      "fn": 378,
+      "precision": 0.43478260869565216,
+      "recall": 0.11682242990654206
+    }
+  },
+  "matching_policy": "Class-specific descending-score greedy IoU >= .5, unique source-box matches; runtime confidence .25/NMS .5. Quality abstentions count as misses for source boxes.",
+  "conditional_group_bootstrap_95ci": {
+    "status": "computed",
+    "source_block_groups": 14,
+    "replicates": 1000,
+    "seed": 20261016,
+    "interval": "2.5 and 97.5 percentile cluster-bootstrap interval",
+    "per_class": {
+      "longitudinal_crack": {
+        "precision": {
+          "low": null,
+          "high": null,
+          "defined_replicates": 0
+        },
+        "recall": {
+          "low": 0.0,
+          "high": 0.0,
+          "defined_replicates": 1000
+        }
+      },
+      "transverse_crack": {
+        "precision": {
+          "low": null,
+          "high": null,
+          "defined_replicates": 0
+        },
+        "recall": {
+          "low": 0.0,
+          "high": 0.0,
+          "defined_replicates": 1000
+        }
+      },
+      "alligator_crack": {
+        "precision": {
+          "low": 0.5984235833225765,
+          "high": 0.7944097594607017,
+          "defined_replicates": 1000
+        },
+        "recall": {
+          "low": 0.23274489861810668,
+          "high": 0.35686974789915965,
+          "defined_replicates": 1000
+        }
+      },
+      "pothole": {
+        "precision": {
+          "low": 0.36065097216927183,
+          "high": 0.5112803315105946,
+          "defined_replicates": 1000
+        },
+        "recall": {
+          "low": 0.08997212674388377,
+          "high": 0.14894499344559844,
+          "defined_replicates": 1000
+        }
+      }
+    },
+    "limitation": "Conditional on this dataset and source-block grouping. Unknown route/session dependence, annotation errors and deployment shift are not captured. These intervals are not road percentile ranks."
+  },
+  "source_empty_label_challenges": {
+    "images": 569,
+    "with_candidate_predictions": 13,
+    "meaning": "Unmatched source-box stress cases, not independently verified healthy negatives."
+  },
+  "examples": [
+    {
+      "name": "damaged-source-image",
+      "source_image_id": "India_006160",
+      "image_sha256": "86a2f5453809cab51b2e980e6d2bd71769478474af46aec2464f797826cb7629",
+      "source": "RDD2022 India",
+      "rights": {
+        "license": "CC-BY-4.0",
+        "source": "https://figshare.com/articles/dataset/21431547"
+      },
+      "split": "test",
+      "scene_group": "india-numeric-block-00061",
+      "report_path": "damaged-source-image/analysis.json",
+      "input_path": "damaged-source-image/India_006160.jpg",
+      "supported_source_boxes": 2,
+      "status": "defects_detected"
+    },
+    {
+      "name": "no-supported-source-boxes-challenge",
+      "source_image_id": "India_001993",
+      "image_sha256": "829e7338b45929496fb32fe6ee31bf5f483fb08049c5e2c85288b4b27bb05361",
+      "source": "RDD2022 India",
+      "rights": {
+        "license": "CC-BY-4.0",
+        "source": "https://figshare.com/articles/dataset/21431547"
+      },
+      "split": "test",
+      "scene_group": "india-numeric-block-00019",
+      "report_path": "no-supported-source-boxes-challenge/analysis.json",
+      "input_path": "no-supported-source-boxes-challenge/India_001993.jpg",
+      "supported_source_boxes": 0,
+      "status": "no_defect_detected"
+    }
+  ],
+  "quality_controls": [
+    {
+      "name": "black_synthetic_control",
+      "status": "unusable",
+      "rsqi": null,
+      "quality_issues": [
+        "severely_underexposed",
+        "very_low_edge_detail_possible_blur_or_uniform_surface",
+        "substantial_shadow_or_dark_pixels"
+      ],
+      "not_a_road_accuracy_benchmark": true
+    },
+    {
+      "name": "low_resolution_control",
+      "status": "unusable",
+      "rsqi": null,
+      "quality_issues": [
+        "effective_resolution_below_minimum"
+      ],
+      "not_a_road_accuracy_benchmark": true
+    },
+    {
+      "name": "blur_transform_challenge",
+      "status": "low_confidence",
+      "rsqi": null,
+      "quality_issues": [
+        "very_low_edge_detail_possible_blur_or_uniform_surface"
+      ],
+      "not_a_road_accuracy_benchmark": true
+    }
+  ],
+  "limitations": [
+    "TestClient exercises genuine HTTP routing/models, excludes browser rendering and network transport.",
+    "Fixed-threshold source-box matching is not AP or field severity accuracy; confidence-sweep mAP is reported separately.",
+    "Quality transforms test known controls, not real field rejection sensitivity/specificity.",
+    "No field calibration, physical MAE or independent severity/healthy labels."
+  ]
+}

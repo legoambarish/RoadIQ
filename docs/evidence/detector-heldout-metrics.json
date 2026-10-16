@@ -1,0 +1,56 @@
+{
+  "dataset_split": "frozen_grouped_labelled_test",
+  "images": 993,
+  "manifest_sha256": "1db2111619e93e059ec0ce20db5965ab895d40c9316c99124f624293c1cc9bcf",
+  "checkpoint_sha256": "81415db053e9635c8d66b7f5d6a8171282e69d8f125cc36e49fe3933ef2807c3",
+  "map50": 0.13764412985293006,
+  "map50_95": 0.05448589965007953,
+  "precision": 0.47561925705264246,
+  "recall": 0.1761173548946999,
+  "per_class": [
+    {
+      "class": "longitudinal_crack",
+      "precision": 0.3472072597792953,
+      "recall": 0.0196078431372549,
+      "ap50": 0.060468509189541664,
+      "ap50_95": 0.02054188700583531
+    },
+    {
+      "class": "transverse_crack",
+      "precision": 1.0,
+      "recall": 0.0,
+      "ap50": 0.0,
+      "ap50_95": 0.0
+    },
+    {
+      "class": "alligator_crack",
+      "precision": 0.3823440193077857,
+      "recall": 0.43018867924528303,
+      "ap50": 0.35319221639381304,
+      "ap50_95": 0.15257483879655354
+    },
+    {
+      "class": "pothole",
+      "precision": 0.172925749123489,
+      "recall": 0.2546728971962617,
+      "ap50": 0.13691579382836552,
+      "ap50_95": 0.04482687279792925
+    }
+  ],
+  "speed_ms_per_image": {
+    "preprocess": 0.46880422960311474,
+    "inference": 5.771227492453776,
+    "loss": 0.0016457200200298814,
+    "postprocess": 1.9097893252217422
+  },
+  "precision_recall_policy": "Ultralytics validation max-mean-F1 confidence, IoU=0.5; AP integrates confidence sweep",
+  "deployment_threshold": 0.25,
+  "calibrated_confidence": false,
+  "limitations": [
+    "No verified route/session metadata; scene separation heuristic, residual leakage possible.",
+    "Excluding later-split near neighbors can alter the evaluation distribution; dHash is not semantic/route identity.",
+    "Published boxes structurally checked; labels not exhaustively independently reannotated.",
+    "Official unlabelled test images excluded; empty supported boxes are not healthy labels."
+  ],
+  "evaluated_utc": "2026-10-16T12:43:38Z"
+}

@@ -47,6 +47,12 @@ def assess_visual_distress(report: dict[str, Any]) -> VisualDistressAssessment:
     reasons = ["Raw detector scores are not calibrated detection probabilities or assessment reliability.",
                "Material, occlusion and viewpoint support are not independently validated.",
                "Condition/severity labels and field measurements are absent; no engineering grade is assigned."]
+    checkpoint = model.get("checkpoint")
+    evaluation = checkpoint.get("heldout_evaluation") if isinstance(checkpoint, dict) else None
+    if isinstance(evaluation, dict) and all(type(evaluation.get(key)) in (int, float) and 0 <= evaluation[key] <= 1
+                                           for key in ("map50", "map50_95")):
+        reasons.append(f"Source-heldout detector AP50 {evaluation['map50']:.3f}, AP50-95 {evaluation['map50_95']:.3f} "
+                       f"on {evaluation.get('images', 'unknown')} images. These dataset-specific results do not establish field or condition accuracy; missed and false candidates require inspection.")
     pavement = report.get("pavement_region") or {}
     roi_fraction = (pavement.get("usable_area_ratio") or {}).get("value")
     roi_warning = isinstance(roi_fraction, (float, int)) and 0 <= roi_fraction < .1

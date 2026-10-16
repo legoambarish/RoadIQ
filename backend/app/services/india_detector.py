@@ -88,7 +88,9 @@ class IndiaRoadDamageDetector:
         self.model_version = metadata["model_version"]
         self.checkpoint_metadata = {"sha256": digest, "manifest_sha256": metadata["manifest_sha256"],
                                     "training_country": "India", "license": "AGPL-3.0",
-                                    "dataset_license": "CC-BY-4.0", "pretrained": False}
+                                    "dataset_license": "CC-BY-4.0", "pretrained": False,
+                                    "heldout_evaluation": {key: metadata["heldout_evaluation"].get(key) for key in
+                                        ("dataset_split", "images", "map50", "map50_95", "manifest_sha256", "checkpoint_sha256")}}
         self.runtime_metadata = {"device": device, "letterbox_reversed_by": "ultralytics_orig_shape",
                                  "coordinate_system": "EXIF-oriented source image pixels", "tile_size": tile_size,
                                  "confidence_calibrated": False, "nms_iou": 0.5, "max_detections_per_view": 300}

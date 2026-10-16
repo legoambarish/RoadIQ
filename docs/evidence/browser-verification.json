@@ -1,0 +1,125 @@
+{
+  "verified_utc": "2026-10-16T13:00:49.371672+00:00",
+  "browser": "Codex in-app Chromium, normal 1280x720 viewport; no override or phone test",
+  "genuine_positive": {
+    "image_id": "India_006160",
+    "state": "defects_detected",
+    "candidate_classes": {
+      "alligator_crack": 1
+    },
+    "source_sha256": "86a2f5453809cab51b2e980e6d2bd71769478474af46aec2464f797826cb7629",
+    "actual_source_evaluation": "alligator TP=1, missed pothole FN=1; not a perfect-success example"
+  },
+  "everyday_verified": [
+    "actual image and dashed candidate overlay",
+    "localized caution flags",
+    "physical/percentile unavailable",
+    "failed experimental pothole IoU visible",
+    "legacy RSQI Unrated"
+  ],
+  "engineer_verified": [
+    "raw score .7343 explicitly uncalibrated",
+    "source box 171.0,443.8,720.0,627.4; box extent is not crack width",
+    "source-heldout detector AP50 .138 / AP50-95 .054 displayed",
+    "experimental road/pothole RLE overlay",
+    "source-image letterbox padding [112,0,112,0]",
+    "overlay source rect and canvas centering checked against downloaded backend JSON"
+  ],
+  "qualitative_mask_failure": "Green road predictions visibly extend into sky/clouds and amber pothole predictions appear near vegetation on this RDD upload. No source mask truth exists for RDD; this is qualitative failure evidence, not a new IoU score. Overlay is optional/off by default and measurements remain experimental.",
+  "empty_label_challenge": {
+    "image_id": "India_001993",
+    "state": "no_defect_detected",
+    "visible_explanation": "Does not establish intact or healthy pavement."
+  },
+  "unsuitable_control": {
+    "input": "black_synthetic_control.png",
+    "state": "unusable",
+    "grade": null,
+    "scope": "Synthetic plumbing control, not road-accuracy evidence."
+  },
+  "json_download": {
+    "sha256": "39e581891dde5361ac158d78dccedd5d0305e3bfcef3fb245e3d5c56d163983f",
+    "verified": "source hash, model hash, actual counts, null RSQI/percentile and preprocessing; no frontend rescoring"
+  },
+  "console_errors_or_warnings_observed": [],
+  "layout": {
+    "elements": [
+      {
+        "aria": null,
+        "box": {
+          "height": 320,
+          "width": 417.015625,
+          "x": 63,
+          "y": -363.5
+        },
+        "height": null,
+        "tag": "IMG",
+        "viewBox": null,
+        "width": null
+      },
+      {
+        "aria": "Model predicted defect boxes; not ground truth",
+        "box": {
+          "height": 320,
+          "width": 417.015625,
+          "x": 63,
+          "y": -363.5
+        },
+        "height": null,
+        "tag": "svg",
+        "viewBox": "0 0 720 720",
+        "width": null
+      },
+      {
+        "aria": "Experimental predicted road mask; not ground truth",
+        "box": {
+          "height": 320,
+          "width": 320,
+          "x": 111.5,
+          "y": -363.5
+        },
+        "height": "720",
+        "tag": "CANVAS",
+        "viewBox": null,
+        "width": "720"
+      },
+      {
+        "aria": "Experimental predicted pothole mask; not ground truth",
+        "box": {
+          "height": 320,
+          "width": 320,
+          "x": 111.5,
+          "y": -363.5
+        },
+        "height": "720",
+        "tag": "CANVAS",
+        "viewBox": null,
+        "width": "720"
+      }
+    ],
+    "rects": [
+      {
+        "height": "183.57525634765625",
+        "width": "549.0112609863281",
+        "x": "170.98873901367188",
+        "y": "443.81536865234375"
+      }
+    ],
+    "viewport": {
+      "documentWidth": 1265,
+      "height": 720,
+      "width": 1280
+    }
+  },
+  "screenshots": [
+    "everyday-genuine-detection.jpg",
+    "engineer-genuine-masks.jpg",
+    "engineer-reliability-limits.jpg",
+    "no-supported-source-boxes-challenge.jpg",
+    "unsuitable-synthetic-control.jpg"
+  ],
+  "scope_limits": [
+    "No mobile/device/camera test.",
+    "Visual UI checks and geometry comparison do not validate mask accuracy, field severity, physical dimensions or road safety."
+  ]
+}

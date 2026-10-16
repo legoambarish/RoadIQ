@@ -4,18 +4,18 @@ RoadIQ is an image-based visible pavement-distress research prototype. The curre
 
 ## India-only implementation handoff
 
-See [training, genuine demo and startup](docs/TRAINING_AND_DEMO.md), [dataset/rights ledger](docs/DATASET_AND_RIGHTS_REGISTER.md), [measurement contract](docs/MEASUREMENT_AND_SCORING_SPEC.md), [model card](docs/MODEL_CARD.md) and [actual validation report](docs/VALIDATION_REPORT.md). Model experiments and final end-to-end verification are in progress on `feat/india-p0-implementation`; no final model-performance claim is made by this progress commit.
+See [training, genuine demo and startup](docs/TRAINING_AND_DEMO.md), [dataset/rights ledger](docs/DATASET_AND_RIGHTS_REGISTER.md), [measurement contract](docs/MEASUREMENT_AND_SCORING_SPEC.md), [model card](docs/MODEL_CARD.md) and [actual validation report](docs/VALIDATION_REPORT.md). The implementation on `feat/india-p0-implementation` is **PARTIALLY VERIFIED**: genuine training, heldout evaluation, HTTP and browser flows work, but detector accuracy is weak and mask measurement quality fails. Detector AP50 is .137644 / AP50–95 .054486; source-resolution pothole-mask IoU is zero. This is an experimental candidate-inspection tool, not a dependable road-condition assessment.
 
 The new VDA reports supported candidate classes/counts and localized caution flags. It assigns no arbitrary grade. RSQI remains Unrated and percentile/physical dimensions remain null because the required evidence does not exist. Raw model scores are explicitly uncalibrated.
 
 ## Current status
 - Frontend: React + TypeScript + Vite dashboard with an interactive Leaflet/OpenStreetMap map, five illustrative travel-profile overlays, filters, rankings, charts, distinct Everyday/Engineer assessment views, local image preview, manual Task C CLI report import, and image upload to the local analysis API
 - Backend: FastAPI + Pydantic with health and image-analysis routes
-- Computer vision: the existing image/texture service is extended with a local India-only YOLO adapter, versioned compact U-Net experiments, verified checkpoint provenance/readiness, source-coordinate boxes, optional tiles/NMS, and semantic mask geometry. Genuine training/evaluation is underway; no pretrained multinational or COCO weights are used. Individual aggregate/metal analysis remains unavailable.
+- Computer vision: the existing image/texture service is extended with a local India-only YOLO adapter, versioned compact U-Net experiments, verified checkpoint provenance/readiness, source-coordinate boxes, optional tiles/NMS, and experimental semantic mask geometry. Scratch detector training completed 30 epochs; two ROI experiments completed 15 epochs each. No pretrained multinational or COCO weights are used. Known weak detector AP and failed mask IoU are disclosed in live reliability details. Individual aggregate/metal analysis remains unavailable.
 - Scoring: deterministic provisional RSQI scorer exists in `backend/app/services/scoring.py`; default normalization references are intentionally empty, so results remain `unrated` until fixed surface-type/capture-specific references and adequate component evidence are supplied. Weights and label cutoffs are unvalidated hypotheses.
 - Dataset/evaluation: RDD2022 India and e-Yantra Indian Roads are acquired and frozen with explicit rights, per-file hashes, scene/duplicate controls and genuine labelled holdouts. Current results are recorded in the model card/validation report. Historical ACAD synthetic-concrete texture measurements do not measure Indian-road defect accuracy or individual stones.
 - Mapping: the Leaflet/OpenStreetMap map is restricted to the OSM-mapped India boundary and opens on nine mapped streets in central Bengaluru. Street names/geometries come from OpenStreetMap; RoadIQ scores and travel-profile values remain illustrative fixtures, not surveys of those streets. Tiles require network access.
-- Testing: backend pytest checks include image-validation and inference-wrapper cases; frontend build/type validation remains available
+- Testing: 138 backend tests passed (136 unit + 2 genuine-model integration), as did 13 frontend tests, lint and TypeScript/Vite build. The full 993-image CPU API benchmark returned zero HTTP/inference failures, median 574 ms / p95 611 ms. At the fixed application threshold, longitudinal/transverse recall is zero and pothole recall is .116822; working software is separate from useful accuracy. Browser and Windows evidence/scope are in the validation report.
 
 ## Repository structure
 - `frontend/` — Vite React + TypeScript application
@@ -133,13 +133,15 @@ PYTHONPATH=backend python -m scripts.demo_road_image --output-dir /tmp/roadiq-de
 
 Open `/tmp/roadiq-demo/annotated-preview.jpg` to see the high-frequency texture candidates. `/tmp/roadiq-demo/analysis-report.json` labels the method as an untrained baseline and keeps particle counts, physical measurements, confidence, and RSQI unavailable/unrated. Synthetic output validates the demo plumbing only; it is not evidence of real-world model performance. To analyze a local road image with the same one-command flow, add `--image /path/to/road.jpg`; it writes only the annotation and report to the output directory and does not upload the image.
 
-If an experimental India-road semantic checkpoint is available, set `ROADIQ_SEGMENTATION_MODEL_PATH=/path/to/checkpoint.pt` (and optionally `ROADIQ_SEGMENTATION_DEVICE=cpu`) before running the demo. The predicted road mask then gates the texture candidates and the report/preview label this behavior. The optional checkpoint is not bundled or configured by default; its road predictions are uncalibrated and do not turn texture into aggregate segmentation.
+For this preserved CLI, set `ROADIQ_SEGMENTATION_MODEL_PATH=/path/to/checkpoint.pt` (and optionally `ROADIQ_SEGMENTATION_DEVICE=cpu`) to enable an experimental India-road semantic checkpoint. Its predicted road mask then gates texture candidates and the report/preview label this behavior. The separate model-enabled desktop build described above embeds the evaluated experimental assets. Their predictions are uncalibrated, measured mask quality fails, and texture does not become aggregate segmentation.
 
 ## API status
 The initial backend exposes a versioned health endpoint:
 - `GET /api/v1/health`
 
 The endpoint returns a simple status payload and intentionally avoids external dependencies, model downloads, or network calls.
+
+`GET /api/v1/vision-readiness` actually checks configured local checkpoints separately from liveness; successful loading is not an accuracy certification. The additive image contract is `image-analysis-v1.1` with separate VDA, source geometry, model provenance and explicit unknowns.
 
 Road-segment retrieval is planned and not implemented. `POST /api/v1/image-analyses` connects Task C observations to Task A's scorer. Task C's service does not calculate scores; the integrated endpoint returns Unrated because the required evidence and default normalization references are unavailable. See [`docs/API_CONTRACT.md`](docs/API_CONTRACT.md) for the implemented response and limitations.
 

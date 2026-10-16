@@ -1,0 +1,109 @@
+{
+  "status": "passed",
+  "executable_sha256": "7027b04b7ba850af0a8345ed22727fd2371ba528230f1d8e8cb24926a7fb8734",
+  "executable_bytes": 281615820,
+  "models_required": true,
+  "python_and_node_on_child_path": false,
+  "dashboard_http": 200,
+  "standalone_no_source_checkout": true,
+  "vision_readiness": {
+    "ready": true,
+    "detector": {
+      "status": "loaded",
+      "model_version": "india-yolo11n-scratch-v1",
+      "checkpoint": {
+        "sha256": "81415db053e9635c8d66b7f5d6a8171282e69d8f125cc36e49fe3933ef2807c3",
+        "manifest_sha256": "1db2111619e93e059ec0ce20db5965ab895d40c9316c99124f624293c1cc9bcf",
+        "training_country": "India",
+        "license": "AGPL-3.0",
+        "dataset_license": "CC-BY-4.0",
+        "pretrained": false,
+        "heldout_evaluation": {
+          "dataset_split": "frozen_grouped_labelled_test",
+          "images": 993,
+          "map50": 0.13764412985293006,
+          "map50_95": 0.05448589965007953,
+          "manifest_sha256": "1db2111619e93e059ec0ce20db5965ab895d40c9316c99124f624293c1cc9bcf",
+          "checkpoint_sha256": "81415db053e9635c8d66b7f5d6a8171282e69d8f125cc36e49fe3933ef2807c3"
+        }
+      },
+      "confidence_calibrated": false
+    },
+    "roi": {
+      "status": "loaded",
+      "model_version": "indian-roads-unet-v3-letterbox-v1",
+      "checkpoint": {
+        "model_version": "indian-roads-unet-v3-letterbox-v1",
+        "training_country": "India",
+        "pretrained_weights_used": false,
+        "selected_epoch": 14,
+        "sha256": "a511f40ad30325f5165008f94af8bced0b39d3ccd08a0b9891973bceb1a542e5",
+        "heldout_evaluation": {
+          "images": 350,
+          "evaluation_split": "untouched_source_validation_sequence_reserved_as_test",
+          "metrics_at_model_input_resolution": {
+            "iou_by_class": {
+              "road": 0.5124692879044066,
+              "footpath": 0.2182314445366382,
+              "shallow": 0.00616979727330007,
+              "pothole": 0.0,
+              "background_unobserved": 0.3912717049962995
+            },
+            "dice_by_class": {
+              "road": 0.6776590995966014,
+              "footpath": 0.3582758358690107,
+              "shallow": 0.012263928593404607,
+              "pothole": 0.0,
+              "background_unobserved": 0.5624662725349399
+            },
+            "macro_iou": 0.2256284469421289,
+            "confusion_matrix_rows_true_columns_predicted": [
+              [
+                20690516,
+                1202503,
+                7653068,
+                23727,
+                8574014
+              ],
+              [
+                1392801,
+                1188282,
+                130862,
+                26675,
+                628937
+              ],
+              [
+                154438,
+                80916,
+                55208,
+                2988,
+                1042
+              ],
+              [
+                1955,
+                4135,
+                83,
+                0,
+                43
+              ],
+              [
+                681136,
+                789943,
+                869501,
+                22100,
+                7434727
+              ]
+            ]
+          }
+        }
+      },
+      "confidence_calibrated": false
+    }
+  },
+  "upload_http": 200,
+  "upload_ms": 3246.1,
+  "source_image_sha256": "86a2f5453809cab51b2e980e6d2bd71769478474af46aec2464f797826cb7629",
+  "graceful_owned_relaunch": true,
+  "graceful_test_shutdown": true,
+  "total_seconds": 28.82
+}

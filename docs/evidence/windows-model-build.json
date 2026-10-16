@@ -1,0 +1,33 @@
+{
+  "build": "scripts/build_windows.ps1 -PythonPath .venv-package/Scripts/python.exe -IncludeModels",
+  "cpu_only_torch": "2.9.1+cpu",
+  "torchvision": "0.24.1+cpu",
+  "python": "3.12.3",
+  "node": "24.22.0",
+  "pyinstaller": "6.22.3",
+  "contrib_hooks": "2026.8",
+  "pyinstaller_reported_seconds": 420.83,
+  "executable_bytes": 281615820,
+  "executable_sha256": "7027b04b7ba850af0a8345ed22727fd2371ba528230f1d8e8cb24926a7fb8734",
+  "local_build_log_sha256": "af8456a585df9b32bd50ac17604cdea9feca5612ee1064cd96737bc5359c4e20",
+  "embedded_assets": [
+    "evaluated detector.pt and detector.json",
+    "evaluated roi.pt and roi-evaluation.json",
+    "built frontend",
+    "MODEL_CARD.md and DATASET_AND_RIGHTS_REGISTER.md",
+    "framework metadata/licence files via PyInstaller hooks/copy_metadata"
+  ],
+  "source_datasets_bundled": false,
+  "cuda_training_dlls_bundled": false,
+  "warnings": [
+    "WARNING \u001b[31m\u001b[1mrequirements:\u001b[0m Ultralytics requirement ['lap>=0.5.12'] not found, AutoUpdate disabled by YOLO_AUTOINSTALL=False",
+    "1905 WARNING: Failed to collect submodules for 'ultralytics.trackers' because importing 'ultralytics.trackers' raised: ModuleNotFoundError: No module named 'lap'",
+    "1763 WARNING: Failed to collect submodules for 'torch.utils.tensorboard' because importing 'torch.utils.tensorboard' raised: ModuleNotFoundError: No module named 'tensorboard'",
+    "276539 WARNING: Hidden import \"tzdata\" not found!",
+    "293642 WARNING: Ignoring /usr/lib64/libgomp.so.1 imported from [repository]\\.venv-package\\Lib\\site-packages\\torch\\_inductor\\codecache.py - only basenames are supported with ctypes imports!",
+    "WARNING \u001b[31m\u001b[1mrequirements:\u001b[0m Ultralytics requirement ['lap>=0.5.12'] not found, AutoUpdate disabled by YOLO_AUTOINSTALL=False"
+  ],
+  "warning_scope": "Missing optional lap tracker support; no tracker feature is claimed. Any other optional-import/build warning is retained verbatim with repository paths normalized. Actual selected detection/ROI route and owned lifecycle passed outside checkout.",
+  "runtime_result": "windows-model-smoke.json",
+  "clean_vm_or_other_windows_versions_tested": false
+}

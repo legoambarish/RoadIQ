@@ -1,0 +1,10 @@
+{
+  "selected_validation_epoch_from_csv": 29,
+  "validation_map50_95": 0.05988,
+  "fitness_policy": "Pinned Ultralytics Metric.fitness weights [0,0,0,1]; validation mAP50-95 only",
+  "completed_epochs": 30,
+  "export_matches_saved_best": true,
+  "checkpoint_sha256": "81415db053e9635c8d66b7f5d6a8171282e69d8f125cc36e49fe3933ef2807c3",
+  "optional_independent_faster_coco_eval": "Not installed; AutoUpdate disabled. Framework internal AP completed; separate faster-coco-eval pass not run.",
+  "note": "No test-based selection, tuning or retraining."
+}

@@ -17,10 +17,12 @@ Executed baseline: `PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/Scripts/python -m pyt
 
 Execution checklist:
 - [x] Read handoff, inspect source/docs/workflow, reconcile owner scope, run baseline.
-- [ ] Verify primary rights/class map; prepare and freeze India-only split with duplicate audit.
-- [ ] Actually train and evaluate a detector; record failures and limitations.
-- [ ] Integrate checkpoint, quality/provenance, dimensionally correct observations and separate VDA.
-- [ ] Verify upload/report, regression tests, real-model evaluation/demo; document actual outcomes.
-- [ ] Consider P1 only against its real-data acceptance gates, commit and submit review PR.
+- [x] Verify primary rights/class map; prepare and freeze India-only split with duplicate audit.
+- [x] Actually train and evaluate a detector; record failures and limitations.
+- [x] Integrate checkpoint, quality/provenance, dimensionally correct observations and separate VDA.
+- [x] Verify upload/report, regression tests, real-model evaluation/demo; document actual outcomes.
+- [x] Assess P1 against its real-data gates: physical/cohort/survey inputs absent and P0 quality inadequate; defer those features, retain actual JSON export. Commit/review delivery is recorded in HANDOFF.md.
+
+These checks mean the work was executed, not that scientific quality passed. Detector AP50 .137644 / AP50–95 .054486, no fixed-.25 longitudinal/transverse predictions, native pothole-mask IoU zero and ROI overlap below a constant-road diagnostic keep the overall verdict **PARTIALLY VERIFIED**. Final tests, standalone package outcomes and remaining evidence gaps are in VALIDATION_REPORT.md.
 
 Scientific choices: boxes cannot provide damaged area, crack widths or depths; no grade trained from absent grade labels; no numeric RSQI or percentile from detector confidence. Preserve existing heuristics as explicitly experimental. Independent capture metadata and field measurements may be unavailable and must remain disclosed.

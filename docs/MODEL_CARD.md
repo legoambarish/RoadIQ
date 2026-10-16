@@ -18,11 +18,52 @@ India licence/source/attribution, ignored RDD codes, selected-member CRCs, sourc
 - Source-label review: 12 box-review cells from 11 unique RDD images and eight paired semantic examples; mapping/alignment inspection, not independent relabelling or completeness certification.
 - No new independent 80–120-image field collection, severity/healthy labels, physical reference measurements or legitimate survey GPS/time was fabricated.
 
-## Detector experiment — running
+## Detector experiment — completed
 
-The genuine `india-yolo11n-scratch-v1` run is still training at this progress snapshot. No heldout detector result is claimed here. Its frozen recipe is random YOLO11n, 640 pixels, batch 8, 30 requested epochs, seed 20261016, AdamW lr .001 / final factor .05 / decay .0005, two warmup epochs, mosaic .5 closed for the final five epochs, horizontal flip .5, no vertical flip/perspective/mixup, deterministic setting and zero loader workers. AMP is disabled to prevent the upstream pretrained-model AMP check from downloading a checkpoint. Best validation framework fitness selects the checkpoint; for the pinned Ultralytics 8.4.178 implementation, fitness is validation mAP50–95. The frozen test is not used for selection or operating-threshold tuning.
+The genuine `india-yolo11n-scratch-v1` run completed all **30 epochs**, taking 6,779.406 seconds through best-checkpoint preparation. Its frozen recipe is random YOLO11n, 640 pixels, batch 8, seed 20261016, AdamW lr .001 / final factor .05 / decay .0005, two warmup epochs, mosaic .5 closed for the final five epochs, horizontal flip .5, no vertical flip/perspective/mixup, deterministic setting and zero loader workers. AMP is disabled to prevent the upstream pretrained-model AMP check from downloading a checkpoint. Best validation framework fitness selects the checkpoint; for the pinned Ultralytics 8.4.178 implementation, fitness is validation mAP50–95. The CSV best is epoch 29 (.05988); the exported checkpoint exactly matches saved best.pt. The frozen test is not used for selection or operating-threshold tuning.
 
 The four model classes are longitudinal crack, transverse crack, alligator crack and pothole. RDD rectangles supervise boxes, not damage masks, severity or physical depth. The application threshold is fixed at .25 with class-wise NMS IoU .5, max 300 detections/view and no tiling in the deployment benchmark. Optional tiled coordinates/deduplication have algorithm tests but no established accuracy gain.
+
+### Frozen labelled detector holdout
+
+Actual evaluated checkpoint SHA-256: `81415db053e9635c8d66b7f5d6a8171282e69d8f125cc36e49fe3933ef2807c3`. All 993 test images / 912 supported source boxes were evaluated after selection.
+
+| Class | Source boxes | AP50 | AP50–95 |
+| --- | ---: | ---: | ---: |
+| Longitudinal crack | 204 | .060469 | .020542 |
+| Transverse crack | 15 | **.000000** | **.000000** |
+| Alligator crack | 265 | .353192 | .152575 |
+| Pothole | 428 | .136916 | .044827 |
+| Four-class mean | 912 | **.137644** | **.054486** |
+
+These are framework internal confidence-sweep AP metrics, not the application operating-point precision/recall or road-condition accuracy. Framework validation uses its default NMS .7; deployment uses .5. GPU validation reports 5.771 ms/image model inference (batch 8), excluding API, ROI model, image/quality/geometry work and UI; this is not end-to-end CPU latency. Exact [heldout report](evidence/detector-heldout-metrics.json), [experiment](evidence/detector-experiment.json), [all 30 epoch rows](evidence/detector-training-results.csv), [actual fit arguments](evidence/detector-fit-arguments.json) and [selection audit](evidence/detector-selection-audit.json) are retained. Only repository-absolute paths in the fit arguments are replaced with `[repository]` for publication.
+
+The actual [heldout precision–recall curve](evidence/detector-heldout-pr-curve.png) and [framework confusion plot](evidence/detector-heldout-confusion.png) are retained; they describe this confidence-sweep validator, separately from the fixed-threshold HTTP counts.
+
+The report also retains the framework's max-mean-F1 precision/recall, which are not fixed-.25 values. In particular, its transverse-crack precision entry is 1.0 while recall/AP are zero: the framework precision-curve interpolation uses a left-fill value of one above all prediction scores. This does **not** demonstrate successful transverse-crack detection. Use AP and actual fixed-threshold TP/FP/FN counts to assess the failure. The optional separate `faster-coco-eval` pass did not run because that package is absent and automatic installation is disabled; the framework's internal AP evaluation completed. No second evaluator or field accuracy is claimed.
+
+**Decision:** genuine trained candidate inference is available, but this weak source-heldout performance does not establish dependable defect detection or engineering assessment. Keep raw scores uncalibrated, no-detection distinct from healthy, and localized candidates visible. No test-driven checkpoint, threshold or architecture tuning follows this result.
+
+### Actual full CPU HTTP pipeline
+
+All **993** frozen labelled test images passed through FastAPI, image quality, both actual models, source masks/geometry, VDA and legacy scorer at confidence .25 / NMS .5, untiled, four Torch threads. All returned HTTP 200, with zero model-inference failures. Quality abstentions count as misses for source boxes. Class-specific descending-score greedy matching uses IoU >= .5 and unique truth matches.
+
+| Class | TP | FP | FN | Precision | Recall |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Longitudinal crack | 0 | 0 | 204 | Undefined | .000000 |
+| Transverse crack | 0 | 0 | 15 | Undefined | .000000 |
+| Alligator crack | 77 | 34 | 188 | .693694 | .290566 |
+| Pothole | 50 | 65 | 378 | .434783 | .116822 |
+
+Thus **neither crack class produces any predictions at the fixed application threshold**, and 88.3% of source pothole boxes are missed. This is a measured failure, not evidence that the roads are healthy. Of 569 images with no supported source boxes, 13 have candidate predictions; source-label incompleteness/ignored classes prevent calling this a certified healthy-road false-positive rate.
+
+VDA states: 693 `no_defect_detected`, 153 `defects_detected`, 147 `low_confidence`. All RSQI values and reference percentiles remain null. Black/low-resolution controls return `unusable`; the transformed blur challenge returns `low_confidence`. These controls test plumbing, not field rejection sensitivity/specificity.
+
+Conditional 1,000-replicate bootstrap intervals over 14 numeric source blocks: alligator precision [.598424, .794410], recall [.232745, .356870]; pothole precision [.360651, .511280], recall [.089972, .148945]. They describe this source/grouping only; route dependence, label error and deployment shift are not covered. Undefined crack precision stays null; no unsupported confidence is assigned to an individual request or road percentile.
+
+Actual CPU TestClient timings: model load **1,965.560 ms**, first request **3,079.848 ms**; 993 warm requests min 301.352 / median **574.053** / p90 602.570 / p95 **611.372** / max 1,058.713 ms. These include both models, quality, geometry, routing and JSON, excluding browser rendering/network transport. This complete run preceded the small addition exposing existing detector AP in report provenance/reliability; that addition does not change predictions/gates and is separately covered by final real-model/browser/package tests. The full accuracy benchmark was not repeated or tuned. [Summary](evidence/pipeline-benchmark.json), [compressed per-image records](evidence/pipeline-per-image.json.gz), [execution provenance](evidence/pipeline-execution-provenance.json).
+
+The deterministic genuine demo is India_006160: one alligator-crack match, no false candidates, and one missed source pothole. India_001993 is a hazy/shadowed, vehicle-containing no-supported-box challenge, not a certified intact road. Eight worst FP+FN examples are retained locally. Four were visually inspected: large merged/unmatched pothole boxes (India_002020, India_009171), and visibly distressed frames with no candidates (India_004755, India_009856). These observations describe disagreement with source boxes, not field-confirmed severity. [Error-review ledger](evidence/pipeline-error-review.json). Original inputs, complete JSON and predicted-box previews remain in `artifacts/genuine-demo/`; compact example JSON is committed compressed. Known low detector AP is exposed in each live report's reliability details and model provenance.
 
 ## Semantic ROI / pothole experiments — actual results
 

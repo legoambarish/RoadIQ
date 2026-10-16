@@ -1,11 +1,15 @@
 # Changelog
 
-## 2026-10-16 — India model integration and audited runtime projection (in progress)
+## 2026-10-16 — India model pipeline and measured quality limits
 
-- Acquired and froze two India-only corpora with rights/hash/duplicate evidence; actual detector training is ongoing and two genuine ROI experiments completed.
+- Acquired and froze two India-only corpora with rights/hash/duplicate evidence; scratch detector training completed 30 epochs and two genuine ROI experiments completed 15 epochs each. Detector heldout AP50 .137644 / AP50–95 .054486, transverse AP zero.
 - Integrated separate VDA, source boxes/semantic masks, guarded readiness/intake, live Everyday/Engineer findings and actual JSON export. Preserved legacy RSQI and map/import workflows.
 - Exported unchanged v3 parameters into a separately versioned letterbox runtime after proving all 3,200 training/evaluation inputs identical. Retained redundant v4 as incomplete; do not claim new training.
-- Actual 350-image CPU source-resolution evaluation found road IoU 0.51267 and pothole IoU zero. Diagnostic constant-road ROI IoU .739147 exceeds the learned .512599; model card and full per-image evidence retain this failed measurement gate. Backend 135 tests (including HTTP concurrency) and frontend 13 tests/lint/build passed; actual saved-report browser import passed. Final detector/E2E/model-enabled package results remain pending.
+- Actual 350-image CPU source-resolution evaluation found road IoU 0.51267 and pothole IoU zero. Diagnostic constant-road ROI IoU .739147 exceeds the learned .512599; model card and full per-image evidence retain this failed measurement gate.
+- All 993 real-model API requests completed without HTTP/inference failures; median warm CPU 574 ms / p95 611 ms. At confidence .25, longitudinal/transverse recall is zero, alligator recall .290566, pothole recall .116822. Kept conditional intervals, source-empty-label challenges and worst errors; no test tuning.
+- Final backend 138 passed (136 unit + 2 genuine integration); frontend 13 tests/lint/build passed. Actual browser Everyday/Engineer uploads, source-coordinate overlays, optional failed masks, JSON download, no-detection/unusable controls and preserved CLI import passed. Fresh model-enabled Windows outcomes are recorded separately in VALIDATION_REPORT.md.
+- Fresh CPU model-enabled Windows EXE built at 281,615,820 bytes and passed genuine embedded-model upload, readiness and owned relaunch/shutdown outside the checkout without Python/Node on child PATH. Retained build warnings and clean-VM limitation; no old-package verification substituted.
+- Overall PARTIALLY VERIFIED: the real application path operates but model/measurement quality and independent field validation remain inadequate. Physical dimensions, valid RSQI/cohort percentile and real survey mapping remain evidence-gated; JSON export is implemented.
 
 ## 2026-10-16 — Task D image-analysis scorer integration (merged in PR #16)
 
@@ -148,7 +152,7 @@
 - PR #4 targets `main`; it was subsequently updated with merge commit `b6f23a33777ecae88d1c52ebbe3499d5f2927740` to bring in newer main work. A live GitHub check then showed the PR open with 15 commits, 19 changed files, and no conflicts with the base branch. It was not merged.
 - Handoff docs were committed as `65ee031`, rebased onto `b6f23a3` to preserve newer remote work, and pushed successfully using a normal fast-forward update. A final documentation correction may advance the branch tip; confirm the exact final hash with `git log -1`.
 - Tests actually run for implementation: backend suite 26 passed; compileall and `git diff --check` passed; one-batch CPU smoke run completed with plumbing-only macro IoU 0.0148, no checkpoint. These are historical results, not rerun for this documentation-only handoff. No full model training/evaluation was completed.
-# 2026-10-16 — India implementation in progress
+## Historical intermediate implementation snapshot — 2026-10-16
 
 - Added genuine India-only acquisition/preparation, frozen manifests and scratch detector/ROI training/evaluation; retained rejected split attempt and weak ROI baseline evidence. Training and real-model acceptance checks are not yet complete in this progress commit.
 - Added source-image detection geometry, provenance-checked checkpoint readiness, mask-only pixel geometry, bounded asynchronous upload handling and a versioned observational VDA. Preserved legacy RSQI/scoring and road-segment/map fixtures.

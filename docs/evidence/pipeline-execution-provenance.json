@@ -1,0 +1,9 @@
+{
+  "benchmark_source_commit": "b8e86c9",
+  "source_changes_at_execution": "Documentation/evidence only; inference code matched this commit.",
+  "subsequent_reporting_change": "Exposes already completed detector AP in checkpoint metadata and VDA reliability reasons; does not alter weights, inference, boxes, masks, quality gates or assessment state. Final real-model tests/browser/EXE verify that additive reporting separately.",
+  "latency_scope": "Full 993-request CPU TestClient run before this small reporting addition; not a benchmark of browser or EXE startup.",
+  "detector_sha256": "81415db053e9635c8d66b7f5d6a8171282e69d8f125cc36e49fe3933ef2807c3",
+  "roi_sha256": "a511f40ad30325f5165008f94af8bced0b39d3ccd08a0b9891973bceb1a542e5",
+  "pipeline_summary_sha256": "68d81b455133b870fcc4d2d520e3f7a09616da1f9d326dce106c6881bed06bca"
+}

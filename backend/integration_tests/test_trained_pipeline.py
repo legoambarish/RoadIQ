@@ -57,6 +57,8 @@ def test_real_india_image_to_actual_model_to_http_contract(live_client):
         assert result["model"]["load_status"] == "loaded"
         assert result["model"]["training_status"] == "roadIQ_trained"
         assert len(result["model"]["checkpoint"]["sha256"]) == 64
+        assert result["model"]["checkpoint"]["heldout_evaluation"]["images"] == 993
+        assert any("Source-heldout detector AP50" in reason for reason in result["visual_distress"]["reliability_reasons"])
         assert result["processing_time_ms"]["detector"] > 0
         assert result["processing_time_ms"]["segmentation"] > 0
         assert result["model"]["segmentation"]["load_status"] == "loaded"
