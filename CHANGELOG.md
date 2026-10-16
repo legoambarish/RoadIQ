@@ -7,7 +7,7 @@
 - U-Net source-resolution metrics on 350 images: road IoU .547518, road-or-pothole union IoU .547526, pothole IoU .000000. Road IoU is below the .739147 static diagnostic. This is a measured gate failure.
 - Updated MODEL_CARD, VALIDATION_REPORT, TASKS, and HANDOFF with real metrics, provenance hashes, test-split reuse caveat, and current verification. Backend unit plus actual-checkpoint integration tests: 142 passed. New full 993-image API benchmark and Windows packaging with these weights remain unverified.
 - Full 993-image GPU API integration benchmark completed with 993 successful HTTP responses, zero inference failures, and fixed-.25 recall .196078/.066667/.494340/.273364 for longitudinal/transverse/alligator/pothole; warm TestClient p50/p95 175.678/190.467 ms. Backend unit + actual-model integration tests passed (142).
-- No accuracy gate is claimed as passed; do not represent the models as dependable road assessment. New-weight Windows package verification remains outstanding. The existing fork is read-only to the current authenticated account, so local documentation commits still need an authorized push to PR #18.
+- No accuracy gate is claimed as passed; do not represent the models as dependable road assessment. New-weight Windows package verification remains outstanding. The measured-result documentation was pushed to PR #18 source branch `feat/india-p0-implementation`.
 
 ## 2026-10-16 — PR #18 model-remediation implementation (results pending)
 

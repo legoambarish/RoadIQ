@@ -14,13 +14,13 @@
 
 ## P0 model remediation follow-up — 2026-10-17
 
-- **Branch/PR:** local branch `pr-18` contains remediation and handoff commits beginning with `a26fa00`; the fetched PR #18 source head remains `d28d17e` (`feat/india-p0-implementation`). PR #18 remains open and draft; no merge occurred. This GitHub account has read-only permission to the PR source fork, so the local commits could not be pushed.
+- **Branch/PR:** local branch `pr-18` and PR #18 source branch `feat/india-p0-implementation` now include remediation and measured-results commits through `55c03f6`. The push succeeded; PR #18 remains open and draft, with no merge.
 - **Training completed:** YOLO11n transfer learning completed 90/90 epochs on the RTX 4050 Laptop GPU. U-Net v5 completed 80 epochs and selected epoch 68 using validation mean road/pothole IoU. Both final script holdout evaluations completed.
 - **Detector holdout:** 993 images, mAP50 **.303242**, mAP50–95 .123735. Per-class confidence-sweep/max-F1 recall: longitudinal .259804, transverse .133333, alligator .562264, pothole .387850. Detector misses the requested AP50, both crack-recall and pothole-recall gates. Checkpoint SHA-256 `173d10ec44da536c2848343cb4275f634e6f2494101c317f11f7863316fa9167`; manifest SHA-256 `8aef52c077c9f9003d89bfdc67b1cd5ee2550b7cb694a9c4f6bf2cb36c2f562d`.
 - **ROI holdout:** 350 images, source road IoU **.547518**, road-or-pothole union IoU .547526, pothole IoU **.000000**. Road IoU remains below the .739147 static diagnostic. Checkpoint SHA-256 `677ccbc74afc29e1c1e3a28b94c5a602d7ac613618632d48f1fae76a2ac18b83`; manifest SHA-256 `1a2f0068c22457e3c458c498df19df6a9249b8`.
 - **Checks:** backend unit + real-model integration run passed **142 tests**, 8.80 s, with two dependency deprecation warnings. Frontend 13 tests, lint, type-check and build passed earlier. Fresh 993-image GPU API benchmark completed with 993 HTTP successes and 0 inference failures; fixed-.25 recall longitudinal .196078, transverse .066667, alligator .494340, pothole .273364; warm p50 175.678 ms / p95 190.467 ms in TestClient. The run excludes browser/network latency.
 - **Limitations:** the frozen holdout splits were used by earlier baseline experiments, though the current run's checkpoint selection used validation only. Detector max-F1 recall is not deployment-threshold recall. No accuracy target passed. New-weight Windows EXE build/runtime remains untested. Full raw metrics, weights and images remain local/ignored.
-- **Next:** publish the updated measured report through a writer authorized for the PR source branch and run the new-weight Windows EXE check if a Windows system is available. Keep PR #18 unmerged for review.
+- **Next:** owner/teammate review of the updated draft PR, followed by new-weight Windows EXE verification when Windows is available. Keep PR #18 unmerged for review.
 
 Older task handoffs below preserve their historical branch state and are superseded by this current entry.
 
