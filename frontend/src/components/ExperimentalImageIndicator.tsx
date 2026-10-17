@@ -6,6 +6,11 @@ export function ExperimentalImageIndicator({ indicator }: { indicator: Indicator
       <div className="subsection-heading"><strong>Experimental image measurements</strong><span>Model observations · not RSQI</span></div>
       {indicator.status !== 'unavailable' ? <>
         {indicator.status === 'limited' && <p className="image-local-note">Low-resolution preview only; do not interpret as a condition assessment.</p>}
+        <div className="provisional-score" aria-label="Experimental provisional image score">
+          <span>Provisional image score <small>/100 · experimental</small></span>
+          <strong>{indicator.provisional_score?.toFixed(1) ?? 'Unavailable'}</strong>
+        </div>
+        <p className="image-local-note">Rule-of-thumb demo estimate only—not RSQI, a validated road-condition rating, or a percentile. Higher values can result from missed defects. Formula: {indicator.provisional_score_formula}</p>
         <div className="report-evidence-grid">
           <div><span>Detected candidate boxes</span><strong>{indicator.candidate_count}</strong></div>
           <div><span>Candidate box coverage of image</span><strong>{indicator.candidate_box_coverage_percent?.toFixed(2)}%</strong></div>

@@ -130,6 +130,8 @@ export type ExperimentalImageIndicator = {
   candidate_count: number | null
   candidate_box_coverage_percent: number | null
   predicted_pothole_pixel_fraction_percent: number | null
+  provisional_score: number | null
+  provisional_score_formula: string | null
   unavailable_reason: string | null
   limitations: string[]
 }

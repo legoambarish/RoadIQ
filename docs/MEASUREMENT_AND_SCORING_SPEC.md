@@ -44,11 +44,14 @@ VDA has **no numeric index or Good/Medium/Bad grade**. `score_eligible=false`, s
 
 The additive `experimental_image_indicator` does not change RSQI, VDA score eligibility, abstention, or percentile behavior. It reports:
 
+- `provisional_score`: a demo-only formula output on a 0–100 display scale:
+  `clamp(100 - 10*candidate_count - 3*candidate_box_coverage_percent - 2*predicted_pothole_pixel_fraction_percent, 0, 100)`.
+  If the pothole fraction is unavailable, that term contributes zero. This is a transparent, unvalidated heuristic chosen for demonstration—not a learned or statistically calibrated score.
 - `candidate_count`: detector boxes returned at the configured threshold for a usable image.
 - `candidate_box_coverage_percent`: exact union area of clipped detector boxes divided by the full EXIF-oriented source-image pixel area. Overlapping boxes count once. This is a box-coverage ratio, not a damaged-area estimate.
 - `predicted_pothole_pixel_fraction_percent`: when available, the semantic model's pothole pixels divided by its predicted pavement denominator, as recorded by `affected_pavement_pixel_fraction`. This is an unvalidated model mask output.
 
-These values are numeric observations rather than a road-condition score. A zero candidate count is not evidence that the road is clear; model precision/recall and mask IoU remain limited as documented in [MODEL_CARD.md](MODEL_CARD.md). Indicator values are null when the image is unusable for reasons other than minimum resolution, or detector inference is unavailable/failed. If minimum resolution is the sole warning, the models may run for an explicitly `limited` preview; this does not make the image score-eligible and RSQI remains Unrated. No fixed 50–60 output, RSQI value, condition grade, or percentile is manufactured. No ASTM PCI/IRI compliance is claimed.
+The provisional score is numeric but is not a reliable road-condition score: the coefficients are demo heuristics, not fitted against field ratings. A zero candidate count yields 100 by formula and is specifically **not** evidence that the road is clear; missed detections can therefore cause an unjustifiably high score. Model precision/recall and mask IoU remain limited as documented in [MODEL_CARD.md](MODEL_CARD.md). All indicator values are null when the image is unusable for reasons other than minimum resolution, or detector inference is unavailable/failed. If minimum resolution is the sole warning, the models may run for an explicitly `limited` preview; this does not make the image score-eligible and RSQI remains Unrated. No percentile is manufactured. No ASTM PCI/IRI compliance is claimed.
 
 ## Legacy RSQI, physical measurements and percentile
 

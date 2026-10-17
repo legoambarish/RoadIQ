@@ -26,8 +26,9 @@
 
 - Added image-analysis contract v1.2 field `experimental_image_indicator`. It reports actual detector candidate count, union coverage of the detection boxes over the oriented full image, and predicted pothole pixels divided by the semantic model's predicted pavement pixels when available.
 - This is deliberately not an RSQI/condition score and does not alter the existing scorer, VDA abstention, or percentile behavior. The UI retains RSQI as Unrated when its evidence gates fail and explains that the RSQI reference percentile is unavailable because there is no eligible compatible scored cohort.
-- Checks: backend unit + real-model integration suite **151 passed** with two dependency deprecation warnings; frontend **15 passed**, lint, TypeScript and Vite build passed. A real local request against the attached low-resolution sample produced a limited model indicator; it remains explicitly not an RSQI/condition score. Windows packaging with the updated UI/backend has not been run.
-- Work is on local branch `pr-18`; implementation commit `8da627e4` is pushed and verified as the PR source branch head. No image, model weights, or dataset assets are included in this change.
+- Owner additionally approved a demo-only provisional score. It is calculated as `clamp(100 - 10*candidate_count - 3*box_coverage_percent - 2*pothole_fraction_percent, 0, 100)`; this heuristic is not fitted or validated. In particular, zero detector candidates produce 100 and may be falsely reassuring. The UI displays its exact formula and limitations; it remains separate from RSQI and percentile.
+- Checks for the indicator-only commit: backend unit + real-model integration suite **151 passed** with two dependency deprecation warnings; frontend **15 passed**, lint, TypeScript and Vite build passed. Windows packaging with the updated UI/backend has not been run.
+- Work is on local branch `pr-18`; the indicator and provisional-score changes are being recorded on the PR source branch. No image, model weights, or dataset assets are included in this change.
 
 Older task handoffs below preserve their historical branch state and are superseded by this current entry.
 

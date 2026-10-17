@@ -15,6 +15,8 @@ class ExperimentalImageIndicator(BaseModel):
     candidate_count: int | None = Field(default=None, ge=0)
     candidate_box_coverage_percent: float | None = Field(default=None, ge=0, le=100)
     predicted_pothole_pixel_fraction_percent: float | None = Field(default=None, ge=0, le=100)
+    provisional_score: float | None = Field(default=None, ge=0, le=100)
+    provisional_score_formula: str | None = None
     unavailable_reason: str | None = None
     limitations: list[str] = Field(default_factory=list)
 
@@ -25,7 +27,14 @@ _LIMITATIONS = [
     "Predicted pothole-pixel fraction, when available, comes from an unvalidated semantic mask and is not a ground-truth measurement.",
     "Zero detected candidates does not establish that the road is defect-free.",
     "Model accuracy on arbitrary field images is not established.",
+    "The provisional score is an unvalidated demo heuristic, not RSQI or a road-condition grade; missed detections can yield an unjustifiably high value.",
 ]
+
+_SCORE_FORMULA = (
+    "clamp(100 - 10*candidate_count - 3*candidate_box_coverage_percent "
+    "- 2*predicted_pothole_pixel_fraction_percent, 0, 100); "
+    "missing pothole fraction contributes 0"
+)
 
 
 def _rectangle_union_area(boxes: list[tuple[float, float, float, float]]) -> float:
@@ -140,11 +149,25 @@ def calculate_experimental_image_indicator(report: dict[str, Any]) -> Experiment
 
     image_area = width * height
     coverage = 100 * _rectangle_union_area(boxes) / image_area
+    coverage_percent = round(coverage, 4)
+    pothole_fraction_percent = _available_pothole_fraction(report)
+    score = max(
+        0.0,
+        min(
+            100.0,
+            100.0
+            - 10.0 * len(detections)
+            - 3.0 * coverage_percent
+            - 2.0 * (pothole_fraction_percent or 0.0),
+        ),
+    )
     return ExperimentalImageIndicator(
         status="limited" if limited_quality else "available",
         candidate_count=len(detections),
-        candidate_box_coverage_percent=round(coverage, 4),
-        predicted_pothole_pixel_fraction_percent=_available_pothole_fraction(report),
+        candidate_box_coverage_percent=coverage_percent,
+        predicted_pothole_pixel_fraction_percent=pothole_fraction_percent,
+        provisional_score=round(score, 1),
+        provisional_score_formula=_SCORE_FORMULA,
         limitations=(
             [*_LIMITATIONS, "Image resolution is below the supported minimum; this is a limited preview only."]
             if limited_quality else _LIMITATIONS

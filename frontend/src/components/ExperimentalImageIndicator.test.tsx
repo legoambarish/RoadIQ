@@ -10,12 +10,16 @@ describe('experimental image measurements', () => {
       candidate_count: 2,
       candidate_box_coverage_percent: 12.345,
       predicted_pothole_pixel_fraction_percent: 4.5,
+      provisional_score: 55.6,
+      provisional_score_formula: 'formula fixture',
       unavailable_reason: null,
       limitations: [],
     }} />)
 
     expect(html).toContain('12.35%')
     expect(html).toContain('4.50%')
+    expect(html).toContain('55.6')
+    expect(html).toContain('Higher values can result from missed defects')
     expect(html).toContain('not RSQI')
     expect(html).toContain('zero candidates does not mean a clear road')
   })
@@ -27,6 +31,8 @@ describe('experimental image measurements', () => {
       candidate_count: null,
       candidate_box_coverage_percent: null,
       predicted_pothole_pixel_fraction_percent: null,
+      provisional_score: null,
+      provisional_score_formula: null,
       unavailable_reason: 'Detector inference is unavailable.',
       limitations: [],
     }} />)

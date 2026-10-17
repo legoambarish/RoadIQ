@@ -34,6 +34,8 @@ def test_reports_union_box_coverage_and_mask_fraction_without_rsqi_score():
     assert result.candidate_count == 2
     assert result.candidate_box_coverage_percent == 43.75
     assert result.predicted_pothole_pixel_fraction_percent == 12.5
+    assert result.provisional_score == 0
+    assert "10*candidate_count" in result.provisional_score_formula
     assert "not RSQI" in result.limitations[1]
 
 
@@ -41,7 +43,18 @@ def test_zero_candidates_is_numeric_but_not_a_clear_road_claim():
     result = calculate_experimental_image_indicator(report())
     assert result.candidate_count == 0
     assert result.candidate_box_coverage_percent == 0
+    assert result.provisional_score == 75
     assert any("does not establish" in item for item in result.limitations)
+    assert any("missed detections" in item for item in result.limitations)
+
+
+def test_zero_candidates_without_mask_returns_high_score_with_warning():
+    input_report = report()
+    input_report["defects"][1].pop("mask_geometry")
+    result = calculate_experimental_image_indicator(input_report)
+    assert result.provisional_score == 100
+    assert result.predicted_pothole_pixel_fraction_percent is None
+    assert any("missed detections" in item for item in result.limitations)
 
 
 @pytest.mark.parametrize(
@@ -72,6 +85,7 @@ def test_low_resolution_preview_returns_limited_indicator():
     assert result.status == "limited"
     assert result.candidate_count == 1
     assert result.candidate_box_coverage_percent == 1
+    assert result.provisional_score == 62
     assert any("limited preview" in item for item in result.limitations)
 
 
