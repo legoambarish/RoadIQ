@@ -93,12 +93,16 @@ def run(args) -> None:
                                      files={"image": (image.name, handle, "image/jpeg")}, timeout=120)
         response.raise_for_status()
         analysis = response.json()
+        assert analysis["contract_version"] == "image-analysis-v1.2"
         assert analysis["rsqi"]["value"] is None
         assert analysis["visual_distress"]["grade"] is None
+        indicator = analysis["experimental_image_indicator"]
         if args.require_models:
             assert analysis["model"]["load_status"] == "loaded"
             assert analysis["processing_time_ms"]["detector"] > 0
             assert any(item["detections"] for item in analysis["defects"]), "Use a known candidate-producing genuine demo image"
+            assert indicator["status"] in {"available", "limited"}
+            assert isinstance(indicator["provisional_score"], (int, float))
         else:
             assert analysis["visual_distress"]["status"] == "unavailable"
         upload_ms = (time.perf_counter() - upload_started) * 1000

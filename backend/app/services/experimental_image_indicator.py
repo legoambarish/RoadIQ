@@ -75,7 +75,7 @@ def _available_pothole_fraction(report: dict[str, Any]) -> float | None:
 
 
 def calculate_experimental_image_indicator(report: dict[str, Any]) -> ExperimentalImageIndicator:
-    """Report image-space model observations without converting them into a condition score."""
+    """Report model observations with a separate, unvalidated demo score—not RSQI."""
     quality = report.get("image_quality")
     quality = quality if isinstance(quality, dict) else {}
     model = report.get("model")

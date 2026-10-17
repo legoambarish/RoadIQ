@@ -7,6 +7,8 @@
 - Display the image-derived measurements in the upload report while preserving RSQI `Unrated` behavior, VDA non-score semantics, and unavailable percentile. No percentile is generated.
 - Documented that the percentile feature is represented as unavailable because no eligible compatible scored reference cohort exists. Added backend API/geometry tests and frontend rendering tests.
 - Verified a real local API request with configured checkpoints on the previously shared limited-preview image: provisional output 56.9, indicator status `limited`, RSQI null. This is an integration smoke check, not model-accuracy evidence.
+- Refreshed the README and Windows guide with current model/test status, the PR source branch setup, local model-asset requirements, model-enabled build steps and explicit Windows verification limitations. Local `weights/` is ignored and is not included in source control.
+- Tightened the Windows package smoke harness to require contract v1.2 and a numeric provisional indicator when models are enabled; this Windows-only runtime check still needs execution on Windows.
 
 ## 2026-10-17 — PR #18 model-remediation holdout results
 

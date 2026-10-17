@@ -30,6 +30,9 @@
 - **Score implementation commit:** `26cfe30a` (`Add provisional image score`) is pushed to PR #18 source branch `feat/india-p0-implementation`. The full backend unit + real-model integration suite passed **152 tests** (two dependency deprecation warnings); frontend **15 tests** passed, and lint, TypeScript, and Vite production build passed. `git diff --check` passed.
 - **Live API smoke:** configured local checkpoints analyzed the previously shared limited-preview image and returned contract `image-analysis-v1.2`, indicator status `limited`, provisional score **56.9**, and `rsqi.value=null`, with no processing errors. This confirms numeric output on that sample only; it does not validate score accuracy. Zero predictions can still yield 100, explicitly warned as potentially false reassurance.
 - Windows packaging with the updated UI/backend has not been run. No image, model weights, or dataset assets are included in this change.
+- The README and [Windows guide](docs/WINDOWS_APP.md) now describe the current PR branch, checkpoint asset requirements and exact model-enabled build/run sequence. The previously verified Windows executable predates the score UI and must not be presented as containing it.
+- The Windows package smoke harness now requires image-analysis contract v1.2 and a numeric provisional indicator for model-enabled uploads. It was syntax-checked only; a current Windows build/runtime check remains outstanding.
+- Final branch review found no unpublished commits on the other local task branches; those branches were not changed. The PR #18 fork branch is the only branch updated for this handoff. Local `weights/` remains untracked and is now ignored.
 
 Older task handoffs below preserve their historical branch state and are superseded by this current entry.
 
